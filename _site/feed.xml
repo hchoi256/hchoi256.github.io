@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-07-20T06:06:58+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">JUMP INTO AI</title><subtitle>Leveraging the state-of-the-art technology in AI</subtitle><author><name>Hojun Eric Choi</name><email>hchoi256@wisc.edu</email></author><entry><title type="html">template</title><link href="http://localhost:4000/star/template/" rel="alternate" type="text/html" title="template" /><published>2022-07-19T00:00:00+09:00</published><updated>2022-07-19T00:00:00+09:00</updated><id>http://localhost:4000/star/template</id><content type="html" xml:base="http://localhost:4000/star/template/"><![CDATA[<p class="notice--danger"><strong>[Notice]</strong> <a href="https://hchoi256.github.io/star/template/">Get your post template!</a></p>
+
+<div class="notice--success">
+<h4>공지사항입니다.</h4>
+<ul>
+    <li>공지사항 순서1</li>
+    <li>공지사항 순서2</li>
+</ul>
+</div>
+
+<p><a href="https://hchoi256.github.io/" class="btn btn--danger">Home</a></p>
+
+<!-- Courtesy of embedresponsively.com -->
+
+<div class="responsive-video-container">
+    <iframe src="https://www.youtube-nocookie.com/embed/XsxDH4HcOWA" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
+  </div>
+
+<p>왜 안되ㅈ</p>
+<h1 id="header-1">Header 1</h1>
+<h2 id="header-1-1">Header 1-1</h2>
+<h2 id="header-1-2">Header 1-2</h2>
+
+<h1 id="header-2">Header 2</h1>
+<h2 id="header-2-1">Header 2-1</h2>
+<h2 id="header-2-2">Header 2-2</h2>]]></content><author><name>Hojun Eric Choi</name><email>hchoi256@wisc.edu</email></author><category term="star" /><category term="template" /><summary type="html"><![CDATA[[Notice] Get your post template!]]></summary></entry><entry><title type="html">Hello World</title><link href="http://localhost:4000/hello/" rel="alternate" type="text/html" title="Hello World" /><published>2022-07-19T00:00:00+09:00</published><updated>2022-07-19T00:00:00+09:00</updated><id>http://localhost:4000/hello</id><content type="html" xml:base="http://localhost:4000/hello/"><![CDATA[<h1 id="third-project">Third Project</h1>
+<p>Let’s go</p>]]></content><author><name>Hojun Eric Choi</name><email>hchoi256@wisc.edu</email></author><summary type="html"><![CDATA[Third Project Let’s go]]></summary></entry></feed>
