@@ -1,16 +1,16 @@
-I"H<p class="notice--danger"><strong>[Notice]</strong> <a href="https://hchoi256.github.io/star/template/">Get your post template!</a></p>
+I"�<h1 id="f">f</h1>
 
-<div class="notice--success">
+<p class="notice--danger"><strong>[Notice]</strong> <a href="https://hchoi256.github.io/star/template/">Get your post template!</a></p>
+
+<!-- <div class="notice--success">
 <h4>공지사항입니다.</h4>
 <ul>
     <li>공지사항 순서1</li>
     <li>공지사항 순서2</li>
 </ul>
-</div>
+</div> -->
 
 <p><a href="https://hchoi256.github.io/" class="btn btn--danger">Home</a></p>
-
-<p>#</p>
 
 <!-- Courtesy of embedresponsively.com -->
 
@@ -18,11 +18,4 @@
     <iframe src="https://www.youtube-nocookie.com/embed/XsxDH4HcOWA" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
   </div>
 
-<h1 id="header-1">Header 1</h1>
-<h2 id="header-1-1">Header 1-1</h2>
-<h2 id="header-1-2">Header 1-2</h2>
-
-<h1 id="header-2">Header 2</h1>
-<h2 id="header-2-1">Header 2-1</h2>
-<h2 id="header-2-2">Header 2-2</h2>
 :ET

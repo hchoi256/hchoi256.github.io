@@ -112,7 +112,7 @@ author:
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
-      url: "eric970412@gmail.com"
+      url: "mailto:eric970412@gmail.com"
     - label: "LinkedIn"
       icon: "fab fa-fw fa-linkedin"
       url: "https://www.linkedin.com/in/hojun-choi-2b10b11a0/"      
@@ -128,7 +128,7 @@ footer:
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
-      url: "eric970412@gmail.com"       
+      url: "mailto:eric970412@gmail.com"       
     - label: "LinkedIn"
       icon: "fab fa-fw fa-linkedin"
       url: "https://www.linkedin.com/in/hojun-choi-2b10b11a0/"
