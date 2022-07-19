@@ -1,16 +1,21 @@
-I"�<h1 id="f">f</h1>
-
+I"�<h1 id="공지사항">공지사항</h1>
+<h2 id="공지사항-등록">공지사항 등록</h2>
 <p class="notice--danger"><strong>[Notice]</strong> <a href="https://hchoi256.github.io/star/template/">Get your post template!</a></p>
 
-<!-- <div class="notice--success">
+<h2 id="공지사항-세부내용">공지사항 세부내용</h2>
+
+<div class="notice--success">
 <h4>공지사항입니다.</h4>
 <ul>
     <li>공지사항 순서1</li>
     <li>공지사항 순서2</li>
 </ul>
-</div> -->
+</div>
 
+<h1 id="버튼-생성하기">버튼 생성하기</h1>
 <p><a href="https://hchoi256.github.io/" class="btn btn--danger">Home</a></p>
+
+<h1 id="미디어-불러오기">미디어 불러오기</h1>
 
 <!-- Courtesy of embedresponsively.com -->
 
