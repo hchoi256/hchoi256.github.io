@@ -108,11 +108,11 @@ author:
   avatar           : "/assets/images/echoi.jpg"
   bio              : "I am a senior-year B.S. student in Computer Science and Data Science at the University of Wisconsin, Madison. My research interests are **ML**, **deep NLP** and **computer vision** for emerging application domains."
   location         : "Madison"
-  email            : "eric970412@gmail.com"
+  email            : "hchoi256@wisc.edu"
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
-      url: "mailto:eric970412@gmail.com"
+      url: "mailto:hchoi256@wisc.edu"
     - label: "LinkedIn"
       icon: "fab fa-fw fa-linkedin"
       url: "https://www.linkedin.com/in/hojun-choi-2b10b11a0/"      
@@ -128,7 +128,7 @@ footer:
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
-      url: "mailto:eric970412@gmail.com"       
+      url: "mailto:hchoi256@wisc.edu"       
     - label: "LinkedIn"
       icon: "fab fa-fw fa-linkedin"
       url: "https://www.linkedin.com/in/hojun-choi-2b10b11a0/"
