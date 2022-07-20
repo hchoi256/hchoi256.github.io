@@ -106,7 +106,7 @@ analytics:
 author:
   name             : "Hojun Eric Choi"
   avatar           : "/assets/images/echoi.jpg"
-  bio              : "I am a senior-year B.S. student in Computer Science and Data Science at the University of Wisconsin, Madison.\n\nMy research interests are **ML**, **deep NLP** and **computer vision** for emerging application domains."
+  bio              : "I am a senior-year B.S. student in Computer Science and Data Science at the University of Wisconsin, Madison.\n\nMy research interests are **ML**, **deep NLP**, and **computer vision** for emerging application domains."
   location         : "Madison"
   email            : "hchoi256@wisc.edu"
   links:
