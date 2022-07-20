@@ -10,6 +10,7 @@ toc_label: "GITHUB BLOG JJUNS"
 sidebar:
     nav: "docs"
 ---
+
 # PART 1: Text Mining
 ## 1-1) 텍스트 마이닝(Text Mining)이란?
 비정형(= 구조화 되지 않은) 텍스트 빅 데이터에 대하여 효과적인 탐색 및 분석을 통해 유용한 정보, 패턴 및 실행 가능한 통찰력을 도출하는 과정이다.
@@ -484,18 +485,6 @@ import nltk
 nltk.download("stopwords")
 ```
 
-    [nltk_data] Downloading package stopwords to
-    [nltk_data]     C:\Users\fermat39\AppData\Roaming\nltk_data...
-    [nltk_data]   Unzipping corpora\stopwords.zip.
-    
-
-
-
-
-    True
-
-
-
 
 ```python
 from nltk.corpus import stopwords
@@ -632,18 +621,6 @@ nltk.download("stopwords", download_dir="./data")
 import nltk
 nltk.download("webtext")
 ```
-
-    [nltk_data] Downloading package webtext to
-    [nltk_data]     C:\Users\fermat39\AppData\Roaming\nltk_data...
-    [nltk_data]   Unzipping corpora\webtext.zip.
-    
-
-
-
-
-    True
-
-
 
 
 ```python
