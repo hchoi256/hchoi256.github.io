@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-07-20T10:31:35+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정리하며 익히는 AI</title><subtitle>Leveraging the state-of-the-art technology in AI</subtitle><author><name>Hojun Eric Choi</name><email>hchoi256@wisc.edu</email></author><entry><title type="html">NLP - Part 1: Text Mining and Tokenization</title><link href="http://localhost:4000/nlp/nlp-basic.md/" rel="alternate" type="text/html" title="NLP - Part 1: Text Mining and Tokenization" /><published>2022-07-20T00:00:00+09:00</published><updated>2022-07-20T00:00:00+09:00</updated><id>http://localhost:4000/nlp/nlp-basic.md</id><content type="html" xml:base="http://localhost:4000/nlp/nlp-basic.md/"><![CDATA[<h1 id="part-1-text-mining">PART 1: Text Mining</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-07-20T10:42:44+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정리하며 익히는 AI</title><subtitle>Leveraging the state-of-the-art technology in AI</subtitle><author><name>Hojun Eric Choi</name><email>hchoi256@wisc.edu</email></author><entry><title type="html">NLP - Part 1: Text Mining and Tokenization</title><link href="http://localhost:4000/nlp/nlp-basic-p1/" rel="alternate" type="text/html" title="NLP - Part 1: Text Mining and Tokenization" /><published>2022-07-20T00:00:00+09:00</published><updated>2022-07-20T00:00:00+09:00</updated><id>http://localhost:4000/nlp/nlp-basic-p1</id><content type="html" xml:base="http://localhost:4000/nlp/nlp-basic-p1/"><![CDATA[<h1 id="part-1-text-mining">PART 1: Text Mining</h1>
 <h2 id="1-1-텍스트-마이닝text-mining이란">1-1) 텍스트 마이닝(Text Mining)이란?</h2>
 <p>비정형(= 구조화 되지 않은) 텍스트 빅 데이터에 대하여 효과적인 탐색 및 분석을 통해 유용한 정보, 패턴 및 실행 가능한 통찰력을 도출하는 과정이다.</p>
 
@@ -55,17 +55,6 @@
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nltk</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="s">"names"</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[nltk_data] Downloading package names to
-[nltk_data]     C:\Users\fermat39\AppData\Roaming\nltk_data...
-[nltk_data]   Unzipping corpora\names.zip.
-
-
-
-
-
-True
-</code></pre></div></div>
-
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">names</span>
 </code></pre></div></div>
 
@@ -108,17 +97,6 @@ True
 </code></pre></div></div>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nltk</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="s">"gutenberg"</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[nltk_data] Downloading package gutenberg to
-[nltk_data]     C:\Users\fermat39\AppData\Roaming\nltk_data...
-[nltk_data]   Unzipping corpora\gutenberg.zip.
-
-
-
-
-
-True
 </code></pre></div></div>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">gutenberg</span>
@@ -383,9 +361,6 @@ With estimated total sales of over five billion copies, the Bible is widely cons
 
 <p><img src="/assets/post_images/nlp_basic/output_66_0.png" alt="png" /></p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;AxesSubplot:title={'center':'Top 10 Most Common Words'}, xlabel='Samples', ylabel='Counts'&gt;
-</code></pre></div></div>
-
 <h2 id="2-3-stop-words-불용어">2-3) Stop Words (불용어)</h2>
 <p>일반적으로 자연어를 처리하기 전에 걸러내는 단어이다.</p>
 
@@ -460,9 +435,6 @@ With estimated total sales of over five billion copies, the Bible is widely cons
 
 <p><img src="/assets/post_images/nlp_basic/output_88_0.png" alt="png" /></p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;AxesSubplot:title={'center':'Top 10 Most Common Words in Sample'}, xlabel='Samples', ylabel='Counts'&gt;
-</code></pre></div></div>
-
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">tokenized_word</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">w</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stop_words</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
@@ -490,20 +462,7 @@ With estimated total sales of over five billion copies, the Bible is widely cons
 
 <p><img src="/assets/post_images/nlp_basic/output_90_0.png" alt="png" /></p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;AxesSubplot:title={'center':'Top 10 Most Common Words in Sample'}, xlabel='Samples', ylabel='Counts'&gt;
-</code></pre></div></div>
-
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nltk</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="s">"stopwords"</span><span class="p">,</span> <span class="n">download_dir</span><span class="o">=</span><span class="s">"./data"</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[nltk_data] Downloading package stopwords to ./data...
-[nltk_data]   Unzipping corpora\stopwords.zip.
-
-
-
-
-
-True
 </code></pre></div></div>
 
 <h2 id="2-4-unigrams-bigrams-trigrams-ngrams">2-4) Unigrams, Bigrams, Trigrams, ngrams</h2>
@@ -596,9 +555,6 @@ True
 
 <p><img src="/assets/post_images/nlp_basic/output_101_0.png" alt="png" /></p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;AxesSubplot:xlabel='Samples', ylabel='Counts'&gt;
-</code></pre></div></div>
-
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">filtered_word</span><span class="p">[:</span><span class="mi">20</span><span class="p">]</span>
 </code></pre></div></div>
 
@@ -656,9 +612,6 @@ True
 
 <p><img src="/assets/post_images/nlp_basic/output_104_0.png" alt="png" /></p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;AxesSubplot:xlabel='Samples', ylabel='Counts'&gt;
-</code></pre></div></div>
-
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk</span> <span class="kn">import</span> <span class="n">trigrams</span>
 
 <span class="n">trigrams_list</span> <span class="o">=</span> <span class="n">trigrams</span><span class="p">(</span><span class="n">filtered_word</span><span class="p">)</span>
@@ -684,9 +637,6 @@ True
 </code></pre></div></div>
 
 <p><img src="/assets/post_images/nlp_basic/output_108_0.png" alt="png" /></p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;AxesSubplot:xlabel='Samples', ylabel='Counts'&gt;
-</code></pre></div></div>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk</span> <span class="kn">import</span> <span class="n">ngrams</span>
 
