@@ -5,8 +5,16 @@
 <lastmod>2022-07-19T00:00:00+09:00</lastmod>
 </url>
 <url>
-<loc>http://localhost:4000/nlp/nlp-basic-p1/</loc>
+<loc>http://localhost:4000/nlp/nlp-basic-tokenizer/</loc>
 <lastmod>2022-07-20T00:00:00+09:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/nlp/nlp-basic-word-embedding/</loc>
+<lastmod>2022-07-20T00:00:00+09:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/machine/learning/projects/</loc>
+<lastmod>2022-07-22T00:00:00+09:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/categories/</loc>
@@ -22,7 +30,7 @@
 </url>
 <url>
 <loc>http://localhost:4000/assets/CV.pdf</loc>
-<lastmod>2022-07-20T07:40:23+09:00</lastmod>
+<lastmod>2022-07-21T00:25:42+09:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/google28456aa357a1fbcc.html</loc>

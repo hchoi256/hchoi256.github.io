@@ -9,7 +9,7 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>NLP - Part 1: Text Mining and Tokenization | 정리하며 익히는 AI</title>
+<!-- begin _includes/seo.html --><title>NLP - Part 1: Text Mining and Tokenization | 정리하여 내 것으로, AI</title>
 <meta name="description" content="PART 1: Text Mining 1-1) 텍스트 마이닝(Text Mining)이란? 비정형(= 구조화 되지 않은) 텍스트 빅 데이터에 대하여 효과적인 탐색 및 분석을 통해 유용한 정보, 패턴 및 실행 가능한 통찰력을 도출하는 과정이다.">
 
 
@@ -21,9 +21,9 @@
 
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
-<meta property="og:site_name" content="정리하며 익히는 AI">
+<meta property="og:site_name" content="정리하여 내 것으로, AI">
 <meta property="og:title" content="NLP - Part 1: Text Mining and Tokenization">
-<meta property="og:url" content="http://localhost:4000/nlp/nlp-basic-p1/">
+<meta property="og:url" content="http://localhost:4000/nlp/nlp-basic-tokenizer/">
 
 
   <meta property="og:description" content="PART 1: Text Mining 1-1) 텍스트 마이닝(Text Mining)이란? 비정형(= 구조화 되지 않은) 텍스트 빅 데이터에 대하여 효과적인 탐색 및 분석을 통해 유용한 정보, 패턴 및 실행 가능한 통찰력을 도출하는 과정이다.">
@@ -45,7 +45,7 @@
   
 
 
-<link rel="canonical" href="http://localhost:4000/nlp/nlp-basic-p1/">
+<link rel="canonical" href="http://localhost:4000/nlp/nlp-basic-tokenizer/">
 
 
 
@@ -73,7 +73,7 @@
 
 
 
-  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정리하며 익히는 AI Feed">
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정리하여 내 것으로, AI Feed">
 
 
 <!-- https://t.co/dKP3o1e -->
@@ -121,7 +121,7 @@
       <nav id="site-nav" class="greedy-nav">
         
         <a class="site-title" href="/">
-          정리하며 익히는 AI
+          정리하여 내 것으로, AI
           <span class="site-subtitle">with jjuns</span>
         </a>
         <ul class="visible-links"><li class="masthead__menu-item">
@@ -211,7 +211,7 @@
       <div class="author__bio p-note" itemprop="description">
         <p>I am a senior-year B.S. student in Computer Science and Data Science at the University of Wisconsin, Madison.</p>
 
-<p>My research interests are <strong>ML</strong>, <strong>deep NLP</strong> and <strong>computer vision</strong> for emerging application domains.</p>
+<p>My research interests are <strong>ML</strong>, <strong>deep NLP</strong>, and <strong>computer vision</strong> for emerging application domains.</p>
 
       </div>
     
@@ -363,7 +363,7 @@
       
         <header>
           <h1 id="page-title" class="page__title p-name" itemprop="headline">
-            <a href="http://localhost:4000/nlp/nlp-basic-p1/" class="u-url" itemprop="url">NLP - Part 1: Text Mining and Tokenization
+            <a href="http://localhost:4000/nlp/nlp-basic-tokenizer/" class="u-url" itemprop="url">NLP - Part 1: Text Mining and Tokenization
 </a>
           </h1>
           
@@ -781,17 +781,6 @@ With estimated total sales of over five billion copies, the Bible is widely cons
 <span class="n">nltk</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="s">"stopwords"</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[nltk_data] Downloading package stopwords to
-[nltk_data]     C:\Users\fermat39\AppData\Roaming\nltk_data...
-[nltk_data]   Unzipping corpora\stopwords.zip.
-
-
-
-
-
-True
-</code></pre></div></div>
-
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">stopwords</span>
 </code></pre></div></div>
 
@@ -884,17 +873,6 @@ With estimated total sales of over five billion copies, the Bible is widely cons
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">nltk</span>
 <span class="n">nltk</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="s">"webtext"</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[nltk_data] Downloading package webtext to
-[nltk_data]     C:\Users\fermat39\AppData\Roaming\nltk_data...
-[nltk_data]   Unzipping corpora\webtext.zip.
-
-
-
-
-
-True
 </code></pre></div></div>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">webtext</span><span class="p">,</span> <span class="n">stopwords</span>
@@ -1136,11 +1114,11 @@ True
     <h4 class="page__share-title">Share on</h4>
   
 
-  <a href="https://twitter.com/intent/tweet?text=NLP+-+Part+1%3A+Text+Mining+and+Tokenization%20http%3A%2F%2Flocalhost%3A4000%2Fnlp%2Fnlp-basic-p1%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=NLP+-+Part+1%3A+Text+Mining+and+Tokenization%20http%3A%2F%2Flocalhost%3A4000%2Fnlp%2Fnlp-basic-tokenizer%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fnlp%2Fnlp-basic-p1%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fnlp%2Fnlp-basic-tokenizer%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fnlp%2Fnlp-basic-p1%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fnlp%2Fnlp-basic-tokenizer%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 </section>
 
 
@@ -1151,7 +1129,8 @@ True
 ">Previous</a>
     
     
-      <a href="#" class="pagination--pager disabled">Next</a>
+      <a href="/nlp/nlp-basic-word-embedding/" class="pagination--pager" title="NLP - Part 2: Word Embedding
+">Next</a>
     
   </nav>
 
@@ -1165,6 +1144,108 @@ True
     <div class="page__related">
       <h2 class="page__related-title">You may also enjoy</h2>
       <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/echoi.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/machine/learning/projects/" rel="permalink">ML Project 1: ANN - Car Sales Prediction
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2022-07-22T00:00:00+09:00">2022-07-22</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          less than 1 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Car Sales Prediction
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/echoi.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/nlp/nlp-basic-word-embedding/" rel="permalink">NLP - Part 2: Word Embedding
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2022-07-20T00:00:00+09:00">2022-07-20</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">PART 1: Vectorization
+</p>
+  </article>
+</div>
+
         
           
 
@@ -1283,8 +1364,8 @@ True
     
   <script>
     var disqus_config = function () {
-      this.page.url = "http://localhost:4000/nlp/nlp-basic-p1/";  /* Replace PAGE_URL with your page's canonical URL variable */
-      this.page.identifier = "/nlp/nlp-basic-p1"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+      this.page.url = "http://localhost:4000/nlp/nlp-basic-tokenizer/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/nlp/nlp-basic-tokenizer"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
     };
     (function() { /* DON'T EDIT BELOW THIS LINE */
       var d = document, s = d.createElement('script');

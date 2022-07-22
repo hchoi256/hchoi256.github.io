@@ -1,4 +1,974 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-07-20T10:42:44+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정리하며 익히는 AI</title><subtitle>Leveraging the state-of-the-art technology in AI</subtitle><author><name>Hojun Eric Choi</name><email>hchoi256@wisc.edu</email></author><entry><title type="html">NLP - Part 1: Text Mining and Tokenization</title><link href="http://localhost:4000/nlp/nlp-basic-p1/" rel="alternate" type="text/html" title="NLP - Part 1: Text Mining and Tokenization" /><published>2022-07-20T00:00:00+09:00</published><updated>2022-07-20T00:00:00+09:00</updated><id>http://localhost:4000/nlp/nlp-basic-p1</id><content type="html" xml:base="http://localhost:4000/nlp/nlp-basic-p1/"><![CDATA[<h1 id="part-1-text-mining">PART 1: Text Mining</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-07-22T15:22:07+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정리하여 내 것으로, AI</title><subtitle>Leveraging the state-of-the-art technology in AI</subtitle><author><name>Hojun Eric Choi</name><email>hchoi256@wisc.edu</email></author><entry><title type="html">ML Project 1: ANN - Car Sales Prediction</title><link href="http://localhost:4000/machine/learning/projects/" rel="alternate" type="text/html" title="ML Project 1: ANN - Car Sales Prediction" /><published>2022-07-22T00:00:00+09:00</published><updated>2022-07-22T00:00:00+09:00</updated><id>http://localhost:4000/machine/learning/projects</id><content type="html" xml:base="http://localhost:4000/machine/learning/projects/"><![CDATA[<h1 id="car-sales-prediction">Car Sales Prediction</h1>
+
+<h2 id="learning-goals">Learning Goals</h2>
+<p>Artificial Neural Network (ANN)을 이용한 회귀 작업 처리를 이해한다.</p>
+
+<p>순방향/역전파를 동반하는 가중치 학습의 과정에 대해 보다 나은 이해를 도모한다.</p>
+
+<h2 id="description">Description</h2>
+<p>여러분이 자동차 딜러 혹은 차량 판매원이라 가정하고, 상기 고객들의 특정 데이터(나이, 연봉, etc.)를 참고하여 고객들이 차량 구매에 사용할 금액을 예측하는 상황이다.</p>
+
+<h3 id="dataset">Dataset</h3>
+<html>
+  <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <meta name="generator" content="PhpSpreadsheet, https://github.com/PHPOffice/PhpSpreadsheet" />
+      <meta name="author" content="owner" />
+    <style type="text/css">
+      html { font-family:Calibri, Arial, Helvetica, sans-serif; font-size:11pt; background-color:white }
+      a.comment-indicator:hover + div.comment { background:#ffd; position:absolute; display:block; border:1px solid black; padding:0.5em }
+      a.comment-indicator { background:red; display:inline-block; border:1px solid black; width:0.5em; height:0.5em }
+      div.comment { display:none }
+      table { border-collapse:collapse; page-break-after:always }
+      .gridlines td { border:1px dotted black }
+      .gridlines th { border:1px dotted black }
+      .b { text-align:center }
+      .e { text-align:center }
+      .f { text-align:right }
+      .inlineStr { text-align:left }
+      .n { text-align:right }
+      .s { text-align:left }
+      td.style0 { vertical-align:bottom; border-bottom:none #000000; border-top:none #000000; border-left:none #000000; border-right:none #000000; color:#000000; font-family:'Calibri'; font-size:11pt; background-color:white }
+      th.style0 { vertical-align:bottom; border-bottom:none #000000; border-top:none #000000; border-left:none #000000; border-right:none #000000; color:#000000; font-family:'Calibri'; font-size:11pt; background-color:white }
+      table.sheet0 col.col0 { width:42pt }
+      table.sheet0 col.col1 { width:42pt }
+      table.sheet0 col.col2 { width:42pt }
+      table.sheet0 col.col3 { width:42pt }
+      table.sheet0 col.col4 { width:42pt }
+      table.sheet0 col.col5 { width:42pt }
+      table.sheet0 col.col6 { width:42pt }
+      table.sheet0 col.col7 { width:42pt }
+      table.sheet0 col.col8 { width:42pt }
+      table.sheet0 tr { height:15pt }
+    </style>
+  </head>
+  <body>
+<style>
+@page { margin-left: 0.7in; margin-right: 0.7in; margin-top: 0.75in; margin-bottom: 0.75in; }
+body { margin-left: 0.7in; margin-right: 0.7in; margin-top: 0.75in; margin-bottom: 0.75in; }
+</style>
+    <table border="0" cellpadding="0" cellspacing="0" id="sheet0" class="sheet0 gridlines">
+        <col class="col0" />
+        <col class="col1" />
+        <col class="col2" />
+        <col class="col3" />
+        <col class="col4" />
+        <col class="col5" />
+        <col class="col6" />
+        <col class="col7" />
+        <col class="col8" />
+        <tbody>
+          <tr class="row0">
+            <td class="column0 style0 s">Customer Name</td>
+            <td class="column1 style0 s">Customer e-mail</td>
+            <td class="column2 style0 s">Country</td>
+            <td class="column3 style0 s">Gender</td>
+            <td class="column4 style0 s">Age</td>
+            <td class="column5 style0 s">Annual Salary</td>
+            <td class="column6 style0 s">Credit Card Debt</td>
+            <td class="column7 style0 s">Net Worth</td>
+            <td class="column8 style0 s">Car Purchase Amount</td>
+          </tr>
+          <tr class="row1">
+            <td class="column0 style0 s">Martina Avila</td>
+            <td class="column1 style0 s">cubilia.Curae.Phasellus@quisaccumsanconvallis.edu</td>
+            <td class="column2 style0 s">Bulgaria</td>
+            <td class="column3 style0 n">0</td>
+            <td class="column4 style0 n">41.8517198</td>
+            <td class="column5 style0 n">62812.09301</td>
+            <td class="column6 style0 n">11609.38091</td>
+            <td class="column7 style0 n">238961.2505</td>
+            <td class="column8 style0 n">35321.45877</td>
+          </tr>
+          <tr class="row2">
+            <td class="column0 style0 s">Harlan Barnes</td>
+            <td class="column1 style0 s">eu.dolor@diam.co.uk</td>
+            <td class="column2 style0 s">Belize</td>
+            <td class="column3 style0 n">0</td>
+            <td class="column4 style0 n">40.87062335</td>
+            <td class="column5 style0 n">66646.89292</td>
+            <td class="column6 style0 n">9572.957136</td>
+            <td class="column7 style0 n">530973.9078</td>
+            <td class="column8 style0 n">45115.52566</td>
+          </tr>
+          <tr class="row3">
+            <td class="column0 style0 s">Naomi Rodriquez</td>
+            <td class="column1 style0 s">vulputate.mauris.sagittis@ametconsectetueradipiscing.co.uk</td>
+            <td class="column2 style0 s">Algeria</td>
+            <td class="column3 style0 n">1</td>
+            <td class="column4 style0 n">43.15289747</td>
+            <td class="column5 style0 n">53798.55112</td>
+            <td class="column6 style0 n">11160.35506</td>
+            <td class="column7 style0 n">638467.1773</td>
+            <td class="column8 style0 n">42925.70921</td>
+          </tr>
+          <tr class="row4">
+            <td class="column0 style0 s">Jade Cunningham</td>
+            <td class="column1 style0 s">malesuada@dignissim.com</td>
+            <td class="column2 style0 s">Cook Islands</td>
+            <td class="column3 style0 n">1</td>
+            <td class="column4 style0 n">58.27136945</td>
+            <td class="column5 style0 n">79370.03798</td>
+            <td class="column6 style0 n">14426.16485</td>
+            <td class="column7 style0 n">548599.0524</td>
+            <td class="column8 style0 n">67422.36313</td>
+          </tr>
+          <tr class="row5">
+            <td class="column0 style0 s">Cedric Leach</td>
+            <td class="column1 style0 s">felis.ullamcorper.viverra@egetmollislectus.net</td>
+            <td class="column2 style0 s">Brazil</td>
+            <td class="column3 style0 n">1</td>
+            <td class="column4 style0 n">57.31374945</td>
+            <td class="column5 style0 n">59729.1513</td>
+            <td class="column6 style0 n">5358.712177</td>
+            <td class="column7 style0 n">560304.0671</td>
+            <td class="column8 style0 n">55915.46248</td>
+          </tr>
+        </tbody>
+    </table>
+  </body>
+</html>
+
+<p><strong>독립변수</strong></p>
+<ul>
+  <li>Customer Name</li>
+  <li>Customer e-mail</li>
+  <li>Country</li>
+  <li>Gender</li>
+  <li>Age</li>
+  <li>Annual Salary</li>
+  <li>Credit Card Debt.</li>
+  <li>Net Worth</li>
+</ul>
+
+<p><strong>종속변수</strong></p>
+<ul>
+  <li>Car Purchase Amount</li>
+</ul>]]></content><author><name>Hojun Eric Choi</name><email>hchoi256@wisc.edu</email></author><category term="Machine" /><category term="Learning" /><category term="machine learning" /><category term="python" /><summary type="html"><![CDATA[Car Sales Prediction]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://user-images.githubusercontent.com/39285147/180375564-2b383e21-3c59-4fec-af6a-cf7a7f88a987.jpg" /><media:content medium="image" url="https://user-images.githubusercontent.com/39285147/180375564-2b383e21-3c59-4fec-af6a-cf7a7f88a987.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">NLP - Part 2: Word Embedding</title><link href="http://localhost:4000/nlp/nlp-basic-word-embedding/" rel="alternate" type="text/html" title="NLP - Part 2: Word Embedding" /><published>2022-07-20T00:00:00+09:00</published><updated>2022-07-20T00:00:00+09:00</updated><id>http://localhost:4000/nlp/nlp-basic-word-embedding</id><content type="html" xml:base="http://localhost:4000/nlp/nlp-basic-word-embedding/"><![CDATA[<h1 id="part-1-vectorization">PART 1: Vectorization</h1>
+
+<h2 id="vectorization-필요성">Vectorization 필요성</h2>
+<p>Machine (기계)는 문자와 단어를 이해할 수 없다.</p>
+
+<p>0과 1로 이루어진 이진 형태의 데이터를 기계는 이해할 수 있다.</p>
+
+<p><strong>Computer Vision</strong>의 가장 기본은 이미지는 픽셀 (pixel)로 이루어져 있고, 픽셀에 대한 정보는 x, y와 같은 픽셀의 위치 그리고 해당 픽셀의 색상 정보 (보통 RGB)를 가지고 있다. 이런 정보들은 숫자로 쉽게 만들 수가 있다!</p>
+
+<p><strong>NLP</strong>의 텍스트 데이터 역시 기계가 이해할 수 있도록 숫자로 표현해야 한다.</p>
+
+<p><em>CountVectorizer</em> 텍스트를 숫자 데이터로 변환하는 방법으로, 텍스트를 수치 데이터로 변화하는데 사용하는 method! sklearn을 통해 사용 가능하다.</p>
+
+<h2 id="vectorization-구현">Vectorization 구현</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">scikit</span><span class="o">-</span><span class="n">learn</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span>
+
+<span class="n">text1</span> <span class="o">=</span><span class="s">'''Tracy loves writing about data science.'''</span>
+<span class="n">text2</span> <span class="o">=</span> <span class="s">'''Tracy loves writing for medium publications.'''</span>
+<span class="n">text3</span> <span class="o">=</span> <span class="s">'''Tracy loves studying Python programming.'''</span>
+<span class="n">text4</span> <span class="o">=</span> <span class="s">'''Tracy loves entering Kaggle competitions.'''</span>
+<span class="n">text5</span> <span class="o">=</span> <span class="s">'''Tracy loves making YouTube videos.'''</span>
+<span class="n">text6</span> <span class="o">=</span> <span class="s">'''Tracy loves getting new subscribers.'''</span>
+<span class="n">corpus</span> <span class="o">=</span> <span class="p">[</span><span class="n">text1</span><span class="p">,</span> <span class="n">text2</span><span class="p">,</span> <span class="n">text3</span><span class="p">,</span> <span class="n">text4</span><span class="p">,</span> <span class="n">text5</span><span class="p">,</span> <span class="n">text6</span><span class="p">]</span>
+<span class="n">count_vec</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">()</span>
+
+<span class="n">word_count_vec</span> <span class="o">=</span> <span class="n">count_vec</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+<span class="n">word_count_vec</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(6, 21)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">count_vec</span><span class="p">.</span><span class="n">get_feature_names_out</span><span class="p">())</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>['about' 'competitions' 'data' 'entering' 'for' 'getting' 'kaggle' 'loves'
+ 'making' 'medium' 'new' 'programming' 'publications' 'python' 'science'
+ 'studying' 'subscribers' 'tracy' 'videos' 'writing' 'youtube']
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">"Vocabulary: "</span><span class="p">,</span> <span class="n">count_vec</span><span class="p">.</span><span class="n">vocabulary_</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Vocabulary:  {'tracy': 17, 'loves': 7, 'writing': 19, 'about': 0, 'data': 2, 'science': 14, 'for': 4, 'medium': 9, 'publications': 12, 'studying': 15, 'python': 13, 'programming': 11, 'entering': 3, 'kaggle': 6, 'competitions': 1, 'making': 8, 'youtube': 20, 'videos': 18, 'getting': 5, 'new': 10, 'subscribers': 16}
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">"Encoded Document is: "</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">word_count_vec</span><span class="p">.</span><span class="n">toarray</span><span class="p">())</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Encoded Document is: 
+[[1 0 1 0 0 0 0 1 0 0 0 0 0 0 1 0 0 1 0 1 0]
+ [0 0 0 0 1 0 0 1 0 1 0 0 1 0 0 0 0 1 0 1 0]
+ [0 0 0 0 0 0 0 1 0 0 0 1 0 1 0 1 0 1 0 0 0]
+ [0 1 0 1 0 0 1 1 0 0 0 0 0 0 0 0 0 1 0 0 0]
+ [0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 1 1 0 1]
+ [0 0 0 0 0 1 0 1 0 0 1 0 0 0 0 0 1 1 0 0 0]]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">matrix</span> <span class="o">=</span> <span class="n">count_vec</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+<span class="n">pd</span><span class="p">.</span><span class="n">set_option</span><span class="p">(</span><span class="s">"display.max_columns"</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span> <span class="c1"># 테이블 전체를 한 눈에 보여주기
+</span><span class="n">counts</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">matrix</span><span class="p">.</span><span class="n">toarray</span><span class="p">(),</span> <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s">"doc1"</span><span class="p">,</span> <span class="s">"doc2"</span><span class="p">,</span> <span class="s">"doc3"</span><span class="p">,</span> <span class="s">"doc4"</span><span class="p">,</span> <span class="s">"doc5"</span><span class="p">,</span> <span class="s">"doc6"</span><span class="p">],</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">count_vec</span><span class="p">.</span><span class="n">get_feature_names</span><span class="p">())</span>
+<span class="n">counts</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="s">"Total"</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">counts</span><span class="p">.</span><span class="nb">sum</span><span class="p">()</span>
+<span class="n">counts</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>about</th>
+      <th>competitions</th>
+      <th>data</th>
+      <th>entering</th>
+      <th>for</th>
+      <th>getting</th>
+      <th>kaggle</th>
+      <th>loves</th>
+      <th>making</th>
+      <th>medium</th>
+      <th>new</th>
+      <th>programming</th>
+      <th>publications</th>
+      <th>python</th>
+      <th>science</th>
+      <th>studying</th>
+      <th>subscribers</th>
+      <th>tracy</th>
+      <th>videos</th>
+      <th>writing</th>
+      <th>youtube</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>doc1</th>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>doc2</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>doc3</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>doc4</th>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>doc5</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>doc6</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>Total</th>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>6.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>6.0</td>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="vectorization-실습">Vectorization 실습</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s">"Electronics_data.xlsx"</span><span class="p">)</span>
+<span class="n">data</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Unnamed: 0</th>
+      <th>sentiment</th>
+      <th>title</th>
+      <th>Reviews</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>2</td>
+      <td>Great CD</td>
+      <td>My lovely Pat has one of the GREAT voices of h...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>2</td>
+      <td>One of the best game music soundtracks - for a...</td>
+      <td>Despite the fact that I have only played a sma...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>1</td>
+      <td>Batteries died within a year ...</td>
+      <td>I bought this charger in Jul 2003 and it worke...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>2</td>
+      <td>works fine, but Maha Energy is better</td>
+      <td>Check out Maha Energy's website. Their Powerex...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>2</td>
+      <td>Great for the non-audiophile</td>
+      <td>Reviewed quite a bit of the combo players and ...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">data</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(50000, 4)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">data</span><span class="p">[</span><span class="s">"Full_text"</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">"title"</span><span class="p">].</span><span class="nb">str</span><span class="p">.</span><span class="n">cat</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">"Reviews"</span><span class="p">],</span> <span class="n">sep</span> <span class="o">=</span> <span class="s">" "</span><span class="p">)</span> <span class="c1"># title과 Reviews 합치기
+</span><span class="n">data</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Unnamed: 0</th>
+      <th>sentiment</th>
+      <th>title</th>
+      <th>Reviews</th>
+      <th>Full_text</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>2</td>
+      <td>Great CD</td>
+      <td>My lovely Pat has one of the GREAT voices of h...</td>
+      <td>Great CD My lovely Pat has one of the GREAT vo...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>2</td>
+      <td>One of the best game music soundtracks - for a...</td>
+      <td>Despite the fact that I have only played a sma...</td>
+      <td>One of the best game music soundtracks - for a...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>1</td>
+      <td>Batteries died within a year ...</td>
+      <td>I bought this charger in Jul 2003 and it worke...</td>
+      <td>Batteries died within a year ... I bought this...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>2</td>
+      <td>works fine, but Maha Energy is better</td>
+      <td>Check out Maha Energy's website. Their Powerex...</td>
+      <td>works fine, but Maha Energy is better Check ou...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>2</td>
+      <td>Great for the non-audiophile</td>
+      <td>Reviewed quite a bit of the combo players and ...</td>
+      <td>Great for the non-audiophile Reviewed quite a ...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">corpus</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">'Full_text'</span><span class="p">].</span><span class="n">tolist</span><span class="p">()</span> <span class="c1"># Fulltext 리스트 형태로 corpus에 저장
+</span><span class="nb">len</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>500
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">nltk</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">stop_words</span> <span class="o">=</span> <span class="n">nltk</span><span class="p">.</span><span class="n">corpus</span><span class="p">.</span><span class="n">stopwords</span><span class="p">.</span><span class="n">words</span><span class="p">(</span><span class="s">"english"</span><span class="p">)</span>
+<span class="n">ps</span> <span class="o">=</span> <span class="n">nltk</span><span class="p">.</span><span class="n">porter</span><span class="p">.</span><span class="n">PorterStemmer</span><span class="p">()</span> <span class="c1"># 어간 추출 (i.e., dies/dead/died --&gt; die)
+</span>
+<span class="k">def</span> <span class="nf">normalize_document</span><span class="p">(</span><span class="n">doc</span><span class="p">):</span>
+    <span class="c1"># 토큰화 하기전 문자열 normalization
+</span>    <span class="n">doc</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s">'[^a-zA-Z\s]'</span><span class="p">,</span> <span class="s">""</span><span class="p">,</span> <span class="n">doc</span><span class="p">,</span> <span class="n">re</span><span class="p">.</span><span class="n">I</span><span class="o">|</span><span class="n">re</span><span class="p">.</span><span class="n">A</span><span class="p">)</span> <span class="c1"># 구두점 및 특수문자 제거
+</span>    <span class="n">doc</span> <span class="o">=</span> <span class="n">doc</span><span class="p">.</span><span class="n">lower</span><span class="p">()</span>   <span class="c1"># 소문자화
+</span>    <span class="n">doc</span> <span class="o">=</span> <span class="n">doc</span><span class="p">.</span><span class="n">strip</span><span class="p">()</span>   <span class="c1"># 문자열의 앞 뒤에 있을 빈 칸 제거
+</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">nltk</span><span class="p">.</span><span class="n">word_tokenize</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span> <span class="c1"># 토큰화
+</span>
+    <span class="n">filtered_tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">tokens</span> <span class="k">if</span> <span class="n">w</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stop_words</span><span class="p">]</span> <span class="c1"># 불용어 제거
+</span>
+    <span class="c1"># doc = " ".join(filtered_tokens)
+</span>    <span class="n">doc</span> <span class="o">=</span> <span class="s">" "</span><span class="p">.</span><span class="n">join</span><span class="p">([</span> <span class="n">ps</span><span class="p">.</span><span class="n">stem</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">filtered_tokens</span> <span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">doc</span>  
+</code></pre></div></div>
+
+<blockquote>
+  <table>
+    <tbody>
+      <tr>
+        <td>re.I</td>
+        <td>re.A: re.sub의 flags (<a href="https://docs.python.org/ko/3/library/re.html">click</a>)</td>
+      </tr>
+    </tbody>
+  </table>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">normalize_corpus</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">vectorize</span><span class="p">(</span><span class="n">normalize_document</span><span class="p">)</span> <span class="c1"># Vectorization 정규화 함수 트리거 저장
+</span><span class="n">norm_corpus</span> <span class="o">=</span> <span class="n">normalize_corpus</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span> <span class="c1"># 트리거에 정규화할 corpus 할당
+</span><span class="n">norm_corpus</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array(['great cd love pat one great voic gener listen cd year still love im good mood make feel better bad mood evapor like sugar rain cd ooz life vocal jusat stuun lyric kill one life hidden gem desert isl cd book never made big beyond everytim play matter black white young old male femal everybodi say one thing sing',
+       'one best game music soundtrack game didnt realli play despit fact play small portion game music heard plu connect chrono trigger great well led purchas soundtrack remain one favorit album incred mix fun epic emot song sad beauti track especi like there mani kind song video game soundtrack must admit one song lifea distant promis brought tear eye mani occasionsmi one complaint soundtrack use guitar fret effect mani song find distract even werent includ would still consid collect worth',
+       'batteri die within year bought charger jul work ok design nice conveni howev year batteri would hold charg might well get alkalin dispos look elsewher charger come batteri better stay power',
+      ...])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span>
+
+<span class="n">cv</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">()</span>
+<span class="n">cv_matrix</span> <span class="o">=</span> <span class="n">cv</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">norm_corpus</span><span class="p">)</span> <span class="c1"># Vectorization 진행
+</span><span class="n">cv_matrix</span> <span class="o">=</span> <span class="n">cv_matrix</span><span class="p">.</span><span class="n">toarray</span><span class="p">()</span> <span class="c1"># pd.DataFrame 인자로 넣기위해 배열화
+</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vocabulary</span> <span class="o">=</span> <span class="n">cv</span><span class="p">.</span><span class="n">get_feature_names</span><span class="p">()</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">vocabulary</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>4754
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">one_hot</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cv_matrix</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span> <span class="n">vocabulary</span><span class="p">)</span>
+<span class="n">one_hot</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(500, 4754)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">one_hot</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>aa</th>
+      <th>abbrevi</th>
+      <th>abduct</th>
+      <th>abil</th>
+      <th>abl</th>
+      <th>aboard</th>
+      <th>abor</th>
+      <th>abound</th>
+      <th>abridg</th>
+      <th>abroad</th>
+      <th>...</th>
+      <th>yr</th>
+      <th>yum</th>
+      <th>yuppi</th>
+      <th>zebra</th>
+      <th>zep</th>
+      <th>zero</th>
+      <th>zhivago</th>
+      <th>zillion</th>
+      <th>zr</th>
+      <th>zydeco</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>495</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>496</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>497</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>498</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>499</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>500 rows × 4754 columns</p>
+</div>]]></content><author><name>Hojun Eric Choi</name><email>hchoi256@wisc.edu</email></author><category term="NLP" /><category term="NLP" /><category term="python" /><summary type="html"><![CDATA[PART 1: Vectorization]]></summary></entry><entry><title type="html">NLP - Part 1: Text Mining and Tokenization</title><link href="http://localhost:4000/nlp/nlp-basic-tokenizer/" rel="alternate" type="text/html" title="NLP - Part 1: Text Mining and Tokenization" /><published>2022-07-20T00:00:00+09:00</published><updated>2022-07-20T00:00:00+09:00</updated><id>http://localhost:4000/nlp/nlp-basic-tokenizer</id><content type="html" xml:base="http://localhost:4000/nlp/nlp-basic-tokenizer/"><![CDATA[<h1 id="part-1-text-mining">PART 1: Text Mining</h1>
 <h2 id="1-1-텍스트-마이닝text-mining이란">1-1) 텍스트 마이닝(Text Mining)이란?</h2>
 <p>비정형(= 구조화 되지 않은) 텍스트 빅 데이터에 대하여 효과적인 탐색 및 분석을 통해 유용한 정보, 패턴 및 실행 가능한 통찰력을 도출하는 과정이다.</p>
 
@@ -372,17 +1342,6 @@ With estimated total sales of over five billion copies, the Bible is widely cons
 <span class="n">nltk</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="s">"stopwords"</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[nltk_data] Downloading package stopwords to
-[nltk_data]     C:\Users\fermat39\AppData\Roaming\nltk_data...
-[nltk_data]   Unzipping corpora\stopwords.zip.
-
-
-
-
-
-True
-</code></pre></div></div>
-
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">stopwords</span>
 </code></pre></div></div>
 
@@ -475,17 +1434,6 @@ With estimated total sales of over five billion copies, the Bible is widely cons
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">nltk</span>
 <span class="n">nltk</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="s">"webtext"</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[nltk_data] Downloading package webtext to
-[nltk_data]     C:\Users\fermat39\AppData\Roaming\nltk_data...
-[nltk_data]   Unzipping corpora\webtext.zip.
-
-
-
-
-
-True
 </code></pre></div></div>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">webtext</span><span class="p">,</span> <span class="n">stopwords</span>
