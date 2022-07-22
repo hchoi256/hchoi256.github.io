@@ -10,7 +10,7 @@
     <meta charset="utf-8">
 
 <!-- begin _includes/seo.html --><title>ML Project 1: ANN - Car Sales Prediction | 정리하여 내 것으로, AI</title>
-<meta name="description" content="Car Sales Prediction">
+<meta name="description" content="코드 [Notice] download here">
 
 
   <meta name="author" content="Hojun Eric Choi">
@@ -23,14 +23,14 @@
 <meta property="og:locale" content="ko_KR">
 <meta property="og:site_name" content="정리하여 내 것으로, AI">
 <meta property="og:title" content="ML Project 1: ANN - Car Sales Prediction">
-<meta property="og:url" content="http://localhost:4000/machine/learning/ml-projects/">
+<meta property="og:url" content="http://localhost:4000/machine/learning/ml-projects-1/">
 
 
-  <meta property="og:description" content="Car Sales Prediction">
+  <meta property="og:description" content="코드 [Notice] download here">
 
 
 
-  <meta property="og:image" content="http://localhost:4000/assets/images/posts/nlp-thumbnail.jpg">
+  <meta property="og:image" content="http://localhost:4000/assets/images/posts/ml-thumbnail.jpg">
 
 
 
@@ -47,7 +47,7 @@
   
 
 
-<link rel="canonical" href="http://localhost:4000/machine/learning/ml-projects/">
+<link rel="canonical" href="http://localhost:4000/machine/learning/ml-projects-1/">
 
 
 
@@ -367,7 +367,7 @@
 
   <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="ML Project 1: ANN - Car Sales Prediction">
-    <meta itemprop="description" content="Car Sales Prediction">
+    <meta itemprop="description" content="코드[Notice] download here">
     <meta itemprop="datePublished" content="2022-07-22T00:00:00+09:00">
     
 
@@ -375,7 +375,7 @@
       
         <header>
           <h1 id="page-title" class="page__title p-name" itemprop="headline">
-            <a href="http://localhost:4000/machine/learning/ml-projects/" class="u-url" itemprop="url">ML Project 1: ANN - Car Sales Prediction
+            <a href="http://localhost:4000/machine/learning/ml-projects-1/" class="u-url" itemprop="url">ML Project 1: ANN - Car Sales Prediction
 </a>
           </h1>
           
@@ -414,22 +414,23 @@
           <aside class="sidebar__right sticky">
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> GITHUB BLOG JJUNS</h4></header>
-              <ul class="toc__menu"><li><a href="#car-sales-prediction">Car Sales Prediction</a><ul><li><a href="#learning-goals">Learning Goals</a></li><li><a href="#description">Description</a><ul><li><a href="#dataset">Dataset</a></li></ul></li><li><a href="#import-dataset">Import Dataset</a></li><li><a href="#data-visualization">Data Visualization</a><ul><li><a href="#seaborn">Seaborn</a></li></ul></li><li><a href="#data-preprocessing">Data Preprocessing</a></li><li><a href="#remove-unnecessary-variables">Remove Unnecessary Variables</a><ul><li><a href="#data-scaling">Data Scaling</a></li></ul></li><li><a href="#model-training">Model Training</a></li><li><a href="#model-evaluation">Model Evaluation</a></li><li><a href="#model-prediction">Model Prediction</a></li></ul></li></ul>
+              <ul class="toc__menu"><li><a href="#코드">코드</a></li><li><a href="#learning-goals">Learning Goals</a></li><li><a href="#description">Description</a><ul><li><a href="#dataset">Dataset</a></li></ul></li><li><a href="#import-dataset">Import Dataset</a></li><li><a href="#data-visualization">Data Visualization</a><ul><li><a href="#seaborn">Seaborn</a></li></ul></li><li><a href="#data-preprocessing">Data Preprocessing</a></li><li><a href="#remove-unnecessary-variables">Remove Unnecessary Variables</a><ul><li><a href="#data-scaling">Data Scaling</a></li></ul></li><li><a href="#model-training">Model Training</a></li><li><a href="#model-evaluation">Model Evaluation</a></li><li><a href="#model-prediction">Model Prediction</a></li></ul>
 
             </nav>
           </aside>
         
-        <h1 id="car-sales-prediction">Car Sales Prediction</h1>
+        <h1 id="코드">코드</h1>
+<p class="notice--danger"><strong>[Notice]</strong> <a href="https://github.com/hchoi256/machine-learning-development">download here</a></p>
 
-<h2 id="learning-goals">Learning Goals</h2>
+<h1 id="learning-goals">Learning Goals</h1>
 <p>Artificial Neural Network (ANN)을 이용한 회귀 작업 처리를 이해한다.</p>
 
 <p>순방향/역전파를 동반하는 가중치 학습의 과정에 대해 보다 나은 이해를 도모한다.</p>
 
-<h2 id="description">Description</h2>
+<h1 id="description">Description</h1>
 <p>여러분이 자동차 딜러 혹은 차량 판매원이라 가정하고, 상기 고객들의 특정 데이터(나이, 연봉, etc.)를 참고하여 고객들이 차량 구매에 사용할 금액을 예측하여 특정 집단에 대한 타깃 마케팅을 이루고자 한다.</p>
 
-<h3 id="dataset">Dataset</h3>
+<h2 id="dataset">Dataset</h2>
 <table border="0" cellpadding="0" cellspacing="0" id="sheet0" class="sheet0 gridlines">
     <col class="col0" />
     <col class="col1" />
@@ -527,7 +528,7 @@
   <li>Car Purchase Amount</li>
 </ul>
 
-<h2 id="import-dataset">Import Dataset</h2>
+<h1 id="import-dataset">Import Dataset</h1>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span> <span class="c1"># 데이터 프레임 조작
 </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span> <span class="c1"># 수치 해석
@@ -537,9 +538,9 @@
 <span class="n">car_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'Car_Purchasing_Data.csv'</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">'ISO-8859-1'</span><span class="p">)</span> <span class="c1"># 데이터셋이 '@'와 같은 특수문자를 포함하기 때문에 상기 인코딩 설정을 해줘야한다.
 </span></code></pre></div></div>
 
-<h2 id="data-visualization">Data Visualization</h2>
+<h1 id="data-visualization">Data Visualization</h1>
 
-<h3 id="seaborn">Seaborn</h3>
+<h2 id="seaborn">Seaborn</h2>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sns</span><span class="p">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">car_df</span><span class="p">)</span> <span class="c1"># 씨본 덕분에 분석 작업을 여러 번 할 필요없이 여러 종류의 시각화를 보여준다
 </span></code></pre></div></div>
@@ -550,8 +551,8 @@
 
 <p>따라서, 나이가 증가함에 따라 차량 구매 예상 금액이 증가하는 선형적 형태의 데이터 분포를 보여주고, 반대로 Credit Card Debt은 종속변수와 뚜렷한 상관관계를 나타내지 않는 것으로 관찰된다.</p>
 
-<h2 id="data-preprocessing">Data Preprocessing</h2>
-<h2 id="remove-unnecessary-variables">Remove Unnecessary Variables</h2>
+<h1 id="data-preprocessing">Data Preprocessing</h1>
+<h1 id="remove-unnecessary-variables">Remove Unnecessary Variables</h1>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X</span> <span class="o">=</span> <span class="n">car_df</span><span class="p">.</span><span class="n">drop</span><span class="p">([</span><span class="s">'Customer Name'</span><span class="p">,</span> <span class="s">'Customer e-mail'</span><span class="p">,</span> <span class="s">'Country'</span><span class="p">,</span> <span class="s">'Car Purchase Amount'</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># 종속변수에 영향을 끼치지 않는 불필요한 입력피처를 제거한다.
 </span><span class="n">y</span> <span class="o">=</span> <span class="n">car_df</span><span class="p">[</span><span class="s">'Car Purchase Amount'</span><span class="p">]</span> <span class="c1"># 종속변수
 </span>
@@ -560,7 +561,7 @@
 
 <p><img src="https://user-images.githubusercontent.com/39285147/180381916-2051d577-51ec-4ff8-be80-0685754f456b.png" alt="image" /></p>
 
-<h3 id="data-scaling">Data Scaling</h3>
+<h2 id="data-scaling">Data Scaling</h2>
 <p>나이와 연봉과 같은 입력피처의 수치가 차이가 커서, 특정 피처에 과중화된 결과가 나올 수 있으므로 [0, 1] 값으로 정규화하는 스케일링(Scailing)을 적용해야 한다.</p>
 
 <p>이번 프로젝트에서, 우리는 <strong>MinMaxScaler</strong>를 사용한다.</p>
@@ -576,7 +577,7 @@
 
 </code></pre></div></div>
 
-<h2 id="model-training">Model Training</h2>
+<h1 id="model-training">Model Training</h1>
 
 <p><strong>Dense</strong></p>
 <ul>
@@ -689,7 +690,7 @@
   <li><a href="https://github.com/hchoi256/ai-terms/blob/main/README.md">validation_split</a></li>
 </ul>
 
-<h2 id="model-evaluation">Model Evaluation</h2>
+<h1 id="model-evaluation">Model Evaluation</h1>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epochs_hist</span><span class="p">.</span><span class="n">history</span><span class="p">[</span><span class="s">'loss'</span><span class="p">])</span>
 <span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epochs_hist</span><span class="p">.</span><span class="n">history</span><span class="p">[</span><span class="s">'val_loss'</span><span class="p">])</span>
@@ -707,7 +708,7 @@
 
 <p>이를 통하여 우리는 적당한 에포크 개수를 도출할 수 있을 것이다.</p>
 
-<h2 id="model-prediction">Model Prediction</h2>
+<h1 id="model-prediction">Model Prediction</h1>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">y_predict</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">50000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="mi">600000</span><span class="p">]]))</span>
 <span class="k">print</span><span class="p">(</span><span class="s">'Expected Purchase Amount='</span><span class="p">,</span> <span class="n">y_predict</span><span class="p">)</span>
@@ -731,7 +732,7 @@
     <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
     <span itemprop="keywords">
     
-      <a href="/tags/#machine-learning" class="page__taxonomy-item p-category" rel="tag">machine learning</a><span class="sep">, </span>
+      <a href="/tags/#machine-learning" class="page__taxonomy-item p-category" rel="tag">machine-learning</a><span class="sep">, </span>
     
       <a href="/tags/#python" class="page__taxonomy-item p-category" rel="tag">python</a>
     
@@ -769,11 +770,11 @@
     <h4 class="page__share-title">공유하기</h4>
   
 
-  <a href="https://twitter.com/intent/tweet?text=ML+Project+1%3A+ANN+-+Car+Sales+Prediction%20http%3A%2F%2Flocalhost%3A4000%2Fmachine%2Flearning%2Fml-projects%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=ML+Project+1%3A+ANN+-+Car+Sales+Prediction%20http%3A%2F%2Flocalhost%3A4000%2Fmachine%2Flearning%2Fml-projects-1%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fmachine%2Flearning%2Fml-projects%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fmachine%2Flearning%2Fml-projects-1%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fmachine%2Flearning%2Fml-projects%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fmachine%2Flearning%2Fml-projects-1%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 </section>
 
 
@@ -784,7 +785,8 @@
 ">이전</a>
     
     
-      <a href="#" class="pagination--pager disabled">다음</a>
+      <a href="/nlp/nlp-voice-recognition/" class="pagination--pager" title="NLP - Part 3: Voice Recognition
+">다음</a>
     
   </nav>
 
@@ -798,6 +800,161 @@
     <div class="page__related">
       <h2 class="page__related-title">참고</h2>
       <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/ml-thumbnail.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/machine/learning/ml-projects-3/" rel="permalink">ML Project 3: Profit Time Series
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2022-07-23T00:00:00+09:00">2022-07-23</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          최대 1 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">코드
+[Notice] download here
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/ml-thumbnail.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/machine/learning/ml-projects-2/" rel="permalink">ML Project 2: Deep Learning - CIFAR-10 Classification
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2022-07-23T00:00:00+09:00">2022-07-23</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          5 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">코드
+[Notice] download here
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/nlp-thumbnail.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/nlp/nlp-voice-recognition/" rel="permalink">NLP - Part 3: Voice Recognition
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2022-07-22T00:00:00+09:00">2022-07-22</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          1 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">PART 1: SST(Speech to Text)
+</p>
+  </article>
+</div>
+
         
           
 
@@ -845,108 +1002,6 @@
 
 
     <p class="archive__item-excerpt" itemprop="description">PART 1: Vectorization
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/assets/images/posts/nlp-thumbnail.jpg" alt="">
-      </div>
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/nlp/nlp-basic-tokenizer/" rel="permalink">NLP - Part 1: Text Mining and Tokenization
-</a>
-      
-    </h2>
-    
-
-  <p class="page__meta">
-    
-      
-      <span class="page__meta-date">
-        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
-        
-        <time datetime="2022-07-20T00:00:00+09:00">2022-07-20</time>
-      </span>
-    
-
-    <span class="page__meta-sep"></span>
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
-        
-          15 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">PART 1: Text Mining
-1-1) 텍스트 마이닝(Text Mining)이란?
-비정형(= 구조화 되지 않은) 텍스트 빅 데이터에 대하여 효과적인 탐색 및 분석을 통해 유용한 정보, 패턴 및 실행 가능한 통찰력을 도출하는 과정이다.
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/star/template/" rel="permalink">How to Write Markdown
-</a>
-      
-    </h2>
-    
-
-  <p class="page__meta">
-    
-      
-      <span class="page__meta-date">
-        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
-        
-        <time datetime="2022-07-19T00:00:00+09:00">2022-07-19</time>
-      </span>
-    
-
-    <span class="page__meta-sep"></span>
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
-        
-          최대 1 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">공지사항
-공지사항 등록
-[Notice] Get your post template!
 </p>
   </article>
 </div>
@@ -1016,8 +1071,8 @@
     
   <script>
     var disqus_config = function () {
-      this.page.url = "http://localhost:4000/machine/learning/ml-projects/";  /* Replace PAGE_URL with your page's canonical URL variable */
-      this.page.identifier = "/machine/learning/ml-projects"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+      this.page.url = "http://localhost:4000/machine/learning/ml-projects-1/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/machine/learning/ml-projects-1"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
     };
     (function() { /* DON'T EDIT BELOW THIS LINE */
       var d = document, s = d.createElement('script');

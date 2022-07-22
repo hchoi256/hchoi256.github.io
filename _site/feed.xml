@@ -1,14 +1,476 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-07-22T20:51:22+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정리하여 내 것으로, AI</title><subtitle>Leveraging the state-of-the-art technology in AI</subtitle><author><name>Hojun Eric Choi</name><email>hchoi256@wisc.edu</email></author><entry><title type="html">ML Project 1: ANN - Car Sales Prediction</title><link href="http://localhost:4000/machine/learning/ml-projects/" rel="alternate" type="text/html" title="ML Project 1: ANN - Car Sales Prediction" /><published>2022-07-22T00:00:00+09:00</published><updated>2022-07-22T00:00:00+09:00</updated><id>http://localhost:4000/machine/learning/ml-projects</id><content type="html" xml:base="http://localhost:4000/machine/learning/ml-projects/"><![CDATA[<h1 id="car-sales-prediction">Car Sales Prediction</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-07-23T07:29:11+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정리하여 내 것으로, AI</title><subtitle>Leveraging the state-of-the-art technology in AI</subtitle><author><name>Hojun Eric Choi</name><email>hchoi256@wisc.edu</email></author><entry><title type="html">ML Project 3: Profit Time Series</title><link href="http://localhost:4000/machine/learning/ml-projects-3/" rel="alternate" type="text/html" title="ML Project 3: Profit Time Series" /><published>2022-07-23T00:00:00+09:00</published><updated>2022-07-23T00:00:00+09:00</updated><id>http://localhost:4000/machine/learning/ml-projects-3</id><content type="html" xml:base="http://localhost:4000/machine/learning/ml-projects-3/"><![CDATA[<h1 id="코드">코드</h1>
+<p class="notice--danger"><strong>[Notice]</strong> <a href="https://github.com/hchoi256/machine-learning-development">download here</a></p>
 
-<h2 id="learning-goals">Learning Goals</h2>
+<h1 id="part-1-chicago-crime-rate">PART 1: Chicago Crime Rate</h1>
+
+<h1 id="part-2-avocado-market">PART 2: Avocado Market</h1>]]></content><author><name>Hojun Eric Choi</name><email>hchoi256@wisc.edu</email></author><category term="Machine" /><category term="Learning" /><category term="machine-learning" /><category term="python" /><summary type="html"><![CDATA[코드 [Notice] download here]]></summary></entry><entry><title type="html">ML Project 2: Deep Learning - CIFAR-10 Classification</title><link href="http://localhost:4000/machine/learning/ml-projects-2/" rel="alternate" type="text/html" title="ML Project 2: Deep Learning - CIFAR-10 Classification" /><published>2022-07-23T00:00:00+09:00</published><updated>2022-07-23T00:00:00+09:00</updated><id>http://localhost:4000/machine/learning/ml-projects-2</id><content type="html" xml:base="http://localhost:4000/machine/learning/ml-projects-2/"><![CDATA[<h1 id="코드">코드</h1>
+<p class="notice--danger"><strong>[Notice]</strong> <a href="https://github.com/hchoi256/machine-learning-development">download here</a></p>
+
+<h1 id="learning-goals">Learning Goals</h1>
+<ol>
+  <li>합성곱 신경망 모델 설계하여 케라스로 이미지 분류</li>
+  <li>Adam 옵티마이저로 신경망 가중치 최적화</li>
+  <li>드롭아웃을 통한 과적합 개선</li>
+  <li>모델 평가 진행 (<em>confusion matrix</em>)</li>
+  <li><em>Image Augmentation</em>으로 신경망 일반화 성능 개선</li>
+  <li>훈련 신경망 가중치 조작 방법</li>
+</ol>
+
+<h1 id="배경지식">배경지식</h1>
+
+<h2 id="cifar-10-데이터-세트">CIFAR-10 데이터 세트</h2>
+<p><img src="https://user-images.githubusercontent.com/39285147/180509114-3b492055-56eb-42c6-85b8-80fb8e077546.png" alt="image" /></p>
+
+<p>10가지 클래스로 나누어져 있는 <strong>6만 개의</strong> <strong>컬러(RGB 채널)</strong> 이미지로 구성된다 (airplanes, cars, birds, cats, etc.).</p>
+<ul>
+  <li>이미지 해상도가 <strong>32x32</strong> 픽셀로 매우 낮다.</li>
+  <li>각 클래스마다 6천개의 이미지가 존재한다 (클래스 별 매우 균등한 이미지 분포).</li>
+</ul>
+
+<p>이번 프로젝트에서 주어진 입력 이미지가 10개의 클래스 중 어디에 속하는지 분류 모델을 학습시켜보자.</p>
+
+<h2 id="convolutional-neural-network-cnn-기초"><a href="https://github.com/hchoi256/ai-boot-camp/blob/main/ai/deep-learning/cnn.md">Convolutional Neural Network (CNN) 기초</a></h2>
+<p><img src="https://user-images.githubusercontent.com/39285147/180512062-48c118e4-c9d4-4ea6-8281-958201289626.png" alt="image" /></p>
+
+<p>CNN 관련 배경지식은 상기 링크를 통해 숙지해주세요!</p>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/180513584-f47d8136-4cc3-473b-b85f-437ddd376101.png" alt="image" /></p>
+
+<p>‘sharpen’ 커널 필터를 적용하면 인풋 이미지의 3x3 픽셀 범위에 대해 가운데 값에 가중치를 높게줘서 출력 이미지에서 가운데 픽셀을 뚜렷하게 강조한다.</p>
+
+<h2 id="성능지표-key-performance-indicators-kpi">성능지표: Key Performance Indicators (KPI)</h2>
+<p><img src="https://user-images.githubusercontent.com/39285147/180517136-7b390f93-0f67-4e21-9217-a482e74a1f41.png" alt="image" /></p>
+
+<p><strong>Precision</strong>: 암이 없는 환자에게 있다고 오진할 확률 50%
+<strong>Recall</strong>: 암이 있는 환자에게 없다고 오진할 확률이 11%</p>
+
+<blockquote>
+  <p><img src="https://user-images.githubusercontent.com/39285147/180517030-eedfd66d-7cd8-4109-9fb2-87f6a29d3c7c.png" alt="image" /></p>
+</blockquote>
+
+<h1 id="구현">구현</h1>
+
+<h2 id="데이터-관찰">데이터 관찰</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span>
+
+<span class="kn">from</span> <span class="nn">keras.datasets</span> <span class="kn">import</span> <span class="n">cifar10</span>
+<span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span> <span class="p">,</span> <span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span> <span class="o">=</span> <span class="n">cifar10</span><span class="p">.</span><span class="n">load_data</span><span class="p">()</span> <span class="c1"># 훈련, 테스트 데이터 생성
+</span><span class="n">X_train</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    (50000, 32, 32, 3)
+</code></pre></div></div>
+
+<p>-* 이미지 개수*: 50000개</p>
+<ul>
+  <li><em>이미지 해상도</em>: 32x32</li>
+  <li><em>컬러 RGB</em>: 3</li>
+</ul>
+
+<h2 id="데이터-시각화">데이터 시각화</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">i</span> <span class="o">=</span> <span class="mi">30009</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">y_train</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    1
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/180518417-37e04fc2-210e-40db-b111-e219b5d66a9b.png" alt="image" /></p>
+
+<p>클래스 리스트에서 인덱스가 1인 클래스, ‘Cars’에 속하는 이미지인 것을 확인할 수 있다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 한 번에 여러 이미지 배출하여 비교하기
+</span>
+<span class="n">W_grid</span> <span class="o">=</span> <span class="mi">4</span> <span class="c1"># 그리드 가로
+</span><span class="n">L_grid</span> <span class="o">=</span> <span class="mi">4</span> <span class="c1"># 그리드 세로
+</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">L_grid</span><span class="p">,</span> <span class="n">W_grid</span><span class="p">,</span> <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">25</span><span class="p">))</span>
+<span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span><span class="p">.</span><span class="n">ravel</span><span class="p">()</span> <span class="c1"># 4x4 행렬을 16개의 요소를 가진 선형배열로 변환한다
+</span>
+<span class="n">n_training</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">L_grid</span> <span class="o">*</span> <span class="n">W_grid</span><span class="p">):</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_training</span><span class="p">)</span> <span class="c1"># pick a random number
+</span>    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">imshow</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">set_title</span><span class="p">(</span><span class="n">y_train</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">axis</span><span class="p">(</span><span class="s">'off'</span><span class="p">)</span> <span class="c1"># 축 안 보이게 만들기
+</span>    
+<span class="n">plt</span><span class="p">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span> <span class="o">=</span> <span class="mf">0.4</span><span class="p">)</span> <span class="c1"># 이미지 사이 공간 벌리기
+</span></code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/180518577-9f9298f7-ff70-4bf5-ba08-b353fa610a6a.png" alt="image" /></p>
+
+<h2 id="데이터-전처리">데이터 전처리</h2>
+
+<h3 id="이미지-포맷-설정-float32">이미지 포맷 설정 (float32)</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 이미지 포맷은 'float32'여야 한다
+</span><span class="n">X_train</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">.</span><span class="n">astype</span><span class="p">(</span><span class="s">'float32'</span><span class="p">)</span>
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">X_test</span><span class="p">.</span><span class="n">astype</span><span class="p">(</span><span class="s">'float32'</span><span class="p">)</span>
+
+<span class="n">number_cat</span> <span class="o">=</span> <span class="mi">10</span> <span class="c1"># 클래스 개수
+</span><span class="n">y_train</span>
+
+</code></pre></div></div>
+
+<p>array([[6],
+    [9],
+    [9],
+    …,
+    [9],
+    [1],
+    [1]], dtype=uint8)</p>
+
+<p>클래스 인덱스로 종속변수가 표현된 것을 확인해볼 수 있다.</p>
+
+<p>이를 인덱스 번호가 아니라 ‘One-Hot Encoding’ 방법을 활용하여 범주화 시켜보자.</p>
+
+<h3 id="categorical-data-범주화시키기">Categorical Data 범주화시키기</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">keras</span>
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">keras</span><span class="p">.</span><span class="n">utils</span><span class="p">.</span><span class="n">to_categorical</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">number_cat</span><span class="p">)</span> <span class="c1"># one-hot encoding 범주형으로 변환하기
+</span><span class="n">y_test</span> <span class="o">=</span> <span class="n">keras</span><span class="p">.</span><span class="n">utils</span><span class="p">.</span><span class="n">to_categorical</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">number_cat</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>array([[0., 0., 0., …, 0., 0., 0.],
+       [0., 0., 0., …, 0., 0., 1.],
+       [0., 0., 0., …, 0., 0., 1.],
+       …,
+       [0., 0., 0., …, 0., 0., 1.],
+       [0., 1., 0., …, 0., 0., 0.],
+       [0., 1., 0., …, 0., 0., 0.]], dtype=float32)</p>
+
+<h3 id="정규화">정규화</h3>
+<p>독립변수들은 픽셀에 할당된 [0, 255] 사이의 수치이므로, [0, 1] 사이 값들로 <em>정규화</em>를 거칠 필요가 있다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X_train</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">/</span><span class="mi">255</span>
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">/</span><span class="mi">255</span>
+</code></pre></div></div>
+
+<h2 id="모델-훈련하기">모델 훈련하기</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span> <span class="c1"># 신경망을 순차적으로 쌓는다
+</span><span class="kn">from</span> <span class="nn">keras.layers</span> <span class="kn">import</span> <span class="n">Conv2D</span><span class="p">,</span> <span class="n">MaxPooling2D</span><span class="p">,</span> <span class="n">AveragePooling2D</span><span class="p">,</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Flatten</span><span class="p">,</span> <span class="n">Dropout</span> <span class="c1"># CNN 관련 클래스
+</span><span class="kn">from</span> <span class="nn">keras.optimizers</span> <span class="kn">import</span> <span class="n">Adam</span> <span class="c1"># Adam 최적화 옵티마이저
+</span><span class="kn">from</span> <span class="nn">keras.callbacks</span> <span class="kn">import</span> <span class="n">TensorBoard</span> <span class="c1"># TensorFlow 시각화 도구
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cnn_model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span>
+<span class="n">cnn_model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Conv2D</span><span class="p">(</span><span class="n">filters</span> <span class="o">=</span> <span class="mi">64</span><span class="p">,</span> <span class="n">kernel_size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">activation</span> <span class="o">=</span> <span class="s">'relu'</span><span class="p">,</span> <span class="n">input_shape</span> <span class="o">=</span> <span class="n">Input_shape</span><span class="p">))</span>
+<span class="n">cnn_model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Conv2D</span><span class="p">(</span><span class="n">filters</span> <span class="o">=</span> <span class="mi">64</span><span class="p">,</span> <span class="n">kernel_size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">activation</span> <span class="o">=</span> <span class="s">'relu'</span><span class="p">))</span>
+<span class="n">cnn_model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">MaxPooling2D</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">cnn_model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.4</span><span class="p">))</span>
+
+
+<span class="n">cnn_model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Conv2D</span><span class="p">(</span><span class="n">filters</span> <span class="o">=</span> <span class="mi">128</span><span class="p">,</span> <span class="n">kernel_size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">activation</span> <span class="o">=</span> <span class="s">'relu'</span><span class="p">))</span>
+<span class="n">cnn_model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Conv2D</span><span class="p">(</span><span class="n">filters</span> <span class="o">=</span> <span class="mi">128</span><span class="p">,</span> <span class="n">kernel_size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">activation</span> <span class="o">=</span> <span class="s">'relu'</span><span class="p">))</span>
+<span class="n">cnn_model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">MaxPooling2D</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">cnn_model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.4</span><span class="p">))</span>
+
+<span class="n">cnn_model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Flatten</span><span class="p">())</span>
+
+<span class="n">cnn_model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span> <span class="o">=</span> <span class="mi">1024</span><span class="p">,</span> <span class="n">activation</span> <span class="o">=</span> <span class="s">'relu'</span><span class="p">))</span>
+
+<span class="n">cnn_model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span> <span class="o">=</span> <span class="mi">1024</span><span class="p">,</span> <span class="n">activation</span> <span class="o">=</span> <span class="s">'relu'</span><span class="p">))</span>
+
+<span class="n">cnn_model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">activation</span> <span class="o">=</span> <span class="s">'softmax'</span><span class="p">))</span> <span class="c1"># 최종 출력 클래스 개수 10개
+</span>
+<span class="n">cnn_model</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="n">loss</span> <span class="o">=</span> <span class="s">'categorical_crossentropy'</span><span class="p">,</span> <span class="n">optimizer</span> <span class="o">=</span> <span class="n">keras</span><span class="p">.</span><span class="n">optimizers</span><span class="p">.</span><span class="n">rmsprop</span><span class="p">(</span><span class="n">lr</span> <span class="o">=</span> <span class="mf">0.001</span><span class="p">),</span> <span class="n">metrics</span> <span class="o">=</span> <span class="p">[</span><span class="s">'accuracy'</span><span class="p">])</span> <span class="c1"># 범주형 크로스엔트로피 손실함수, rmsprop 옵티마이저와 accuracy를 척도로 사용한다.
+</span>
+<span class="n">history</span> <span class="o">=</span> <span class="n">cnn_model</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span> <span class="n">epochs</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">shuffle</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span> <span class="c1"># 이미지 순서를 섞어(shuffle) 모델 학습을 시작한다
+</span></code></pre></div></div>
+
+<blockquote>
+  <p>ReLU: 회귀 작업 관련 함수로 연속적인 출력값을 생성한다</p>
+</blockquote>
+
+<blockquote>
+  <p>Softmax: 분류에 사용된다.</p>
+</blockquote>
+
+<blockquote>
+  <p>CPU vs. GPU
+학습이 오래 지속된다면 GPU가 아닌 CPU를 사용한다.</p>
+</blockquote>
+
+<blockquote>
+  <p>ANN 은닉층 <em>뉴런개수</em>와 CNN <em>필터개수</em>를 증가시키면, 모델 복잡도가 증가하여 학습 시간이 늘어난다.</p>
+</blockquote>
+
+<h2 id="모델-평가">모델 평가</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">evaluation</span> <span class="o">=</span> <span class="n">cnn_model</span><span class="p">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span> <span class="c1"># 실제값과 예측값을 비교하여 정확도를 도출한다
+</span>
+<span class="n">predicted_classes</span> <span class="o">=</span> <span class="n">cnn_model</span><span class="p">.</span><span class="n">predict_classes</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span> <span class="c1"># 모델 예측값을 도출한다
+</span>
+<span class="n">y_test</span> <span class="o">=</span> <span class="n">y_test</span><span class="p">.</span><span class="n">argmax</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># one hot 인코딩의 이진수로 표현된 값을 십진수로 바꿔준다
+</span>
+<span class="n">L</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="n">W</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span><span class="p">.</span><span class="n">ravel</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">L</span><span class="o">*</span><span class="n">W</span><span class="p">):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">imshow</span><span class="p">(</span><span class="n">X_test</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">set_title</span><span class="p">(</span><span class="s">'Prediction = {}</span><span class="se">\n</span><span class="s"> True = {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">predicted_classes</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">y_test</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">axis</span><span class="p">(</span><span class="s">'off'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">wspace</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>    
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/180562014-e6d8d90f-7dc5-449f-a7cb-233e50bd6fa3.png" alt="image" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 혼동행렬로 평가지표 표현하기
+</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">confusion_matrix</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="n">sns</span>
+
+<span class="n">cm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predicted_classes</span><span class="p">)</span>
+<span class="n">cm</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">sns</span><span class="p">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">annot</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span> <span class="c1"># 해당 데이터가 많거나 높은 경우 색을 사용해 시각화하는 그래프
+</span></code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/180563602-b9035fea-733c-4514-a223-63c1e99608a6.png" alt="image" /></p>
+
+<p>혼동행렬에서 큰 수치를 띄는 값들은 오류(False Negative, False Positive)를 의미한다.</p>
+
+<h2 id="모델-저장하기">모델 저장하기</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">os</span> 
+<span class="n">directory</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s">'saved_models'</span><span class="p">)</span> <span class="c1"># getcwd: get current working directory
+</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">directory</span><span class="p">):</span>
+    <span class="n">os</span><span class="p">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span>
+<span class="n">model_path</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="s">'keras_cifar10_trained_model.h5'</span><span class="p">)</span>
+<span class="n">cnn_model</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="image-augmentation-활용-모델-개선">Image Augmentation 활용 모델 개선</h2>
+
+<p>Image Augmentation</p>
+<ul>
+  <li>과적합 문제를 해소하고 정확도를 높이기 위해 변화를 적용하는 전처리 기법. 주로, 기존 인풋 이미지에 조금씩 변화(뒤집기, 회전, etc.)를 주어 학습 데이터량을 증가시켜 데이터 차원이 모델 복잡도를 웃돌게 만든다.</li>
+</ul>
+
+<blockquote>
+  <p><em>ImageDataGenerator</em> 클래스를 통해 변화를 끌어낸다.</p>
+</blockquote>
+
+<h3 id="이미지-증강으로-새로운-데이터-만들어내기">이미지 증강으로 새로운 데이터 만들어내기</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">keras</span>
+<span class="kn">from</span> <span class="nn">keras.datasets</span> <span class="kn">import</span> <span class="n">cifar10</span>
+<span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">),</span> <span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span> <span class="o">=</span> <span class="n">cifar10</span><span class="p">.</span><span class="n">load_data</span><span class="p">()</span>
+
+<span class="n">X_train</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">.</span><span class="n">astype</span><span class="p">(</span><span class="s">'float32'</span><span class="p">)</span>
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">X_test</span><span class="p">.</span><span class="n">astype</span><span class="p">(</span><span class="s">'float32'</span><span class="p">)</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">8</span> 
+<span class="n">X_train_sample</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[:</span><span class="n">n</span><span class="p">]</span> <span class="c1"># 8개의 샘플 이미지를 가져온다
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 이미지 변화주기
+</span><span class="kn">from</span> <span class="nn">keras.preprocessing.image</span> <span class="kn">import</span> <span class="n">ImageDataGenerator</span>
+
+<span class="c1"># dataget_train = ImageDataGenerator(rotation_range = 90) # 이미지 회전
+# dataget_train = ImageDataGenerator(vertical_flip=True) # 뒤집기/반전
+# dataget_train = ImageDataGenerator(height_shift_range=0.5) ## 
+</span><span class="n">dataget_train</span> <span class="o">=</span> <span class="n">ImageDataGenerator</span><span class="p">(</span><span class="n">brightness_range</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span> <span class="c1"># 밝기 조정
+</span>
+<span class="n">dataget_train</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_sample</span><span class="p">)</span> <span class="c1"># 이미지 생성기 적용
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 이미지에 변화 적용하기
+</span><span class="kn">from</span> <span class="nn">scipy.misc</span> <span class="kn">import</span> <span class="n">toimage</span> <span class="c1"># 배열을 이미지로 변환한다
+</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span> <span class="c1"># 새로 생성될 이미지 사이즈 조정
+</span>
+<span class="c1"># 훈련 샘플을 가져와 이미지 flow를 생성한다.
+# 변형된 이미지를 배치 단위로 불러올 수 있는 Generator(*flow()*)을 생성해 준다 (8개 요소 포함하는 리스트 형태로 한 번에 가져오게 된다)
+</span><span class="k">for</span> <span class="n">x_batch</span> <span class="ow">in</span> <span class="n">dataget_train</span><span class="p">.</span><span class="n">flow</span><span class="p">(</span><span class="n">X_train_sample</span><span class="p">,</span> <span class="n">batch_size</span> <span class="o">=</span> <span class="n">n</span><span class="p">):</span>
+     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">ax</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">toimage</span><span class="p">(</span><span class="n">x_batch</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+     <span class="n">fig</span><span class="p">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s">'Augmented images (rotated 90 degrees)'</span><span class="p">)</span>
+     <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+     <span class="k">break</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/180567864-9bef861d-2973-4367-9344-436ae78ee7c9.png" alt="image" /></p>
+
+<p>결과에서 보이는 것처럼 기존 인풋 이미지의 밝기를 수정하여 새로운 데이터를 만들어냈다!</p>
+
+<h3 id="이미지-증강으로-만들어낸-데이터로-모델-새로-학습하기">이미지 증강으로 만들어낸 데이터로 모델 새로 학습하기</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">keras.preprocessing.image</span> <span class="kn">import</span> <span class="n">ImageDataGenerator</span>
+
+<span class="c1"># 이미지 생성기 특성 정의
+</span><span class="n">datagen</span> <span class="o">=</span> <span class="n">ImageDataGenerator</span><span class="p">(</span>
+                            <span class="n">rotation_range</span> <span class="o">=</span> <span class="mi">90</span><span class="p">,</span>
+                            <span class="n">width_shift_range</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
+                            <span class="n">horizontal_flip</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+                            <span class="n">vertical_flip</span> <span class="o">=</span> <span class="bp">True</span>
+                             <span class="p">)</span>
+
+<span class="n">datagen</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span> <span class="c1"># 이미지 생성기 특성 적용
+</span>
+<span class="n">cnn_model</span><span class="p">.</span><span class="n">fit_generator</span><span class="p">(</span><span class="n">datagen</span><span class="p">.</span><span class="n">flow</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">32</span><span class="p">),</span> <span class="n">epochs</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span> <span class="c1"># 이미지 생성기로 만든 데이터 학습에 이용할 때 fit_generator() 함수를 사용한다
+</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">cnn_model</span><span class="p">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span> <span class="c1"># 모델 성능평가
+</span><span class="k">print</span><span class="p">(</span><span class="s">'Test accuracy'</span><span class="p">,</span> <span class="n">score</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="c1"># save the model
+</span><span class="n">directory</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s">'saved_models'</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">directory</span><span class="p">):</span>
+    <span class="n">os</span><span class="p">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span>
+<span class="n">model_path</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="s">'keras_cifar10_trained_model_Augmentation.h5'</span><span class="p">)</span>
+<span class="n">cnn_model</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span>
+</code></pre></div></div>]]></content><author><name>Hojun Eric Choi</name><email>hchoi256@wisc.edu</email></author><category term="Machine" /><category term="Learning" /><category term="machine-learning" /><category term="python" /><summary type="html"><![CDATA[코드 [Notice] download here]]></summary></entry><entry><title type="html">NLP - Part 3: Voice Recognition</title><link href="http://localhost:4000/nlp/nlp-voice-recognition/" rel="alternate" type="text/html" title="NLP - Part 3: Voice Recognition" /><published>2022-07-22T00:00:00+09:00</published><updated>2022-07-22T00:00:00+09:00</updated><id>http://localhost:4000/nlp/nlp-voice-recognition</id><content type="html" xml:base="http://localhost:4000/nlp/nlp-voice-recognition/"><![CDATA[<h1 id="part-1-sstspeech-to-text">PART 1: SST(Speech to Text)</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">SpeechRecognition</span>
+<span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">PyAudio</span>
+
+<span class="kn">import</span> <span class="nn">speech_recognition</span> <span class="k">as</span> <span class="n">sr</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">transform</span><span class="p">():</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">sr</span><span class="p">.</span><span class="n">Recognizer</span><span class="p">()</span>
+
+    <span class="k">with</span> <span class="n">sr</span><span class="p">.</span><span class="n">Microphone</span><span class="p">()</span> <span class="k">as</span> <span class="n">source</span><span class="p">:</span>
+        <span class="n">r</span><span class="p">.</span><span class="n">pause_threshold</span> <span class="o">=</span> <span class="mf">0.8</span> <span class="c1"># 0.8초 동안 정적이면 자동으로 음성 녹음을 종료한다
+</span>        <span class="n">said</span> <span class="o">=</span> <span class="n">r</span><span class="p">.</span><span class="n">listen</span><span class="p">(</span><span class="n">source</span><span class="p">)</span> <span class="c1"># 녹음본 'said'에 저장하기
+</span>        <span class="k">try</span><span class="p">:</span>
+            <span class="n">q</span> <span class="o">=</span> <span class="n">r</span><span class="p">.</span><span class="n">recognize_google</span><span class="p">(</span><span class="n">said</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s">"ko"</span><span class="p">)</span> <span class="c1"># google 언어팩 사용
+</span>            <span class="k">return</span> <span class="n">q</span>
+        <span class="k">except</span> <span class="n">sr</span><span class="p">.</span><span class="n">UnknownValueError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s">"무슨 말인지 이해를 잘 못 했어요"</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s">"대기중입니다."</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">transform</span><span class="p">()</span> <span class="c1"># STT 작업 시작
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>마이크를 켜고, 음성을 녹음하면 메시지로 출력되는 것을 보실 수 있습니다.
+</code></pre></div></div>
+
+<h1 id="part-2-ttstext-to-speech">PART 2: TTS(Text to Speech)</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">pyttsx3</span> <span class="c1"># TTS 클래스
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pyttsx3</span>
+
+<span class="k">def</span> <span class="nf">speaking</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="n">engine</span> <span class="o">=</span> <span class="n">pyttsx3</span><span class="p">.</span><span class="n">init</span><span class="p">()</span> <span class="c1"># TTS 엔진 가동
+</span>    <span class="n">engine</span><span class="p">.</span><span class="n">say</span><span class="p">(</span><span class="n">message</span><span class="p">)</span> <span class="c1"># 메시지 내용 엔진에 전달
+</span>    <span class="n">engine</span><span class="p">.</span><span class="n">runAndWait</span><span class="p">()</span> <span class="c1"># 메시지 음성출력
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">speaking</span><span class="p">(</span><span class="s">"이제 STT가 준비가 되었습니다. 계속 해서 Voice Assistance를 만들어 보겠습니다."</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>스피커에서 상기 메시지가 출력되는 것을 보실 수 있습니다.
+</code></pre></div></div>
+
+<h2 id="tts-실습-1-요일시간-음성-출력하기">TTS 실습 1: 요일/시간 음성 출력하기</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">query_day</span><span class="p">():</span>
+    <span class="n">day</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="n">date</span><span class="p">.</span><span class="n">today</span><span class="p">()</span>
+    <span class="n">weekday</span> <span class="o">=</span> <span class="n">day</span><span class="p">.</span><span class="n">weekday</span><span class="p">()</span>
+    <span class="n">week_mapping</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="mi">0</span><span class="p">:</span> <span class="s">"월요일"</span><span class="p">,</span>
+        <span class="mi">1</span><span class="p">:</span> <span class="s">"화요일"</span><span class="p">,</span>
+        <span class="mi">2</span><span class="p">:</span> <span class="s">"수요일"</span><span class="p">,</span>
+        <span class="mi">3</span><span class="p">:</span> <span class="s">"목요일"</span><span class="p">,</span>
+        <span class="mi">4</span><span class="p">:</span> <span class="s">"금요일"</span><span class="p">,</span>
+        <span class="mi">5</span><span class="p">:</span> <span class="s">"토요일"</span><span class="p">,</span>
+        <span class="mi">6</span><span class="p">:</span> <span class="s">"일요일"</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="n">speaking</span><span class="p">(</span><span class="sa">f</span><span class="s">"오늘은 </span><span class="si">{</span><span class="n">week_mapping</span><span class="p">[</span><span class="n">weekday</span><span class="p">]</span><span class="si">}</span><span class="s">입니다. </span><span class="si">{</span><span class="n">week_mapping</span><span class="p">[</span><span class="n">weekday</span><span class="p">]</span><span class="si">}</span><span class="s">에도 공부하느라 고생이시네요!"</span> <span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">query_day</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>오늘 요일이 음성 출력되는 것을 보실 수 있습니다.
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">query_time</span><span class="p">():</span>
+    <span class="n">time</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="n">datetime</span><span class="p">.</span><span class="n">now</span><span class="p">().</span><span class="n">strftime</span><span class="p">(</span><span class="s">"%H:%M:%S"</span><span class="p">)</span>
+    <span class="n">speaking</span><span class="p">(</span><span class="sa">f</span><span class="s">"현재는 </span><span class="si">{</span><span class="n">time</span><span class="p">[</span><span class="si">:</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s">시 </span><span class="si">{</span><span class="n">time</span><span class="p">[</span><span class="mi">3</span><span class="si">:</span><span class="mi">5</span><span class="p">]</span><span class="si">}</span><span class="s">분입니다."</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">query_time</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>현재 시간이 음성 출력되는 것을 보실 수 있습니다.
+</code></pre></div></div>
+
+<h2 id="tts-실습-2-stt--tts---마이크-출력을-다시-읊어주기">TTS 실습 2: STT + TTS - 마이크 출력을 다시 읊어주기</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">webbrowser</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">while</span> <span class="p">(</span><span class="bp">True</span><span class="p">):</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">transform</span><span class="p">()</span>
+
+    <span class="k">if</span>  <span class="s">"무슨 요일"</span> <span class="ow">in</span> <span class="n">q</span><span class="p">:</span>
+        <span class="n">query_day</span><span class="p">()</span>
+        <span class="k">continue</span>
+    <span class="k">elif</span> <span class="s">"몇 시"</span> <span class="ow">in</span> <span class="n">q</span><span class="p">:</span>
+        <span class="n">query_time</span><span class="p">()</span>
+        <span class="k">continue</span> 
+    <span class="k">elif</span> <span class="s">"유튜브 시작"</span> <span class="ow">in</span> <span class="n">q</span><span class="p">:</span>
+        <span class="n">speaking</span><span class="p">(</span><span class="s">"유튜브를 시작하겠습니다. 잠시만 기다려주세요!"</span><span class="p">)</span>
+        <span class="n">webbrowser</span><span class="p">.</span><span class="nb">open</span><span class="p">(</span><span class="s">"https://www.youtube.com"</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="s">"네이버 시작"</span> <span class="ow">in</span> <span class="n">q</span><span class="p">:</span>
+        <span class="n">speaking</span><span class="p">(</span><span class="s">"네이버를 시작하겠습니다. 잠시만 기다려주세요!"</span><span class="p">)</span>
+        <span class="n">webbrowser</span><span class="p">.</span><span class="nb">open</span><span class="p">(</span><span class="s">"https://www.naver.com"</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="s">"이동"</span> <span class="ow">in</span> <span class="n">q</span><span class="p">:</span>
+        <span class="n">speaking</span><span class="p">(</span><span class="s">"윈도우키를 실행하겠습니다. 잠시만 기다려주세요!"</span><span class="p">)</span>
+        <span class="n">pyautogui</span><span class="p">.</span><span class="n">moveTo</span><span class="p">(</span><span class="mi">700</span><span class="p">,</span> <span class="mi">1050</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="n">pyautogui</span><span class="p">.</span><span class="n">click</span><span class="p">(</span><span class="n">button</span><span class="o">=</span><span class="s">"left"</span><span class="p">)</span>        
+    <span class="k">elif</span> <span class="s">"이제 그만"</span> <span class="ow">in</span> <span class="n">q</span><span class="p">:</span>
+        <span class="n">speaking</span><span class="p">(</span><span class="s">"아쉽지만 다음에 또 뵙겠습니다"</span><span class="p">)</span>
+        <span class="k">break</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>가령, '네이버 시작'이라는 마이크 입력을 넣으면, '네이버 시작'이라는 말이 스피커로 반향되며 webbrowser 라이브러리를 통하여 네이버를 브라우저에서 띄워준다.
+</code></pre></div></div>
+
+<h1 id="bonus-keyboard-io">Bonus: Keyboard I/O</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">pyautogui</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pyautogui</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">screenWidth</span><span class="p">,</span> <span class="n">screenHeight</span> <span class="o">=</span> <span class="n">pyautogui</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="c1"># 현재 화면 해상도
+</span>
+<span class="n">pyautogui</span><span class="p">.</span><span class="n">moveTo</span><span class="p">(</span><span class="mi">700</span><span class="p">,</span> <span class="mi">1050</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="c1"># # 마우스 커서를 x, y 좌표로 이동
+</span><span class="n">pyautogui</span><span class="p">.</span><span class="n">click</span><span class="p">(</span><span class="n">button</span><span class="o">=</span><span class="s">"left"</span><span class="p">)</span> <span class="c1"># 해당 위치 버튼을 좌클릭
+</span></code></pre></div></div>]]></content><author><name>Hojun Eric Choi</name><email>hchoi256@wisc.edu</email></author><category term="NLP" /><category term="NLP" /><category term="python" /><summary type="html"><![CDATA[PART 1: SST(Speech to Text)]]></summary></entry><entry><title type="html">ML Project 1: ANN - Car Sales Prediction</title><link href="http://localhost:4000/machine/learning/ml-projects-1/" rel="alternate" type="text/html" title="ML Project 1: ANN - Car Sales Prediction" /><published>2022-07-22T00:00:00+09:00</published><updated>2022-07-22T00:00:00+09:00</updated><id>http://localhost:4000/machine/learning/ml-projects-1</id><content type="html" xml:base="http://localhost:4000/machine/learning/ml-projects-1/"><![CDATA[<h1 id="코드">코드</h1>
+<p class="notice--danger"><strong>[Notice]</strong> <a href="https://github.com/hchoi256/machine-learning-development">download here</a></p>
+
+<h1 id="learning-goals">Learning Goals</h1>
 <p>Artificial Neural Network (ANN)을 이용한 회귀 작업 처리를 이해한다.</p>
 
 <p>순방향/역전파를 동반하는 가중치 학습의 과정에 대해 보다 나은 이해를 도모한다.</p>
 
-<h2 id="description">Description</h2>
+<h1 id="description">Description</h1>
 <p>여러분이 자동차 딜러 혹은 차량 판매원이라 가정하고, 상기 고객들의 특정 데이터(나이, 연봉, etc.)를 참고하여 고객들이 차량 구매에 사용할 금액을 예측하여 특정 집단에 대한 타깃 마케팅을 이루고자 한다.</p>
 
-<h3 id="dataset">Dataset</h3>
+<h2 id="dataset">Dataset</h2>
 <table border="0" cellpadding="0" cellspacing="0" id="sheet0" class="sheet0 gridlines">
     <col class="col0" />
     <col class="col1" />
@@ -106,7 +568,7 @@
   <li>Car Purchase Amount</li>
 </ul>
 
-<h2 id="import-dataset">Import Dataset</h2>
+<h1 id="import-dataset">Import Dataset</h1>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span> <span class="c1"># 데이터 프레임 조작
 </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span> <span class="c1"># 수치 해석
@@ -116,9 +578,9 @@
 <span class="n">car_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'Car_Purchasing_Data.csv'</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">'ISO-8859-1'</span><span class="p">)</span> <span class="c1"># 데이터셋이 '@'와 같은 특수문자를 포함하기 때문에 상기 인코딩 설정을 해줘야한다.
 </span></code></pre></div></div>
 
-<h2 id="data-visualization">Data Visualization</h2>
+<h1 id="data-visualization">Data Visualization</h1>
 
-<h3 id="seaborn">Seaborn</h3>
+<h2 id="seaborn">Seaborn</h2>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sns</span><span class="p">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">car_df</span><span class="p">)</span> <span class="c1"># 씨본 덕분에 분석 작업을 여러 번 할 필요없이 여러 종류의 시각화를 보여준다
 </span></code></pre></div></div>
@@ -129,8 +591,8 @@
 
 <p>따라서, 나이가 증가함에 따라 차량 구매 예상 금액이 증가하는 선형적 형태의 데이터 분포를 보여주고, 반대로 Credit Card Debt은 종속변수와 뚜렷한 상관관계를 나타내지 않는 것으로 관찰된다.</p>
 
-<h2 id="data-preprocessing">Data Preprocessing</h2>
-<h2 id="remove-unnecessary-variables">Remove Unnecessary Variables</h2>
+<h1 id="data-preprocessing">Data Preprocessing</h1>
+<h1 id="remove-unnecessary-variables">Remove Unnecessary Variables</h1>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X</span> <span class="o">=</span> <span class="n">car_df</span><span class="p">.</span><span class="n">drop</span><span class="p">([</span><span class="s">'Customer Name'</span><span class="p">,</span> <span class="s">'Customer e-mail'</span><span class="p">,</span> <span class="s">'Country'</span><span class="p">,</span> <span class="s">'Car Purchase Amount'</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># 종속변수에 영향을 끼치지 않는 불필요한 입력피처를 제거한다.
 </span><span class="n">y</span> <span class="o">=</span> <span class="n">car_df</span><span class="p">[</span><span class="s">'Car Purchase Amount'</span><span class="p">]</span> <span class="c1"># 종속변수
 </span>
@@ -139,7 +601,7 @@
 
 <p><img src="https://user-images.githubusercontent.com/39285147/180381916-2051d577-51ec-4ff8-be80-0685754f456b.png" alt="image" /></p>
 
-<h3 id="data-scaling">Data Scaling</h3>
+<h2 id="data-scaling">Data Scaling</h2>
 <p>나이와 연봉과 같은 입력피처의 수치가 차이가 커서, 특정 피처에 과중화된 결과가 나올 수 있으므로 [0, 1] 값으로 정규화하는 스케일링(Scailing)을 적용해야 한다.</p>
 
 <p>이번 프로젝트에서, 우리는 <strong>MinMaxScaler</strong>를 사용한다.</p>
@@ -155,7 +617,7 @@
 
 </code></pre></div></div>
 
-<h2 id="model-training">Model Training</h2>
+<h1 id="model-training">Model Training</h1>
 
 <p><strong>Dense</strong></p>
 <ul>
@@ -268,7 +730,7 @@
   <li><a href="https://github.com/hchoi256/ai-terms/blob/main/README.md">validation_split</a></li>
 </ul>
 
-<h2 id="model-evaluation">Model Evaluation</h2>
+<h1 id="model-evaluation">Model Evaluation</h1>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epochs_hist</span><span class="p">.</span><span class="n">history</span><span class="p">[</span><span class="s">'loss'</span><span class="p">])</span>
 <span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epochs_hist</span><span class="p">.</span><span class="n">history</span><span class="p">[</span><span class="s">'val_loss'</span><span class="p">])</span>
@@ -286,14 +748,668 @@
 
 <p>이를 통하여 우리는 적당한 에포크 개수를 도출할 수 있을 것이다.</p>
 
-<h2 id="model-prediction">Model Prediction</h2>
+<h1 id="model-prediction">Model Prediction</h1>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">y_predict</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">50000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="mi">600000</span><span class="p">]]))</span>
 <span class="k">print</span><span class="p">(</span><span class="s">'Expected Purchase Amount='</span><span class="p">,</span> <span class="n">y_predict</span><span class="p">)</span>
 </code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Expected Purchase Amount= [35656.47]
-</code></pre></div></div>]]></content><author><name>Hojun Eric Choi</name><email>hchoi256@wisc.edu</email></author><category term="Machine" /><category term="Learning" /><category term="machine learning" /><category term="python" /><summary type="html"><![CDATA[Car Sales Prediction]]></summary></entry><entry><title type="html">NLP - Part 2: Word Embedding</title><link href="http://localhost:4000/nlp/nlp-basic-word-embedding/" rel="alternate" type="text/html" title="NLP - Part 2: Word Embedding" /><published>2022-07-20T00:00:00+09:00</published><updated>2022-07-20T00:00:00+09:00</updated><id>http://localhost:4000/nlp/nlp-basic-word-embedding</id><content type="html" xml:base="http://localhost:4000/nlp/nlp-basic-word-embedding/"><![CDATA[<h1 id="part-1-vectorization">PART 1: Vectorization</h1>
+</code></pre></div></div>]]></content><author><name>Hojun Eric Choi</name><email>hchoi256@wisc.edu</email></author><category term="Machine" /><category term="Learning" /><category term="machine-learning" /><category term="python" /><summary type="html"><![CDATA[코드 [Notice] download here]]></summary></entry><entry><title type="html">NLP - Part 1: Text Mining and Tokenization</title><link href="http://localhost:4000/nlp/nlp-basic-tokenizer/" rel="alternate" type="text/html" title="NLP - Part 1: Text Mining and Tokenization" /><published>2022-07-20T00:00:00+09:00</published><updated>2022-07-20T00:00:00+09:00</updated><id>http://localhost:4000/nlp/nlp-basic-tokenizer</id><content type="html" xml:base="http://localhost:4000/nlp/nlp-basic-tokenizer/"><![CDATA[<h1 id="part-1-text-mining">PART 1: Text Mining</h1>
+<h2 id="1-1-텍스트-마이닝text-mining이란">1-1) 텍스트 마이닝(Text Mining)이란?</h2>
+<p>비정형(= 구조화 되지 않은) 텍스트 빅 데이터에 대하여 효과적인 탐색 및 분석을 통해 유용한 정보, 패턴 및 실행 가능한 통찰력을 도출하는 과정이다.</p>
+
+<h3 id="텍스트-마이닝의-필요성">텍스트 마이닝의 필요성</h3>
+
+<p>일반적으로 텍스트 데이터는 구조화가 되어있지 않아서 비지도학습이 활용된다.</p>
+
+<p>하지만, 실생활에는 엄청나게 많은 양의 텍스트 데이터가 순간마다 생성되고 있다 (<a href="https://github.com/hchoi256/ai-terms">차원의 저주</a>).</p>
+
+<p>따라서, 텍스트 마이닝은 이러한 텍스트 데이터에서 business insight를 식별하여 목표 성취에 위험을 줄이는 것에 뜻이 있다.</p>
+
+<blockquote>
+  <p>정보에 입각한 결정을 내리고, 프로세스를 자동화하고, 감정 분석을 사용한 시장 조사 등을 수행하고자 한다.</p>
+</blockquote>
+
+<h3 id="텍스트-마이닝의-분야">텍스트 마이닝의 분야</h3>
+
+<ul>
+  <li><strong>정보 추출</strong> (Information Extraction)</li>
+  <li><strong>문서 분류 및 클러스터링</strong> (Document classification and clustering)</li>
+  <li><strong>정보 검색</strong> (Information retrieval)</li>
+  <li><strong>자연어 처리</strong> (Natural Language Processing)</li>
+</ul>
+
+<blockquote>
+  <p>NLP (Processing) -&gt; NLU (Understaing) -&gt; NLG (Generate)</p>
+</blockquote>
+
+<h3 id="nlp-텍스트-마이닝의-핵심">NLP: 텍스트 마이닝의 핵심</h3>
+
+<p>컴퓨터를 사용하여 인간의 언어를 이해, 해석 및 조작하는 것을 다루는 연구 분야이다.</p>
+
+<blockquote>
+  <p>Natural Languae : 인간이 의사소통하는 모든 언어를 지칭한다!</p>
+</blockquote>
+
+<p>NLP은 인공지능의 <strong>하위 도메인</strong>이고, 중요한 정보의 대부분은 <strong>자연어</strong>로 작성되어 편리하게 태그가 지정되지 않기 때문에 텍스트 분석을 위한 컨텐츠를 식별하고 추출한 후 다양한 NLP기술을 사용하여 의미 있는 정보를 추출하고자 한다.</p>
+
+<h4 id="nltk">NLTK</h4>
+
+<p>NLTK이란 NLP를 위해 가장 널리 사용되는 패키지 중에 하나로, 컴퓨터가 자연어와 텍스트를 전처리, 분석 및 이해하는데 도움이 되는 여러 알고리즘이 포함된 강력한 파이썬 패키지이다.</p>
+
+<h4 id="nltk에서-사용-가능한-일반적인-알고리즘">NLTK에서 사용 가능한 일반적인 알고리즘</h4>
+<ul>
+  <li><strong>Tokenization</strong> : 토큰화</li>
+  <li><strong>Part of Speech Tagging</strong> : 품사 태깅</li>
+  <li><strong>Named Entity Recognition</strong> : NER (명명된 엔티티 인식)</li>
+  <li><strong>Sentiment analysis</strong> : 감정 분석</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">nltk</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nltk</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="s">"names"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">names</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">names</span><span class="p">.</span><span class="n">words</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>['Abagael',
+ 'Abagail',
+ 'Abbe',
+ 'Abbey',
+ 'Abbi',
+ 'Abbie',
+ 'Abby',
+ 'Abigael',
+ 'Abigail',
+ 'Abigale',
+ 'Abra',
+ ...]
+</code></pre></div></div>
+
+<blockquote>
+  <p><em>corpus(말뭉치)</em></p>
+  <blockquote>
+    <p>논리적으로 <strong>최소한</strong>의 의미를 전달할 수 있는 단일 텍스트들의 모음이다.</p>
+  </blockquote>
+</blockquote>
+
+<h1 id="part-2-tokenization">PART 2: Tokenization</h1>
+<h2 id="2-1-tokenization">2-1) Tokenization</h2>
+<ul>
+  <li><strong>word tokenization</strong> : 대량의 텍스트를 단어로 분할하는 과정 각 단어를 인식하고 특정 감정에 대한 분류 및 계산과 같은 추가 분석을 거쳐야 하는 자연어 처리 작업</li>
+  <li><strong>sentence tokenization</strong> : 문장을 기준으로 토큰화</li>
+  <li><strong>Regex tokenization</strong> : Regex를 기준으로 해서 토큰화</li>
+  <li><strong>Blank line tokenization</strong> : 빈 줄을 기준으로 토큰화</li>
+</ul>
+
+<h3 id="sentence-tokenization">Sentence Tokenization</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">sent_tokenize</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nltk</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="s">"gutenberg"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">gutenberg</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sample</span> <span class="o">=</span> <span class="n">gutenberg</span><span class="p">.</span><span class="n">raw</span><span class="p">(</span><span class="s">"carroll-alice.txt"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sent_tokens</span> <span class="o">=</span> <span class="n">sent_tokenize</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">len</span><span class="p">(</span><span class="n">sent_tokens</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1625
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sent_tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>["[Alice's Adventures in Wonderland by Lewis Carroll 1865]\n\nCHAPTER I.",
+ "Down the Rabbit-Hole\n\nAlice was beginning to get very tired of sitting by her sister on the\nbank, and of having nothing to do: once or twice she had peeped into the\nbook her sister was reading, but it had no pictures or conversations in\nit, 'and what is the use of a book,' thought Alice 'without pictures or\nconversation?'",
+ 'So she was considering in her own mind (as well as she could, for the\nhot day made her feel very sleepy and stupid), whether the pleasure\nof making a daisy-chain would be worth the trouble of getting up and\npicking the daisies, when suddenly a White Rabbit with pink eyes ran\nclose by her.',
+ "There was nothing so VERY remarkable in that; nor did Alice think it so\nVERY much out of the way to hear the Rabbit say to itself, 'Oh dear!",
+ 'Oh dear!',
+ "I shall be late!'",
+ '(when she thought it over afterwards, it\noccurred to her that she ought to have wondered at this, but at the time\nit all seemed quite natural); but when the Rabbit actually TOOK A WATCH\nOUT OF ITS WAISTCOAT-POCKET, and looked at it, and then hurried on,\nAlice started to her feet, for it flashed across her mind that she had\nnever before seen a rabbit with either a waistcoat-pocket, or a watch\nto take out of it, and burning with curiosity, she ran across the field\nafter it, and fortunately was just in time to see it pop down a large\nrabbit-hole under the hedge.',
+ 'In another moment down went Alice after it, never once considering how\nin the world she was to get out again.',
+ 'The rabbit-hole went straight on like a tunnel for some way, and then\ndipped suddenly down, so suddenly that Alice had not a moment to think\nabout stopping herself before she found herself falling down a very deep\nwell.',
+ 'Either the well was very deep, or she fell very slowly, for she had\nplenty of time as she went down to look about her and to wonder what was\ngoing to happen next.']
+</code></pre></div></div>
+
+<h3 id="word-tokenization">Word Tokenization</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">word_tokenize</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tok</span> <span class="o">=</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">len</span><span class="p">(</span><span class="n">tok</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>33494
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tok</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">20</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>['[',
+ 'Alice',
+ "'s",
+ 'Adventures',
+ 'in',
+ 'Wonderland',
+ 'by',
+ 'Lewis',
+ 'Carroll',
+ '1865',
+ ']',
+ 'CHAPTER',
+ 'I',
+ '.',
+ 'Down',
+ 'the',
+ 'Rabbit-Hole',
+ 'Alice',
+ 'was',
+ 'beginning']
+</code></pre></div></div>
+
+<h3 id="regex-tokenization">Regex Tokenization</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sample</span> <span class="o">=</span> <span class="s">"""
+Volodymyr Oleksandrovych Zelenskyy (Ukrainian: Володимир Олександрович Зеленський; Russian: Владимир Александрович Зеленский, romanized: Vladimir Aleksandrovich Zelenskyy,[a] born 25 January 1978), also transliterated as Zelensky or Zelenskiy,[b] is a Ukrainian politician and former comedic actor[5] who has served as the 6th and current president of Ukraine since 2019.
+
+Born to a Jewish family, Zelenskyy grew up as a native Russian speaker in Kryvyi Rih, a major city of Dnipropetrovsk Oblast in central Ukraine. Prior to his acting career, he obtained a degree in law from the Kyiv National Economic University. He then pursued a career in comedy and created the production company Kvartal 95, which produced films, cartoons, and TV shows including the TV series Servant of the People, in which Zelenskyy played the role of the Ukrainian president. The series aired from 2015 to 2019 and was immensely popular. A political party bearing the same name as the television show was created in March 2018 by employees of Kvartal 95.
+
+Zelenskyy announced his candidacy in the 2019 Ukrainian presidential election on the evening of 31 December 2018, alongside the New Year's Eve address of then-president Petro Poroshenko on the TV channel 1+1. A political outsider, he had already become one of the frontrunners in opinion polls for the election. He won the election with 73.23 percent of the vote in the second round, defeating Poroshenko. He has positioned himself as an anti-establishment and anti-corruption figure.
+
+As president, Zelenskyy has been a proponent of e-government and of unity between the Ukrainian- and Russian-speaking parts of the country's population.[6]: 11–13  His communication style heavily uses social media, particularly Instagram.[6]: 7–10  His party won a landslide victory in the snap legislative election held shortly after his inauguration as president. During his administration, Zelenskyy oversaw the lifting of legal immunity for members of parliament (the Verkhovna Rada),[7] the country's response to the COVID-19 pandemic and subsequent economic recession, and some progress in tackling corruption in Ukraine.[8][9]
+
+During his presidential campaign, Zelenskyy promised to end Ukraine's protracted conflict with Russia, and he has attempted to engage in dialogue with Russian president Vladimir Putin.[10] His administration faced an escalation of tensions with Russia in 2021, culminating in the launch of the ongoing full-scale Russian invasion in February 2022. Zelenskyy's strategy during the Russian military buildup was to calm the Ukrainian populace and assure the international community that Ukraine was not seeking to retaliate.[11] He initially distanced himself from warnings of an imminent war, while also calling for security guarantees and military support from NATO to "withstand" the threat.[12] After the start of the invasion, Zelenskyy declared martial law across Ukraine and a general mobilisation of the armed forces. His leadership during the crisis has won him widespread international praise, and he has been described as a symbol of the Ukrainian resistance.[13][14]
+
+
+"""</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">RegexpTokenizer</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">capword_tokenizer</span> <span class="o">=</span> <span class="n">RegexpTokenizer</span><span class="p">(</span><span class="s">"[A-Z]\w+"</span><span class="p">)</span>
+<span class="n">capword_tokenizer</span><span class="p">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>['Volodymyr',
+ 'Oleksandrovych',
+ 'Zelenskyy',
+ 'Ukrainian',
+ 'Russian',
+ 'Vladimir',
+ 'Aleksandrovich',
+ 'Zelenskyy',
+ 'January',
+ 'Zelensky',
+ 'Zelenskiy',
+ 'Ukrainian',
+ 'Ukraine',
+ 'Born',
+ 'Jewish',
+ 'Zelenskyy',
+ 'Russian',
+ 'Kryvyi',
+ 'Rih',
+ 'Dnipropetrovsk',
+ 'Oblast',
+ 'Ukraine',
+ 'Prior',
+ 'Kyiv',
+ ...]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">capword_tokenizer</span> <span class="o">=</span> <span class="n">RegexpTokenizer</span><span class="p">(</span><span class="s">"[0-9]\w+"</span><span class="p">)</span>
+<span class="n">capword_tokenizer</span><span class="p">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>['25',
+ '1978',
+ '6th',
+ '2019',
+ '95',
+ '2015',
+ '2019',
+ '2018',
+ '95',
+ '2019',
+ '31',
+ '2018',
+ '73',
+ '23',
+ '11',
+ '13',
+ '10',
+ '19',
+ '10',
+ '2021',
+ '2022',
+ '11',
+ '12',
+ '13',
+ '14']
+</code></pre></div></div>
+
+<h3 id="blankline-tokenizer">Blankline Tokenizer</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">BlanklineTokenizer</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sample</span> <span class="o">=</span> <span class="s">"""
+Good muffins cost £1.50 in London.</span><span class="se">\n\n</span><span class="s"> Please can you buy me two of them. </span><span class="se">\n\n</span><span class="s"> Thanks.
+"""</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">BlanklineTokenizer</span><span class="p">().</span><span class="n">tokenize</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>['\nGood muffins cost £1.50 in London.',
+ 'Please can you buy me two of them.',
+ 'Thanks.\n']
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sample</span> <span class="o">=</span> <span class="sa">r</span><span class="s">"""
+Good muffins cost £1.50 in London.\n\n Please can you buy me two of them. \n\n Thanks.
+"""</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">BlanklineTokenizer</span><span class="p">().</span><span class="n">tokenize</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>['\nGood muffins cost £1.50 in London.\\n\\n Please can you buy me two of them. \\n\\n Thanks.\n']
+</code></pre></div></div>
+
+<blockquote>
+  <p><strong>f”“</strong> : f-string (format을 중시)</p>
+
+  <p><strong>r”“</strong> : r-string (문자열의 문자 자체를 유지하려한다)</p>
+
+  <p><strong>b”“</strong> : b-string (사람이 보기에는 일반 문자열처럼 보이지만, 내부적으로 byte형 문자열을 처리)</p>
+</blockquote>
+
+<h2 id="2-2-frequency-distribution-빈도-분포">2-2) Frequency Distribution (빈도 분포)</h2>
+<p>텍스트에서 단어 빈도를 알아본다. Key가 단어이고, Value가 단어와 관련된 개수이다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">word_tokenize</span>
+<span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">gutenberg</span>
+<span class="kn">from</span> <span class="nn">nltk.probability</span> <span class="kn">import</span> <span class="n">FreqDist</span> <span class="c1"># 문서에서 각 단어가 발생하는 횟수를 계산
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sample</span> <span class="o">=</span> <span class="s">"""
+The Bible (from Koine Greek τὰ βιβλία, tà biblía, 'the books') is a collection of religious texts or scriptures sacred in Christianity, Judaism, Samaritanism, and many other religions. The Bible is an anthology—a compilation of texts of a variety of forms—originally written in Hebrew, Aramaic, and Koine Greek. These texts include instructions, stories, poetry, and prophesies, among other genres. The collection of materials that are accepted as part of the Bible by a particular religious tradition or community is called a biblical canon. Believers in the Bible generally consider it to be a product of divine inspiration, while understanding what that means in different ways.
+
+The origins of the oldest writings of the Israelites are lost to antiquity. The religious texts were compiled by different religious communities into various official collections. The earliest contained the first five books of the Bible, called the Torah, which was accepted as Jewish canon by the 5th century BCE. A second collection of narrative histories and prophesies was canonized in the 3rd century BCE. A third collection containing psalms, proverbs, and narrative histories, was canonized sometime between the 2nd century BCE and the 2nd century CE.[1] The transmission history of these combined collections spans approximately 3000 years, and there is no scholarly consensus as to when the Jewish Hebrew Bible canon was settled in its present form.[2] Some scholars argue that it was fixed by the Hasmonean dynasty (140–40 BCE),[a] while others argue it was not fixed until the second century CE or even later.[3] The Dead Sea scrolls are approximately dated to 250 BCE–100 CE and are the oldest existing copies of the books of the Hebrew Bible. Tanakh is an alternate term for the Hebrew Bible composed of the first letters of the three parts of the Hebrew scriptures: the Torah ("Teaching"), the Nevi'im ("Prophets"), and the Ketuvim ("Writings"). The Torah is also known as the Pentateuch. The Masoretic Text, in Hebrew and Aramaic, is considered the authoritative text by Rabbinic Judaism; the Septuagint, a Koine Greek translation from the third and second centuries BCE, largely overlaps with the Hebrew Bible.
+
+Christianity began as an outgrowth of Judaism, using the Septuagint as the basis of the Old Testament. The early Church continued the Jewish tradition of writing and incorporating what it saw as inspired, authoritative religious books. The gospels, Pauline epistles and other texts coalesced into the "New Testament" very early. In the first three centuries CE, the concept of a closed canon emerged in response to heretical writings in the second century. The list of books included in the Catholic Bible was established as canon by the Council of Rome in 382, followed by those of Hippo in 393 and Carthage in 397. Christian biblical canons range from the 73 books of the Catholic Church canon, and the 66-book canon of most Protestant denominations, to the 81 books of the Ethiopian Orthodox Tewahedo Church canon, among others.
+
+With estimated total sales of over five billion copies, the Bible is widely considered to be the best-selling publication of all time.[4][5] It has had a profound influence both on Western culture and history and on cultures around the globe.[6] "Simply put, the Bible is the most influential book of all-time."[7] The study of the Bible through biblical criticism has indirectly impacted culture and history as well. The Bible is currently translated or being translated into about half of the world's languages.
+"""</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">token_words</span> <span class="o">=</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">token_words</span><span class="p">[:</span><span class="mi">20</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>['The',
+ 'Bible',
+ '(',
+ 'from',
+ 'Koine',
+ 'Greek',
+ 'τὰ',
+ 'βιβλία',
+ ',',
+ 'tà',
+ 'biblía',
+ ',',
+ "'the",
+ 'books',
+ "'",
+ ')',
+ 'is',
+ 'a',
+ 'collection',
+ 'of']
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fdist</span> <span class="o">=</span> <span class="n">FreqDist</span><span class="p">(</span><span class="n">token_words</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fdist</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>FreqDist({'the': 51, ',': 35, 'of': 32, '.': 27, 'and': 18, 'The': 15, 'Bible': 14, 'in': 13, 'is': 10, 'a': 9, ...})
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">capword_tokenizer</span> <span class="o">=</span> <span class="n">RegexpTokenizer</span><span class="p">(</span><span class="s">"[A-Za-z0-9]\w+"</span><span class="p">)</span>
+<span class="n">fdist</span> <span class="o">=</span> <span class="n">FreqDist</span><span class="p">(</span><span class="n">capword_tokenizer</span><span class="p">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">sample</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fdist</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>FreqDist({'the': 52, 'of': 32, 'and': 18, 'The': 15, 'Bible': 14, 'in': 13, 'is': 10, 'as': 9, 'canon': 8, 'books': 7, ...})
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">matplotlib</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fdist</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s">"Top 10 Most Common Words"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/180378796-f8a9a87f-2f43-4f6a-9d3b-64b415132eba.png" alt="output_66_0" /></p>
+
+<h2 id="2-3-stop-words-불용어">2-3) Stop Words (불용어)</h2>
+<p>일반적으로 자연어를 처리하기 전에 걸러내는 단어이다.</p>
+
+<p>실제로 모든 언어에서 가장 흔한 단어 (관사, 전치사, 대명사, 접속사 등)이며 텍스트에 많은 정보를 추가하지 않는다는 것이 특징이다.</p>
+
+<p>주어진 말뭉치의 텍스트에서 불용어를 제거하여 데이터를 정리하고, 더 희귀하고 우리가 관심 있는 것과 잠재적으로 더 관련이 있는 단어를 식별하고자 하는 것이 목적이다!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">nltk</span>
+<span class="n">nltk</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="s">"stopwords"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">stopwords</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">stop_words</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">stopwords</span><span class="p">.</span><span class="n">words</span><span class="p">(</span><span class="s">"english"</span><span class="p">))</span>
+<span class="nb">type</span><span class="p">(</span><span class="n">stop_words</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">stop_words</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(set, 179)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">word_tokenize</span><span class="p">,</span> <span class="n">sent_tokenize</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">filtered_word</span> <span class="o">=</span> <span class="p">[]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sample</span> <span class="o">=</span> <span class="s">"""
+The Bible (from Koine Greek τὰ βιβλία, tà biblía, 'the books') is a collection of religious texts or scriptures sacred in Christianity, Judaism, Samaritanism, and many other religions. The Bible is an anthology—a compilation of texts of a variety of forms—originally written in Hebrew, Aramaic, and Koine Greek. These texts include instructions, stories, poetry, and prophesies, among other genres. The collection of materials that are accepted as part of the Bible by a particular religious tradition or community is called a biblical canon. Believers in the Bible generally consider it to be a product of divine inspiration, while understanding what that means in different ways.
+
+The origins of the oldest writings of the Israelites are lost to antiquity. The religious texts were compiled by different religious communities into various official collections. The earliest contained the first five books of the Bible, called the Torah, which was accepted as Jewish canon by the 5th century BCE. A second collection of narrative histories and prophesies was canonized in the 3rd century BCE. A third collection containing psalms, proverbs, and narrative histories, was canonized sometime between the 2nd century BCE and the 2nd century CE.[1] The transmission history of these combined collections spans approximately 3000 years, and there is no scholarly consensus as to when the Jewish Hebrew Bible canon was settled in its present form.[2] Some scholars argue that it was fixed by the Hasmonean dynasty (140–40 BCE),[a] while others argue it was not fixed until the second century CE or even later.[3] The Dead Sea scrolls are approximately dated to 250 BCE–100 CE and are the oldest existing copies of the books of the Hebrew Bible. Tanakh is an alternate term for the Hebrew Bible composed of the first letters of the three parts of the Hebrew scriptures: the Torah ("Teaching"), the Nevi'im ("Prophets"), and the Ketuvim ("Writings"). The Torah is also known as the Pentateuch. The Masoretic Text, in Hebrew and Aramaic, is considered the authoritative text by Rabbinic Judaism; the Septuagint, a Koine Greek translation from the third and second centuries BCE, largely overlaps with the Hebrew Bible.
+
+Christianity began as an outgrowth of Judaism, using the Septuagint as the basis of the Old Testament. The early Church continued the Jewish tradition of writing and incorporating what it saw as inspired, authoritative religious books. The gospels, Pauline epistles and other texts coalesced into the "New Testament" very early. In the first three centuries CE, the concept of a closed canon emerged in response to heretical writings in the second century. The list of books included in the Catholic Bible was established as canon by the Council of Rome in 382, followed by those of Hippo in 393 and Carthage in 397. Christian biblical canons range from the 73 books of the Catholic Church canon, and the 66-book canon of most Protestant denominations, to the 81 books of the Ethiopian Orthodox Tewahedo Church canon, among others.
+
+With estimated total sales of over five billion copies, the Bible is widely considered to be the best-selling publication of all time.[4][5] It has had a profound influence both on Western culture and history and on cultures around the globe.[6] "Simply put, the Bible is the most influential book of all-time."[7] The study of the Bible through biblical criticism has indirectly impacted culture and history as well. The Bible is currently translated or being translated into about half of the world's languages.
+"""</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tokenized_word</span> <span class="o">=</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fdist</span> <span class="o">=</span> <span class="n">FreqDist</span><span class="p">(</span><span class="n">tokenized_word</span><span class="p">)</span>
+<span class="n">fdist_top10</span> <span class="o">=</span> <span class="n">fdist</span><span class="p">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">fdist_top10</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[('the', 51),
+ (',', 35),
+ ('of', 32),
+ ('.', 27),
+ ('and', 18),
+ ('The', 15),
+ ('Bible', 14),
+ ('in', 13),
+ ('is', 10),
+ ('a', 9)]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fdist</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s">"Top 10 Most Common Words in Sample"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/180379028-cfc18f85-faa9-4d0c-b693-a2544f8457bf.png" alt="output_88_0" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">tokenized_word</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">w</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stop_words</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">filtered_word</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+
+<span class="n">fdist</span> <span class="o">=</span> <span class="n">FreqDist</span><span class="p">(</span><span class="n">filtered_word</span><span class="p">)</span>
+<span class="n">fdist_top10</span> <span class="o">=</span> <span class="n">fdist</span><span class="p">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">fdist_top10</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[('Bible', 28),
+ ('canon', 16),
+ ('books', 14),
+ ('Hebrew', 14),
+ ('century', 12),
+ ('religious', 10),
+ ('texts', 10),
+ ('collection', 8),
+ ('second', 8),
+ ('Koine', 6)]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fdist</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s">"Top 10 Most Common Words in Sample"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/180378703-5c921d67-37ce-45b8-a7ed-edde873e76b1.png" alt="output_90_0" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nltk</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="s">"stopwords"</span><span class="p">,</span> <span class="n">download_dir</span><span class="o">=</span><span class="s">"./data"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="2-4-unigrams-bigrams-trigrams-ngrams">2-4) Unigrams, Bigrams, Trigrams, ngrams</h2>
+<p>기계는 한 번에 한 단어를 통과해야 할 때 문장의 의미를 완전히 이해할 수 없다.</p>
+<ul>
+  <li>한 번에 하나씩 주어진 단어를 유니그램이라고 합니다.</li>
+  <li>한 번에 두 개의 단어 -&gt; 바이그램</li>
+  <li>한 번에 세 개의 단어 -&gt; 트라이그램</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">nltk</span>
+<span class="n">nltk</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="s">"webtext"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">webtext</span><span class="p">,</span> <span class="n">stopwords</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk</span> <span class="kn">import</span> <span class="n">bigrams</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">text_words</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">webtext</span><span class="p">.</span><span class="n">words</span><span class="p">(</span><span class="s">"firefox.txt"</span><span class="p">):</span>
+    <span class="n">text_words</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+
+<span class="nb">type</span><span class="p">(</span><span class="n">text_words</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">text_words</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(list, 102457)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">text_words</span> <span class="o">=</span> <span class="p">[</span><span class="n">w</span><span class="p">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">webtext</span><span class="p">.</span><span class="n">words</span><span class="p">(</span><span class="s">"firefox.txt"</span><span class="p">)]</span> 
+
+<span class="nb">type</span><span class="p">(</span><span class="n">text_words</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">text_words</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(list, 102457)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">stop_words</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">stopwords</span><span class="p">.</span><span class="n">words</span><span class="p">(</span><span class="s">"english"</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">filtered_word</span> <span class="o">=</span> <span class="p">[]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">text_words</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">w</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stop_words</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">filtered_word</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+
+<span class="n">fdist</span> <span class="o">=</span> <span class="n">FreqDist</span><span class="p">(</span><span class="n">filtered_word</span><span class="p">)</span>
+<span class="n">fdist</span><span class="p">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[('page', 882),
+ ('firefox', 879),
+ ('window', 647),
+ ('bookmarks', 598),
+ ('firebird', 583),
+ ('open', 576),
+ ('menu', 527),
+ ('toolbar', 518),
+ ('browser', 484),
+ ('bookmark', 482),
+ ('download', 441),
+ ('work', 421),
+ ('manager', 408),
+ ('crash', 389),
+ ('file', 382),
+ ('button', 378),
+ ('dialog', 369),
+ ('text', 327),
+ ('crashes', 316),
+ ('mozilla', 314)]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fdist</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/180378509-0b7f8535-5123-43c3-838d-27f45a609411.png" alt="output_101_0" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">filtered_word</span><span class="p">[:</span><span class="mi">20</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>['cookie',
+ 'manager',
+ 'allow',
+ 'sites',
+ 'removed',
+ 'cookies',
+ 'future',
+ 'cookies',
+ 'stay',
+ 'checked',
+ 'full',
+ 'screen',
+ 'mode',
+ 'pressing',
+ 'ctrl',
+ 'open',
+ 'browser',
+ 'download',
+ 'dialog',
+ 'left']
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bigrams_list</span> <span class="o">=</span> <span class="n">bigrams</span><span class="p">(</span><span class="n">filtered_word</span><span class="p">)</span>
+<span class="n">freq</span> <span class="o">=</span> <span class="n">FreqDist</span><span class="p">(</span><span class="n">bigrams_list</span><span class="p">)</span>
+<span class="n">freq</span><span class="p">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[(('download', 'manager'), 150),
+ (('context', 'menu'), 105),
+ (('bookmarks', 'toolbar'), 103),
+ (('mozilla', 'firebird'), 96),
+ (('right', 'click'), 89),
+ (('firefox', 'crashes'), 72),
+ (('print', 'preview'), 71),
+ (('password', 'manager'), 63),
+ (('open', 'tabs'), 61),
+ (('browser', 'window'), 56),
+ (('default', 'browser'), 52),
+ (('tools', 'options'), 50),
+ (('middle', 'click'), 47),
+ (('home', 'page'), 47),
+ (('toolbar', 'folder'), 46),
+ (('bookmarks', 'menu'), 46),
+ (('bookmark', 'manager'), 44),
+ (('bookmark', 'toolbar'), 43),
+ (('page', 'info'), 43),
+ (('bookmarks', 'manager'), 42)]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">freq</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/180378599-674ae2aa-ad6a-4f9c-89e0-84189f66228d.png" alt="output_104_0" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk</span> <span class="kn">import</span> <span class="n">trigrams</span>
+
+<span class="n">trigrams_list</span> <span class="o">=</span> <span class="n">trigrams</span><span class="p">(</span><span class="n">filtered_word</span><span class="p">)</span>
+<span class="n">fdist</span> <span class="o">=</span> <span class="n">FreqDist</span><span class="p">(</span><span class="n">trigrams_list</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fdist</span><span class="p">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[(('bookmarks', 'toolbar', 'folder'), 23),
+ (('full', 'screen', 'mode'), 19),
+ (('view', 'page', 'source'), 15),
+ (('bookmark', 'toolbar', 'folder'), 14),
+ (('right', 'click', 'context'), 14),
+ (('middle', 'mouse', 'button'), 13),
+ (('click', 'context', 'menu'), 13),
+ (('right', 'click', 'menu'), 12),
+ (('save', 'link', 'disk'), 12),
+ (('download', 'manager', 'open'), 9)]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fdist</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/180378674-2bfcf9aa-1aef-4394-8de3-1877773589a3.png" alt="output_108_0" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk</span> <span class="kn">import</span> <span class="n">ngrams</span>
+
+<span class="n">ngrams_list</span> <span class="o">=</span> <span class="n">ngrams</span><span class="p">(</span><span class="n">filtered_word</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">fdist</span> <span class="o">=</span> <span class="n">FreqDist</span><span class="p">(</span><span class="n">ngrams_list</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fdist</span><span class="p">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[(('right', 'click', 'context', 'menu'), 13),
+ (('error', 'launching', 'browser', 'window'), 7),
+ (('launching', 'browser', 'window', 'binding'), 6),
+ (('browser', 'window', 'binding', 'browser'), 6),
+ (('tree', 'view', 'bookmark', 'dialog'), 4),
+ (('bookmarks', 'toolbar', 'folder', 'bookmarks'), 3),
+ (('click', 'middle', 'mouse', 'button'), 3),
+ (('work', 'full', 'screen', 'mode'), 3),
+ (('button', 'download', 'font', 'dialog'), 3),
+ (('error', 'establishing', 'encrypted', 'connection'), 3)]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ngrams_list</span> <span class="o">=</span> <span class="n">ngrams</span><span class="p">(</span><span class="n">filtered_word</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">fdist</span> <span class="o">=</span> <span class="n">FreqDist</span><span class="p">(</span><span class="n">ngrams_list</span><span class="p">)</span>
+<span class="n">fdist</span><span class="p">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[(('error', 'launching', 'browser', 'window', 'binding'), 6),
+ (('launching', 'browser', 'window', 'binding', 'browser'), 6),
+ (('save', 'link', 'disk', 'context', 'menu'), 3),
+ (('allow', 'sites', 'removed', 'cookies', 'future'), 2),
+ (('sites', 'removed', 'cookies', 'future', 'cookies'), 2),
+ (('shortcut', 'increase', 'text', 'size', 'broken'), 2),
+ (('focus', 'page', 'going', 'page', 'bookmark'), 2),
+ (('..."', 'right', 'click', 'context', 'menu'), 2),
+ (('webpage', 'loads', 'refreshing', 'page', 'continuous'), 2),
+ (('loads', 'refreshing', 'page', 'continuous', 'loop'), 2)
+</code></pre></div></div>]]></content><author><name>Hojun Eric Choi</name><email>hchoi256@wisc.edu</email></author><category term="NLP" /><category term="NLP" /><category term="python" /><summary type="html"><![CDATA[PART 1: Text Mining 1-1) 텍스트 마이닝(Text Mining)이란? 비정형(= 구조화 되지 않은) 텍스트 빅 데이터에 대하여 효과적인 탐색 및 분석을 통해 유용한 정보, 패턴 및 실행 가능한 통찰력을 도출하는 과정이다.]]></summary></entry><entry><title type="html">NLP - Part 2: Word Embedding</title><link href="http://localhost:4000/nlp/nlp-basic-word-embedding/" rel="alternate" type="text/html" title="NLP - Part 2: Word Embedding" /><published>2022-07-20T00:00:00+09:00</published><updated>2022-07-20T00:00:00+09:00</updated><id>http://localhost:4000/nlp/nlp-basic-word-embedding</id><content type="html" xml:base="http://localhost:4000/nlp/nlp-basic-word-embedding/"><![CDATA[<h1 id="part-1-vectorization">PART 1: Vectorization</h1>
 
 <h2 id="vectorization-필요성">Vectorization 필요성</h2>
 <p>Machine (기계)는 문자와 단어를 이해할 수 없다.</p>
@@ -1117,661 +2233,7 @@
   </tbody>
 </table>
 <p>500 rows × 4754 columns</p>
-</div>]]></content><author><name>Hojun Eric Choi</name><email>hchoi256@wisc.edu</email></author><category term="NLP" /><category term="NLP" /><category term="python" /><summary type="html"><![CDATA[PART 1: Vectorization]]></summary></entry><entry><title type="html">NLP - Part 1: Text Mining and Tokenization</title><link href="http://localhost:4000/nlp/nlp-basic-tokenizer/" rel="alternate" type="text/html" title="NLP - Part 1: Text Mining and Tokenization" /><published>2022-07-20T00:00:00+09:00</published><updated>2022-07-20T00:00:00+09:00</updated><id>http://localhost:4000/nlp/nlp-basic-tokenizer</id><content type="html" xml:base="http://localhost:4000/nlp/nlp-basic-tokenizer/"><![CDATA[<h1 id="part-1-text-mining">PART 1: Text Mining</h1>
-<h2 id="1-1-텍스트-마이닝text-mining이란">1-1) 텍스트 마이닝(Text Mining)이란?</h2>
-<p>비정형(= 구조화 되지 않은) 텍스트 빅 데이터에 대하여 효과적인 탐색 및 분석을 통해 유용한 정보, 패턴 및 실행 가능한 통찰력을 도출하는 과정이다.</p>
-
-<h3 id="텍스트-마이닝의-필요성">텍스트 마이닝의 필요성</h3>
-
-<p>일반적으로 텍스트 데이터는 구조화가 되어있지 않아서 비지도학습이 활용된다.</p>
-
-<p>하지만, 실생활에는 엄청나게 많은 양의 텍스트 데이터가 순간마다 생성되고 있다 (<a href="https://github.com/hchoi256/ai-terms">차원의 저주</a>).</p>
-
-<p>따라서, 텍스트 마이닝은 이러한 텍스트 데이터에서 business insight를 식별하여 목표 성취에 위험을 줄이는 것에 뜻이 있다.</p>
-
-<blockquote>
-  <p>정보에 입각한 결정을 내리고, 프로세스를 자동화하고, 감정 분석을 사용한 시장 조사 등을 수행하고자 한다.</p>
-</blockquote>
-
-<h3 id="텍스트-마이닝의-분야">텍스트 마이닝의 분야</h3>
-
-<ul>
-  <li><strong>정보 추출</strong> (Information Extraction)</li>
-  <li><strong>문서 분류 및 클러스터링</strong> (Document classification and clustering)</li>
-  <li><strong>정보 검색</strong> (Information retrieval)</li>
-  <li><strong>자연어 처리</strong> (Natural Language Processing)</li>
-</ul>
-
-<blockquote>
-  <p>NLP (Processing) -&gt; NLU (Understaing) -&gt; NLG (Generate)</p>
-</blockquote>
-
-<h3 id="nlp-텍스트-마이닝의-핵심">NLP: 텍스트 마이닝의 핵심</h3>
-
-<p>컴퓨터를 사용하여 인간의 언어를 이해, 해석 및 조작하는 것을 다루는 연구 분야이다.</p>
-
-<blockquote>
-  <p>Natural Languae : 인간이 의사소통하는 모든 언어를 지칭한다!</p>
-</blockquote>
-
-<p>NLP은 인공지능의 <strong>하위 도메인</strong>이고, 중요한 정보의 대부분은 <strong>자연어</strong>로 작성되어 편리하게 태그가 지정되지 않기 때문에 텍스트 분석을 위한 컨텐츠를 식별하고 추출한 후 다양한 NLP기술을 사용하여 의미 있는 정보를 추출하고자 한다.</p>
-
-<h4 id="nltk">NLTK</h4>
-
-<p>NLTK이란 NLP를 위해 가장 널리 사용되는 패키지 중에 하나로, 컴퓨터가 자연어와 텍스트를 전처리, 분석 및 이해하는데 도움이 되는 여러 알고리즘이 포함된 강력한 파이썬 패키지이다.</p>
-
-<h4 id="nltk에서-사용-가능한-일반적인-알고리즘">NLTK에서 사용 가능한 일반적인 알고리즘</h4>
-<ul>
-  <li><strong>Tokenization</strong> : 토큰화</li>
-  <li><strong>Part of Speech Tagging</strong> : 품사 태깅</li>
-  <li><strong>Named Entity Recognition</strong> : NER (명명된 엔티티 인식)</li>
-  <li><strong>Sentiment analysis</strong> : 감정 분석</li>
-</ul>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">nltk</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nltk</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="s">"names"</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">names</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">names</span><span class="p">.</span><span class="n">words</span><span class="p">()</span>
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>['Abagael',
- 'Abagail',
- 'Abbe',
- 'Abbey',
- 'Abbi',
- 'Abbie',
- 'Abby',
- 'Abigael',
- 'Abigail',
- 'Abigale',
- 'Abra',
- ...]
-</code></pre></div></div>
-
-<blockquote>
-  <p><em>corpus(말뭉치)</em></p>
-  <blockquote>
-    <p>논리적으로 <strong>최소한</strong>의 의미를 전달할 수 있는 단일 텍스트들의 모음이다.</p>
-  </blockquote>
-</blockquote>
-
-<h1 id="part-2-tokenization">PART 2: Tokenization</h1>
-<h2 id="2-1-tokenization">2-1) Tokenization</h2>
-<ul>
-  <li><strong>word tokenization</strong> : 대량의 텍스트를 단어로 분할하는 과정 각 단어를 인식하고 특정 감정에 대한 분류 및 계산과 같은 추가 분석을 거쳐야 하는 자연어 처리 작업</li>
-  <li><strong>sentence tokenization</strong> : 문장을 기준으로 토큰화</li>
-  <li><strong>Regex tokenization</strong> : Regex를 기준으로 해서 토큰화</li>
-  <li><strong>Blank line tokenization</strong> : 빈 줄을 기준으로 토큰화</li>
-</ul>
-
-<h3 id="sentence-tokenization">Sentence Tokenization</h3>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">sent_tokenize</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nltk</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="s">"gutenberg"</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">gutenberg</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sample</span> <span class="o">=</span> <span class="n">gutenberg</span><span class="p">.</span><span class="n">raw</span><span class="p">(</span><span class="s">"carroll-alice.txt"</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sent_tokens</span> <span class="o">=</span> <span class="n">sent_tokenize</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">len</span><span class="p">(</span><span class="n">sent_tokens</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1625
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sent_tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>["[Alice's Adventures in Wonderland by Lewis Carroll 1865]\n\nCHAPTER I.",
- "Down the Rabbit-Hole\n\nAlice was beginning to get very tired of sitting by her sister on the\nbank, and of having nothing to do: once or twice she had peeped into the\nbook her sister was reading, but it had no pictures or conversations in\nit, 'and what is the use of a book,' thought Alice 'without pictures or\nconversation?'",
- 'So she was considering in her own mind (as well as she could, for the\nhot day made her feel very sleepy and stupid), whether the pleasure\nof making a daisy-chain would be worth the trouble of getting up and\npicking the daisies, when suddenly a White Rabbit with pink eyes ran\nclose by her.',
- "There was nothing so VERY remarkable in that; nor did Alice think it so\nVERY much out of the way to hear the Rabbit say to itself, 'Oh dear!",
- 'Oh dear!',
- "I shall be late!'",
- '(when she thought it over afterwards, it\noccurred to her that she ought to have wondered at this, but at the time\nit all seemed quite natural); but when the Rabbit actually TOOK A WATCH\nOUT OF ITS WAISTCOAT-POCKET, and looked at it, and then hurried on,\nAlice started to her feet, for it flashed across her mind that she had\nnever before seen a rabbit with either a waistcoat-pocket, or a watch\nto take out of it, and burning with curiosity, she ran across the field\nafter it, and fortunately was just in time to see it pop down a large\nrabbit-hole under the hedge.',
- 'In another moment down went Alice after it, never once considering how\nin the world she was to get out again.',
- 'The rabbit-hole went straight on like a tunnel for some way, and then\ndipped suddenly down, so suddenly that Alice had not a moment to think\nabout stopping herself before she found herself falling down a very deep\nwell.',
- 'Either the well was very deep, or she fell very slowly, for she had\nplenty of time as she went down to look about her and to wonder what was\ngoing to happen next.']
-</code></pre></div></div>
-
-<h3 id="word-tokenization">Word Tokenization</h3>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">word_tokenize</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tok</span> <span class="o">=</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">len</span><span class="p">(</span><span class="n">tok</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>33494
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tok</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">20</span><span class="p">]</span>
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>['[',
- 'Alice',
- "'s",
- 'Adventures',
- 'in',
- 'Wonderland',
- 'by',
- 'Lewis',
- 'Carroll',
- '1865',
- ']',
- 'CHAPTER',
- 'I',
- '.',
- 'Down',
- 'the',
- 'Rabbit-Hole',
- 'Alice',
- 'was',
- 'beginning']
-</code></pre></div></div>
-
-<h3 id="regex-tokenization">Regex Tokenization</h3>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sample</span> <span class="o">=</span> <span class="s">"""
-Volodymyr Oleksandrovych Zelenskyy (Ukrainian: Володимир Олександрович Зеленський; Russian: Владимир Александрович Зеленский, romanized: Vladimir Aleksandrovich Zelenskyy,[a] born 25 January 1978), also transliterated as Zelensky or Zelenskiy,[b] is a Ukrainian politician and former comedic actor[5] who has served as the 6th and current president of Ukraine since 2019.
-
-Born to a Jewish family, Zelenskyy grew up as a native Russian speaker in Kryvyi Rih, a major city of Dnipropetrovsk Oblast in central Ukraine. Prior to his acting career, he obtained a degree in law from the Kyiv National Economic University. He then pursued a career in comedy and created the production company Kvartal 95, which produced films, cartoons, and TV shows including the TV series Servant of the People, in which Zelenskyy played the role of the Ukrainian president. The series aired from 2015 to 2019 and was immensely popular. A political party bearing the same name as the television show was created in March 2018 by employees of Kvartal 95.
-
-Zelenskyy announced his candidacy in the 2019 Ukrainian presidential election on the evening of 31 December 2018, alongside the New Year's Eve address of then-president Petro Poroshenko on the TV channel 1+1. A political outsider, he had already become one of the frontrunners in opinion polls for the election. He won the election with 73.23 percent of the vote in the second round, defeating Poroshenko. He has positioned himself as an anti-establishment and anti-corruption figure.
-
-As president, Zelenskyy has been a proponent of e-government and of unity between the Ukrainian- and Russian-speaking parts of the country's population.[6]: 11–13  His communication style heavily uses social media, particularly Instagram.[6]: 7–10  His party won a landslide victory in the snap legislative election held shortly after his inauguration as president. During his administration, Zelenskyy oversaw the lifting of legal immunity for members of parliament (the Verkhovna Rada),[7] the country's response to the COVID-19 pandemic and subsequent economic recession, and some progress in tackling corruption in Ukraine.[8][9]
-
-During his presidential campaign, Zelenskyy promised to end Ukraine's protracted conflict with Russia, and he has attempted to engage in dialogue with Russian president Vladimir Putin.[10] His administration faced an escalation of tensions with Russia in 2021, culminating in the launch of the ongoing full-scale Russian invasion in February 2022. Zelenskyy's strategy during the Russian military buildup was to calm the Ukrainian populace and assure the international community that Ukraine was not seeking to retaliate.[11] He initially distanced himself from warnings of an imminent war, while also calling for security guarantees and military support from NATO to "withstand" the threat.[12] After the start of the invasion, Zelenskyy declared martial law across Ukraine and a general mobilisation of the armed forces. His leadership during the crisis has won him widespread international praise, and he has been described as a symbol of the Ukrainian resistance.[13][14]
-
-
-"""</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">RegexpTokenizer</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">capword_tokenizer</span> <span class="o">=</span> <span class="n">RegexpTokenizer</span><span class="p">(</span><span class="s">"[A-Z]\w+"</span><span class="p">)</span>
-<span class="n">capword_tokenizer</span><span class="p">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>['Volodymyr',
- 'Oleksandrovych',
- 'Zelenskyy',
- 'Ukrainian',
- 'Russian',
- 'Vladimir',
- 'Aleksandrovich',
- 'Zelenskyy',
- 'January',
- 'Zelensky',
- 'Zelenskiy',
- 'Ukrainian',
- 'Ukraine',
- 'Born',
- 'Jewish',
- 'Zelenskyy',
- 'Russian',
- 'Kryvyi',
- 'Rih',
- 'Dnipropetrovsk',
- 'Oblast',
- 'Ukraine',
- 'Prior',
- 'Kyiv',
- ...]
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">capword_tokenizer</span> <span class="o">=</span> <span class="n">RegexpTokenizer</span><span class="p">(</span><span class="s">"[0-9]\w+"</span><span class="p">)</span>
-<span class="n">capword_tokenizer</span><span class="p">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>['25',
- '1978',
- '6th',
- '2019',
- '95',
- '2015',
- '2019',
- '2018',
- '95',
- '2019',
- '31',
- '2018',
- '73',
- '23',
- '11',
- '13',
- '10',
- '19',
- '10',
- '2021',
- '2022',
- '11',
- '12',
- '13',
- '14']
-</code></pre></div></div>
-
-<h3 id="blankline-tokenizer">Blankline Tokenizer</h3>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">BlanklineTokenizer</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sample</span> <span class="o">=</span> <span class="s">"""
-Good muffins cost £1.50 in London.</span><span class="se">\n\n</span><span class="s"> Please can you buy me two of them. </span><span class="se">\n\n</span><span class="s"> Thanks.
-"""</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">BlanklineTokenizer</span><span class="p">().</span><span class="n">tokenize</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>['\nGood muffins cost £1.50 in London.',
- 'Please can you buy me two of them.',
- 'Thanks.\n']
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sample</span> <span class="o">=</span> <span class="sa">r</span><span class="s">"""
-Good muffins cost £1.50 in London.\n\n Please can you buy me two of them. \n\n Thanks.
-"""</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">BlanklineTokenizer</span><span class="p">().</span><span class="n">tokenize</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>['\nGood muffins cost £1.50 in London.\\n\\n Please can you buy me two of them. \\n\\n Thanks.\n']
-</code></pre></div></div>
-
-<blockquote>
-  <p><strong>f”“</strong> : f-string (format을 중시)</p>
-
-  <p><strong>r”“</strong> : r-string (문자열의 문자 자체를 유지하려한다)</p>
-
-  <p><strong>b”“</strong> : b-string (사람이 보기에는 일반 문자열처럼 보이지만, 내부적으로 byte형 문자열을 처리)</p>
-</blockquote>
-
-<h2 id="2-2-frequency-distribution-빈도-분포">2-2) Frequency Distribution (빈도 분포)</h2>
-<p>텍스트에서 단어 빈도를 알아본다. Key가 단어이고, Value가 단어와 관련된 개수이다.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">word_tokenize</span>
-<span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">gutenberg</span>
-<span class="kn">from</span> <span class="nn">nltk.probability</span> <span class="kn">import</span> <span class="n">FreqDist</span> <span class="c1"># 문서에서 각 단어가 발생하는 횟수를 계산
-</span></code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sample</span> <span class="o">=</span> <span class="s">"""
-The Bible (from Koine Greek τὰ βιβλία, tà biblía, 'the books') is a collection of religious texts or scriptures sacred in Christianity, Judaism, Samaritanism, and many other religions. The Bible is an anthology—a compilation of texts of a variety of forms—originally written in Hebrew, Aramaic, and Koine Greek. These texts include instructions, stories, poetry, and prophesies, among other genres. The collection of materials that are accepted as part of the Bible by a particular religious tradition or community is called a biblical canon. Believers in the Bible generally consider it to be a product of divine inspiration, while understanding what that means in different ways.
-
-The origins of the oldest writings of the Israelites are lost to antiquity. The religious texts were compiled by different religious communities into various official collections. The earliest contained the first five books of the Bible, called the Torah, which was accepted as Jewish canon by the 5th century BCE. A second collection of narrative histories and prophesies was canonized in the 3rd century BCE. A third collection containing psalms, proverbs, and narrative histories, was canonized sometime between the 2nd century BCE and the 2nd century CE.[1] The transmission history of these combined collections spans approximately 3000 years, and there is no scholarly consensus as to when the Jewish Hebrew Bible canon was settled in its present form.[2] Some scholars argue that it was fixed by the Hasmonean dynasty (140–40 BCE),[a] while others argue it was not fixed until the second century CE or even later.[3] The Dead Sea scrolls are approximately dated to 250 BCE–100 CE and are the oldest existing copies of the books of the Hebrew Bible. Tanakh is an alternate term for the Hebrew Bible composed of the first letters of the three parts of the Hebrew scriptures: the Torah ("Teaching"), the Nevi'im ("Prophets"), and the Ketuvim ("Writings"). The Torah is also known as the Pentateuch. The Masoretic Text, in Hebrew and Aramaic, is considered the authoritative text by Rabbinic Judaism; the Septuagint, a Koine Greek translation from the third and second centuries BCE, largely overlaps with the Hebrew Bible.
-
-Christianity began as an outgrowth of Judaism, using the Septuagint as the basis of the Old Testament. The early Church continued the Jewish tradition of writing and incorporating what it saw as inspired, authoritative religious books. The gospels, Pauline epistles and other texts coalesced into the "New Testament" very early. In the first three centuries CE, the concept of a closed canon emerged in response to heretical writings in the second century. The list of books included in the Catholic Bible was established as canon by the Council of Rome in 382, followed by those of Hippo in 393 and Carthage in 397. Christian biblical canons range from the 73 books of the Catholic Church canon, and the 66-book canon of most Protestant denominations, to the 81 books of the Ethiopian Orthodox Tewahedo Church canon, among others.
-
-With estimated total sales of over five billion copies, the Bible is widely considered to be the best-selling publication of all time.[4][5] It has had a profound influence both on Western culture and history and on cultures around the globe.[6] "Simply put, the Bible is the most influential book of all-time."[7] The study of the Bible through biblical criticism has indirectly impacted culture and history as well. The Bible is currently translated or being translated into about half of the world's languages.
-"""</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">token_words</span> <span class="o">=</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">token_words</span><span class="p">[:</span><span class="mi">20</span><span class="p">]</span>
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>['The',
- 'Bible',
- '(',
- 'from',
- 'Koine',
- 'Greek',
- 'τὰ',
- 'βιβλία',
- ',',
- 'tà',
- 'biblía',
- ',',
- "'the",
- 'books',
- "'",
- ')',
- 'is',
- 'a',
- 'collection',
- 'of']
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fdist</span> <span class="o">=</span> <span class="n">FreqDist</span><span class="p">(</span><span class="n">token_words</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fdist</span>
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>FreqDist({'the': 51, ',': 35, 'of': 32, '.': 27, 'and': 18, 'The': 15, 'Bible': 14, 'in': 13, 'is': 10, 'a': 9, ...})
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">capword_tokenizer</span> <span class="o">=</span> <span class="n">RegexpTokenizer</span><span class="p">(</span><span class="s">"[A-Za-z0-9]\w+"</span><span class="p">)</span>
-<span class="n">fdist</span> <span class="o">=</span> <span class="n">FreqDist</span><span class="p">(</span><span class="n">capword_tokenizer</span><span class="p">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">sample</span><span class="p">))</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fdist</span>
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>FreqDist({'the': 52, 'of': 32, 'and': 18, 'The': 15, 'Bible': 14, 'in': 13, 'is': 10, 'as': 9, 'canon': 8, 'books': 7, ...})
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">matplotlib</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fdist</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s">"Top 10 Most Common Words"</span><span class="p">)</span>
-</code></pre></div></div>
-
-<p><img src="https://user-images.githubusercontent.com/39285147/180378796-f8a9a87f-2f43-4f6a-9d3b-64b415132eba.png" alt="output_66_0" /></p>
-
-<h2 id="2-3-stop-words-불용어">2-3) Stop Words (불용어)</h2>
-<p>일반적으로 자연어를 처리하기 전에 걸러내는 단어이다.</p>
-
-<p>실제로 모든 언어에서 가장 흔한 단어 (관사, 전치사, 대명사, 접속사 등)이며 텍스트에 많은 정보를 추가하지 않는다는 것이 특징이다.</p>
-
-<p>주어진 말뭉치의 텍스트에서 불용어를 제거하여 데이터를 정리하고, 더 희귀하고 우리가 관심 있는 것과 잠재적으로 더 관련이 있는 단어를 식별하고자 하는 것이 목적이다!</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">nltk</span>
-<span class="n">nltk</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="s">"stopwords"</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">stopwords</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">stop_words</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">stopwords</span><span class="p">.</span><span class="n">words</span><span class="p">(</span><span class="s">"english"</span><span class="p">))</span>
-<span class="nb">type</span><span class="p">(</span><span class="n">stop_words</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">stop_words</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(set, 179)
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">word_tokenize</span><span class="p">,</span> <span class="n">sent_tokenize</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">filtered_word</span> <span class="o">=</span> <span class="p">[]</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sample</span> <span class="o">=</span> <span class="s">"""
-The Bible (from Koine Greek τὰ βιβλία, tà biblía, 'the books') is a collection of religious texts or scriptures sacred in Christianity, Judaism, Samaritanism, and many other religions. The Bible is an anthology—a compilation of texts of a variety of forms—originally written in Hebrew, Aramaic, and Koine Greek. These texts include instructions, stories, poetry, and prophesies, among other genres. The collection of materials that are accepted as part of the Bible by a particular religious tradition or community is called a biblical canon. Believers in the Bible generally consider it to be a product of divine inspiration, while understanding what that means in different ways.
-
-The origins of the oldest writings of the Israelites are lost to antiquity. The religious texts were compiled by different religious communities into various official collections. The earliest contained the first five books of the Bible, called the Torah, which was accepted as Jewish canon by the 5th century BCE. A second collection of narrative histories and prophesies was canonized in the 3rd century BCE. A third collection containing psalms, proverbs, and narrative histories, was canonized sometime between the 2nd century BCE and the 2nd century CE.[1] The transmission history of these combined collections spans approximately 3000 years, and there is no scholarly consensus as to when the Jewish Hebrew Bible canon was settled in its present form.[2] Some scholars argue that it was fixed by the Hasmonean dynasty (140–40 BCE),[a] while others argue it was not fixed until the second century CE or even later.[3] The Dead Sea scrolls are approximately dated to 250 BCE–100 CE and are the oldest existing copies of the books of the Hebrew Bible. Tanakh is an alternate term for the Hebrew Bible composed of the first letters of the three parts of the Hebrew scriptures: the Torah ("Teaching"), the Nevi'im ("Prophets"), and the Ketuvim ("Writings"). The Torah is also known as the Pentateuch. The Masoretic Text, in Hebrew and Aramaic, is considered the authoritative text by Rabbinic Judaism; the Septuagint, a Koine Greek translation from the third and second centuries BCE, largely overlaps with the Hebrew Bible.
-
-Christianity began as an outgrowth of Judaism, using the Septuagint as the basis of the Old Testament. The early Church continued the Jewish tradition of writing and incorporating what it saw as inspired, authoritative religious books. The gospels, Pauline epistles and other texts coalesced into the "New Testament" very early. In the first three centuries CE, the concept of a closed canon emerged in response to heretical writings in the second century. The list of books included in the Catholic Bible was established as canon by the Council of Rome in 382, followed by those of Hippo in 393 and Carthage in 397. Christian biblical canons range from the 73 books of the Catholic Church canon, and the 66-book canon of most Protestant denominations, to the 81 books of the Ethiopian Orthodox Tewahedo Church canon, among others.
-
-With estimated total sales of over five billion copies, the Bible is widely considered to be the best-selling publication of all time.[4][5] It has had a profound influence both on Western culture and history and on cultures around the globe.[6] "Simply put, the Bible is the most influential book of all-time."[7] The study of the Bible through biblical criticism has indirectly impacted culture and history as well. The Bible is currently translated or being translated into about half of the world's languages.
-"""</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tokenized_word</span> <span class="o">=</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fdist</span> <span class="o">=</span> <span class="n">FreqDist</span><span class="p">(</span><span class="n">tokenized_word</span><span class="p">)</span>
-<span class="n">fdist_top10</span> <span class="o">=</span> <span class="n">fdist</span><span class="p">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">fdist_top10</span>
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[('the', 51),
- (',', 35),
- ('of', 32),
- ('.', 27),
- ('and', 18),
- ('The', 15),
- ('Bible', 14),
- ('in', 13),
- ('is', 10),
- ('a', 9)]
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fdist</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s">"Top 10 Most Common Words in Sample"</span><span class="p">)</span>
-</code></pre></div></div>
-
-<p><img src="https://user-images.githubusercontent.com/39285147/180379028-cfc18f85-faa9-4d0c-b693-a2544f8457bf.png" alt="output_88_0" /></p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">tokenized_word</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">w</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stop_words</span><span class="p">:</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
-            <span class="n">filtered_word</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
-
-<span class="n">fdist</span> <span class="o">=</span> <span class="n">FreqDist</span><span class="p">(</span><span class="n">filtered_word</span><span class="p">)</span>
-<span class="n">fdist_top10</span> <span class="o">=</span> <span class="n">fdist</span><span class="p">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">fdist_top10</span>
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[('Bible', 28),
- ('canon', 16),
- ('books', 14),
- ('Hebrew', 14),
- ('century', 12),
- ('religious', 10),
- ('texts', 10),
- ('collection', 8),
- ('second', 8),
- ('Koine', 6)]
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fdist</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s">"Top 10 Most Common Words in Sample"</span><span class="p">)</span>
-</code></pre></div></div>
-
-<p><img src="https://user-images.githubusercontent.com/39285147/180378703-5c921d67-37ce-45b8-a7ed-edde873e76b1.png" alt="output_90_0" /></p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">nltk</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="s">"stopwords"</span><span class="p">,</span> <span class="n">download_dir</span><span class="o">=</span><span class="s">"./data"</span><span class="p">)</span>
-</code></pre></div></div>
-
-<h2 id="2-4-unigrams-bigrams-trigrams-ngrams">2-4) Unigrams, Bigrams, Trigrams, ngrams</h2>
-<p>기계는 한 번에 한 단어를 통과해야 할 때 문장의 의미를 완전히 이해할 수 없다.</p>
-<ul>
-  <li>한 번에 하나씩 주어진 단어를 유니그램이라고 합니다.</li>
-  <li>한 번에 두 개의 단어 -&gt; 바이그램</li>
-  <li>한 번에 세 개의 단어 -&gt; 트라이그램</li>
-</ul>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">nltk</span>
-<span class="n">nltk</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="s">"webtext"</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">webtext</span><span class="p">,</span> <span class="n">stopwords</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk</span> <span class="kn">import</span> <span class="n">bigrams</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">text_words</span> <span class="o">=</span> <span class="p">[]</span>
-
-<span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">webtext</span><span class="p">.</span><span class="n">words</span><span class="p">(</span><span class="s">"firefox.txt"</span><span class="p">):</span>
-    <span class="n">text_words</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
-
-<span class="nb">type</span><span class="p">(</span><span class="n">text_words</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">text_words</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(list, 102457)
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">text_words</span> <span class="o">=</span> <span class="p">[</span><span class="n">w</span><span class="p">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">webtext</span><span class="p">.</span><span class="n">words</span><span class="p">(</span><span class="s">"firefox.txt"</span><span class="p">)]</span> 
-
-<span class="nb">type</span><span class="p">(</span><span class="n">text_words</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">text_words</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(list, 102457)
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">stop_words</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">stopwords</span><span class="p">.</span><span class="n">words</span><span class="p">(</span><span class="s">"english"</span><span class="p">))</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">filtered_word</span> <span class="o">=</span> <span class="p">[]</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">text_words</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">w</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stop_words</span><span class="p">:</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
-            <span class="n">filtered_word</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
-
-<span class="n">fdist</span> <span class="o">=</span> <span class="n">FreqDist</span><span class="p">(</span><span class="n">filtered_word</span><span class="p">)</span>
-<span class="n">fdist</span><span class="p">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[('page', 882),
- ('firefox', 879),
- ('window', 647),
- ('bookmarks', 598),
- ('firebird', 583),
- ('open', 576),
- ('menu', 527),
- ('toolbar', 518),
- ('browser', 484),
- ('bookmark', 482),
- ('download', 441),
- ('work', 421),
- ('manager', 408),
- ('crash', 389),
- ('file', 382),
- ('button', 378),
- ('dialog', 369),
- ('text', 327),
- ('crashes', 316),
- ('mozilla', 314)]
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fdist</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-</code></pre></div></div>
-
-<p><img src="https://user-images.githubusercontent.com/39285147/180378509-0b7f8535-5123-43c3-838d-27f45a609411.png" alt="output_101_0" /></p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">filtered_word</span><span class="p">[:</span><span class="mi">20</span><span class="p">]</span>
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>['cookie',
- 'manager',
- 'allow',
- 'sites',
- 'removed',
- 'cookies',
- 'future',
- 'cookies',
- 'stay',
- 'checked',
- 'full',
- 'screen',
- 'mode',
- 'pressing',
- 'ctrl',
- 'open',
- 'browser',
- 'download',
- 'dialog',
- 'left']
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bigrams_list</span> <span class="o">=</span> <span class="n">bigrams</span><span class="p">(</span><span class="n">filtered_word</span><span class="p">)</span>
-<span class="n">freq</span> <span class="o">=</span> <span class="n">FreqDist</span><span class="p">(</span><span class="n">bigrams_list</span><span class="p">)</span>
-<span class="n">freq</span><span class="p">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[(('download', 'manager'), 150),
- (('context', 'menu'), 105),
- (('bookmarks', 'toolbar'), 103),
- (('mozilla', 'firebird'), 96),
- (('right', 'click'), 89),
- (('firefox', 'crashes'), 72),
- (('print', 'preview'), 71),
- (('password', 'manager'), 63),
- (('open', 'tabs'), 61),
- (('browser', 'window'), 56),
- (('default', 'browser'), 52),
- (('tools', 'options'), 50),
- (('middle', 'click'), 47),
- (('home', 'page'), 47),
- (('toolbar', 'folder'), 46),
- (('bookmarks', 'menu'), 46),
- (('bookmark', 'manager'), 44),
- (('bookmark', 'toolbar'), 43),
- (('page', 'info'), 43),
- (('bookmarks', 'manager'), 42)]
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">freq</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-</code></pre></div></div>
-
-<p><img src="https://user-images.githubusercontent.com/39285147/180378599-674ae2aa-ad6a-4f9c-89e0-84189f66228d.png" alt="output_104_0" /></p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk</span> <span class="kn">import</span> <span class="n">trigrams</span>
-
-<span class="n">trigrams_list</span> <span class="o">=</span> <span class="n">trigrams</span><span class="p">(</span><span class="n">filtered_word</span><span class="p">)</span>
-<span class="n">fdist</span> <span class="o">=</span> <span class="n">FreqDist</span><span class="p">(</span><span class="n">trigrams_list</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fdist</span><span class="p">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[(('bookmarks', 'toolbar', 'folder'), 23),
- (('full', 'screen', 'mode'), 19),
- (('view', 'page', 'source'), 15),
- (('bookmark', 'toolbar', 'folder'), 14),
- (('right', 'click', 'context'), 14),
- (('middle', 'mouse', 'button'), 13),
- (('click', 'context', 'menu'), 13),
- (('right', 'click', 'menu'), 12),
- (('save', 'link', 'disk'), 12),
- (('download', 'manager', 'open'), 9)]
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fdist</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-</code></pre></div></div>
-
-<p><img src="https://user-images.githubusercontent.com/39285147/180378674-2bfcf9aa-1aef-4394-8de3-1877773589a3.png" alt="output_108_0" /></p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk</span> <span class="kn">import</span> <span class="n">ngrams</span>
-
-<span class="n">ngrams_list</span> <span class="o">=</span> <span class="n">ngrams</span><span class="p">(</span><span class="n">filtered_word</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-<span class="n">fdist</span> <span class="o">=</span> <span class="n">FreqDist</span><span class="p">(</span><span class="n">ngrams_list</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fdist</span><span class="p">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[(('right', 'click', 'context', 'menu'), 13),
- (('error', 'launching', 'browser', 'window'), 7),
- (('launching', 'browser', 'window', 'binding'), 6),
- (('browser', 'window', 'binding', 'browser'), 6),
- (('tree', 'view', 'bookmark', 'dialog'), 4),
- (('bookmarks', 'toolbar', 'folder', 'bookmarks'), 3),
- (('click', 'middle', 'mouse', 'button'), 3),
- (('work', 'full', 'screen', 'mode'), 3),
- (('button', 'download', 'font', 'dialog'), 3),
- (('error', 'establishing', 'encrypted', 'connection'), 3)]
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ngrams_list</span> <span class="o">=</span> <span class="n">ngrams</span><span class="p">(</span><span class="n">filtered_word</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-<span class="n">fdist</span> <span class="o">=</span> <span class="n">FreqDist</span><span class="p">(</span><span class="n">ngrams_list</span><span class="p">)</span>
-<span class="n">fdist</span><span class="p">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[(('error', 'launching', 'browser', 'window', 'binding'), 6),
- (('launching', 'browser', 'window', 'binding', 'browser'), 6),
- (('save', 'link', 'disk', 'context', 'menu'), 3),
- (('allow', 'sites', 'removed', 'cookies', 'future'), 2),
- (('sites', 'removed', 'cookies', 'future', 'cookies'), 2),
- (('shortcut', 'increase', 'text', 'size', 'broken'), 2),
- (('focus', 'page', 'going', 'page', 'bookmark'), 2),
- (('..."', 'right', 'click', 'context', 'menu'), 2),
- (('webpage', 'loads', 'refreshing', 'page', 'continuous'), 2),
- (('loads', 'refreshing', 'page', 'continuous', 'loop'), 2)
-</code></pre></div></div>]]></content><author><name>Hojun Eric Choi</name><email>hchoi256@wisc.edu</email></author><category term="NLP" /><category term="NLP" /><category term="python" /><summary type="html"><![CDATA[PART 1: Text Mining 1-1) 텍스트 마이닝(Text Mining)이란? 비정형(= 구조화 되지 않은) 텍스트 빅 데이터에 대하여 효과적인 탐색 및 분석을 통해 유용한 정보, 패턴 및 실행 가능한 통찰력을 도출하는 과정이다.]]></summary></entry><entry><title type="html">How to Write Markdown</title><link href="http://localhost:4000/star/template/" rel="alternate" type="text/html" title="How to Write Markdown" /><published>2022-07-19T00:00:00+09:00</published><updated>2022-07-19T00:00:00+09:00</updated><id>http://localhost:4000/star/template</id><content type="html" xml:base="http://localhost:4000/star/template/"><![CDATA[<h1 id="공지사항">공지사항</h1>
+</div>]]></content><author><name>Hojun Eric Choi</name><email>hchoi256@wisc.edu</email></author><category term="NLP" /><category term="NLP" /><category term="python" /><summary type="html"><![CDATA[PART 1: Vectorization]]></summary></entry><entry><title type="html">How to Write Markdown</title><link href="http://localhost:4000/star/template/" rel="alternate" type="text/html" title="How to Write Markdown" /><published>2022-07-19T00:00:00+09:00</published><updated>2022-07-19T00:00:00+09:00</updated><id>http://localhost:4000/star/template</id><content type="html" xml:base="http://localhost:4000/star/template/"><![CDATA[<h1 id="공지사항">공지사항</h1>
 <h2 id="공지사항-등록">공지사항 등록</h2>
 <p class="notice--danger"><strong>[Notice]</strong> <a href="https://hchoi256.github.io/star/template/">Get your post template!</a></p>
 

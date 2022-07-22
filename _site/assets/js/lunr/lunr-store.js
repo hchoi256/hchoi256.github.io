@@ -12,8 +12,26 @@ var store = [{
         "teaser": "/assets/images/posts/nlp-thumbnail.jpg"
       },{
         "title": "ML Project 1: ANN - Car Sales Prediction",
-        "excerpt":"Car Sales Prediction Learning Goals Artificial Neural Network (ANN)을 이용한 회귀 작업 처리를 이해한다. 순방향/역전파를 동반하는 가중치 학습의 과정에 대해 보다 나은 이해를 도모한다. Description 여러분이 자동차 딜러 혹은 차량 판매원이라 가정하고, 상기 고객들의 특정 데이터(나이, 연봉, etc.)를 참고하여 고객들이 차량 구매에 사용할 금액을 예측하여 특정 집단에 대한 타깃 마케팅을...","categories": ["Machine","Learning"],
-        "tags": ["machine learning","python"],
-        "url": "/machine/learning/ml-projects/",
+        "excerpt":"코드 [Notice] download here Learning Goals Artificial Neural Network (ANN)을 이용한 회귀 작업 처리를 이해한다. 순방향/역전파를 동반하는 가중치 학습의 과정에 대해 보다 나은 이해를 도모한다. Description 여러분이 자동차 딜러 혹은 차량 판매원이라 가정하고, 상기 고객들의 특정 데이터(나이, 연봉, etc.)를 참고하여 고객들이 차량 구매에 사용할 금액을 예측하여 특정 집단에 대한 타깃...","categories": ["Machine","Learning"],
+        "tags": ["machine-learning","python"],
+        "url": "/machine/learning/ml-projects-1/",
+        "teaser": "/assets/images/posts/ml-thumbnail.jpg"
+      },{
+        "title": "NLP - Part 3: Voice Recognition",
+        "excerpt":"PART 1: SST(Speech to Text) !pip install SpeechRecognition !pip install PyAudio import speech_recognition as sr def transform(): r = sr.Recognizer() with sr.Microphone() as source: r.pause_threshold = 0.8 # 0.8초 동안 정적이면 자동으로 음성 녹음을 종료한다 said = r.listen(source) # 녹음본 'said'에 저장하기 try: q = r.recognize_google(said, language=\"ko\") # google 언어팩...","categories": ["NLP"],
+        "tags": ["NLP","python"],
+        "url": "/nlp/nlp-voice-recognition/",
         "teaser": "/assets/images/posts/nlp-thumbnail.jpg"
+      },{
+        "title": "ML Project 2: Deep Learning - CIFAR-10 Classification",
+        "excerpt":"코드 [Notice] download here Learning Goals 합성곱 신경망 모델 설계하여 케라스로 이미지 분류 Adam 옵티마이저로 신경망 가중치 최적화 드롭아웃을 통한 과적합 개선 모델 평가 진행 (confusion matrix) Image Augmentation으로 신경망 일반화 성능 개선 훈련 신경망 가중치 조작 방법 배경지식 CIFAR-10 데이터 세트 10가지 클래스로 나누어져 있는 6만 개의 컬러(RGB 채널)...","categories": ["Machine","Learning"],
+        "tags": ["machine-learning","python"],
+        "url": "/machine/learning/ml-projects-2/",
+        "teaser": "/assets/images/posts/ml-thumbnail.jpg"
+      },{
+        "title": "ML Project 3: Profit Time Series",
+        "excerpt":"코드  [Notice] download here   PART 1: Chicago Crime Rate   PART 2: Avocado Market  ","categories": ["Machine","Learning"],
+        "tags": ["machine-learning","python"],
+        "url": "/machine/learning/ml-projects-3/",
+        "teaser": "/assets/images/posts/ml-thumbnail.jpg"
       }]

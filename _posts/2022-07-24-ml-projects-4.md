@@ -14,7 +14,7 @@ sidebar:
 ---
 
 # 코드
-**[download here]**(https://github.com/hchoi256/machine-learning-development)
+**[Notice]** [download here](https://github.com/hchoi256/machine-learning-development)
 {: .notice--danger}
 
 # TBD
