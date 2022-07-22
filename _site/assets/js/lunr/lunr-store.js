@@ -12,7 +12,7 @@ var store = [{
         "teaser": "/assets/images/echoi.jpg"
       },{
         "title": "ML Project 1: ANN - Car Sales Prediction",
-        "excerpt":"Car Sales Prediction Learning Goals Artificial Neural Network (ANN)을 이용한 회귀 작업 처리를 이해한다. 순방향/역전파를 동반하는 가중치 학습의 과정에 대해 보다 나은 이해를 도모한다. Description 여러분이 자동차 딜러 혹은 차량 판매원이라 가정하고, 상기 고객들의 특정 데이터(나이, 연봉, etc.)를 참고하여 고객들이 차량 구매에 사용할 금액을 예측하는 상황이다. Dataset Customer Name Customer...","categories": ["Machine","Learning"],
+        "excerpt":"Car Sales Prediction Learning Goals Artificial Neural Network (ANN)을 이용한 회귀 작업 처리를 이해한다. 순방향/역전파를 동반하는 가중치 학습의 과정에 대해 보다 나은 이해를 도모한다. Description 여러분이 자동차 딜러 혹은 차량 판매원이라 가정하고, 상기 고객들의 특정 데이터(나이, 연봉, etc.)를 참고하여 고객들이 차량 구매에 사용할 금액을 예측하여 특정 집단에 대한 타깃 마케팅을...","categories": ["Machine","Learning"],
         "tags": ["machine learning","python"],
         "url": "/machine/learning/projects/",
         "teaser": "/assets/images/echoi.jpg"

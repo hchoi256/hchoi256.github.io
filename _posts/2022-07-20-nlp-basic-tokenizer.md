@@ -468,7 +468,7 @@ fdist.plot(10, title="Top 10 Most Common Words")
 
 
     
-![png](/assets/post_images/nlp_basic/output_66_0.png)
+![output_66_0](https://user-images.githubusercontent.com/39285147/180378796-f8a9a87f-2f43-4f6a-9d3b-64b415132eba.png)
     
 
 
@@ -562,7 +562,7 @@ fdist.plot(10, title="Top 10 Most Common Words in Sample")
 
 
     
-![png](/assets/post_images/nlp_basic/output_88_0.png)
+![output_88_0](https://user-images.githubusercontent.com/39285147/180379028-cfc18f85-faa9-4d0c-b693-a2544f8457bf.png)
     
 
 
@@ -601,7 +601,7 @@ fdist.plot(10, title="Top 10 Most Common Words in Sample")
 
 
     
-![png](/assets/post_images/nlp_basic/output_90_0.png)
+![output_90_0](https://user-images.githubusercontent.com/39285147/180378703-5c921d67-37ce-45b8-a7ed-edde873e76b1.png)
     
 
 
@@ -718,7 +718,7 @@ fdist.plot(10)
 
 
     
-![png](/assets/post_images/nlp_basic/output_101_0.png)
+![output_101_0](https://user-images.githubusercontent.com/39285147/180378509-0b7f8535-5123-43c3-838d-27f45a609411.png)
     
 
 
@@ -793,7 +793,7 @@ freq.plot(10)
 
 
     
-![png](/assets/post_images/nlp_basic/output_104_0.png)
+![output_104_0](https://user-images.githubusercontent.com/39285147/180378599-674ae2aa-ad6a-4f9c-89e0-84189f66228d.png)
     
 
 
@@ -832,7 +832,7 @@ fdist.plot(10)
 
 
     
-![png](/assets/post_images/nlp_basic/output_108_0.png)
+![output_108_0](https://user-images.githubusercontent.com/39285147/180378674-2bfcf9aa-1aef-4394-8de3-1877773589a3.png)
     
 
 
