@@ -8,7 +8,7 @@ toc_sticky: true
 toc_label: "GITHUB BLOG JJUNS"
 #author_profile: false
 header:
-    teaser: /assets/images/posts/ml-thumbnail.jpg
+    teaser: /assets/images/posts/nlp-thumbnail.jpg
 sidebar:
     nav: "docs"
 ---
@@ -24,125 +24,85 @@ Artificial Neural Network (ANN)을 이용한 회귀 작업 처리를 이해한�
 여러분이 자동차 딜러 혹은 차량 판매원이라 가정하고, 상기 고객들의 특정 데이터(나이, 연봉, etc.)를 참고하여 고객들이 차량 구매에 사용할 금액을 예측하여 특정 집단에 대한 타깃 마케팅을 이루고자 한다.
 
 ### Dataset
-<html>
-  <head>
-      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-      <meta name="generator" content="PhpSpreadsheet, https://github.com/PHPOffice/PhpSpreadsheet">
-      <meta name="author" content="owner" />
-    <style type="text/css">
-      html { font-family:Calibri, Arial, Helvetica, sans-serif; font-size:11pt; background-color:white }
-      a.comment-indicator:hover + div.comment { background:#ffd; position:absolute; display:block; border:1px solid black; padding:0.5em }
-      a.comment-indicator { background:red; display:inline-block; border:1px solid black; width:0.5em; height:0.5em }
-      div.comment { display:none }
-      table { border-collapse:collapse; page-break-after:always }
-      .gridlines td { border:1px dotted black }
-      .gridlines th { border:1px dotted black }
-      .b { text-align:center }
-      .e { text-align:center }
-      .f { text-align:right }
-      .inlineStr { text-align:left }
-      .n { text-align:right }
-      .s { text-align:left }
-      td.style0 { vertical-align:bottom; border-bottom:none #000000; border-top:none #000000; border-left:none #000000; border-right:none #000000; color:#000000; font-family:'Calibri'; font-size:11pt; background-color:white }
-      th.style0 { vertical-align:bottom; border-bottom:none #000000; border-top:none #000000; border-left:none #000000; border-right:none #000000; color:#000000; font-family:'Calibri'; font-size:11pt; background-color:white }
-      table.sheet0 col.col0 { width:42pt }
-      table.sheet0 col.col1 { width:42pt }
-      table.sheet0 col.col2 { width:42pt }
-      table.sheet0 col.col3 { width:42pt }
-      table.sheet0 col.col4 { width:42pt }
-      table.sheet0 col.col5 { width:42pt }
-      table.sheet0 col.col6 { width:42pt }
-      table.sheet0 col.col7 { width:42pt }
-      table.sheet0 col.col8 { width:42pt }
-      table.sheet0 tr { height:15pt }
-    </style>
-  </head>
-  <body>
-<style>
-@page { margin-left: 0.7in; margin-right: 0.7in; margin-top: 0.75in; margin-bottom: 0.75in; }
-body { margin-left: 0.7in; margin-right: 0.7in; margin-top: 0.75in; margin-bottom: 0.75in; }
-</style>
-    <table border="0" cellpadding="0" cellspacing="0" id="sheet0" class="sheet0 gridlines">
-        <col class="col0">
-        <col class="col1">
-        <col class="col2">
-        <col class="col3">
-        <col class="col4">
-        <col class="col5">
-        <col class="col6">
-        <col class="col7">
-        <col class="col8">
-        <tbody>
-          <tr class="row0">
-            <td class="column0 style0 s">Customer Name</td>
-            <td class="column1 style0 s">Customer e-mail</td>
-            <td class="column2 style0 s">Country</td>
-            <td class="column3 style0 s">Gender</td>
-            <td class="column4 style0 s">Age</td>
-            <td class="column5 style0 s">Annual Salary</td>
-            <td class="column6 style0 s">Credit Card Debt</td>
-            <td class="column7 style0 s">Net Worth</td>
-            <td class="column8 style0 s">Car Purchase Amount</td>
-          </tr>
-          <tr class="row1">
-            <td class="column0 style0 s">Martina Avila</td>
-            <td class="column1 style0 s">cubilia.Curae.Phasellus@quisaccumsanconvallis.edu</td>
-            <td class="column2 style0 s">Bulgaria</td>
-            <td class="column3 style0 n">0</td>
-            <td class="column4 style0 n">41.8517198</td>
-            <td class="column5 style0 n">62812.09301</td>
-            <td class="column6 style0 n">11609.38091</td>
-            <td class="column7 style0 n">238961.2505</td>
-            <td class="column8 style0 n">35321.45877</td>
-          </tr>
-          <tr class="row2">
-            <td class="column0 style0 s">Harlan Barnes</td>
-            <td class="column1 style0 s">eu.dolor@diam.co.uk</td>
-            <td class="column2 style0 s">Belize</td>
-            <td class="column3 style0 n">0</td>
-            <td class="column4 style0 n">40.87062335</td>
-            <td class="column5 style0 n">66646.89292</td>
-            <td class="column6 style0 n">9572.957136</td>
-            <td class="column7 style0 n">530973.9078</td>
-            <td class="column8 style0 n">45115.52566</td>
-          </tr>
-          <tr class="row3">
-            <td class="column0 style0 s">Naomi Rodriquez</td>
-            <td class="column1 style0 s">vulputate.mauris.sagittis@ametconsectetueradipiscing.co.uk</td>
-            <td class="column2 style0 s">Algeria</td>
-            <td class="column3 style0 n">1</td>
-            <td class="column4 style0 n">43.15289747</td>
-            <td class="column5 style0 n">53798.55112</td>
-            <td class="column6 style0 n">11160.35506</td>
-            <td class="column7 style0 n">638467.1773</td>
-            <td class="column8 style0 n">42925.70921</td>
-          </tr>
-          <tr class="row4">
-            <td class="column0 style0 s">Jade Cunningham</td>
-            <td class="column1 style0 s">malesuada@dignissim.com</td>
-            <td class="column2 style0 s">Cook Islands</td>
-            <td class="column3 style0 n">1</td>
-            <td class="column4 style0 n">58.27136945</td>
-            <td class="column5 style0 n">79370.03798</td>
-            <td class="column6 style0 n">14426.16485</td>
-            <td class="column7 style0 n">548599.0524</td>
-            <td class="column8 style0 n">67422.36313</td>
-          </tr>
-          <tr class="row5">
-            <td class="column0 style0 s">Cedric Leach</td>
-            <td class="column1 style0 s">felis.ullamcorper.viverra@egetmollislectus.net</td>
-            <td class="column2 style0 s">Brazil</td>
-            <td class="column3 style0 n">1</td>
-            <td class="column4 style0 n">57.31374945</td>
-            <td class="column5 style0 n">59729.1513</td>
-            <td class="column6 style0 n">5358.712177</td>
-            <td class="column7 style0 n">560304.0671</td>
-            <td class="column8 style0 n">55915.46248</td>
-          </tr>
-        </tbody>
-    </table>
-  </body>
-</html>
+<table border="0" cellpadding="0" cellspacing="0" id="sheet0" class="sheet0 gridlines">
+    <col class="col0">
+    <col class="col1">
+    <col class="col2">
+    <col class="col3">
+    <col class="col4">
+    <col class="col5">
+    <col class="col6">
+    <col class="col7">
+    <col class="col8">
+    <tbody>
+        <tr class="row0">
+        <td class="column0 style0 s">Customer Name</td>
+        <td class="column1 style0 s">Customer e-mail</td>
+        <td class="column2 style0 s">Country</td>
+        <td class="column3 style0 s">Gender</td>
+        <td class="column4 style0 s">Age</td>
+        <td class="column5 style0 s">Annual Salary</td>
+        <td class="column6 style0 s">Credit Card Debt</td>
+        <td class="column7 style0 s">Net Worth</td>
+        <td class="column8 style0 s">Car Purchase Amount</td>
+        </tr>
+        <tr class="row1">
+        <td class="column0 style0 s">Martina Avila</td>
+        <td class="column1 style0 s">cubilia.Curae.Phasellus@quisaccumsanconvallis.edu</td>
+        <td class="column2 style0 s">Bulgaria</td>
+        <td class="column3 style0 n">0</td>
+        <td class="column4 style0 n">41.8517198</td>
+        <td class="column5 style0 n">62812.09301</td>
+        <td class="column6 style0 n">11609.38091</td>
+        <td class="column7 style0 n">238961.2505</td>
+        <td class="column8 style0 n">35321.45877</td>
+        </tr>
+        <tr class="row2">
+        <td class="column0 style0 s">Harlan Barnes</td>
+        <td class="column1 style0 s">eu.dolor@diam.co.uk</td>
+        <td class="column2 style0 s">Belize</td>
+        <td class="column3 style0 n">0</td>
+        <td class="column4 style0 n">40.87062335</td>
+        <td class="column5 style0 n">66646.89292</td>
+        <td class="column6 style0 n">9572.957136</td>
+        <td class="column7 style0 n">530973.9078</td>
+        <td class="column8 style0 n">45115.52566</td>
+        </tr>
+        <tr class="row3">
+        <td class="column0 style0 s">Naomi Rodriquez</td>
+        <td class="column1 style0 s">vulputate.mauris.sagittis@ametconsectetueradipiscing.co.uk</td>
+        <td class="column2 style0 s">Algeria</td>
+        <td class="column3 style0 n">1</td>
+        <td class="column4 style0 n">43.15289747</td>
+        <td class="column5 style0 n">53798.55112</td>
+        <td class="column6 style0 n">11160.35506</td>
+        <td class="column7 style0 n">638467.1773</td>
+        <td class="column8 style0 n">42925.70921</td>
+        </tr>
+        <tr class="row4">
+        <td class="column0 style0 s">Jade Cunningham</td>
+        <td class="column1 style0 s">malesuada@dignissim.com</td>
+        <td class="column2 style0 s">Cook Islands</td>
+        <td class="column3 style0 n">1</td>
+        <td class="column4 style0 n">58.27136945</td>
+        <td class="column5 style0 n">79370.03798</td>
+        <td class="column6 style0 n">14426.16485</td>
+        <td class="column7 style0 n">548599.0524</td>
+        <td class="column8 style0 n">67422.36313</td>
+        </tr>
+        <tr class="row5">
+        <td class="column0 style0 s">Cedric Leach</td>
+        <td class="column1 style0 s">felis.ullamcorper.viverra@egetmollislectus.net</td>
+        <td class="column2 style0 s">Brazil</td>
+        <td class="column3 style0 n">1</td>
+        <td class="column4 style0 n">57.31374945</td>
+        <td class="column5 style0 n">59729.1513</td>
+        <td class="column6 style0 n">5358.712177</td>
+        <td class="column7 style0 n">560304.0671</td>
+        <td class="column8 style0 n">55915.46248</td>
+        </tr>
+    </tbody>
+</table>
 
 **독립변수**
 - Customer Name
@@ -294,4 +254,4 @@ epochs_hist = model.fit(X_train, y_train, epochs=20, batch_size=25,  verbose=1, 
 - epoch: 배치 사이즈만큼의 하나의 학습을 몇번 시행할지 결정한다. 그 크기가 모델 성능을 향상시키는 최대 임계치에 가까워 질수록 더 정확한 예측을 해낼 수 있다.
 - batch_size: 한 번에 학습할 훈련 데이터 개수
 - verbose: 디폴트 0. 1로 지정하면 Epoch의 상황과, loss의 값이 output에 보여준다.
-- [validation_splot](https://github.com/hchoi256/ai-terms/blob/main/README.md):
+- [validation_split](https://github.com/hchoi256/ai-terms/blob/main/README.md)
