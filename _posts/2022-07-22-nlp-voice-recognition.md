@@ -13,8 +13,7 @@ sidebar:
     nav: "docs"
 ---
 
-# Voice Recognition
-## PART 1: SST(Speech to Text)
+# PART 1: SST(Speech to Text)
 
 ```python
 !pip install SpeechRecognition
@@ -46,7 +45,7 @@ transform() # STT 작업 시작
 
     마이크를 켜고, 음성을 녹음하면 메시지로 출력되는 것을 보실 수 있습니다.
 
-## PART 2: TTS(Text to Speech)
+# PART 2: TTS(Text to Speech)
 
 ```python
 !pip install pyttsx3 # TTS 클래스
@@ -69,7 +68,7 @@ speaking("이제 STT가 준비가 되었습니다. 계속 해서 Voice Assistanc
     스피커에서 상기 메시지가 출력되는 것을 보실 수 있습니다.
 
 
-### TTS 실습 1: 요일/시간 음성 출력하기
+## TTS 실습 1: 요일/시간 음성 출력하기
 
 ```python
 def query_day():
@@ -110,7 +109,7 @@ query_time()
     현재 시간이 음성 출력되는 것을 보실 수 있습니다.
 
 
-### TTS 실습 2: STT + TTS - 마이크 출력을 다시 읊어주기
+## TTS 실습 2: STT + TTS - 마이크 출력을 다시 읊어주기
 
 ```python
 import webbrowser
@@ -146,7 +145,7 @@ while (True):
 
 
 
-## Bonus: Keyboard I/O
+# Bonus: Keyboard I/O
 
 ```python
 !pip install pyautogui

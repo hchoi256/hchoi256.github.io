@@ -13,17 +13,20 @@ sidebar:
     nav: "docs"
 ---
 
-# Car Sales Prediction
+# 코드
+**[download here]**(https://github.com/hchoi256/machine-learning-development)
+{: .notice--danger}
 
-## Learning Goals
+
+# Learning Goals
 Artificial Neural Network (ANN)을 이용한 회귀 작업 처리를 이해한다.
 
 순방향/역전파를 동반하는 가중치 학습의 과정에 대해 보다 나은 이해를 도모한다.
 
-## Description
+# Description
 여러분이 자동차 딜러 혹은 차량 판매원이라 가정하고, 상기 고객들의 특정 데이터(나이, 연봉, etc.)를 참고하여 고객들이 차량 구매에 사용할 금액을 예측하여 특정 집단에 대한 타깃 마케팅을 이루고자 한다.
 
-### Dataset
+## Dataset
 <table border="0" cellpadding="0" cellspacing="0" id="sheet0" class="sheet0 gridlines">
     <col class="col0">
     <col class="col1">
@@ -117,7 +120,7 @@ Artificial Neural Network (ANN)을 이용한 회귀 작업 처리를 이해한�
 **종속변수**
 - Car Purchase Amount
 
-## Import Dataset
+# Import Dataset
 
 ```python
 import pandas as pd # 데이터 프레임 조작
@@ -128,9 +131,9 @@ import seaborn as sns # 그래프 시각화
 car_df = pd.read_csv('Car_Purchasing_Data.csv', encoding='ISO-8859-1') # 데이터셋이 '@'와 같은 특수문자를 포함하기 때문에 상기 인코딩 설정을 해줘야한다.
 ```
 
-## Data Visualization
+# Data Visualization
 
-### Seaborn
+## Seaborn
 
 ```python
 sns.pairplot(car_df) # 씨본 덕분에 분석 작업을 여러 번 할 필요없이 여러 종류의 시각화를 보여준다
@@ -142,8 +145,8 @@ sns.pairplot(car_df) # 씨본 덕분에 분석 작업을 여러 번 할 필요�
 
 따라서, 나이가 증가함에 따라 차량 구매 예상 금액이 증가하는 선형적 형태의 데이터 분포를 보여주고, 반대로 Credit Card Debt은 종속변수와 뚜렷한 상관관계를 나타내지 않는 것으로 관찰된다.
 
-## Data Preprocessing
-## Remove Unnecessary Variables
+# Data Preprocessing
+# Remove Unnecessary Variables
 ```python
 X = car_df.drop(['Customer Name', 'Customer e-mail', 'Country', 'Car Purchase Amount'], axis = 1) # 종속변수에 영향을 끼치지 않는 불필요한 입력피처를 제거한다.
 y = car_df['Car Purchase Amount'] # 종속변수
@@ -153,7 +156,7 @@ X # 정제된 훈련 데이터 관찰
 
 ![image](https://user-images.githubusercontent.com/39285147/180381916-2051d577-51ec-4ff8-be80-0685754f456b.png)
 
-### Data Scaling
+## Data Scaling
 나이와 연봉과 같은 입력피처의 수치가 차이가 커서, 특정 피처에 과중화된 결과가 나올 수 있으므로 [0, 1] 값으로 정규화하는 스케일링(Scailing)을 적용해야 한다.
 
 이번 프로젝트에서, 우리는 **MinMaxScaler**를 사용한다.
@@ -170,7 +173,7 @@ X_scaled = scaler.fit_transform(X)
 
 ```
 
-## Model Training
+# Model Training
 
 **Dense**
 - *첫번째 인자* : 출력 뉴런의 수를 설정합니다.
@@ -259,7 +262,7 @@ epochs_hist = model.fit(X_train, y_train, epochs=20, batch_size=25,  verbose=1, 
 - [validation_split](https://github.com/hchoi256/ai-terms/blob/main/README.md)
 
 
-## Model Evaluation
+# Model Evaluation
 
 ```python
 plt.plot(epochs_hist.history['loss'])
@@ -279,7 +282,7 @@ plt.legend(['Training Loss', 'Validation Loss'])
 이를 통하여 우리는 적당한 에포크 개수를 도출할 수 있을 것이다.
 
 
-## Model Prediction
+# Model Prediction
 
 ```python
 y_predict = model.predict(np.array([[1, 50, 50000, 10000, 600000]]))

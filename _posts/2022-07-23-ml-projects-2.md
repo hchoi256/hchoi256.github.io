@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "ML Project 1: ANN - Car Sales Prediction"
+title: "ML Project 2: Deep Learning - CIFAR-10 Classification"
 categories: Machine Learning
 tag: [machine learning, python]
 toc: true
@@ -13,277 +13,336 @@ sidebar:
     nav: "docs"
 ---
 
-# Car Sales Prediction
+# 코드
+**[download here]**(https://github.com/hchoi256/machine-learning-development)
+{: .notice--danger}
 
-## Learning Goals
-Artificial Neural Network (ANN)을 이용한 회귀 작업 처리를 이해한다.
+# Learning Goals
+1. 합성곱 신경망 모델 설계하여 케라스로 이미지 분류
+2. Adam 옵티마이저로 신경망 가중치 최적화
+3. 드롭아웃을 통한 과적합 개선
+4. 모델 평가 진행 (*confusion matrix*)
+5. *Image Augmentation*으로 신경망 일반화 성능 개선
+6. 훈련 신경망 가중치 조작 방법
 
-순방향/역전파를 동반하는 가중치 학습의 과정에 대해 보다 나은 이해를 도모한다.
+# 배경지식
 
-## Description
-여러분이 자동차 딜러 혹은 차량 판매원이라 가정하고, 상기 고객들의 특정 데이터(나이, 연봉, etc.)를 참고하여 고객들이 차량 구매에 사용할 금액을 예측하여 특정 집단에 대한 타깃 마케팅을 이루고자 한다.
+## CIFAR-10 데이터 세트
+![image](https://user-images.githubusercontent.com/39285147/180509114-3b492055-56eb-42c6-85b8-80fb8e077546.png)
 
-### Dataset
-<table border="0" cellpadding="0" cellspacing="0" id="sheet0" class="sheet0 gridlines">
-    <col class="col0">
-    <col class="col1">
-    <col class="col2">
-    <col class="col3">
-    <col class="col4">
-    <col class="col5">
-    <col class="col6">
-    <col class="col7">
-    <col class="col8">
-    <tbody>
-        <tr class="row0">
-        <td class="column0 style0 s">Customer Name</td>
-        <td class="column1 style0 s">Customer e-mail</td>
-        <td class="column2 style0 s">Country</td>
-        <td class="column3 style0 s">Gender</td>
-        <td class="column4 style0 s">Age</td>
-        <td class="column5 style0 s">Annual Salary</td>
-        <td class="column6 style0 s">Credit Card Debt</td>
-        <td class="column7 style0 s">Net Worth</td>
-        <td class="column8 style0 s">Car Purchase Amount</td>
-        </tr>
-        <tr class="row1">
-        <td class="column0 style0 s">Martina Avila</td>
-        <td class="column1 style0 s">cubilia.Curae.Phasellus@quisaccumsanconvallis.edu</td>
-        <td class="column2 style0 s">Bulgaria</td>
-        <td class="column3 style0 n">0</td>
-        <td class="column4 style0 n">41.8517198</td>
-        <td class="column5 style0 n">62812.09301</td>
-        <td class="column6 style0 n">11609.38091</td>
-        <td class="column7 style0 n">238961.2505</td>
-        <td class="column8 style0 n">35321.45877</td>
-        </tr>
-        <tr class="row2">
-        <td class="column0 style0 s">Harlan Barnes</td>
-        <td class="column1 style0 s">eu.dolor@diam.co.uk</td>
-        <td class="column2 style0 s">Belize</td>
-        <td class="column3 style0 n">0</td>
-        <td class="column4 style0 n">40.87062335</td>
-        <td class="column5 style0 n">66646.89292</td>
-        <td class="column6 style0 n">9572.957136</td>
-        <td class="column7 style0 n">530973.9078</td>
-        <td class="column8 style0 n">45115.52566</td>
-        </tr>
-        <tr class="row3">
-        <td class="column0 style0 s">Naomi Rodriquez</td>
-        <td class="column1 style0 s">vulputate.mauris.sagittis@ametconsectetueradipiscing.co.uk</td>
-        <td class="column2 style0 s">Algeria</td>
-        <td class="column3 style0 n">1</td>
-        <td class="column4 style0 n">43.15289747</td>
-        <td class="column5 style0 n">53798.55112</td>
-        <td class="column6 style0 n">11160.35506</td>
-        <td class="column7 style0 n">638467.1773</td>
-        <td class="column8 style0 n">42925.70921</td>
-        </tr>
-        <tr class="row4">
-        <td class="column0 style0 s">Jade Cunningham</td>
-        <td class="column1 style0 s">malesuada@dignissim.com</td>
-        <td class="column2 style0 s">Cook Islands</td>
-        <td class="column3 style0 n">1</td>
-        <td class="column4 style0 n">58.27136945</td>
-        <td class="column5 style0 n">79370.03798</td>
-        <td class="column6 style0 n">14426.16485</td>
-        <td class="column7 style0 n">548599.0524</td>
-        <td class="column8 style0 n">67422.36313</td>
-        </tr>
-        <tr class="row5">
-        <td class="column0 style0 s">Cedric Leach</td>
-        <td class="column1 style0 s">felis.ullamcorper.viverra@egetmollislectus.net</td>
-        <td class="column2 style0 s">Brazil</td>
-        <td class="column3 style0 n">1</td>
-        <td class="column4 style0 n">57.31374945</td>
-        <td class="column5 style0 n">59729.1513</td>
-        <td class="column6 style0 n">5358.712177</td>
-        <td class="column7 style0 n">560304.0671</td>
-        <td class="column8 style0 n">55915.46248</td>
-        </tr>
-    </tbody>
-</table>
 
-**독립변수**
-- Customer Name
-- Customer e-mail
-- Country
-- Gender
-- Age
-- Annual Salary
-- Credit Card Debt.
-- Net Worth
+10가지 클래스로 나누어져 있는 **6만 개의** **컬러(RGB 채널)** 이미지로 구성된다 (airplanes, cars, birds, cats, etc.).
+- 이미지 해상도가 **32x32** 픽셀로 매우 낮다.
+- 각 클래스마다 6천개의 이미지가 존재한다 (클래스 별 매우 균등한 이미지 분포).
 
-**종속변수**
-- Car Purchase Amount
+이번 프로젝트에서 주어진 입력 이미지가 10개의 클래스 중 어디에 속하는지 분류 모델을 학습시켜보자.
 
-## Import Dataset
+## [Convolutional Neural Network (CNN) 기초](https://github.com/hchoi256/ai-boot-camp/blob/main/ai/deep-learning/cnn.md)
+![image](https://user-images.githubusercontent.com/39285147/180512062-48c118e4-c9d4-4ea6-8281-958201289626.png)
+
+CNN 관련 배경지식은 상기 링크를 통해 숙지해주세요!
+
+![image](https://user-images.githubusercontent.com/39285147/180513584-f47d8136-4cc3-473b-b85f-437ddd376101.png)
+
+'sharpen' 커널 필터를 적용하면 인풋 이미지의 3x3 픽셀 범위에 대해 가운데 값에 가중치를 높게줘서 출력 이미지에서 가운데 픽셀을 뚜렷하게 강조한다.
+
+## 성능지표: Key Performance Indicators (KPI)
+![image](https://user-images.githubusercontent.com/39285147/180517136-7b390f93-0f67-4e21-9217-a482e74a1f41.png)
+
+**Precision**: 암이 없는 환자에게 있다고 오진할 확률 50%
+**Recall**: 암이 있는 환자에게 없다고 오진할 확률이 11%
+
+> ![image](https://user-images.githubusercontent.com/39285147/180517030-eedfd66d-7cd8-4109-9fb2-87f6a29d3c7c.png)
+
+# 구현
+
+## 데이터 관찰
 
 ```python
-import pandas as pd # 데이터 프레임 조작
-import numpy as np # 수치 해석
-import matplotlib.pyplot as plt # 그래프 시각화
-import seaborn as sns # 그래프 시각화
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn
 
-car_df = pd.read_csv('Car_Purchasing_Data.csv', encoding='ISO-8859-1') # 데이터셋이 '@'와 같은 특수문자를 포함하기 때문에 상기 인코딩 설정을 해줘야한다.
+from keras.datasets import cifar10
+(X_train, y_train) , (X_test, y_test) = cifar10.load_data() # 훈련, 테스트 데이터 생성
+X_train.shape
 ```
 
-## Data Visualization
+        (50000, 32, 32, 3)
 
-### Seaborn
+
+-* 이미지 개수*: 50000개
+- *이미지 해상도*: 32x32
+- *컬러 RGB*: 3
+
+
+## 데이터 시각화
 
 ```python
-sns.pairplot(car_df) # 씨본 덕분에 분석 작업을 여러 번 할 필요없이 여러 종류의 시각화를 보여준다
+i = 30009
+plt.imshow(X_train[i])
+print(y_train[i])
 ```
 
-![screensht](https://user-images.githubusercontent.com/39285147/180380848-d3772ba0-a21b-416b-8139-534c7a3aa721.JPG)
+        1
 
-데이터 분포에서 맨 아래 위치한 행은 'Car Purchase Amount'이고, 각 열은 순서대로 Gender, Age, Annual Salary, Credit Car Debt, Net Worth, Car Purchase Amount이다.
+![image](https://user-images.githubusercontent.com/39285147/180518417-37e04fc2-210e-40db-b111-e219b5d66a9b.png)        
 
-따라서, 나이가 증가함에 따라 차량 구매 예상 금액이 증가하는 선형적 형태의 데이터 분포를 보여주고, 반대로 Credit Card Debt은 종속변수와 뚜렷한 상관관계를 나타내지 않는 것으로 관찰된다.
 
-## Data Preprocessing
-## Remove Unnecessary Variables
+클래스 리스트에서 인덱스가 1인 클래스, 'Cars'에 속하는 이미지인 것을 확인할 수 있다.
+
 ```python
-X = car_df.drop(['Customer Name', 'Customer e-mail', 'Country', 'Car Purchase Amount'], axis = 1) # 종속변수에 영향을 끼치지 않는 불필요한 입력피처를 제거한다.
-y = car_df['Car Purchase Amount'] # 종속변수
+# 한 번에 여러 이미지 배출하여 비교하기
 
-X # 정제된 훈련 데이터 관찰
+W_grid = 4 # 그리드 가로
+L_grid = 4 # 그리드 세로
+
+fig, axes = plt.subplots(L_grid, W_grid, figsize = (25, 25))
+axes = axes.ravel() # 4x4 행렬을 16개의 요소를 가진 선형배열로 변환한다
+
+n_training = len(X_train)
+
+for i in np.arange(0, L_grid * W_grid):
+    index = np.random.randint(0, n_training) # pick a random number
+    axes[i].imshow(X_train[index])
+    axes[i].set_title(y_train[index])
+    axes[i].axis('off') # 축 안 보이게 만들기
+    
+plt.subplots_adjust(hspace = 0.4) # 이미지 사이 공간 벌리기
 ```
 
-![image](https://user-images.githubusercontent.com/39285147/180381916-2051d577-51ec-4ff8-be80-0685754f456b.png)
+![image](https://user-images.githubusercontent.com/39285147/180518577-9f9298f7-ff70-4bf5-ba08-b353fa610a6a.png)
 
-### Data Scaling
-나이와 연봉과 같은 입력피처의 수치가 차이가 커서, 특정 피처에 과중화된 결과가 나올 수 있으므로 [0, 1] 값으로 정규화하는 스케일링(Scailing)을 적용해야 한다.
+## 데이터 전처리
 
-이번 프로젝트에서, 우리는 **MinMaxScaler**를 사용한다.
-
-기존 StandardScaler와 MinMaxScaler의 차이점은 데이터가 **정규분포를 따르는지 혹은 따라야 하는지**에 달려있다.
-
-[참고](https://velog.io/@ljs7463/%ED%94%BC%EC%B2%98-%EC%8A%A4%EC%BC%80%EC%9D%BC%EB%A7%81StandardScalerMinMaxScaler)
-
+### 이미지 포맷 설정 (float32)
 ```python
-from sklearn.preprocessing import MinMaxScaler
+# 이미지 포맷은 'float32'여야 한다
+X_train = X_train.astype('float32')
+X_test = X_test.astype('float32')
 
-scaler = MinMaxScaler()
-X_scaled = scaler.fit_transform(X)
+number_cat = 10 # 클래스 개수
+y_train
 
 ```
 
-## Model Training
+array([[6],
+    [9],
+    [9],
+    ...,
+    [9],
+    [1],
+    [1]], dtype=uint8)
 
-**Dense**
-- *첫번째 인자* : 출력 뉴런의 수를 설정합니다.
-- *input_dim* : 입력 뉴런의 수를 설정합니다.
-- *init* : 가중치 초기화 방법 설정합니다.
-  - 'uniform' : 균일 분포
-  - 'normal' : 가우시안 분포
-- *activation* : 활성화 함수 설정합니다.
-  - 'linear' : 디폴트 값, 입력뉴런과 가중치로 계산된 결과값이 그대로 출력으로 나옵니다.
-  - 'relu' : rectifier 함수, 은익층에 주로 쓰입니다.
-  - 'sigmoid' : 시그모이드 함수, 이진 분류 문제에서 출력층에 주로 쓰입니다.
-  - 'softmax' : 소프트맥스 함수, 다중 클래스 분류 문제에서 출력층에 주로 쓰입니다.
+클래스 인덱스로 종속변수가 표현된 것을 확인해볼 수 있다.
 
+이를 인덱스 번호가 아니라 'One-Hot Encoding' 방법을 활용하여 범주화 시켜보자.
+
+### Categorical Data 범주화시키기
 
 ```python
-from sklearn.model_selection import train_test_split
-X_train, X_test, y_train, y_test = train_test_split(X_scaled, y_scaled, test_size = 0.25) # Create training and test set
+import keras
+y_train = keras.utils.to_categorical(y_train, number_cat) # one-hot encoding 범주형으로 변환하기
+y_test = keras.utils.to_categorical(y_test, number_cat)
+```
 
-import tensorflow.keras
-from keras.models import Sequential # 신경망을 순차적 형태로 설계
-from keras.layers import Dense # 뉴런의 입출력을 연결해주는 완전 연결 신경망 생성
-from sklearn.preprocessing import MinMaxScaler
+array([[0., 0., 0., ..., 0., 0., 0.],
+       [0., 0., 0., ..., 0., 0., 1.],
+       [0., 0., 0., ..., 0., 0., 1.],
+       ...,
+       [0., 0., 0., ..., 0., 0., 1.],
+       [0., 1., 0., ..., 0., 0., 0.],
+       [0., 1., 0., ..., 0., 0., 0.]], dtype=float32)
 
-model = Sequential()
-model.add(Dense(25, input_dim=5, activation='relu'))
-model.add(Dense(25, activation='relu')) # 순차적 망이기 때문에 'input)dim'은 다시 쓰지 않아도 된다.
-model.add(Dense(1, activation='linear')) # output 값
-model.summary()
+
+### 정규화
+독립변수들은 픽셀에 할당된 [0, 255] 사이의 수치이므로, [0, 1] 사이 값들로 *정규화*를 거칠 필요가 있다.
+
+```python
+X_train = X_train/255
+X_test = X_test/255
+```
+
+## 모델 훈련하기
+
+```python
+from keras.models import Sequential # 신경망을 순차적으로 쌓는다
+from keras.layers import Conv2D, MaxPooling2D, AveragePooling2D, Dense, Flatten, Dropout # CNN 관련 클래스
+from keras.optimizers import Adam # Adam 최적화 옵티마이저
+from keras.callbacks import TensorBoard # TensorFlow 시각화 도구
 ```
 
 
-![image](https://user-images.githubusercontent.com/39285147/180387209-a42f1385-dacc-45a3-a844-0ea2c3384262.png)
+```python
+cnn_model = Sequential()
+cnn_model.add(Conv2D(filters = 64, kernel_size = (3,3), activation = 'relu', input_shape = Input_shape))
+cnn_model.add(Conv2D(filters = 64, kernel_size = (3,3), activation = 'relu'))
+cnn_model.add(MaxPooling2D(2,2))
+cnn_model.add(Dropout(0.4))
 
 
-**입력값 개수**: 5 (나이, etc.)
+cnn_model.add(Conv2D(filters = 128, kernel_size = (3,3), activation = 'relu'))
+cnn_model.add(Conv2D(filters = 128, kernel_size = (3,3), activation = 'relu'))
+cnn_model.add(MaxPooling2D(2,2))
+cnn_model.add(Dropout(0.4))
 
-**뉴런 개수**: 25
+cnn_model.add(Flatten())
 
-> 뉴런 개수가 적을수록 손실이 크게 발생한다 (에포크 수를 늘림으로써 보완 가능하다).
+cnn_model.add(Dense(units = 1024, activation = 'relu'))
 
-**bias**: 은닉층 뉴런 개수에 맞게 할당된다 (i.e., 은닉층 뉴런 개수 25개 --> bias 역시 25개가 존재한다).
+cnn_model.add(Dense(units = 1024, activation = 'relu'))
 
-**훈련 가능한 파라미터**: 딥러닝 모델 학습의 역전파 과정에서 피라미터 업데이트의 대상이 되는 가중치와 bias를 말한다.
+cnn_model.add(Dense(units = 10, activation = 'softmax')) # 최종 출력 클래스 개수 10개
 
-1. 초기 입력값에서 첫 번째 은닉층까지, **훈련 가능한 피라미터* 개수 = 5(입력값 개수) * 25(첫 은닉층 뉴런개수) + 25(bias) = 150
+cnn_model.compile(loss = 'categorical_crossentropy', optimizer = keras.optimizers.rmsprop(lr = 0.001), metrics = ['accuracy']) # 범주형 크로스엔트로피 손실함수, rmsprop 옵티마이저와 accuracy를 척도로 사용한다.
 
-2. 초기 입력값에서 두 번째 은닉층까지, **훈련 가능한 피라미터* 개수 =  25(첫 은닉층 뉴런개수) * 25(두 번째 은닉층 뉴런개수) + 25(bias) = 650
+history = cnn_model.fit(X_train, y_train, batch_size = 32, epochs = 1, shuffle = True) # 이미지 순서를 섞어(shuffle) 모델 학습을 시작한다
+```
 
-3. 출력, **훈련 가능한 피라미터* 개수 = 25(두 번째 은닉층 뉴런개수) * 1(출력값은 하나) + 1(bias) = 150
+> ReLU: 회귀 작업 관련 함수로 연속적인 출력값을 생성한다
 
-> Toal params: 826
->> 입출력 값에 대한 최선의 상관관계 도출을 위해 훈련되거나 조정되는 피라미터 총 개수이다.
+> Softmax: 분류에 사용된다.
+
+> CPU vs. GPU
+> 학습이 오래 지속된다면 GPU가 아닌 CPU를 사용한다.
+
+> ANN 은닉층 *뉴런개수*와 CNN *필터개수*를 증가시키면, 모델 복잡도가 증가하여 학습 시간이 늘어난다.
+
+## 모델 평가
+
+```python
+evaluation = cnn_model.evaluate(X_test, y_test) # 실제값과 예측값을 비교하여 정확도를 도출한다
+
+predicted_classes = cnn_model.predict_classes(X_test) # 모델 예측값을 도출한다
+
+y_test = y_test.argmax(1) # one hot 인코딩의 이진수로 표현된 값을 십진수로 바꿔준다
+
+L = 7
+W = 7
+fig, axes = plt.subplots(L, W, figsize = (12, 12))
+axes = axes.ravel()
+
+for i in np.arange(0, L*W):
+    axes[i].imshow(X_test[i])
+    axes[i].set_title('Prediction = {}\n True = {}'.format(predicted_classes[i], y_test[i]))
+    axes[i].axis('off')
+
+plt.subplots_adjust(wspace = 1)    
+```
+
+![image](https://user-images.githubusercontent.com/39285147/180562014-e6d8d90f-7dc5-449f-a7cb-233e50bd6fa3.png)
 
 
 ```python
-model.compile(optimizer='adam', loss='mean_squared_error') # 모델 학습 방법 제시
+# 혼동행렬로 평가지표 표현하기
 
+from sklearn.metrics import confusion_matrix
+import seaborn as sns
+
+cm = confusion_matrix(y_test, predicted_classes)
+cm
+plt.figure(figsize = (10, 10))
+sns.heatmap(cm, annot = True) # 해당 데이터가 많거나 높은 경우 색을 사용해 시각화하는 그래프
 ```
-![image](https://user-images.githubusercontent.com/39285147/180389686-0fd6c3e2-8ee8-4e0f-999c-7686f8f89d41.png)
 
-> Optimizer
->> 모델이 학습과정에서 어떻게 가중치 최적화를 이뤄내는지에 대한 방법을 제시한다.
->>
->> [adam이란?](https://github.com/hchoi256/lg-ai-auto-driving-radar-sensor/blob/main/supervised-learning/gradient-discent.md)
+![image](https://user-images.githubusercontent.com/39285147/180563602-b9035fea-733c-4514-a223-63c1e99608a6.png)
 
-> loss (손실함수)
->> 모델의 정확도를 판단하는데 사용되는 방법론이다.
->>
->> mean_squared_error (평균제곱오차)
->>>>
->>>> 예측값과 실제값의 차이를 나타내는 정도로, 그 값이 작을수록 실제값과 유사하여 정확한 예측을 해냈다고 볼 수 있다.
+혼동행렬에서 큰 수치를 띄는 값들은 오류(False Negative, False Positive)를 의미한다.
 
+
+## 모델 저장하기
 
 ```python
-epochs_hist = model.fit(X_train, y_train, epochs=20, batch_size=25,  verbose=1, validation_split=0.2)
+import os 
+directory = os.path.join(os.getcwd(), 'saved_models') # getcwd: get current working directory
+
+if not os.path.isdir(directory):
+    os.makedirs(directory)
+model_path = os.path.join(directory, 'keras_cifar10_trained_model.h5')
+cnn_model.save(model_path)
 ```
 
-![image](https://user-images.githubusercontent.com/39285147/180390662-b659a0d9-6f49-46cd-bb01-acd9cf2bd4b5.png)
 
-모델이 학습하면서 epoch를 거듭함에 따라 loss(여기서는 평균제곱오차 방법을 사용)의 값이 줄어드는 것을 볼 수 있다.
+## Image Augmentation 활용 모델 개선
 
+Image Augmentation
+- 과적합 문제를 해소하고 정확도를 높이기 위해 변화를 적용하는 전처리 기법. 주로, 기존 인풋 이미지에 조금씩 변화(뒤집기, 회전, etc.)를 주어 학습 데이터량을 증가시켜 데이터 차원이 모델 복잡도를 웃돌게 만든다.
 
-- epoch: 배치 사이즈만큼의 하나의 학습을 몇번 시행할지 결정한다. 그 크기가 모델 성능을 향상시키는 최대 임계치에 가까워 질수록 더 정확한 예측을 해낼 수 있다.
-- batch_size: 한 번에 학습할 훈련 데이터 개수
-- verbose: 디폴트 0. 1로 지정하면 Epoch의 상황과, loss의 값이 output에 보여준다.
-- [validation_split](https://github.com/hchoi256/ai-terms/blob/main/README.md)
+> *ImageDataGenerator* 클래스를 통해 변화를 끌어낸다.
 
-
-## Model Evaluation
+### 이미지 증강으로 새로운 데이터 만들어내기
 
 ```python
-plt.plot(epochs_hist.history['loss'])
-plt.plot(epochs_hist.history['val_loss'])
+import keras
+from keras.datasets import cifar10
+(X_train, y_train), (X_test, y_test) = cifar10.load_data()
 
-plt.title('Model Loss Progression During Training/Validation')
-plt.ylabel('Training and Validation Losses')
-plt.xlabel('Epoch Number')
-plt.legend(['Training Loss', 'Validation Loss'])
+X_train = X_train.astype('float32')
+X_test = X_test.astype('float32')
 
+n = 8 
+X_train_sample = X_train[:n] # 8개의 샘플 이미지를 가져온다
 ```
-
-![image](https://user-images.githubusercontent.com/39285147/180432355-41591eba-81ac-4625-a7a9-52b8dcba0c7a.png)
-
-위 그래프에서 손실함수의 분포가 에포크가 [0, 4] 사이의 어느 임계치에서부터 크게 줄어들지 않는 것을 볼 수 있다.
-
-이를 통하여 우리는 적당한 에포크 개수를 도출할 수 있을 것이다.
-
-
-## Model Prediction
 
 ```python
-y_predict = model.predict(np.array([[1, 50, 50000, 10000, 600000]]))
-print('Expected Purchase Amount=', y_predict)
+# 이미지 변화주기
+from keras.preprocessing.image import ImageDataGenerator
+
+# dataget_train = ImageDataGenerator(rotation_range = 90) # 이미지 회전
+# dataget_train = ImageDataGenerator(vertical_flip=True) # 뒤집기/반전
+# dataget_train = ImageDataGenerator(height_shift_range=0.5) ## 
+dataget_train = ImageDataGenerator(brightness_range=(1,3)) # 밝기 조정
+
+dataget_train.fit(X_train_sample) # 이미지 생성기 적용
 ```
 
-    Expected Purchase Amount= [35656.47]
+```python
+# 이미지에 변화 적용하기
+from scipy.misc import toimage # 배열을 이미지로 변환한다
+
+fig = plt.figure(figsize = (20,2)) # 새로 생성될 이미지 사이즈 조정
+
+# 훈련 샘플을 가져와 이미지 flow를 생성한다.
+# 변형된 이미지를 배치 단위로 불러올 수 있는 Generator(*flow()*)을 생성해 준다 (8개 요소 포함하는 리스트 형태로 한 번에 가져오게 된다)
+for x_batch in dataget_train.flow(X_train_sample, batch_size = n):
+     for i in range(0,n):
+            ax = fig.add_subplot(1, n, i+1)
+            ax.imshow(toimage(x_batch[i]))
+     fig.suptitle('Augmented images (rotated 90 degrees)')
+     plt.show()
+     break;
+```
+
+![image](https://user-images.githubusercontent.com/39285147/180567864-9bef861d-2973-4367-9344-436ae78ee7c9.png)
+
+결과에서 보이는 것처럼 기존 인풋 이미지의 밝기를 수정하여 새로운 데이터를 만들어냈다! 
+
+### 이미지 증강으로 만들어낸 데이터로 모델 새로 학습하기
+
+```python
+from keras.preprocessing.image import ImageDataGenerator
+
+# 이미지 생성기 특성 정의
+datagen = ImageDataGenerator(
+                            rotation_range = 90,
+                            width_shift_range = 0.1,
+                            horizontal_flip = True,
+                            vertical_flip = True
+                             )
+
+datagen.fit(X_train) # 이미지 생성기 특성 적용
+
+cnn_model.fit_generator(datagen.flow(X_train, y_train, batch_size = 32), epochs = 2) # 이미지 생성기로 만든 데이터 학습에 이용할 때 fit_generator() 함수를 사용한다
+
+score = cnn_model.evaluate(X_test, y_test) # 모델 성능평가
+print('Test accuracy', score[1])
+
+# save the model
+directory = os.path.join(os.getcwd(), 'saved_models')
+
+if not os.path.isdir(directory):
+    os.makedirs(directory)
+model_path = os.path.join(directory, 'keras_cifar10_trained_model_Augmentation.h5')
+cnn_model.save(model_path)
+```
