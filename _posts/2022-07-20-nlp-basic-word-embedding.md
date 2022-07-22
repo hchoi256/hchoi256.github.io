@@ -11,7 +11,7 @@ sidebar:
     nav: "docs"
 ---
 
-# Part 1: Vectorization
+# PART 1: Vectorization
 
 ## Vectorization 필요성
 Machine (기계)는 문자와 단어를 이해할 수 없다.
@@ -309,4 +309,586 @@ counts
     </tr>
   </tbody>
 </table>
+</div>
+
+## Vectorization 실습
+
+```python
+import pandas as pd
+import numpy as np
+
+data = pd.read_excel("Electronics_data.xlsx")
+data.head()
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Unnamed: 0</th>
+      <th>sentiment</th>
+      <th>title</th>
+      <th>Reviews</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>2</td>
+      <td>Great CD</td>
+      <td>My lovely Pat has one of the GREAT voices of h...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>2</td>
+      <td>One of the best game music soundtracks - for a...</td>
+      <td>Despite the fact that I have only played a sma...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>1</td>
+      <td>Batteries died within a year ...</td>
+      <td>I bought this charger in Jul 2003 and it worke...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>2</td>
+      <td>works fine, but Maha Energy is better</td>
+      <td>Check out Maha Energy's website. Their Powerex...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>2</td>
+      <td>Great for the non-audiophile</td>
+      <td>Reviewed quite a bit of the combo players and ...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+data.shape
+```
+
+
+
+
+    (50000, 4)
+
+
+
+```python
+data["Full_text"] = data["title"].str.cat(data["Reviews"], sep = " ") # title과 Reviews 합치기
+data.head()
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Unnamed: 0</th>
+      <th>sentiment</th>
+      <th>title</th>
+      <th>Reviews</th>
+      <th>Full_text</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>2</td>
+      <td>Great CD</td>
+      <td>My lovely Pat has one of the GREAT voices of h...</td>
+      <td>Great CD My lovely Pat has one of the GREAT vo...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>2</td>
+      <td>One of the best game music soundtracks - for a...</td>
+      <td>Despite the fact that I have only played a sma...</td>
+      <td>One of the best game music soundtracks - for a...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>1</td>
+      <td>Batteries died within a year ...</td>
+      <td>I bought this charger in Jul 2003 and it worke...</td>
+      <td>Batteries died within a year ... I bought this...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>2</td>
+      <td>works fine, but Maha Energy is better</td>
+      <td>Check out Maha Energy's website. Their Powerex...</td>
+      <td>works fine, but Maha Energy is better Check ou...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>2</td>
+      <td>Great for the non-audiophile</td>
+      <td>Reviewed quite a bit of the combo players and ...</td>
+      <td>Great for the non-audiophile Reviewed quite a ...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+corpus = data['Full_text'].tolist() # Fulltext 리스트 형태로 corpus에 저장
+len(corpus)
+```
+
+
+
+
+    500
+
+
+
+
+```python
+import nltk
+import re
+
+stop_words = nltk.corpus.stopwords.words("english")
+ps = nltk.porter.PorterStemmer() # 어간 추출 (i.e., dies/dead/died --> die)
+
+def normalize_document(doc):
+    # 토큰화 하기전 문자열 normalization
+    doc = re.sub(r'[^a-zA-Z\s]', "", doc, re.I|re.A) # 구두점 및 특수문자 제거
+    doc = doc.lower()   # 소문자화
+    doc = doc.strip()   # 문자열의 앞 뒤에 있을 빈 칸 제거
+
+    tokens = nltk.word_tokenize(doc) # 토큰화
+
+    filtered_tokens = [w for w in tokens if w not in stop_words] # 불용어 제거
+
+    # doc = " ".join(filtered_tokens)
+    doc = " ".join([ ps.stem(w) for w in filtered_tokens ])
+
+    return doc  
+```
+
+> re.I|re.A: re.sub의 flags ([click](https://docs.python.org/ko/3/library/re.html))
+
+
+```python
+normalize_corpus = np.vectorize(normalize_document) # Vectorization 정규화 함수 트리거 저장
+norm_corpus = normalize_corpus(corpus) # 트리거에 정규화할 corpus 할당
+norm_corpus
+```
+
+
+
+
+    array(['great cd love pat one great voic gener listen cd year still love im good mood make feel better bad mood evapor like sugar rain cd ooz life vocal jusat stuun lyric kill one life hidden gem desert isl cd book never made big beyond everytim play matter black white young old male femal everybodi say one thing sing',
+           'one best game music soundtrack game didnt realli play despit fact play small portion game music heard plu connect chrono trigger great well led purchas soundtrack remain one favorit album incred mix fun epic emot song sad beauti track especi like there mani kind song video game soundtrack must admit one song lifea distant promis brought tear eye mani occasionsmi one complaint soundtrack use guitar fret effect mani song find distract even werent includ would still consid collect worth',
+           'batteri die within year bought charger jul work ok design nice conveni howev year batteri would hold charg might well get alkalin dispos look elsewher charger come batteri better stay power',
+          ...])
+
+
+
+
+```python
+from sklearn.feature_extraction.text import CountVectorizer
+
+cv = CountVectorizer()
+cv_matrix = cv.fit_transform(norm_corpus) # Vectorization 진행
+cv_matrix = cv_matrix.toarray() # pd.DataFrame 인자로 넣기위해 배열화
+
+```
+
+
+```python
+vocabulary = cv.get_feature_names()
+len(vocabulary)
+```
+
+
+
+
+    4754
+
+
+
+
+```python
+one_hot = pd.DataFrame(cv_matrix, columns= vocabulary)
+one_hot.shape
+```
+
+
+
+
+    (500, 4754)
+
+
+
+
+```python
+one_hot
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>aa</th>
+      <th>abbrevi</th>
+      <th>abduct</th>
+      <th>abil</th>
+      <th>abl</th>
+      <th>aboard</th>
+      <th>abor</th>
+      <th>abound</th>
+      <th>abridg</th>
+      <th>abroad</th>
+      <th>...</th>
+      <th>yr</th>
+      <th>yum</th>
+      <th>yuppi</th>
+      <th>zebra</th>
+      <th>zep</th>
+      <th>zero</th>
+      <th>zhivago</th>
+      <th>zillion</th>
+      <th>zr</th>
+      <th>zydeco</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>495</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>496</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>497</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>498</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>499</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>500 rows × 4754 columns</p>
 </div>
