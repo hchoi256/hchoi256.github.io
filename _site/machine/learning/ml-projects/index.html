@@ -414,7 +414,7 @@
           <aside class="sidebar__right sticky">
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> GITHUB BLOG JJUNS</h4></header>
-              <ul class="toc__menu"><li><a href="#car-sales-prediction">Car Sales Prediction</a><ul><li><a href="#learning-goals">Learning Goals</a></li><li><a href="#description">Description</a><ul><li><a href="#dataset">Dataset</a></li></ul></li><li><a href="#import-dataset">Import Dataset</a></li><li><a href="#data-visualization">Data Visualization</a><ul><li><a href="#seaborn">Seaborn</a></li></ul></li><li><a href="#data-preprocessing">Data Preprocessing</a></li><li><a href="#remove-unnecessary-variables">Remove Unnecessary Variables</a><ul><li><a href="#data-scaling">Data Scaling</a></li></ul></li><li><a href="#model-training">Model Training</a></li></ul></li></ul>
+              <ul class="toc__menu"><li><a href="#car-sales-prediction">Car Sales Prediction</a><ul><li><a href="#learning-goals">Learning Goals</a></li><li><a href="#description">Description</a><ul><li><a href="#dataset">Dataset</a></li></ul></li><li><a href="#import-dataset">Import Dataset</a></li><li><a href="#data-visualization">Data Visualization</a><ul><li><a href="#seaborn">Seaborn</a></li></ul></li><li><a href="#data-preprocessing">Data Preprocessing</a></li><li><a href="#remove-unnecessary-variables">Remove Unnecessary Variables</a><ul><li><a href="#data-scaling">Data Scaling</a></li></ul></li><li><a href="#model-training">Model Training</a></li><li><a href="#model-evaluation">Model Evaluation</a></li><li><a href="#model-prediction">Model Prediction</a></li></ul></li></ul>
 
             </nav>
           </aside>
@@ -619,6 +619,10 @@
 
 <p><strong>뉴런 개수</strong>: 25</p>
 
+<blockquote>
+  <p>뉴런 개수가 적을수록 손실이 크게 발생한다 (에포크 수를 늘림으로써 보완 가능하다).</p>
+</blockquote>
+
 <p><strong>bias</strong>: 은닉층 뉴런 개수에 맞게 할당된다 (i.e., 은닉층 뉴런 개수 25개 –&gt; bias 역시 25개가 존재한다).</p>
 
 <p><strong>훈련 가능한 파라미터</strong>: 딥러닝 모델 학습의 역전파 과정에서 피라미터 업데이트의 대상이 되는 가중치와 bias를 말한다.</p>
@@ -684,6 +688,33 @@
   <li>verbose: 디폴트 0. 1로 지정하면 Epoch의 상황과, loss의 값이 output에 보여준다.</li>
   <li><a href="https://github.com/hchoi256/ai-terms/blob/main/README.md">validation_split</a></li>
 </ul>
+
+<h2 id="model-evaluation">Model Evaluation</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epochs_hist</span><span class="p">.</span><span class="n">history</span><span class="p">[</span><span class="s">'loss'</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epochs_hist</span><span class="p">.</span><span class="n">history</span><span class="p">[</span><span class="s">'val_loss'</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'Model Loss Progression During Training/Validation'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'Training and Validation Losses'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'Epoch Number'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">([</span><span class="s">'Training Loss'</span><span class="p">,</span> <span class="s">'Validation Loss'</span><span class="p">])</span>
+
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/180432355-41591eba-81ac-4625-a7a9-52b8dcba0c7a.png" alt="image" /></p>
+
+<p>위 그래프에서 손실함수의 분포가 에포크가 [0, 4] 사이의 어느 임계치에서부터 크게 줄어들지 않는 것을 볼 수 있다.</p>
+
+<p>이를 통하여 우리는 적당한 에포크 개수를 도출할 수 있을 것이다.</p>
+
+<h2 id="model-prediction">Model Prediction</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">y_predict</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">50000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="mi">600000</span><span class="p">]]))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'Expected Purchase Amount='</span><span class="p">,</span> <span class="n">y_predict</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Expected Purchase Amount= [35656.47]
+</code></pre></div></div>
 
         
       </section>

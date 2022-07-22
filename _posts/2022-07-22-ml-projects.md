@@ -209,6 +209,8 @@ model.summary()
 
 **뉴런 개수**: 25
 
+> 뉴런 개수가 적을수록 손실이 크게 발생한다 (에포크 수를 늘림으로써 보완 가능하다).
+
 **bias**: 은닉층 뉴런 개수에 맞게 할당된다 (i.e., 은닉층 뉴런 개수 25개 --> bias 역시 25개가 존재한다).
 
 **훈련 가능한 파라미터**: 딥러닝 모델 학습의 역전파 과정에서 피라미터 업데이트의 대상이 되는 가중치와 bias를 말한다.
@@ -255,3 +257,33 @@ epochs_hist = model.fit(X_train, y_train, epochs=20, batch_size=25,  verbose=1, 
 - batch_size: 한 번에 학습할 훈련 데이터 개수
 - verbose: 디폴트 0. 1로 지정하면 Epoch의 상황과, loss의 값이 output에 보여준다.
 - [validation_split](https://github.com/hchoi256/ai-terms/blob/main/README.md)
+
+
+## Model Evaluation
+
+```python
+plt.plot(epochs_hist.history['loss'])
+plt.plot(epochs_hist.history['val_loss'])
+
+plt.title('Model Loss Progression During Training/Validation')
+plt.ylabel('Training and Validation Losses')
+plt.xlabel('Epoch Number')
+plt.legend(['Training Loss', 'Validation Loss'])
+
+```
+
+![image](https://user-images.githubusercontent.com/39285147/180432355-41591eba-81ac-4625-a7a9-52b8dcba0c7a.png)
+
+위 그래프에서 손실함수의 분포가 에포크가 [0, 4] 사이의 어느 임계치에서부터 크게 줄어들지 않는 것을 볼 수 있다.
+
+이를 통하여 우리는 적당한 에포크 개수를 도출할 수 있을 것이다.
+
+
+## Model Prediction
+
+```python
+y_predict = model.predict(np.array([[1, 50, 50000, 10000, 600000]]))
+print('Expected Purchase Amount=', y_predict)
+```
+
+    Expected Purchase Amount= [35656.47]
