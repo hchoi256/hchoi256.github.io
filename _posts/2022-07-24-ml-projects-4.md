@@ -1,8 +1,8 @@
 ---
 layout: single
-title: "ML Project 3: LeNet 심층망 - Traffic Signs Classification"
+title: "ML Project 4: LeNet 심층망 - Traffic Signs Classification"
 categories: Machine Learning
-tag: [machine-learning, python]
+tag: [ML, python]
 toc: true
 toc_sticky: true
 toc_label: "GITHUB BLOG JJUNS"
