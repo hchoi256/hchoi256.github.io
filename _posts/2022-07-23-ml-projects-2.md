@@ -1,8 +1,8 @@
 ---
 layout: single
 title: "ML Project 2: Deep Learning - CIFAR-10 Classification"
-categories: Machine Learning
-tag: [ML, python]
+categories: ML
+tag: [machine learning, python]
 toc: true
 toc_sticky: true
 toc_label: "GITHUB BLOG JJUNS"

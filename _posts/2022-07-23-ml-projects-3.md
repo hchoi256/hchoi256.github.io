@@ -1,8 +1,8 @@
 ---
 layout: single
 title: "ML Project 3: Profit Time Series"
-categories: Machine Learning
-tag: [ML, python]
+categories: ML
+tag: [machine learning, python]
 toc: true
 toc_sticky: true
 toc_label: "GITHUB BLOG JJUNS"
