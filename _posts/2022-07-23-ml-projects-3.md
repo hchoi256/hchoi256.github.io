@@ -17,12 +17,12 @@ sidebar:
 **[Notice]** [download here](https://github.com/hchoi256/machine-learning-development)
 {: .notice--danger}
 
-# PART 1: Chicago Crime Rate
-## Learning Goals
+# Learning Goals
 **시계열 예측**을 위한 **페이스북 Propjet** 이해
 
+# PART 1: Chicago Crime Rate
 ## Description
-절도범이 어느 시간대에 가장 잘 잡히는지, 범죄율이 올라가는 가장 높은 시간대는 언제인지 등을 관찬해보고 결과도 도출해본다
+절도범이 어느 시간대에 가장 잘 잡히는지, 범죄율이 올라가는 가장 높은 시간대는 언제인지 등을 관찰해보고 Prophet 활용하여 미래 'Crime' 결과도 예측해본다.
 
 ## 데이터셋 관찰
 **Dataset contains the following columns**: 
@@ -1402,3 +1402,5 @@ figure3 = m.plot_components(forecast)
 
 # PART 2: Avocado Market
 
+## Description
+페이스북 Prophet을 사용해 미래 물가를 예측한다.
