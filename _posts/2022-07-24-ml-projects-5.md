@@ -17,10 +17,7 @@ sidebar:
 **[Notice]** [download here](https://github.com/hchoi256/machine-learning-development)
 {: .notice--danger}
 
-# PART 1: 이메일 스팸 필터
-이 프로젝트는 [Naive Beyas Classifier](https://github.com/hchoi256/ai-terms/blob/main/README.md)를 활용하여 SMS 스팸 분류 방법을 제시한다.
-
-## Learning Goals
+# Learning Goals
 1. **나이브 베이즈 정리**에 대한 이해
 - *베이즈 정리*에 기반한 분류 기술
 
@@ -31,6 +28,9 @@ sidebar:
 3. 우도, 사전 확률, 주변 우도의 차이점
 
 4. 불균형 데이터 처리 방법
+
+# PART 1: 이메일 스팸 필터
+이 프로젝트는 [Naive Beyas Classifier](https://github.com/hchoi256/ai-terms/blob/main/README.md)를 활용하여 SMS 스팸 분류 방법을 제시한다.
 
 ## 데이터 불러오기
 
@@ -92,7 +92,7 @@ sns.countplot(spam_df['spam'], label = "Count") # 각 카테고리 값별로 데
 ## 자연어 처리
 
 ### 데이터 전처리
-#### 불용어 제거 with 'Stopwords' + 소문자 통일하기
+#### 불용어 제거 and 소문자 통일하기
 
 ```python
 from nltk.corpus import stopwords
@@ -296,6 +296,240 @@ print(classification_report(y_test, y_predict_test))
 
 
 # PART 2: YELP 후기 (TBD)
+'엘프'는 기업체와 서비스에 대한 대중의 리뷰 포럼을 제공하는 앱으로 자연어 처리 기술을 사용해 엘프 리뷰를 분석해본다.
+
+자연어 처리를 활용하여 리뷰에 있는 순수 텍스트에 기반해 고객 기분이 좋은지 나쁜지 감성 분석을 시행한 후, 모델이 자동적으로 해당 고객이 상품에 별점을 얼마나 부과할지 예측한다.
 
 
+## 데이터 불러오기
+```python
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+```
 
+```python
+yelp_df = pd.read_csv("yelp.csv") # 자료 요청시 공유
+```
+
+![image](https://user-images.githubusercontent.com/39285147/180663433-611d058b-ec9e-4276-a517-9b7020c66700.png)
+
+
+## 데이터 시각화
+
+```python
+# 메시지 길이 저장
+yelp_df['length'] = yelp_df['text'].apply(len)
+yelp_df['length'].plot(bins=100, kind='hist') 
+```
+
+![image](https://user-images.githubusercontent.com/39285147/180663579-4a692ad7-7df5-4913-8a64-d4edd41607ec.png)
+
+
+대략 400단어가 분포에서 가장 많은 것으로 관찰된다.
+
+
+```python
+yelp_df.length.describe()
+```
+
+        count    10000.000000
+        mean       710.738700
+        std        617.399827
+        min          1.000000
+        25%        294.000000
+        50%        541.500000
+        75%        930.000000
+        max       4997.000000
+        Name: length, dtype: float64
+
+
+위 결과에서 가장 많은 단어 수는 4997개이고, 평균 단어 수는 710인 것으로 발견됐다.
+
+그렇다면, 각 별점 별 리뷰 개수 분포는 어떠할까?
+
+```python
+sns.countplot(y = 'stars', data=yelp_df) # 'stars' 열을 기준으로 count
+```
+
+
+![image](https://user-images.githubusercontent.com/39285147/180664615-c1904d4b-a7f2-49b5-b6c1-4c5001687b63.png)
+
+
+분포도에서 나온 바와 같이 별점 4점이 가장 많은 빈도수를 차지한다.
+
+여기서, 우리는 각 별점 별로 단어 길이 개수 분포를 확인해보고자 한다.
+
+```python
+g = sns.FacetGrid(data=yelp_df, col='stars', col_wrap=5) # 한 줄에 총 5개 grid를 별점 기준으로 나누기
+g.map(plt.hist, 'length', bins = 20, color = 'r') # 히스토그램 w/ x-axis = length
+```
+
+![image](https://user-images.githubusercontent.com/39285147/180664713-5cda0980-4cb4-4f77-b58d-b11f059294d7.png)
+
+
+분포도에서 확인해볼 수 있듯이, x축은 단어의 길이를 나타낸다.
+
+따라서, 길이가 짧은 리뷰의 빈도수가 각 별점마다 높게 나타난 것을 확인해볼 수 있다. 
+
+이제, 별점 1과 5를 비교해보자.
+
+```python
+yelp_df_1 = yelp_df[yelp_df['stars']==1] # 별점 1
+yelp_df_5 = yelp_df[yelp_df['stars']==5] # 별점 5
+yelp_df_1_5 = pd.concat([yelp_df_1 , yelp_df_5]) # 한 행렬로 합치기
+```
+
+
+```python
+print( '1-Stars percentage =', (len(yelp_df_1) / len(yelp_df_1_5) )*100,"%")
+```
+
+        1-Stars percentage = 18.330885952031327 %
+
+별점 1점은 별점 5점에 대비하여 18.3%의 빈도수를 차지한다.
+
+따라서, 별점 5점은 81.67%를 차지할 것이다.
+
+```python
+sns.countplot(yelp_df_1_5['stars'], label = "Count") 
+```
+
+![image](https://user-images.githubusercontent.com/39285147/180664906-878df245-f501-4236-bde6-903fd5cb8cee.png)
+
+
+## 자연어 처리
+
+### 불용어/구두점 제거
+
+```python
+def message_cleaning(message):
+    Test_punc_removed = [char for char in message if char not in string.punctuation]
+    Test_punc_removed_join = ''.join(Test_punc_removed)
+    Test_punc_removed_join_clean = [word for word in Test_punc_removed_join.split() if word.lower() not in stopwords.words('english')]
+    return Test_punc_removed_join_clean
+```
+
+<details>
+<summary>결과 확인(접기/펼치기)</summary>
+<div markdown="1">
+
+```python
+yelp_df_clean = yelp_df_1_5['text'].apply(message_cleaning)
+print(yelp_df_clean[0]) # show the cleaned up version
+```
+
+
+        ['wife', 'took', 'birthday', 'breakfast', 'excellent', 'weather', 'perfect', 'made', 'sitting', 'outside', 'overlooking', 'grounds', 'absolute', 'pleasure', 'waitress', 'excellent', 'food', 'arrived', 'quickly', 'semibusy', 'Saturday', 'morning', 'looked', 'like', 'place', 'fills', 'pretty', 'quickly', 'earlier', 'get', 'better', 'favor', 'get', 'Bloody', 'Mary', 'phenomenal', 'simply', 'best', 'Ive', 'ever', 'Im', 'pretty', 'sure', 'use', 'ingredients', 'garden', 'blend', 'fresh', 'order', 'amazing', 'EVERYTHING', 'menu', 'looks', 'excellent', 'white', 'truffle', 'scrambled', 'eggs', 'vegetable', 'skillet', 'tasty', 'delicious', 'came', '2', 'pieces', 'griddled', 'bread', 'amazing', 'absolutely', 'made', 'meal', 'complete', 'best', 'toast', 'Ive', 'ever', 'Anyway', 'cant', 'wait', 'go', 'back']
+
+
+```python
+print(yelp_df_1_5['text'][0]) # show the original version
+```
+
+
+        My wife took me here on my birthday for breakfast and it was excellent.  The weather was perfect which made sitting outside overlooking their grounds an absolute pleasure.  Our waitress was excellent and our food arrived quickly on the semi-busy Saturday morning.  It looked like the place fills up pretty quickly so the earlier you get here the better.
+
+        Do yourself a favor and get their Bloody Mary.  It was phenomenal and simply the best I've ever had.  I'm pretty sure they only use ingredients from their garden and blend them fresh when you order it.  It was amazing.
+
+        While EVERYTHING on the menu looks excellent, I had the white truffle scrambled eggs vegetable skillet and it was tasty and delicious.  It came with 2 pieces of their griddled bread with was amazing and it absolutely made the meal complete.  It was the best "toast" I've ever had.
+
+        Anyway, I can't wait to go back!
+
+
+</div>
+</details>
+
+### [Count Vectorizer](#count-vectorizer)
+
+```python
+from sklearn.feature_extraction.text import CountVectorizer
+
+vectorizer = CountVectorizer(analyzer = message_cleaning)
+yelp_countvectorizer = vectorizer.fit_transform(yelp_df_1_5['text'])
+
+yelp_countvectorizer.shape
+```
+
+        (4086, 26435)
+
+
+```python
+print(yelp_countvectorizer.toarray())  
+```
+
+
+        [[0 0 0 ... 0 0 0]
+        [0 0 0 ... 0 0 0]
+        [0 0 0 ... 0 0 0]
+        ...
+        [0 0 0 ... 0 0 0]
+        [0 0 0 ... 0 0 0]
+        [0 0 0 ... 0 0 0]]
+
+
+## Training/Test 생성
+
+```python
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(yelp_countvectorizer, yelp_df_1_5['stars'].values, test_size=0.2)
+```
+
+
+## 모델 훈련 (Naive Beyas)
+
+```python
+from sklearn.naive_bayes import MultinomialNB
+
+NB_classifier = MultinomialNB()
+NB_classifier.fit(X_train, y_train)
+```
+
+## 모델 평가
+### 혼동 행렬
+```python
+from sklearn.metrics import classification_report, confusion_matrix
+
+y_predict_train = NB_classifier.predict(X_train)
+y_predict_train
+cm = confusion_matrix(y_train, y_predict_train)
+sns.heatmap(cm, annot=True)
+```
+
+
+![image](https://user-images.githubusercontent.com/39285147/180665314-052c9c4f-9ee8-4e45-83e8-40498b220715.png)
+
+
+모델이 학습 데이터를 훈련한 결과를 보여주는 상기 혼동 행렬에서 오분류가 64개인 것으로 확인된다.
+
+
+```python
+# Predicting the Test set results
+y_predict_test = NB_classifier.predict(X_test)
+cm = confusion_matrix(y_test, y_predict_test)
+sns.heatmap(cm, annot=True)
+```
+
+![image](https://user-images.githubusercontent.com/39285147/180665355-5991613d-7965-4802-982c-6913ef276720.png)
+
+
+반대로 모델이 테스트 데이터를 예측한 결과를 보여주는 상기 혼동 행렬에서 오분류가 67개인 것으로 확인된다.
+
+### 성능 지표
+```python
+print(classification_report(y_test, y_predict_test))
+```
+
+                    precision    recall  f1-score   support
+
+                1       0.86      0.68      0.76       156
+                5       0.93      0.97      0.95       662
+
+        avg / total       0.92      0.92      0.91       818
+
+
+## TF-IDF
+정보 검색과 텍스트 마이닝에서 이용하는 가중치로, 여러 문서로 이루어진 문서군이 있을 때 어떤 단어가 특정 문서 내에서 얼마나 중요한 것인지를 나타내는 통계적 수치이다.
+
+자세한 사항은 [코드](#코드)를 참조하길 바란다.
