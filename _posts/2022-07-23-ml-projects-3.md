@@ -21,6 +21,8 @@ sidebar:
 **시계열 예측**을 위한 **페이스북 Propjet** 이해
 
 # PART 1: Chicago Crime Rate
+![image](https://user-images.githubusercontent.com/39285147/180627186-59e3e369-89c7-4607-b533-0f62794fcde8.png)
+
 ## Description
 절도범이 어느 시간대에 가장 잘 잡히는지, 범죄율이 올라가는 가장 높은 시간대는 언제인지 등을 관찰해보고 Prophet 활용하여 미래 'Crime' 결과도 예측해본다.
 
@@ -1401,6 +1403,101 @@ figure3 = m.plot_components(forecast)
 시카고와 같은 경우 그래프에서 7월달(여름)까지 범죄율이 상승하다가, 그 이후로 겨울을 맞아 날씨가 추워지면서 범죄율이 하락하는 현상을 관찰해볼 수 있다.
 
 # PART 2: Avocado Market
+![image](https://user-images.githubusercontent.com/39285147/180627180-230065b5-cac5-4905-9275-9a3b8c9c0201.png)
 
 ## Description
 페이스북 Prophet을 사용해 미래 물가를 예측한다.
+
+## 데이터 관찰
+**Some relevant columns in the dataset**:
+- Date - The date of the observation
+- AveragePrice - the average price of a single avocado
+- type - conventional or organic
+- year - the year
+- Region - the city or region of the observation
+- Total Volume - Total number of avocados sold
+- 4046 - Total number of avocados with PLU 4046 sold
+- 4225 - Total number of avocados with PLU 4225 sold
+- 4770 - Total number of avocados with PLU 4770 sold
+
+## 데이터 불러오기
+
+```python
+# import libraries 
+import pandas as pd # Import Pandas for data manipulation using dataframes
+import numpy as np # Import Numpy for data statistical analysis 
+import matplotlib.pyplot as plt # Import matplotlib for data visualisation
+import random
+import seaborn as sns
+from fbprophet import Prophet
+
+```
+
+```python
+avocado_df = pd.read_csv('avocado.csv')
+
+```
+
+```python
+# 날짜별 아보카도 가격분포
+avocado_df = avocado_df.sort_values("Date") # 시간 순으로 정렬
+plt.figure(figsize=(10,10))
+plt.plot(avocado_df['Date'], avocado_df['AveragePrice'])
+```
+
+        ![image](https://user-images.githubusercontent.com/39285147/180627643-4643c6bd-53b8-4c99-b2b3-72be82c8e849.png)
+
+
+```python
+# 지역별 아보카도 가격분포
+plt.figure(figsize=[25,12])
+sns.countplot(x = 'region', data = avocado_df)
+plt.xticks(rotation = 45)
+
+```
+
+        ![image](https://user-images.githubusercontent.com/39285147/180627663-1f2a671d-918e-407c-ae38-7324e92e2f50.png)
+
+
+```python
+# 연도별 아보카도 가격분포
+plt.figure(figsize=[25,12])
+sns.countplot(x = 'year', data = avocado_df)
+plt.xticks(rotation = 45)
+```
+
+        ![image](https://user-images.githubusercontent.com/39285147/180627690-5098e10e-886c-4557-948e-f31b670aedac.png)
+
+
+## Prediction
+
+```python
+avocado_prophet_df = avocado_df[['Date', 'AveragePrice']] # Prophet에 필요한 열만 추출 
+avocado_prophet_df = avocado_prophet_df.rename(columns={'Date':'ds', 'AveragePrice':'y'}) # Prophet 열이름 사전설정
+
+avocado_prophet_df
+```
+
+        ![image](https://user-images.githubusercontent.com/39285147/180627737-38939649-e27b-4405-8db4-f6eef7244366.png)
+
+
+```python
+# Prophet 적용
+m = Prophet()
+m.fit(avocado_prophet_df)
+
+# Forcasting into the future
+future = m.make_future_dataframe(periods=365) # 미래 1년 동안의 아보카도 가격 예측
+forecast = m.predict(future)
+
+figure = m.plot(forecast, xlabel='Date', ylabel='Price')
+```
+
+
+        ![image](https://user-images.githubusercontent.com/39285147/180627774-0e9170c5-caf9-4068-be02-cdb9c81f6bee.png)
+
+```python
+figure3 = m.plot_components(forecast)
+```
+
+        ![image](https://user-images.githubusercontent.com/39285147/180627779-8ad49295-3efa-4aa8-ba02-8587bb0ffdc1.png)
