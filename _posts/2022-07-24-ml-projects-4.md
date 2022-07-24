@@ -200,7 +200,7 @@ X_test_gray_norm = (X_test_gray - 128)/128
 X_validation_gray_norm = (X_validation_gray - 128)/128
 ```
 
-> 왜 '128'이라는 숫자로 정규화하는걸까?
+> 왜 '128'이라는 숫자로 정규화하는걸까? (TBA)
 
 ```python
 # 정제된 이미지 시각화
@@ -211,7 +211,12 @@ plt.imshow(X_train[i])
 
 ```
 
+[*흑백*]
+
 ![image](https://user-images.githubusercontent.com/39285147/180631744-3e9ec0da-7271-408a-983a-4f329a148234.png)
+
+
+[*기존*]
 
 ![image](https://user-images.githubusercontent.com/39285147/180631746-cc3638e8-b277-4351-993b-1f96434d8825.png)
 
