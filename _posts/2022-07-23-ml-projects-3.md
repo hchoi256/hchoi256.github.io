@@ -107,7 +107,7 @@ plt.figure(figsize=(10,10))
 sns.heatmap(chicago_df.isnull(), cbar = False, cmap = 'YlGnBu')
 ```
 
-        ![image](https://user-images.githubusercontent.com/39285147/180625915-a5c5d201-7976-403e-9dec-3ee4d1261c6a.png)
+![image](https://user-images.githubusercontent.com/39285147/180625915-a5c5d201-7976-403e-9dec-3ee4d1261c6a.png)
 
 
 ```python
@@ -116,7 +116,7 @@ plt.figure(figsize = (15, 10))
 sns.countplot(y= 'Primary Type', data = chicago_df, order = chicago_df['Primary Type'].value_counts().iloc[:15].index)
 ```
 
-        ![image](https://user-images.githubusercontent.com/39285147/180626028-84e51093-bcb4-40a8-99ea-575d68f0a53f.png)
+![image](https://user-images.githubusercontent.com/39285147/180626028-84e51093-bcb4-40a8-99ea-575d68f0a53f.png)
 
 
 'MOTOR VEHICLE THEFT' 대략 20만 여개의 차량이 도난됐다.
@@ -138,7 +138,7 @@ plt.xlabel('Years')
 plt.ylabel('Number of Crimes')
 ```
 
-        ![image](https://user-images.githubusercontent.com/39285147/180626221-6bc29e6a-a714-4dda-8654-54085509b499.png)
+![image](https://user-images.githubusercontent.com/39285147/180626221-6bc29e6a-a714-4dda-8654-54085509b499.png)
 
         Date
         2005-12-31    455811
@@ -163,7 +163,7 @@ plt.xlabel('Months')
 plt.ylabel('Number of Crimes')
 ```
 
-        ![image](https://user-images.githubusercontent.com/39285147/180626249-77bc4292-b858-4436-a7d1-16f7dd213c7d.png)
+![image](https://user-images.githubusercontent.com/39285147/180626249-77bc4292-b858-4436-a7d1-16f7dd213c7d.png)
 
 
 
@@ -175,7 +175,7 @@ plt.xlabel('Quarters')
 plt.ylabel('Number of Crimes')
 ```
 
-        ![image](https://user-images.githubusercontent.com/39285147/180626270-d43dbc75-697e-44e0-896c-a83cb635d75a.png)
+![image](https://user-images.githubusercontent.com/39285147/180626270-d43dbc75-697e-44e0-896c-a83cb635d75a.png)
 
 ## 데이터 전처리
 
@@ -186,7 +186,7 @@ chicago_prophet_df = pd.DataFrame(chicago_prophet)
 chicago_prophet_df_final = chicago_prophet_df.rename(columns={'Date':'ds', 'Crime Count':'y'})
 ```
 
-        [image](https://user-images.githubusercontent.com/39285147/180626349-87d721fd-31fc-4964-aabf-3fa9febbc6bd.png)
+[image](https://user-images.githubusercontent.com/39285147/180626349-87d721fd-31fc-4964-aabf-3fa9febbc6bd.png)
 
 ## Prediction
 
@@ -1388,7 +1388,7 @@ forecast = m.predict(future)
 figure = m.plot(forecast, xlabel='Date', ylabel='Crime Rate')
 ```
 
-        ![image](https://user-images.githubusercontent.com/39285147/180626434-50c9ad80-89f1-41b7-8f09-0b81df037201.png)
+![image](https://user-images.githubusercontent.com/39285147/180626434-50c9ad80-89f1-41b7-8f09-0b81df037201.png)
 
 시각화 자료에서 볼 수 있듯이 데이터에 포함된 2017년 이후의 연도 또한 Prophet을 통하여 표현이 가능하다.
 
@@ -1398,7 +1398,7 @@ figure = m.plot(forecast, xlabel='Date', ylabel='Crime Rate')
 figure3 = m.plot_components(forecast)
 ```
 
-        ![image](https://user-images.githubusercontent.com/39285147/180626451-4193c24f-4667-483b-867e-934386363c79.png)
+![image](https://user-images.githubusercontent.com/39285147/180626451-4193c24f-4667-483b-867e-934386363c79.png)
 
 시카고와 같은 경우 그래프에서 7월달(여름)까지 범죄율이 상승하다가, 그 이후로 겨울을 맞아 날씨가 추워지면서 범죄율이 하락하는 현상을 관찰해볼 수 있다.
 
@@ -1445,7 +1445,7 @@ plt.figure(figsize=(10,10))
 plt.plot(avocado_df['Date'], avocado_df['AveragePrice'])
 ```
 
-        ![image](https://user-images.githubusercontent.com/39285147/180627643-4643c6bd-53b8-4c99-b2b3-72be82c8e849.png)
+![image](https://user-images.githubusercontent.com/39285147/180627643-4643c6bd-53b8-4c99-b2b3-72be82c8e849.png)
 
 
 ```python
@@ -1456,7 +1456,7 @@ plt.xticks(rotation = 45)
 
 ```
 
-        ![image](https://user-images.githubusercontent.com/39285147/180627663-1f2a671d-918e-407c-ae38-7324e92e2f50.png)
+![image](https://user-images.githubusercontent.com/39285147/180627663-1f2a671d-918e-407c-ae38-7324e92e2f50.png)
 
 
 ```python
@@ -1466,7 +1466,7 @@ sns.countplot(x = 'year', data = avocado_df)
 plt.xticks(rotation = 45)
 ```
 
-        ![image](https://user-images.githubusercontent.com/39285147/180627690-5098e10e-886c-4557-948e-f31b670aedac.png)
+![image](https://user-images.githubusercontent.com/39285147/180627690-5098e10e-886c-4557-948e-f31b670aedac.png)
 
 
 ## Prediction
@@ -1478,7 +1478,7 @@ avocado_prophet_df = avocado_prophet_df.rename(columns={'Date':'ds', 'AveragePri
 avocado_prophet_df
 ```
 
-        ![image](https://user-images.githubusercontent.com/39285147/180627737-38939649-e27b-4405-8db4-f6eef7244366.png)
+![image](https://user-images.githubusercontent.com/39285147/180627737-38939649-e27b-4405-8db4-f6eef7244366.png)
 
 
 ```python
@@ -1494,11 +1494,11 @@ figure = m.plot(forecast, xlabel='Date', ylabel='Price')
 ```
 
 
-        ![image](https://user-images.githubusercontent.com/39285147/180627774-0e9170c5-caf9-4068-be02-cdb9c81f6bee.png)
+![image](https://user-images.githubusercontent.com/39285147/180627774-0e9170c5-caf9-4068-be02-cdb9c81f6bee.png)
 
 ```python
 figure3 = m.plot_components(forecast)
 ```
 
-        ![image](https://user-images.githubusercontent.com/39285147/180627779-8ad49295-3efa-4aa8-ba02-8587bb0ffdc1.png)
+![image](https://user-images.githubusercontent.com/39285147/180627779-8ad49295-3efa-4aa8-ba02-8587bb0ffdc1.png)
 
