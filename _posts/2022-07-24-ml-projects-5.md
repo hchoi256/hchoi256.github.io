@@ -295,9 +295,7 @@ print(classification_report(y_test, y_predict_test))
 
 
 
-# PART 2: YELP 후기
-
-
+# PART 2: YELP 후기 (TBD)
 
 
 
