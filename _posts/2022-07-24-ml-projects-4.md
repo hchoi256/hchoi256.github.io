@@ -41,12 +41,11 @@ Classes are as listed below:
 - (40, b'Roundabout mandatory') (41, b'End of no passing')
 - (42, b'End of no passing by vehicles over 3.5 metric tons')
 
-The network used is called **Le-Net** that was presented by Yann LeCun
-- http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf
+[The network used is called **Le-Net** that was presented by Yann LeCun](http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf)
 
 # Learning Goals
 1. Le-Net이라는 심층 신경망을 사용하여 교통 표지판 분류 작업을 수행한다.
-- 자율 주행 잗종차 분야에서 특히 각광받는 분야로 카메라를 통해 물체 감지 및 교통 표지판 인식하여 적절한 자동차 수행처리를 이행해야 한다.
+- 자율 주행 자동차 분야에서 특히 각광받는 분야로 카메라를 통해 물체 감지 및 교통 표지판 인식하여 적절한 자동차 수행처리를 이행해야 한다.
 
 2. 시그모이드 ReLU와 같은 활성화 함수에 대해 이해한다
 
@@ -101,13 +100,8 @@ The network used is called **Le-Net** that was presented by Yann LeCun
 </div>
 </details>
 
+
 # 데이터 불러오기
-
-```python
-import warnings
-warnings.filterwarnings("ignore")
-
-```
 
 ```python
 import pickle # 데이터 직렬화
@@ -121,6 +115,7 @@ import random
 > *데이터 직렬화*: 객체에 저장된 데이터를 스트림에 쓰기위해 연속적인 데이터를 변환하는것
 
 ```python
+# 이미지 데이터 요청시 공유
 with open("./traffic-signs-data/train.p", mode='rb') as training_data:
     train = pickle.load(training_data)
 with open("./traffic-signs-data/valid.p", mode='rb') as validation_data:
@@ -129,7 +124,7 @@ with open("./traffic-signs-data/test.p", mode='rb') as testing_data:
     test = pickle.load(testing_data)
 ```
 
-``python
+```python
 X_train, y_train = train['features'], train['labels']
 X_validation, y_validation = valid['features'], valid['labels']
 X_test, y_test = test['features'], test['labels']
@@ -163,7 +158,7 @@ y_train[i]
         
         36
 
-보시는 것처럼 해당 이미지의 클래스 인덱스는 36으로, 이는 'Go straight or right'에 해당된다.
+위 결과에서 해당 이미지의 클래스 인덱스는 36으로, 이는 'Go straight or right'에 해당된다.
 
 이미지 속 표지판과 부합하는 것을 확인했다.
 
@@ -178,6 +173,8 @@ X_train, y_train = shuffle(X_train, y_train)
 
 상기 코드에서 이미지 순서에 기반한 과적합을 방지하고자 이미지 셔플을 전처리 과정에서 해줘야 한다.
 
+그렇지 않으면, 모델이 매번 같은 순서의 이미지들을 학습하여 그 이미지들에 대한 과대 학습이 이루어질 것이다.
+
 
 ```python
 # 컬러 이미지 --> 흑백 이미지 (RGB 채널 하나로 통일)
@@ -186,15 +183,15 @@ X_test_gray  = np.sum(X_test/3, axis=3, keepdims=True)
 X_validation_gray  = np.sum(X_validation/3, axis=3, keepdims=True) 
 ```
 
-색상때문에 분류가 헷갈리지 않게 하기위해서 흑백으로 통일한다.
+색상때문에 분류가 헷갈리지 않게 하기위해서 RGB를 흑백으로 통일한다.
 
 np.sum()
-- [axis](https://stackoverflow.com/questions/51628437/compute-the-sum-of-the-red-green-and-blue-channels-using-python): 모든 원소의 합계가 아닌, 특정 축을 기준으로만 합계를 구하기
+- *[axis]*(https://stackoverflow.com/questions/51628437/compute-the-sum-of-the-red-green-and-blue-channels-using-python): 모든 원소의 합계가 아닌, 특정 축을 기준으로만 합계를 구하기
     - i.e, (34799, 32, 32, 3)에서 axis=2는 32, axis=3은 3이다. 따라서, axis=3은 RGB인 3을 기준으로 summation을 수행한다.
 - keepdims: 차원 유지하여 합계 구하기
     - 기존 차원이 n일 때, axis는 n-1의 차원을 배출한다. 따라서, keepdims=True를 통하여 n 차원을 배출하게 한다.
 
-> RGB는 3개의 채널로 구성되어 있으므로, 이미지 데이터를 총 합한 다음 3으로 나누면 색깔이 제거된다.
+> RGB는 3개의 채널로 구성되어 있으므로, 이미지 데이터의 RGB 값들을 총 합한 다음 3으로 나누면 색깔이 제거된다.
 
 ```python
 # 정규화
