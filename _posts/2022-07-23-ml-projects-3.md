@@ -1501,3 +1501,4 @@ figure3 = m.plot_components(forecast)
 ```
 
         ![image](https://user-images.githubusercontent.com/39285147/180627779-8ad49295-3efa-4aa8-ba02-8587bb0ffdc1.png)
+
