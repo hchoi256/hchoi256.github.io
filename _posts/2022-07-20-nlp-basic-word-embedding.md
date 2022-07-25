@@ -1201,7 +1201,7 @@ cosine_similarity(df0[3:4], df0) # 문서 4와 나머지 문서들과의 코사�
 ## Hashing Vectorizer
 문장들을 token의 빈도수(= 횟수)로 행렬을 만드는 방법으로, CountVectorizer와 동일한 방식이다.
 
-하지만, 'CountVectorizer'과 다르게 텍스트를 처리할 때 '해시'를 이용하여 실행시간을 줄인다.
+하지만, 'CountVectorizer'과 다르게 텍스트를 처리할 때 '해시'를 이용하여 '실행시간을 줄인다'.
 
 
 
@@ -1215,7 +1215,8 @@ from sklearn.feature_extraction.text import HashingVectorizer
 vectorizer = HashingVectorizer(n_features = 2 ** 5) # 'n_features': 피쳐 개수 (default = 30,000개)
 ```
 
-해쉬 함수를 사용하여 토큰 이름들을 맵핑된 32개의 피처로부터 제어한다.
+해쉬 함수를 사용하여 토큰 이름들을 맵핑된 32개의 피처를 제어한다.
+- 해쉬 함수를 통하여 32개의 피처 중 알맞은 피처의 인덱스를 가져온다.
 
 ```python
 X = vectorizer.fit_transform(corpus)
@@ -1429,7 +1430,7 @@ matrix
 
 
 ## FeatureHasher
-Feature Hashing이라는 방법을 이용하여 약간 메모리를 사용하고 빠르게 벡터화 하는 방법이다.
+Feature Hashing이라는 방법을 이용하여 '약간 메모리를 사용하고' 빠르게 벡터화 하는 방법이다.
 
 
 ```python
