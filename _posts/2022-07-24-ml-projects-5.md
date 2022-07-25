@@ -532,4 +532,6 @@ print(classification_report(y_test, y_predict_test))
 ## TF-IDF
 정보 검색과 텍스트 마이닝에서 이용하는 가중치로, 여러 문서로 이루어진 문서군이 있을 때 어떤 단어가 특정 문서 내에서 얼마나 중요한 것인지를 나타내는 통계적 수치이다.
 
-자세한 사항은 [코드](#코드)를 참조하길 바란다.
+가령, 부동산 관련하여 '계약'이라는 단어가 지극히 중요할 것이다.
+
+보다 자세한 사항은 [여기](https://hchoi256.github.io/nlp/nlp-basic-word-embedding/) 혹은 [코드](#코드)를 참조하길 바란다.
