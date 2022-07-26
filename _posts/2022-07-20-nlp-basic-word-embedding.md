@@ -51,26 +51,26 @@ frame.sentiment = frame.sentiment.replace( {"positive" : 1, "negative" : 0} ) # 
 ```
 
 ```python
-# 라이브러리 불러오기
+# load libraries
 import re
 import nltk
 from nltk.corpus import stopwords
-nltk.download("stopwords") # 불용어
-nltk.download("punkt") # 구두점
+nltk.download("stopwords")
+nltk.download("punkt")
 nltk.download("averaged_perceptron_tagger") #
 ```
 
 ```python
-# 데이터 전처리
+# data preprocessing
 stop_words = list(set(stopwords.words("english")))
 all_words = []
 
 for p in frame.review:
-    cleaned = re.sub(r"[^a-zA-Z\s]", "", p) # 필요없는 기호들 삭제
+    cleaned = re.sub(r"[^a-zA-Z\s]", "", p) # remove unnecessary words
     tokens = nltk.word_tokenize(cleaned)
-    word_length = [ i for i in tokens if 3 <= len(i) <=7 ] # 토근의 길이로 제한
-    word_lower = [ i.lower() for i in word_length ] # 토큰의 소문자화
-    stopped = [w for w in word_lower if not w in stop_words] # 불용어 제거
+    word_length = [ i for i in tokens if 3 <= len(i) <=7 ] # limit by length of tokens
+    word_lower = [ i.lower() for i in word_length ] # lowercase tokens
+    stopped = [w for w in word_lower if not w in stop_words] # remove stopwords
     all_words.append(stopped)
 ```
 
@@ -84,7 +84,7 @@ words_fq
 
 
 ```python
-# 데이터 시각화
+# data visualization
 import matplotlib.pyplot as plt
 
 words_fq.plot(30, cumulative=False)
@@ -95,23 +95,23 @@ plt.show()
 ![image](https://user-images.githubusercontent.com/39285147/181004840-3db47747-7566-43a3-beeb-eb52e2f9f4f6.png)
 
 
-상기 분포도에서 'giant' 단어가 가장 많이 사용된 것을 확인해볼 수 있다.
+상기 분포도에서 'giant' 단어가 가장 많이 사용된 것을 확인해볼 수 있다. The plot shows that 'giant' is used the most.
 
 # Vectorization
 
-## Vectorization 필요성
-Machine (기계)는 문자와 단어를 이해할 수 없다.
+## Why We Need Vectorization?
+Machine (기계)는 문자와 단어를 이해할 수 없다. Machines cannot understand sentences or words. 
 
-0과 1로 이루어진 이진 형태의 데이터를 기계는 이해할 수 있다.
+0과 1로 이루어진 이진 형태의 데이터를 기계는 이해할 수 있다. But they can understand binary data (i.e., 0101010)  
 
-**Computer Vision**의 가장 기본은 이미지는 픽셀 (pixel)로 이루어져 있고, 픽셀에 대한 정보는 x, y와 같은 픽셀의 위치 그리고 해당 픽셀의 색상 정보 (보통 RGB)를 가지고 있다. 이런 정보들은 숫자로 쉽게 만들 수가 있다!
+**Computer Vision**의 가장 기본은 이미지는 픽셀 (pixel)로 이루어져 있고, 픽셀에 대한 정보는 x, y와 같은 픽셀의 위치 그리고 해당 픽셀의 색상 정보 (보통 RGB)를 가지고 있다. 이런 정보들은 숫자로 쉽게 만들 수가 있다! **Computer Vision** is a collection of pixels requiring information about the location of x, y, and RGB. We can easily produce such information with numbers.
 
-**NLP**의 텍스트 데이터 역시 기계가 이해할 수 있도록 숫자로 표현해야 한다.
+**NLP**의 텍스트 데이터 역시 기계가 이해할 수 있도록 숫자로 표현해야 한다. In NLP, text data must also be numbers.
 
-*CountVectorizer* 텍스트를 숫자 데이터로 변환하는 방법으로, 텍스트를 수치 데이터로 변화하는데 사용하는 method! sklearn을 통해 사용 가능하다.
+**CountVectorizer** 텍스트를 숫자 데이터로 변환하는 방법으로, 텍스트를 수치 데이터로 변화하는데 사용하는 method! sklearn을 통해 사용 가능하다. **CountVectorizer** is the method to convert text to numbers, which can be achieved with *sklearn*.
 
 ## 1. CountVectorizer
-텍스트 데이터에서 '횟수'를 기준으로 특징을 추출하는 방법이다.
+텍스트 데이터에서 '횟수'를 기준으로 특징을 추출하는 방법이다. Extracting features by 'number' from text data.
 
 ```python
 %pip install scikit-learn
@@ -175,7 +175,7 @@ print(word_count_vec.toarray())
 
 ```python
 matrix = count_vec.fit_transform(corpus)
-pd.set_option("display.max_columns", None) # 테이블 전체를 한 눈에 보여주기
+pd.set_option("display.max_columns", None) # show table on one page
 counts = pd.DataFrame(matrix.toarray(), index = ["doc1", "doc2", "doc3", "doc4", "doc5", "doc6"], columns = count_vec.get_feature_names())
 counts.loc["Total", :] = counts.sum()
 counts
@@ -398,7 +398,7 @@ counts
 </table>
 </div>
 
-### ConutVectorizer 실습
+### Exercise
 
 ```python
 import pandas as pd
@@ -591,14 +591,14 @@ stop_words = nltk.corpus.stopwords.words("english")
 ps = nltk.porter.PorterStemmer() # 어간 추출 (i.e., dies/dead/died --> die)
 
 def normalize_document(doc):
-    # 토큰화 하기전 문자열 normalization
-    doc = re.sub(r'[^a-zA-Z\s]', "", doc, re.I|re.A) # 구두점 및 특수문자 제거
-    doc = doc.lower()   # 소문자화
-    doc = doc.strip()   # 문자열의 앞 뒤에 있을 빈 칸 제거
+    # normalization
+    doc = re.sub(r'[^a-zA-Z\s]', "", doc, re.I|re.A) # 구두점 및 특수문자 제거 remove punctuation and speical characteristics
+    doc = doc.lower()   # 소문자화 lowercase
+    doc = doc.strip()   # 문자열의 앞 뒤에 있을 빈 칸 제거 strip string
 
-    tokens = nltk.word_tokenize(doc) # 토큰화
+    tokens = nltk.word_tokenize(doc) # tokenization
 
-    filtered_tokens = [w for w in tokens if w not in stop_words] # 불용어 제거
+    filtered_tokens = [w for w in tokens if w not in stop_words] # remove stopwords
 
     # doc = " ".join(filtered_tokens)
     doc = " ".join([ ps.stem(w) for w in filtered_tokens ])
@@ -610,8 +610,8 @@ def normalize_document(doc):
 
 
 ```python
-normalize_corpus = np.vectorize(normalize_document) # Vectorization 정규화 함수 트리거 저장
-norm_corpus = normalize_corpus(corpus) # 트리거에 정규화할 corpus 할당
+normalize_corpus = np.vectorize(normalize_document) # vectorize the text
+norm_corpus = normalize_corpus(corpus) # noremarize the corpus
 norm_corpus
 ```
 
@@ -630,8 +630,8 @@ norm_corpus
 from sklearn.feature_extraction.text import CountVectorizer
 
 cv = CountVectorizer()
-cv_matrix = cv.fit_transform(norm_corpus) # Vectorization 진행
-cv_matrix = cv_matrix.toarray() # pd.DataFrame 인자로 넣기위해 배열화
+cv_matrix = cv.fit_transform(norm_corpus) # perform vectorization
+cv_matrix = cv_matrix.toarray() # pd.DataFrame 인자로 넣기위해 배열화 to be used for pd.DataFrame
 
 ```
 
@@ -981,17 +981,17 @@ one_hot
 </div>
 
 ## 2. TF-IDF
-정보 검색과 텍스트 마이닝에서 이용하는 가중치로, 여러 문서로 이루어진 문서군이 있을 때 어떤 단어가 특정 문서 내에서 얼마나 중요한 것인지를 나타내는 통계적 수치이다.
+정보 검색과 텍스트 마이닝에서 이용하는 가중치로, 여러 문서로 이루어진 문서군이 있을 때 어떤 단어가 특정 문서 내에서 얼마나 중요한 것인지를 나타내는 통계적 수치이다. a statistical measure that evaluates how relevant a word is to a document in a collection of documents
 
-*TF*: 특정 단어가 하나의 데이터 안에서 등장하는 횟수
+*TF*: 특정 단어가 하나의 데이터 안에서 등장하는 횟수 how many times certain word appears in one data
 
-*DF*: 문제 빈도 값으로, 특정 단어가 여러 데이터에 자주 등장하는지 알려주는 지표
+*DF*: 문제 빈도 값으로, 특정 단어가 여러 데이터에 자주 등장하는지 알려주는 지표 how many times certain word appears in other data
 
-*IDF(Inverse)*: DF의 역수를 취해서 구하며, 특정 단어가 다른 데이터에 등장하지 않을 경우 값이 커진다
+*IDF(Inverse)*: DF의 역수를 취해서 구하며, 특정 단어가 다른 데이터에 등장하지 않을 경우 값이 커진다 As a word doesn't appear in other data, IDF increases
 
-TF-IDF란 이 두 값을 곱해서 사용하므로 어떤 단어가 해당 문서에 자주 등장하지만 다른 문서에는 많이 없는 단어일수록 높은 값을 가진다.
+TF-IDF란 이 두 값을 곱해서 사용하므로 어떤 단어가 해당 문서에 자주 등장하지만 다른 문서에는 많이 없는 단어일수록 높은 값을 가진다. TF-IDF is computed by the multiplication of TF and IDF.
 
-따라서, 조사나 지시대명사처럼 자주 등장하는 단어는 TF 값은 크지만 IDF 값은 작아지므로 CountVectorizer가 가진 문제점이 해결 가능하다.
+따라서, 조사나 지시대명사처럼 자주 등장하는 단어는 TF 값은 크지만 IDF 값은 작아지므로 CountVectorizer가 가진 문제점이 해결 가능하다. Thus, TF-IDF overcomes the limits of CountVectorizer.
 
 
 
@@ -1041,9 +1041,9 @@ count_vec = CountVectorizer()
 
 
 ```python
-matrix = count_vec.fit_transform(corpus) # CountVectorizer 사용하여 숫자로 변환
-tf_transformer = TfidfTransformer().fit(matrix) # TF-IDF 학습
-word_count_vec_tf = tf_transformer.transform(matrix) # TF-IDF 적용
+matrix = count_vec.fit_transform(corpus)
+tf_transformer = TfidfTransformer().fit(matrix) # train TF-IDF
+word_count_vec_tf = tf_transformer.transform(matrix) # apply TF-IDF
 word_count_vec_tf.shape
 ```
 
@@ -1266,7 +1266,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 
 ```python
-cosine_similarity(df0[3:4], df0) # 문서 4와 나머지 문서들과의 코사인 연관성을 비교
+cosine_similarity(df0[3:4], df0) # 문서 4와 나머지 문서들과의 코사인 연관성을 비교 consine similarity between docu 4 and others
 ```
 
 
@@ -1296,11 +1296,11 @@ from sklearn.feature_extraction.text import HashingVectorizer
 
 
 ```python
-vectorizer = HashingVectorizer(n_features = 2 ** 5) # 'n_features': 피쳐 개수 (default = 30,000개)
+vectorizer = HashingVectorizer(n_features = 2 ** 5) # 'n_features': 피쳐 개수 # features (default = 30,000) 
 ```
 
-해쉬 함수를 사용하여 토큰 이름들을 맵핑된 32개의 피처를 제어한다.
-- 해쉬 함수를 통하여 32개의 피처 중 알맞은 피처의 인덱스를 가져온다.
+해쉬 함수를 사용하여 토큰 이름들을 맵핑된 32개의 피처를 제어한다. take control of token names that have been mapped into 32 features using hash function
+- 해쉬 함수를 통하여 32개의 피처 중 알맞은 피처의 인덱스를 가져온다. hash function helps find the index of appropriate feature
 
 ```python
 X = vectorizer.fit_transform(corpus)
@@ -1547,16 +1547,14 @@ vectors.toarray()
             8., 2., 2., 0., 1.]])
 
 ## 5. Dict Vectorizer
-CountVectorizer과 동일한 방식으로 동작하지만, **딕셔너리** 데이터를 인풋으로 받는다는 점에서 차이가 있다.
-
-단어의 사용 빈도를 나타내는 '딕셔너리 정보'를 입력받아 BOW 인코딩한 수치 벡터로 변환한다.
+CountVectorizer과 동일한 방식으로 동작하지만, **딕셔너리** 데이터를 인풋으로 받는다는 점에서 차이가 있다. Dic Vectorizer shares the same way to operate but receives dictionary input data.
 
 ```python
 from sklearn.feature_extraction import DictVectorizer
 ```
 
 ```python
-# 테스트 Dict 데이터
+# sample dict data
 dict = [
     {'name': 'Tracy', 'from': 'Little Rock', 'sex':'female', 'age': 60},
     {'name': 'Mike', 'from': 'Reading', 'sex':'male', 'age': 54},
@@ -1574,7 +1572,7 @@ dict = [
 
 ```python
 vec = DictVectorizer()
-vectors = vec.fit_transform(dict) # data를 fit하고 transform
+vectors = vec.fit_transform(dict)
 vectors.toarray()
 ```
 
@@ -1617,9 +1615,9 @@ vec.get_feature_names_out(), len(vec.get_feature_names_out())
     23)
 
 
-상기 과정에서 Dict Vectorizer를 통하여 딕셔너리 데이터를 수치에 기반하여 벡터화했다.
+상기 과정에서 Dict Vectorizer를 통하여 딕셔너리 데이터를 수치에 기반하여 벡터화했다. The result shows how vectorization has been done using Dict Vectorizer.
 
-이후, TF-IDF를 사용하여 횟수 기반 벡터화된 행렬을 변환하여 보다 유의미한 단어를 도출해보자.
+이후, TF-IDF를 사용하여 횟수 기반 벡터화된 행렬을 변환하여 보다 유의미한 단어를 도출해보자. Now, let's use TF-IDF to find informative words from the output.
 
 ```python
 from sklearn.feature_extraction.text import TfidfTransformer
@@ -1627,7 +1625,7 @@ from sklearn.feature_extraction.text import TfidfTransformer
 
 ```python
 tf_transformer = TfidfTransformer().fit(vectors)
-word_count_vec_tf = tf_transformer.transform(vectors) # count 행렬을 tf-idf 형식 바꾸어준다
+word_count_vec_tf = tf_transformer.transform(vectors)
 word_count_vec_tf.shape
 ```
 
