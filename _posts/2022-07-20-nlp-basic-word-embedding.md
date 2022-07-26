@@ -24,8 +24,8 @@ import numpy as np
 ```
 
 ```python
-# 데이터 불러오기
-data = pd.read_csv('IMDB-Dataset.csv') # 요청시 공유
+# Load data
+data = pd.read_csv('IMDB-Dataset.csv')
 ```
 
 ```python
@@ -47,8 +47,7 @@ frame.head()
 feature = frame.review
 label = frame.sentiment
 
-frame.sentiment = frame.sentiment.replace( {"positive" : 1, "negative" : 0} )
-frame # 감성 분석 인자 숫자로 변환
+frame.sentiment = frame.sentiment.replace( {"positive" : 1, "negative" : 0} ) # convert from word to number
 ```
 
 ```python

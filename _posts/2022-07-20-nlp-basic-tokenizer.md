@@ -42,7 +42,7 @@ sidebar:
 
 > Natural Language: 인간이 의사소통하는 모든 언어를 지칭한다! Every human language used for communication! 
 
-NLP은 인공지능의 **하위 도메인**이고, 중요한 정보의 대부분은 **자연어**로 작성되어 편리하게 태그가 지정되지 않기 때문에 텍스트 분석을 위한 컨텐츠를 식별하고 추출한 후 다양한 NLP기술을 사용하여 의미 있는 정보를 추출하고자 한다. NLP is the **subdomain** of AI, and every pivotal data are usually untagged. NLP helps identify the contents of the data and extract informative features using diverse NLP technologies. 
+NLP은 인공지능의 **하위 도메인**이고, 중요한 정보의 대부분은 **자연어**로 작성되어 편리하게 태그가 지정되지 않기 때문에 텍스트 분석을 위한 컨텐츠를 식별하고 추출한 후 다양한 NLP기술을 사용하여 의미 있는 정보를 추출하고자 한다. NLP is the **subdomain** of AI, and pivotal data are usually untagged. NLP helps identify the contents of the data and extract informative features using diverse NLP technologies. 
 
 #### NLTK
 
@@ -613,7 +613,7 @@ nltk.download("stopwords", download_dir="./data")
 
 
 ## 2-4) Unigrams, Bigrams, Trigrams, ngrams
-기계는 한 번에 한 단어를 통과해야 할 때 문장의 의미를 완전히 이해할 수 없다. A machine cannot understand a sentence only with one words
+기계는 한 번에 한 단어를 통과해야 할 때 문장의 의미를 완전히 이해할 수 없다. A machine cannot fully understand a sentence only with one word
 - 한 번에 하나씩 주어진 단어를 유니그램이라고 합니다. **Unigram**: one word
 - 한 번에 두 개의 단어 -> 바이그램 **Bigram**: two word
 - 한 번에 세 개의 단어 -> 트라이그램 **Trigram**: three word
