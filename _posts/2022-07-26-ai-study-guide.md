@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "How to Write Markdown"
+title: "AI Study Guide"
 categories: star
 tag: artificial intelligence
 toc: true

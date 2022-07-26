@@ -13,6 +13,91 @@ sidebar:
     nav: "docs"
 ---
 
+
+
+# Tokenization 복습
+
+
+```python
+import pandas as pd
+import numpy as np
+```
+
+```python
+# 데이터 불러오기
+data = pd.read_csv('IMDB-Dataset.csv') # 요청시 공유
+```
+
+```python
+data.shape
+```
+
+    (50000, 2)
+
+
+```python
+frame = data[:1000]
+frame.head()
+```
+
+![image](https://user-images.githubusercontent.com/39285147/181003013-73bfa56f-9a5c-4bb7-9a38-794b1828801a.png)
+
+
+```python
+feature = frame.review
+label = frame.sentiment
+
+frame.sentiment = frame.sentiment.replace( {"positive" : 1, "negative" : 0} )
+frame # 감성 분석 인자 숫자로 변환
+```
+
+```python
+# 라이브러리 불러오기
+import re
+import nltk
+from nltk.corpus import stopwords
+nltk.download("stopwords") # 불용어
+nltk.download("punkt") # 구두점
+nltk.download("averaged_perceptron_tagger") #
+```
+
+```python
+# 데이터 전처리
+stop_words = list(set(stopwords.words("english")))
+all_words = []
+
+for p in frame.review:
+    cleaned = re.sub(r"[^a-zA-Z\s]", "", p) # 필요없는 기호들 삭제
+    tokens = nltk.word_tokenize(cleaned)
+    word_length = [ i for i in tokens if 3 <= len(i) <=7 ] # 토근의 길이로 제한
+    word_lower = [ i.lower() for i in word_length ] # 토큰의 소문자화
+    stopped = [w for w in word_lower if not w in stop_words] # 불용어 제거
+    all_words.append(stopped)
+```
+
+```python
+words_fq = nltk.FreqDist(all_words)
+words_fq
+```
+
+    FreqDist({'giant': 6, 'komodo': 6, 'one': 5, 'dont': 4, 'bullets': 3, 'dragons': 3, 'itbr': 3, 'right': 3, 'animal': 3, 'camera': 3, ...})
+
+
+
+```python
+# 데이터 시각화
+import matplotlib.pyplot as plt
+
+words_fq.plot(30, cumulative=False)
+plt.show()
+```
+
+
+![image](https://user-images.githubusercontent.com/39285147/181004840-3db47747-7566-43a3-beeb-eb52e2f9f4f6.png)
+
+
+상기 분포도에서 'giant' 단어가 가장 많이 사용된 것을 확인해볼 수 있다.
+
 # Vectorization
 
 ## Vectorization 필요성
@@ -1868,63 +1953,3 @@ df0
 </table>
 <p>11 rows × 23 columns</p>
 </div>
-
-
-
-
-```python
-```
-
-```python
-```
-
-```python
-```
-
-```python
-```
-
-```python
-```
-
-```python
-```
-
-```python
-```
-
-```python
-```
-
-```python
-```
-
-```python
-```
-
-```python
-```
-
-```python
-```
-
-```python
-```
-
-```python
-```
-
-```python
-```
-
-```python
-```
-
-```python
-```
-
-```python
-```
-
-```python
-```
