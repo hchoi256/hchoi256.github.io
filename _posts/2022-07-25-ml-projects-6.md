@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "ML Project 6: 사용자 기반 협업 필터링 - 영화 추천 시스템"
+title: "ML Project 6: 사용자 기반 협업 필터링 (Collaborative Filtering) - 영화 추천 시스템 (Movie Recommender Systems)"
 categories: ML
 tag: [machine learning, python]
 toc: true
@@ -13,22 +13,22 @@ sidebar:
     nav: "docs"
 ---
 
-# 코드
+# Code
 **[Notice]** [download here](https://github.com/hchoi256/machine-learning-development)
 {: .notice--danger}
 
 # Description
-추천 시스템이란 가령, 아마존에서 제품을 구매하면 이 제품을 구매하는 고객들이 다른 상품에도 관심이 있을 것이라 판단해 추천해주는 방법이다.
+추천 시스템이란 가령, 아마존에서 제품을 구매하면 이 제품을 구매하는 고객들이 다른 상품에도 관심이 있을 것이라 판단해 추천해주는 방법이다. Providing suggestions for items that are most pertinent to a particular user
 
-'아이템'을 기반으로 사용자에게 추천을 제공한다.
+'아이템'을 기반으로 사용자에게 추천을 제공한다. Item-based recommendation systems, not user-based
 
-이게 무슨 말인고 하니, 세상 인구 80억 명을 전부 조사하여 단 몇 편의 영화를 기호에 따라 추천해주는 것은 지극히 비효율적인 문제일 것이다.
+이게 무슨 말인고 하니, 세상 인구 80억 명을 전부 조사하여 단 몇 편의 영화를 기호에 따라 추천해주는 것은 지극히 비효율적인 문제일 것이다. It will be not effective to recommend movies after investigating huge volumne of populations
 
-따라서, 사람이 아닌 아이템, 즉 영화와 같은 시간이 지나도 한결같은 것들에 기준을 두고 추천 시스템을 적용한다.
+따라서, 사람이 아닌 아이템, 즉 영화와 같은 시간이 지나도 한결같은 것들에 기준을 두고 추천 시스템을 적용한다. Thus, we need to focus on consistent data like movies
 
-가령, 영화 '타이타닉'을 본 서로 다른 두 사람이 비슷한 장르의 로맨스 장르의 '어바웃 타임'을 시청했다면, 추천 시스템은 타이타닉을 본 새로운 사용자에게 어바웃 타임을 추천할 것이다. 
+가령, 영화 '타이타닉'을 본 서로 다른 두 사람이 비슷한 장르의 로맨스 장르의 '어바웃 타임'을 시청했다면, 추천 시스템은 타이타닉을 본 새로운 사용자에게 어바웃 타임을 추천할 것이다. For example, if two people watched 'Titanic' and 'About Time', the model will suggest 'About Time' for new people who watched 'Titanic' 
 
-# 데이터 불러오기
+# Loading the dataset
 
 ```python
 import pandas as pd
@@ -39,8 +39,7 @@ import seaborn as sns
 ```
 
 ```python
-# 타이틀 데이터 저장
-movie_titles_df = pd.read_csv("Movie_Id_Titles") # 요청 시 공유
+movie_titles_df = pd.read_csv("Movie_Id_Titles")
 movie_titles_df.head(20)
 ```
 
@@ -57,7 +56,7 @@ movies_rating_df.head(10)
 
 
 ```python
-# user_id를 기준으로 두 테이블 합치기
+# user_id를 기준으로 두 테이블 합치기 merge two tables by 'user_id'
 movies_rating_df = pd.merge(movies_rating_df, movie_titles_df, on = 'item_id') 
 movies_rating_df
 ```
@@ -71,10 +70,10 @@ movies_rating_df.shape
         (100003, 4)
 
 
-# 데이터 시각화
+# Data Visualization
 
 ```python
-ratings_df_mean = movies_rating_df.groupby('title')['rating'].describe()['mean'] # title을 기준으로 rating을 정렬한 평균값 저장
+ratings_df_mean = movies_rating_df.groupby('title')['rating'].describe()['mean'] # title을 기준으로 rating을 정렬한 평균값 저장 saving the average of ratings aligned by 'title'
 ratings_df_count = movies_rating_df.groupby('title')['rating'].describe()['count']
 ratings_df_count
 ```
@@ -89,22 +88,6 @@ ratings_df_count
         2 Days in the Valley (1996)                                  93.0
         20,000 Leagues Under the Sea (1954)                          72.0
         2001: A Space Odyssey (1968)                                259.0
-        3 Ninjas: High Noon At Mega Mountain (1998)                   5.0
-        39 Steps, The (1935)                                         59.0
-        8 1/2 (1963)                                                 38.0
-        8 Heads in a Duffel Bag (1997)                                4.0
-        8 Seconds (1994)                                              4.0
-        A Chef in Love (1996)                                         8.0
-        Above the Rim (1994)                                          5.0
-        Absolute Power (1997)                                       127.0
-        Abyss, The (1989)                                           151.0
-        Ace Ventura: Pet Detective (1994)                           103.0
-        Ace Ventura: When Nature Calls (1995)                        37.0
-        Across the Sea of Time (1995)                                 4.0
-        Addams Family Values (1993)                                  87.0
-        Addicted to Love (1997)                                      54.0
-        Addiction, The (1995)                                        11.0
-        Adventures of Pinocchio, The (1996)                          39.0
         ...
         Young Poisoner's Handbook, The (1995)                        41.0
         Zeus and Roxanne (1997)                                       6.0
@@ -128,7 +111,7 @@ ratings_mean_count_df['mean'].plot(bins=100, kind='hist', color = 'r')
 ![image](https://user-images.githubusercontent.com/39285147/180882141-f4292103-5f94-40c2-88a6-233e34978d3e.png)
 
 
-상기 분포도에서 별점 평균이 3인 경우가 가장 많이 차지하는 것을 확인할 수 있다. 
+상기 분포도에서 별점 평균이 3인 경우가 가장 많이 차지하는 것을 확인할 수 있다. Star rate 3 appears the most in the distribution above
 
 ```python
 ratings_mean_count_df['count'].plot(bins=100, kind='hist', color = 'r') 
@@ -137,17 +120,17 @@ ratings_mean_count_df['count'].plot(bins=100, kind='hist', color = 'r')
 ![image](https://user-images.githubusercontent.com/39285147/180882216-a837effd-7434-4b2b-a8f1-a31350bb8041.png)
 
 
-분포도에서 확인할 수 있듯이, 대다수의 영화가 대략 한 두번 정도 이내로 평가받은 것을 볼 수 있다.
+분포도에서 확인할 수 있듯이, 대다수의 영화가 대략 한 두번 정도 이내로 평가받은 것을 볼 수 있다. As shown in the distribution, most movies are rated at most two times
 
-# 아이템 기반 협력 필터링
+# 아이템 기반 협력 필터링 (item-based collaborative filtering)
 
 ```python
 userid_movietitle_matrix = movies_rating_df.pivot_table(index = 'user_id', columns = 'title', values = 'rating')
 ```
 
-상기 코드로 만들어진 테이블은 요소값으로 'rating', 즉 별점을 나타낸다.
+상기 코드로 만들어진 테이블은 요소값으로 'rating', 즉 별점을 나타낸다. 'rating' = star rate
 
-열은 'title', 그리고 행들은 'user_id'이다.
+열은 'title', 그리고 행들은 'user_id'이다. column = 'title' and row = 'user_id'
 
 ```python
 titanic = userid_movietitle_matrix['Titanic (1997)']
@@ -164,7 +147,7 @@ titanic_correlations.sort_values('Correlation', ascending=False)
 ![image](https://user-images.githubusercontent.com/39285147/180883922-2164ef1f-d80f-4089-afef-55fc56e551ed.png)
 
 
-영화 '타이타닉'이 다른 영화들과 연관성이 얼마만큼 있는지 *Correlation* 열의 요소값들을 통하여 확인 가능하다.
+영화 '타이타닉'이 다른 영화들과 연관성이 얼마만큼 있는지 *Correlation* 열의 요소값들을 통하여 확인 가능하다. Can check how much 'Titanic' is related to other movies using *Correlation*
 
 
 ```python
@@ -173,9 +156,9 @@ titanic_correlations[titanic_correlations['count']>80].sort_values('Correlation'
 
 ![image](https://user-images.githubusercontent.com/39285147/180883994-d9fe6bc6-509b-42a5-a077-20386409ad8b.png)
 
-결과 테이블에서 우리는 '타이타닉'을 본 사람에게 추천해줄 영화로써 가장 적절한 영화는 타이타닉 자기자신을 제외하고 'River Wild, The (1994)'인 것을 확인한다.
+결과 테이블에서 우리는 '타이타닉'을 본 사람에게 추천해줄 영화로써 가장 적절한 영화는 타이타닉 자기자신을 제외하고 'River Wild, The (1994)'인 것을 확인한다. The resultant table tells us the second most appropriate movie for people who watched 'Titanic' is 'River Wild, The (1994)'
 
-그렇다면, 타이타닉처럼 특정 영화와 연관성이 높은 타영화가 아니라 전체 데이터를 대상으로 한 번에 연관성을 확인해볼 수는 없을까?
+그렇다면, 타이타닉처럼 특정 영화와 연관성이 높은 타영화가 아니라 전체 데이터를 대상으로 한 번에 연관성을 확인해볼 수는 없을까? Can't we check the correlation for all the data at once?
 
 ```python
 # Obtain the correlations between all movies in the dataframe
@@ -185,7 +168,7 @@ movie_correlations = userid_movietitle_matrix.corr(method = 'pearson', min_perio
 > *pearson* : standard correlation coefficient
 
 ```python
-myRatings = pd.read_csv("My_Ratings.csv") # 임의의 타겟 사용자 평점 데이터
+myRatings = pd.read_csv("My_Ratings.csv")
 myRatings
 ```
 
@@ -203,11 +186,11 @@ for i in range(0, 2):
 ```
 
 
-'movie_correlations'의 데이터 수치들은 [0, 1] 사이 값으로, 서로 다른 타이틀 간의 상관관계를 나타내는 지표이다.
+'movie_correlations'의 데이터 수치들은 [0, 1] 사이 값으로, 서로 다른 타이틀 간의 상관관계를 나타내는 지표이다. 'movie_correlations' is in range [0, 1] and represents the correlation among titles
 
-따라서, '상관관계'가 가장 클 경우 그 값은 1일 것이고, 우리가 다루는 '별점'의 총점은 5점이다.
+따라서, '상관관계'가 가장 클 경우 그 값은 1일 것이고, 우리가 다루는 '별점'의 총점은 5점이다. The max **corrlation** and **star rate** is 1 and 5, respectively
 
-따라서, [0, 1]의 상관계수에 별점을 곱하여, 그 값이 높은 순서로 나열한다면, 그것은 해당 사용자에게 가장 알맞은 추천 리스트가 도출될 것이다. 
+따라서, [0, 1]의 상관계수에 별점을 곱하여, 그 값이 높은 순서로 나열한다면, 그것은 해당 사용자에게 가장 알맞은 추천 리스트가 도출될 것이다. Recommendation systems based on the value of **corrlation** * **star rate**
 
 
 ```python
@@ -215,7 +198,7 @@ similar_movies_list.sort_values(inplace = True, ascending = False)
 print (similar_movies_list.head(10))
         ```
 
-        ~Liar Liar (1997)                             5.000000~
+        Liar Liar (1997)                             5.000000
         Con Air (1997)                               2.349141
         Pretty Woman (1990)                          2.348951
         Michael (1996)                               2.210110
@@ -228,6 +211,6 @@ print (similar_movies_list.head(10))
         dtype: float64
 
 
-상기 결과는 'Liar Liar'이라는 영화에 높은 별점을 선사한 해당 사용자에게 추천할만한 타영화 리스트이다.
+상기 결과는 'Liar Liar'이라는 영화에 높은 별점을 선사한 해당 사용자에게 추천할만한 타영화 리스트이다. Recommending the shown movies for people who watched 'Liar Liar'
 
-별점으로써 표현된 가장 높은 연관성을 나타내는 'Liar Liar' 자기자신을 제외하고 'Con Air'라는 영화가 두 번째로 해당 사용자에게 가장 추천해줄 영화일 것이다. 
+별점으로써 표현된 가장 높은 연관성을 나타내는 'Liar Liar' 자기자신을 제외하고 'Con Air'라는 영화가 두 번째로 해당 사용자에게 가장 추천해줄 영화일 것이다. The movie 'Con Air' will be the best recommendation for the people.
