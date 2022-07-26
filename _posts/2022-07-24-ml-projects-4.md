@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "ML Project 4: LeNet 심층망 - Traffic Signs Classification"
+title: "ML Project 4: LeNet - Traffic Signs Classification"
 categories: ML
 tag: [machine learning, python]
 toc: true
@@ -44,21 +44,21 @@ Classes are as listed below:
 [The network used is called **Le-Net** that was presented by Yann LeCun](http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf)
 
 # Learning Goals
-1. Le-Net이라는 심층 신경망을 사용하여 교통 표지판 분류 작업을 수행한다.
-- 자율 주행 자동차 분야에서 특히 각광받는 분야로 카메라를 통해 물체 감지 및 교통 표지판 인식하여 적절한 자동차 수행처리를 이행해야 한다.
+1. Le-Net이라는 심층 신경망을 사용하여 교통 표지판 분류 작업을 수행한다. Traffic signs classification using Le-Net, a deep neural network
+- 자율 주행 자동차 분야에서 특히 각광받는 분야로 카메라를 통해 물체 감지 및 교통 표지판 인식하여 적절한 자동차 수행처리를 이행해야 한다. A rising field of study in self-driving, expecting the camera to identify objects and traffic signs.
 
-2. 시그모이드 ReLU와 같은 활성화 함수에 대해 이해한다
+2. 시그모이드 ReLU와 같은 활성화 함수에 대해 이해한다 Understanding activation functions like ReLU, Sigmoid, etc.
 
-3. 케라스 API로 심층 합성곱 신견망을 설계하고 분류 성능 개선을 위해 신경망 구조를 최적화한다.
+3. 케라스 API로 심층 합성곱 신견망을 설계하고 분류 성능 개선을 위해 신경망 구조를 최적화한다. Building deep CNN using Keras API and optimizing the network for better classification
 
-4. 교차 검증(Cross Validation)응ㄹ 이해하고 신경망 과적합 방지 적용 방법에 대해 이해한다.
+4. 교차 검증(Cross Validation)을 이해하고 신경망 과적합 방지 적용 방법에 대해 이해한다. Understanding cross-validation and how to avoid overfitting
 
-5. 혼동, 행렬 및 분류 보고서로 모델 평가 및 결과 제시하는 법을 배운다
-- precision과 recall에 대해서 배운다.
+5. 혼동, 행렬 및 분류 보고서로 모델 평가 및 결과 제시하는 법을 배운다 Model evaluation using confusion matrix and classification report
+- precision & recall
 
 
 <details>
-<summary>Le-Net(접기/펼치기)</summary>
+<summary>Le-Net(Hide/Show)</summary>
 <div markdown="1">
 
 ![image](https://user-images.githubusercontent.com/39285147/180630434-4192f16c-b0e4-473d-bc36-3d1fc2b652d1.png)
@@ -101,10 +101,10 @@ Classes are as listed below:
 </details>
 
 
-# 데이터 불러오기
+# Loading the dataset
 
 ```python
-import pickle # 데이터 직렬화
+import pickle # Serialize the data
 import seaborn as sns
 import pandas as pd # Import Pandas for data manipulation using dataframes
 import numpy as np # Import Numpy for data statistical analysis 
@@ -112,10 +112,10 @@ import matplotlib.pyplot as plt # Import matplotlib for data visualisation
 import random
 ```
 
-> *데이터 직렬화*: 객체에 저장된 데이터를 스트림에 쓰기위해 연속적인 데이터를 변환하는것
+> *데이터 직렬화(Serialization)*: 객체에 저장된 데이터를 스트림에 쓰기위해 연속적인 데이터를 변환하는것  the process of converting an object into a stream of bytes
 
 ```python
-# 이미지 데이터 요청시 공유
+# Loading the dataset
 with open("./traffic-signs-data/train.p", mode='rb') as training_data:
     train = pickle.load(training_data)
 with open("./traffic-signs-data/valid.p", mode='rb') as validation_data:
@@ -146,11 +146,11 @@ X_train.shape
         (34799,)
 
 
-# 이미지 관찰
+# Observing the dataset
 
 ```python
 i = 1001
-plt.imshow(X_train[i]) # 이미지 보여주기
+plt.imshow(X_train[i]) # show the image
 y_train[i]
 ```
     
@@ -158,11 +158,9 @@ y_train[i]
         
         36
 
-위 결과에서 해당 이미지의 클래스 인덱스는 36으로, 이는 'Go straight or right'에 해당된다.
+상기 결과에서 해당 이미지의 클래스 인덱스는 36으로, 이는 'Go straight or right'에 해당된다. The result shows the image has its index , which corresponds to 'Go straight or right'
 
-이미지 속 표지판과 부합하는 것을 확인했다.
-
-# 이미지 전처리
+# Image Preprocessing
 
 ```python
 ## Shuffle the dataset
@@ -171,39 +169,39 @@ X_train, y_train = shuffle(X_train, y_train)
 
 ```
 
-상기 코드에서 이미지 순서에 기반한 과적합을 방지하고자 이미지 셔플을 전처리 과정에서 해줘야 한다.
+상기 코드에서 이미지 순서에 기반한 과적합을 방지하고자 이미지 셔플을 전처리 과정에서 해줘야 한다. Shuffling the image dataset to avoid overfitting by order of images
 
-그렇지 않으면, 모델이 매번 같은 순서의 이미지들을 학습하여 그 이미지들에 대한 과대 학습이 이루어질 것이다.
+그렇지 않으면, 모델이 매번 같은 순서의 이미지들을 학습하여 그 이미지들에 대한 과대 학습이 이루어질 것이다. Otherwise, the model will inevitably face overfitting
 
 
 ```python
-# 컬러 이미지 --> 흑백 이미지 (RGB 채널 하나로 통일)
-X_train_gray = np.sum(X_train/3, axis=3, keepdims=True) # 실제 이미지 차원을 그대로 유지
+# Color image--> dark image (integrating into one RGB channel)
+X_train_gray = np.sum(X_train/3, axis=3, keepdims=True) # 실제 이미지 차원을 그대로 유지 Keep the image's dimension
 X_test_gray  = np.sum(X_test/3, axis=3, keepdims=True)
 X_validation_gray  = np.sum(X_validation/3, axis=3, keepdims=True) 
 ```
 
-색상때문에 분류가 헷갈리지 않게 하기위해서 RGB를 흑백으로 통일한다.
+색상때문에 분류가 헷갈리지 않게 하기위해서 RGB를 흑백으로 통일한다. Integrating into one RGB channel (dark)
 
 np.sum()
-- *[axis]*(https://stackoverflow.com/questions/51628437/compute-the-sum-of-the-red-green-and-blue-channels-using-python): 모든 원소의 합계가 아닌, 특정 축을 기준으로만 합계를 구하기
-    - i.e, (34799, 32, 32, 3)에서 axis=2는 32, axis=3은 3이다. 따라서, axis=3은 RGB인 3을 기준으로 summation을 수행한다.
-- keepdims: 차원 유지하여 합계 구하기
-    - 기존 차원이 n일 때, axis는 n-1의 차원을 배출한다. 따라서, keepdims=True를 통하여 n 차원을 배출하게 한다.
+- *[axis]*(https://stackoverflow.com/questions/51628437/compute-the-sum-of-the-red-green-and-blue-channels-using-python): 특정 축을 기준으로만 합계를 구하기 summation based on certain axis
+    - i.e, (34799, 32, 32, 3) --> axis=2 <=> 32, axis=3 <=> 3. Thus, 'axis=3' performs summation based on RGB
+- keepdims: 차원 유지하여 합계 구하기 Find the sum, keeping the dimension
+    - 기존 차원이 n일 때, axis는 n-1의 차원을 배출한다. 따라서, keepdims=True를 통하여 n 차원을 배출하게 한다. If original dimension is n, axis will produce n-1 dimensions. 'keepdims=True' makes it possible to produce n dimensions
 
-> RGB는 3개의 채널로 구성되어 있으므로, 이미지 데이터의 RGB 값들을 총 합한 다음 3으로 나누면 색깔이 제거된다.
+> RGB는 3개의 채널로 구성되어 있으므로; 이미지 데이터의 RGB 값들을 총 합한 다음 3으로 나누면 색깔이 제거된다. RGB consists of three channels; summing all RGB values then dividing the sum by 3
 
 ```python
-# 정규화
+# normalization
 X_train_gray_norm = (X_train_gray - 128)/128 
 X_test_gray_norm = (X_test_gray - 128)/128
 X_validation_gray_norm = (X_validation_gray - 128)/128
 ```
 
-> 왜 '128'이라는 숫자로 정규화하는걸까? (TBA)
+> 왜 '128'이라는 숫자로 정규화하는걸까? Why normalizing the dataset with 128? (TBA) 
 
 ```python
-# 정제된 이미지 시각화
+# data visualization
 i = 610
 plt.imshow(X_train_gray[i].squeeze(), cmap='gray')
 plt.figure()
@@ -211,22 +209,22 @@ plt.imshow(X_train[i])
 
 ```
 
-[*흑백*]
+[*dark*]
 
 ![image](https://user-images.githubusercontent.com/39285147/180631744-3e9ec0da-7271-408a-983a-4f329a148234.png)
 
 
-[*기존*]
+[*original*]
 
 ![image](https://user-images.githubusercontent.com/39285147/180631746-cc3638e8-b277-4351-993b-1f96434d8825.png)
 
 
-> *squeeze*:  [[1, 2, 3, 4]]를 [1, 2, 3, 4]의 형태로 바꿔주는 것
+> *squeeze*:  [[1, 2, 3, 4]] --> [1, 2, 3, 4]
 
-# 모델 훈련하기
+# Training the dataset
 
 ```python
-# 라이브러리 불러오기
+# Loading the dataset
 from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D, AveragePooling2D, Dense, Flatten, Dropout
 from keras.optimizers import Adam
@@ -236,7 +234,7 @@ from sklearn.model_selection import train_test_split
 ```
 
 ```python
-# 모델 정의하기
+# Building the model
 cnn_model = Sequential()
 
 cnn_model.add(Conv2D(filters=6, kernel_size=(5, 5), activation='relu', input_shape=(32,32,1)))
@@ -255,20 +253,20 @@ cnn_model.add(Dense(units=43, activation = 'softmax'))
 
 ```
 
-[Le-Net 신경망을 정의하는 방법](#learning-goals)을 참고해주세요.
+[How to Build Le-Net?](#learning-goals)을 참고해주세요.
 
 
 ```python
-# 모델 훈련시키기
+# Training the model
 cnn_model.compile(loss ='sparse_categorical_crossentropy', optimizer=Adam(lr=0.001),metrics =['accuracy'])
 ```
 
 
 compile()
-- *sparse_categorical_crossentropy*: 손실 범주형 교차엔트로피로 분류에 사용된다.
-    - 클래스가 두 개밖에 없다면 이진 교차엔트로피('binary_categorical_crossentropy')를 사용한다.
+- *sparse_categorical_crossentropy*: 손실 범주형 교차엔트로피로 분류에 사용된다. used for classification
+    - 클래스가 두 개밖에 없다면 이진 교차엔트로피('binary_categorical_crossentropy')를 사용한다. 'binary_categorical_crossentropy' is used for binary tasks 
 - [Adam](https://github.com/hchoi256/lg-ai-auto-driving-radar-sensor/blob/main/supervised-learning/gradient-discent.md)
-    - lr: 학습률
+    - lr: 학습률 (learning rate)
 
 ```python
 history = cnn_model.fit(X_train_gray_norm,
@@ -276,14 +274,14 @@ history = cnn_model.fit(X_train_gray_norm,
                         batch_size=500,
                         nb_epoch=50,
                         verbose=1,
-                        validation_data = (X_validation_gray_norm,y_validation)) # 교차검증할 경우 validation set도 포함한다.
+                        validation_data = (X_validation_gray_norm,y_validation)) # Adding validation set, test set
 ```
 
         Epoch 50/50
         34799/34799 [==============================] - 13s 364us/step - loss: 0.0255 - acc: 0.9951 - val_loss: 0.7429 - val_acc: 0.8624
 
 
-# 모델 성능 평가
+# Evaluating the model performance
 
 ```python
 score = cnn_model.evaluate(X_test_gray_norm, y_test,verbose=0)
@@ -301,7 +299,7 @@ history.history.keys()
 
 
 ```python
-# 정확도 분포
+# Accuracy distribution
 accuracy = history.history['acc']
 val_accuracy = history.history['val_acc']
 loss = history.history['loss']
@@ -309,8 +307,8 @@ val_loss = history.history['val_loss']
 
 epochs = range(len(accuracy))
 
-plt.plot(epochs, accuracy, 'bo', label='Training Accuracy') # 'bo': 파란 X, Y 점으로 나타남
-plt.plot(epochs, val_accuracy, 'b', label='Validation Accuracy') # 'b': 파란선으로 나타남
+plt.plot(epochs, accuracy, 'bo', label='Training Accuracy') # 'bo': 파란 X, Y 점 blue X, Y points
+plt.plot(epochs, val_accuracy, 'b', label='Validation Accuracy') # 'b': 파란선 blue lines
 plt.title('Training and Validation accuracy')
 plt.legend()
 ```
@@ -320,7 +318,7 @@ plt.legend()
 
 
 ```python
-# 손실함수 분포
+# loss distribution
 plt.plot(epochs, loss, 'ro', label='Training Loss')
 plt.plot(epochs, val_loss, 'r', label='Validation Loss')
 plt.title('Training and validation loss')
@@ -337,9 +335,9 @@ plt.show()
 # get the predictions for the test data
 predicted_classes = cnn_model.predict_classes(X_test_gray_norm)
 
-# 예측값 vs. 실제값 비교
+# predicted vs. actual
 from sklearn.metrics import confusion_matrix
-cm = confusion_matrix(y_test, predicted_classes) # 혼동행렬
+cm = confusion_matrix(y_test, predicted_classes)
 plt.figure(figsize = (25,25))
 sns.heatmap(cm, annot=True)
 
@@ -348,22 +346,22 @@ sns.heatmap(cm, annot=True)
 ![image](https://user-images.githubusercontent.com/39285147/180636509-7a29b79a-1658-450c-af6f-71b5e2889b30.png)
 
 
-혼동행령에서 대각선이 아닌 위치에 속한 수치값들은 오분류 개수이다.
+혼동행령에서 대각선이 아닌 위치에 속한 수치값들은 오분류 개수이다. The elements not on the diagonal line represent the number of errors
 
-예측값을 만들어냈으니, 실제값들과 비교하기 위해 7x7 그리드에 49개의 랜덤 이미지를 나열해서 확인해보자.
+예측값을 만들어냈으니, 실제값들과 비교하기 위해 7x7 그리드에 49개의 랜덤 이미지를 나열해서 확인해보자. Let's lay out the 7x7 grid of randomly generated images so that we can intuitively compare estimates with answers
 
 ```python
 L = 7
 W = 7
 fig, axes = plt.subplots(L, W, figsize = (12,12))
-axes = axes.ravel() # 배열을 flatten하는 함수
+axes = axes.ravel() # flatten the array
 
 for i in np.arange(0, L * W):  
     axes[i].imshow(X_test[i])
     axes[i].set_title("Prediction={}\n True={}".format(predicted_classes[i], y_true[i]))
-    axes[i].axis('off') # 축 제거하기
+    axes[i].axis('off') # remove axis
 
-plt.subplots_adjust(wspace=1) # 이미지 간격 벌리기
+plt.subplots_adjust(wspace=1) # space out images
 ```
 
 ![image](https://user-images.githubusercontent.com/39285147/180636517-bca07edb-4d29-4bf4-a4ae-4bd927e5c7b2.png)
