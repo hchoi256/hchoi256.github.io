@@ -165,6 +165,9 @@ for i, chunk in enumerate(chunks):
     Chunk 21 ==> 
 
 
+700(# words per chunk) * 20(# chunks) = 14000 (total words)
+
+
 # Bag of Words
 Bag of Words 모델을 사용해서 텍스트 분석을 하는 주요 목적 중에 하나는 텍스트를 기계학습에서 사용할 수 있도록 텍스트를 숫자 형식으로 변환하는 것이다. One of the main purposes of text analysis using the Bag of Words model is to convert the text into a numeric form so that it can be used in machine learning.
 
