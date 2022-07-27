@@ -13,89 +13,213 @@ sidebar:
     nav: "docs"
 ---
 
-
-
-# Tokenization 복습
+# 어간추출(Stemmer) vs. 표제어추출(Lemmatizer)
+## Stemmer
+단어에서 일반적인 형태 및 굴절 어미를 제거하는 프로세스. A process for removing the commoner morphological and inflexional endings from words.
 
 
 ```python
-import pandas as pd
+from nltk.stem.porter import PorterStemmer # least strict
+from nltk.stem.snowball import SnowballStemmer # average (best)
+from nltk.stem.lancaster import LancasterStemmer # most strict 
+```
+
+```python
+input_words = ['writing', 'calves', 'be', 'branded', 'house', 'randomize', 'possibly', 'extraction', 'hospital', 'kept', 'scratchy', 'code'] # sample
+
+porter = PorterStemmer()
+snowball = SnowballStemmer("english")
+lancaster = LancasterStemmer()
+```
+
+```python
+stemmers_names = ["PORTER", "SNOWBALL", "LANCASTER"]
+formatted_text = "{:>16}" * (len(stemmers_names) + 1)
+print(formatted_text.format("INPUT WORD", *stemmers_names), "\n", "="*68)
+for word in input_words:
+    output = [word, porter.stem(word), snowball.stem(word), lancaster.stem(word)]
+    print(formatted_text.format(*output))
+```
+
+
+          INPUT WORD          PORTER        SNOWBALL       LANCASTER 
+    ====================================================================
+            writing           write           write            writ
+              calves            calv            calv            calv
+                  be              be              be              be
+            branded           brand           brand           brand
+              house            hous            hous            hous
+          randomize          random          random          random
+            possibly         possibl         possibl            poss
+          extraction         extract         extract         extract
+            hospital          hospit          hospit          hospit
+                kept            kept            kept            kept
+            scratchy        scratchi        scratchi        scratchy
+                code            code            code             cod
+
+## Lemmatizer
+'단어의 원형'을 찾고자 하는 또 다른 형태, 표제어는 단어의 다양한 굴절 형태를 그룹화하여 단일 항목으로 분석할 수 있도록 하는 과정이다. Lemmatization is the process of grouping together the different inflected forms of a word so they can be analyzed as a single item
+
+```python
+from nltk.stem import WordNetLemmatizer
+nltk.download("wordnet")
+nltk.download("omw-1.4")
+
+lemmatizer = WordNetLemmatizer()
+```
+
+```python
+lemmatizer_names = ["NOUN LEMMATIZER", "VERB LEMMATIZER"]
+formatted_text = "{:>24}" * (len(lemmatizer_names) + 1)
+print(formatted_text.format("INPUT WORD", *lemmatizer_names), "\n", "="*75)
+for word in input_words:
+    output = [word, lemmatizer.lemmatize(word, pos="n"), lemmatizer.lemmatize(word, pos="v")]
+    print(formatted_text.format(*output))
+```
+
+
+                  INPUT WORD         NOUN LEMMATIZER         VERB LEMMATIZER 
+    ===========================================================================
+                    writing                 writing                   write
+                      calves                    calf                   calve
+                          be                      be                      be
+                    branded                 branded                   brand
+                      house                   house                   house
+                  randomize               randomize               randomize
+                    possibly                possibly                possibly
+                  extraction              extraction              extraction
+                    hospital                hospital                hospital
+                        kept                    kept                    keep
+                    scratchy                scratchy                scratchy
+                        code                    code                    code
+
+
+# Chunking
+텍스트 데이터는 일반적으로 추가 분석을 위해 조각으로 나누어야 할 필요가 있다. Text data usually needs to be broken into pieces for further analysis.
+
+
+```python
 import numpy as np
+from nltk.corpus import brown
+nltk.download("brown")
 ```
 
 ```python
-# Load data
-data = pd.read_csv('IMDB-Dataset.csv')
+def chunker(input_data, N):
+    input_words = input_data.split()
+    output = []
+
+    cur_chunk = []
+    count = 0
+
+    for word in input_words:
+        cur_chunk.append(word)
+        count += 1
+        if count == N:
+            output.append(" ".join(cur_chunk))
+            # print(cur_chunk)
+            count, cur_chunk = 0, []
+        # print(output)
+
+    output.append(" ".join(cur_chunk))
+
+    return output
 ```
 
 ```python
-data.shape
+input_data = " ".join(brown.words()[:14000])
+chunk_size = 700
+chunks = chunker(input_data, chunk_size)
 ```
 
-    (50000, 2)
+상기 코드는 brown 라이브러리 데이터의 14000 단어를 불러와 700개의 단어 단위로 chunk를 생성한다. The above code fetches 14000 words of brown library data and creates chunks in units of 700 words.
+
+```python
+print("Number of text chunks =", len(chunks), "\n")
+for i, chunk in enumerate(chunks):
+    print("Chunk", i + 1, "==>" ,chunk[:50]) # show 50 words out of 700
+```
+
+    Number of text chunks = 21 
+
+    Chunk 1 ==> The Fulton County Grand Jury said Friday an invest
+    Chunk 2 ==> '' . ( 2 ) Fulton legislators `` work with city of
+    Chunk 3 ==> . Construction bonds Meanwhile , it was learned th
+    Chunk 4 ==> , anonymous midnight phone calls and veiled threat
+    Chunk 5 ==> Harris , Bexar , Tarrant and El Paso would be $451
+    Chunk 6 ==> set it for public hearing on Feb. 22 . The proposa
+    Chunk 7 ==> College . He has served as a border patrolman and 
+    Chunk 8 ==> of his staff were doing on the address involved co
+    Chunk 9 ==> plan alone would boost the base to $5,000 a year a
+    Chunk 10 ==> nursing homes In the area of `` community health s
+    Chunk 11 ==> of its Angola policy prove harsh , there has been 
+    Chunk 12 ==> system which will prevent Laos from being used as 
+    Chunk 13 ==> reform in recipient nations . In Laos , the admini
+    Chunk 14 ==> . He is not interested in being named a full-time 
+    Chunk 15 ==> said , `` to obtain the views of the general publi
+    Chunk 16 ==> '' . Mr. Reama , far from really being retired , i
+    Chunk 17 ==> making enforcement of minor offenses more effectiv
+    Chunk 18 ==> to tell the people where he stands on the tax issu
+    Chunk 19 ==> '' . Trenton -- William J. Seidel , state fire war
+    Chunk 20 ==> not comment on tax reforms or other issues in whic
+    Chunk 21 ==> 
+
+
+# Bag of Words
+Bag of Words 모델을 사용해서 텍스트 분석을 하는 주요 목적 중에 하나는 텍스트를 기계학습에서 사용할 수 있도록 텍스트를 숫자 형식으로 변환하는 것이다. One of the main purposes of text analysis using the Bag of Words model is to convert the text into a numeric form so that it can be used in machine learning.
+
+수백만 단어가 포함된 텍스트 문서를 분석하려고 한다. You want to analyze a text document containing millions of words.
+
+그러기 위해선, 텍스트를 추출하고 숫자 표현 형식으로 변환해야 한다. To do that, we need to extract the text and convert it to a numeric representation.
+
+기계 학습 알고리즘은 데이터를 분석하고 의미 있는 정보를 추출할 수 있도록 작업할 숫자 데이터가 필요하다. Machine learning algorithms need numeric data to work with so that they can analyze the data and extract meaningful information.
+
+Bag of Words 모델은 문서의 모든 단어에서 어휘를 추출하고 문서-용어 행렬 (matrix)를 사용하여 모델을 구축한다. The Bag of Words model extracts vocabulary from every word in a document and builds the model using a document-term matrix.
+- 이 모델을 사용하면 모든 문서를 단어 모음으로 나타낼 수 있다. This model allows any document to be represented as a collection of words.
+- 단어 갯수, 문법적 세부 사항, 단어 순서를 무시한다. Ignoring word count, grammatical details, and word order.
+
+문서-용어 행렬은 기본적으로 문서에서 발생하는 다양한 단어의 수를 제공하는 테이블이다. The document-term matrix is ​​basically a table that gives the number of different words that occur in a document.
+
+텍스트 문서는 다양한 단어의 가중치 조항으로 표현되고, 임계값을 설정하고 더 의미 있는 단어를 선택할 수 있다. Text documents are represented by weighted clauses of various words; more meaningful with thresholds words can be selected.
+
+feature vector로 사용될 문서의 모든 단어들의 히스토그램을 만들고, 이 feature vector는 텍스트 분류에 사용할 수 있다. Create a histogram of all words in the document to be used as a feature vector, and this feature vector can be used for text classification.
 
 
 ```python
-frame = data[:1000]
-frame.head()
-```
-
-![image](https://user-images.githubusercontent.com/39285147/181003013-73bfa56f-9a5c-4bb7-9a38-794b1828801a.png)
-
-
-```python
-feature = frame.review
-label = frame.sentiment
-
-frame.sentiment = frame.sentiment.replace( {"positive" : 1, "negative" : 0} ) # convert from word to number
+from sklearn.feature_extraction.text import CountVectorizer
 ```
 
 ```python
-# load libraries
-import re
-import nltk
-from nltk.corpus import stopwords
-nltk.download("stopwords")
-nltk.download("punkt")
-nltk.download("averaged_perceptron_tagger") #
+input_data = " ".join(brown.words()[:5500])
+chunk_size = 800
+text = chunker(input_data, chunk_size)
 ```
 
 ```python
-# data preprocessing
-stop_words = list(set(stopwords.words("english")))
-all_words = []
-
-for p in frame.review:
-    cleaned = re.sub(r"[^a-zA-Z\s]", "", p) # remove unnecessary words
-    tokens = nltk.word_tokenize(cleaned)
-    word_length = [ i for i in tokens if 3 <= len(i) <=7 ] # limit by length of tokens
-    word_lower = [ i.lower() for i in word_length ] # lowercase tokens
-    stopped = [w for w in word_lower if not w in stop_words] # remove stopwords
-    all_words.append(stopped)
+chunks = []
+for count, chunk in enumerate(text):
+    d = {"index": count, "text": chunk}
+    chunks.append(d)
+len(chunks)
 ```
 
-```python
-words_fq = nltk.FreqDist(all_words)
-words_fq
-```
 
-    FreqDist({'giant': 6, 'komodo': 6, 'one': 5, 'dont': 4, 'bullets': 3, 'dragons': 3, 'itbr': 3, 'right': 3, 'animal': 3, 'camera': 3, ...})
+    7
 
 
 
 ```python
-# data visualization
-import matplotlib.pyplot as plt
-
-words_fq.plot(30, cumulative=False)
-plt.show()
+count_vectorizer = CountVectorizer()
+document_term_matrix = count_vectorizer.fit_transform([chunk["text"] for chunk in chunks])
+vocabulary = np.array(count_vectorizer.get_feature_names_out())
+print(vocabulary)
 ```
 
 
-![image](https://user-images.githubusercontent.com/39285147/181004840-3db47747-7566-43a3-beeb-eb52e2f9f4f6.png)
+    ['000' '10' '100' ... 'york' 'you' 'your']
 
+> [CountVectorizer](#1-countvectorizer)
 
-상기 분포도에서 'giant' 단어가 가장 많이 사용된 것을 확인해볼 수 있다. The plot shows that 'giant' is used the most.
 
 # Vectorization
 

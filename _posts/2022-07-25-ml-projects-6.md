@@ -26,7 +26,7 @@ sidebar:
 
 따라서, 사람이 아닌 아이템, 즉 영화와 같은 시간이 지나도 한결같은 것들에 기준을 두고 추천 시스템을 적용한다. Thus, we need to focus on consistent data like movies
 
-가령, 영화 '타이타닉'을 본 서로 다른 두 사람이 비슷한 장르의 로맨스 장르의 '어바웃 타임'을 시청했다면, 추천 시스템은 타이타닉을 본 새로운 사용자에게 어바웃 타임을 추천할 것이다. For example, if two people watched 'Titanic' and 'About Time', the model will suggest 'About Time' for new people who watched 'Titanic' 
+가령, 영화 '타이타닉'을 본 서로 다른 두 사람이 비슷한 장르의 로맨스 장르의 '어바웃 타임'을 시청했다면, 추천 시스템은 타이타닉을 본 새로운 사용자에게 어바웃 타임을 추천할 것이다. For example, if two people watched 'Titanic' and 'About Time', the model would suggest 'About Time' for new people who watched 'Titanic' 
 
 # Loading the dataset
 
