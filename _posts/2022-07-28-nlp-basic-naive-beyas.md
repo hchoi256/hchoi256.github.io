@@ -14,12 +14,12 @@ sidebar:
 ---
 
 # PART 1: Gender Identifier
-Corpus의 영어 이름에서 마지막 '몇 글자'를 보고 남자 혹은 여자 이름인지 확인하여 분류한다. Identifying sex through the last 'few letters' of the corpus
+Corpus의 영어 이름에서 마지막 '몇 글자'를 보고 남자 혹은 여자 이름인지 확인하여 분류한다. <span style="color: blue"> Identifying sex through the last 'few letters' of the corpus</span>
 
 Naive Bayes Classifier
-1. 모든 고유한 단어가 텍스트에서 추출 extracting words from texts
-2. 라벨 확인 checking labels
-3. 분류 classification 
+1. 모든 고유한 단어가 텍스트에서 추출 <span style="color: blue"> extracting words from texts</span>
+2. 라벨 확인 <span style="color: blue"> checking labels</span>
+3. 분류 <span style="color: blue"> classification </span>
 
 > [Naive Beyas](https://github.com/hchoi256/ai-boot-camp/blob/main/ai/machine-learning/supervised-learning/classification/naive-bayes.md)
 
@@ -118,16 +118,16 @@ for i in range(1, 6):
         Cheryl ===> female
         ...
 
-상기 결과는 단어의 마지막 문자 1, 2개를 기준으로 성별을 분류했을 때 정확도이다. The result represents the accuracy of the classifier that identifies sex based on the last one and two words respectively.
+상기 결과는 단어의 마지막 문자 1, 2개를 기준으로 성별을 분류했을 때 정확도이다. <span style="color: blue"> The result represents the accuracy of the classifier that identifies sex based on the last one and two words respectively.</span>
 
-나머지 마지막 문자 3개 이상을 기준으로한 결과값은 편의상 생략하였다. The other outcomes are omitted for convenience.
+나머지 마지막 문자 3개 이상을 기준으로한 결과값은 편의상 생략하였다. <span style="color: blue"> The other outcomes are omitted for convenience.</span>
 
 # PART 2: Sentimental Analysis
-감성분석(Sentiment Analysis): 텍스트 일부로 감정을 결정하는 과정이다 (좋아, 나뻐). Sentiment Analysis studies how to determine sentiment through part of texts (good, poor).
+감성분석(Sentiment Analysis): 텍스트 일부로 감정을 결정하는 과정이다 (좋아, 나뻐). <span style="color: blue"> Sentiment Analysis studies how to determine sentiment through part of texts (good, poor).</span>
 
-남자 이름인지 여자 이름인지... / 영화 리뷰가 긍정인지... 부정인지... Man/Woman, Positive/Negative
+남자 이름인지 여자 이름인지... / 영화 리뷰가 긍정인지... 부정인지... <span style="color: blue"> Man/Woman, Positive/Negative</span>
 
-제품이 좋은지 나쁜지... 여론조사 등등 확장이 가능 Good/Poor, etc.
+제품이 좋은지 나쁜지... 여론조사 등등 확장이 가능 <span style="color: blue"> Good/Poor, etc.</span>
 
 ## Loading the libraries
 ```python
@@ -148,9 +148,9 @@ fileids_pos[:1]
         ['pos/cv000_29590.txt']
 
 
-상기 라이브러리의 'pos' 디렉토리의 해당 텍스트에 긍정 단어들이 포함되어 있다. The directory above incldues positive words.
+상기 라이브러리의 'pos' 디렉토리의 해당 텍스트에 긍정 단어들이 포함되어 있다. <span style="color: blue"> The directory above incldues positive words.</span>
 
-어떤 단어들이 속해있는지 지금 바로 확인해보자. Let's go check those words now.
+어떤 단어들이 속해있는지 지금 바로 확인해보자. <span style="color: blue"> Let's go check those words now.</span>
 
 ```python
 movie_reviews.words(fileids=['pos/cv000_29590.txt'])
@@ -220,7 +220,7 @@ print("Probabilities : ", round(probabilities.prob(predicted_sentiment), 2))
         Probabilities :  0.8
 
 
-긍부정 단어 개수를 계산하여 빈도수가 더 많이 등장한 선택지로 결론내린다. By counting the number of positive and negative words, we conclude with the option that appears more frequently.
+긍부정 단어 개수를 계산하여 빈도수가 더 많이 등장한 선택지로 결론내린다. <span style="color: blue"> By counting the number of positive and negative words, we conclude with the option that appears more frequently.</span>
 
-결과는 Negative로 부정 단어가 더 많이 포함된 문장이었고, 그 빈도수는 0.8이며 긍정은 0.2이다. The result was a sentence containing more negative words as negative, and the frequency was 0.8 and positive was 0.2.
+결과는 Negative로 부정 단어가 더 많이 포함된 문장이었고, 그 빈도수는 0.8이며 긍정은 0.2이다. <span style="color: blue"> The result was a sentence containing more negative words as negative, and the frequency was 0.8 and positive was 0.2.</span>
 

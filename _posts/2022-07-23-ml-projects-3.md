@@ -13,20 +13,20 @@ sidebar:
     nav: "docs"
 ---
 
-# 코드
+# Code
 **[Notice]** [download here](https://github.com/hchoi256/machine-learning-development)
 {: .notice--danger}
 
 # Learning Goals
-**시계열 예측**을 위한 **페이스북 Propjet** 이해
+**시계열 예측**을 위한 **페이스북 Propjet** 이해 <span style="color: blue"> Understanding **Facebook Propjet** for **Time Series Prediction** </span>
 
 # PART 1: Chicago Crime Rate
 ![image](https://user-images.githubusercontent.com/39285147/180627186-59e3e369-89c7-4607-b533-0f62794fcde8.png)
 
 ## Description
-절도범이 어느 시간대에 가장 잘 잡히는지, 범죄율이 올라가는 가장 높은 시간대는 언제인지 등을 관찰해보고 Prophet 활용하여 미래 'Crime' 결과도 예측해본다.
+절도범이 어느 시간대에 가장 잘 잡히는지, 범죄율이 올라가는 가장 높은 시간대는 언제인지 등을 관찰해보고 Prophet 활용하여 미래 'Crime' 결과도 예측해본다. <span style="color: blue"> Observing when thieves are best caught and when the crime rate rises the most, and predict future 'Crime' results using Prophet. </span>
 
-## 데이터셋 관찰
+## Observing the dataset
 **Dataset contains the following columns**: 
 - ID: Unique identifier for the record.
 - Case Number: The Chicago Police Department RD Number (Records Division Number), which is unique to the incident.
@@ -53,7 +53,7 @@ sidebar:
 
 **Datasource**: https://www.kaggle.com/currie32/crimes-in-chicago
 
-## 데이터 불러오기
+## Loading the dataset
 
 ```python
 import pandas as pd 
@@ -67,7 +67,7 @@ from fbprophet import Prophet
 
 ```python
 # training and testing datasets 
-chicago_df_1 = pd.read_csv('Chicago_Crimes_2005_to_2007.csv', error_bad_lines=False) # error_bad_lines: 손상된 줄이나 누락된 행을 무시한다
+chicago_df_1 = pd.read_csv('Chicago_Crimes_2005_to_2007.csv', error_bad_lines=False) # error_bad_lines: 손상된 줄이나 누락된 행을 무시한다 Ignoring corrupted or missing lines
 chicago_df_2 = pd.read_csv('Chicago_Crimes_2008_to_2011.csv', error_bad_lines=False)
 chicago_df_3 = pd.read_csv('Chicago_Crimes_2012_to_2017.csv', error_bad_lines=False)
 
@@ -76,29 +76,29 @@ chicago_df = pd.concat([chicago_df_1, chicago_df_2, chicago_df_3], ignore_index=
 
 ```
 
-## 데이터 정제하기
+## Organizing the dataset
 
 ```python
 # 불필요한 열 제거하기
 chicago_df.drop(['Unnamed: 0', 'Case Number', 'Case Number', 'IUCR', 'X Coordinate', 'Y Coordinate','Updated On','Year', 'FBI Code', 'Beat','Ward','Community Area', 'Location', 'District', 'Latitude' , 'Longitude'], inplace=True, axis=1)
 ```
 
-> *inplace*: 메모리에서 실제열(= 불필요한열)을 삭제한다
+> *inplace*: 메모리에서 실제열(= 불필요한열)을 삭제한다 <span style="color: blue"> Delete real rows (= unnecessary rows) from memory
 >
-> *axis=1*: 전체 열을 탈락시킨다
+> *axis=1*: 전체 열을 탈락시킨다<span style="color: blue"> dissipating all heat</span>
 
-하기 코드는 이 프로젝트의 시계열 처리에 수반되는 전처리 과정이다.
+하기 코드는 이 프로젝트의 시계열 처리에 수반되는 전처리 과정이다.<span style="color: blue"> The following code is the preprocessing process involved in the time series processing of this project. </span>
 
 ```python
-# Date 형식 수정하기
+# Date 형식 수정 Modifying Date Format
 chicago_df.Date = pd.to_datetime(chicago_df.Date, format='%m/%d/%Y %I:%M:%S %p')
 
-# Date을 인덱스로 활용한다
+# Date을 인덱스로 활용한다 Usnig Date as an index
 chicago_df.index = pd.DatetimeIndex(chicago_df.Date)
 
 ```
 
-> *DatetimeIndex*: 특정한 순간에 기록된 타임스탬프(timestamp) 형식의 시계열 자료를 다루기 위한 인덱스
+> *DatetimeIndex*: 특정한 순간에 기록된 타임스탬프(timestamp) 형식의 시계열 자료를 다루기 위한 인덱스 <span style="color: blue"> Index for handling time series data in timestamp format recorded at a specific moment</span>
 
 ## 데이터 시각화
 
@@ -111,7 +111,7 @@ sns.heatmap(chicago_df.isnull(), cbar = False, cmap = 'YlGnBu')
 
 
 ```python
-# 어떤 종류의 폭력이 가장 많이 발생했나
+# 어떤 종류의 폭력이 가장 많이 발생했나 What kind of violence occurred the most
 plt.figure(figsize = (15, 10))
 sns.countplot(y= 'Primary Type', data = chicago_df, order = chicago_df['Primary Type'].value_counts().iloc[:15].index)
 ```
@@ -119,20 +119,20 @@ sns.countplot(y= 'Primary Type', data = chicago_df, order = chicago_df['Primary 
 ![image](https://user-images.githubusercontent.com/39285147/180626028-84e51093-bcb4-40a8-99ea-575d68f0a53f.png)
 
 
-'MOTOR VEHICLE THEFT' 대략 20만 여개의 차량이 도난됐다.
+'MOTOR VEHICLE THEFT' 대략 20만 여개의 차량이 도난됐다. <span style="color: blue">'MOTOR VEHICLE THEFT' About 200,000 vehicles were stolen. </span>
 
 
 ```python
-# 어느 지역에서 가장 폭력이 많이 발생했는가
+# 어느 지역에서 가장 폭력이 많이 발생했는가 Which region has the most violence?
 plt.figure(figsize = (15, 10))
 sns.countplot(y= 'Location Description', data = chicago_df, order = chicago_df['Location Description'].value_counts().iloc[:15].index)
 ```
 
-'거리'에서 발생한 폭력이 가장 많은 것을 확인해볼 수 있다.
+'거리'에서 발생한 폭력이 가장 많은 것을 확인해볼 수 있다. <span style="color: blue"> It can be seen that the most violence occurred on the 'street'.</span>
 
 ```python
-# 특정 연도에 범죄가 얼마나 발생했나
-plt.plot(chicago_df.resample('Y').size()) # 연도(Y) 기준으로 resample하여 특정 연도에 발생한 샘플 개수(사건 수)를 도출한다
+# 특정 연도에 범죄가 얼마나 발생했나 How many crimes occurred in a particular year
+plt.plot(chicago_df.resample('Y').size()) # 연도(Y) 기준으로 resample하여 특정 연도에 발생한 샘플 개수(사건 수)를 도출 Resampling based on year (Y) to derive # samples (# events) that occurred in a specific year
 plt.title('Crimes Count Per Year')
 plt.xlabel('Years')
 plt.ylabel('Number of Crimes')
@@ -156,7 +156,7 @@ plt.ylabel('Number of Crimes')
         2017-12-31     11357
 
 ```python
-# 특정 달에 범죄가 얼마나 발생했나
+# 특정 달에 범죄가 얼마나 발생했나 How many crimes occurred in a particular month
 plt.plot(chicago_df.resample('M').size())
 plt.title('Crimes Count Per Month')
 plt.xlabel('Months')
@@ -168,7 +168,7 @@ plt.ylabel('Number of Crimes')
 
 
 ```python
-# 특정 분기에 범죄가 얼마나 발생했나
+# 특정 분기에 범죄가 얼마나 발생했나 How many crimes occurred in a particular quarter
 plt.plot(chicago_df.resample('Q').size())
 plt.title('Crimes Count Per Quarter')
 plt.xlabel('Quarters')
@@ -177,10 +177,10 @@ plt.ylabel('Number of Crimes')
 
 ![image](https://user-images.githubusercontent.com/39285147/180626270-d43dbc75-697e-44e0-896c-a83cb635d75a.png)
 
-## 데이터 전처리
+## Data Preprocessing
 
 ```python
-chicago_prophet = chicago_df.resample('M').size().reset_index() # 인덱스화 되어있는 테이블을 초기화시킨다
+chicago_prophet = chicago_df.resample('M').size().reset_index() # 인덱스화 되어있는 테이블을 초기화시킨다 Initializing an indexed table
 chicago_prophet.columns = ['Date', 'Crime Count']
 chicago_prophet_df = pd.DataFrame(chicago_prophet)
 chicago_prophet_df_final = chicago_prophet_df.rename(columns={'Date':'ds', 'Crime Count':'y'})
@@ -191,11 +191,11 @@ chicago_prophet_df_final = chicago_prophet_df.rename(columns={'Date':'ds', 'Crim
 ## Prediction
 
 ```python
-m = Prophet() # 'Crime의' 미래를 예측하는 역할
+m = Prophet() # 'Crime의' 미래를 예측하는 역할 Predicting the future of 'Crime'
 m.fit(chicago_prophet_df_final)
 
 # Forcasting into the future
-future = m.make_future_dataframe(periods=365) # 앞으로 1년 동안의 'Crime'을 Prophet 활용하여 예측
+future = m.make_future_dataframe(periods=365) # 앞으로 1년 동안의 'Crime'을 Prophet 활용하여 예측 Prediction using Prophet 'Crime' for the next year
 forecast = m.predict(future)
 ```
 
@@ -1390,25 +1390,25 @@ figure = m.plot(forecast, xlabel='Date', ylabel='Crime Rate')
 
 ![image](https://user-images.githubusercontent.com/39285147/180626434-50c9ad80-89f1-41b7-8f09-0b81df037201.png)
 
-시각화 자료에서 볼 수 있듯이 데이터에 포함된 2017년 이후의 연도 또한 Prophet을 통하여 표현이 가능하다.
+시각화 자료에서 볼 수 있듯이 데이터에 포함된 2017년 이후의 연도 또한 Prophet을 통하여 표현이 가능하다. <span style="color: blue"> As can be seen from the visualization data, the years after 2017 included in the data can also be expressed through Prophet. </span>
 
 
 ```python
-# 예측된 추세가 어떤 모양일지 도출해준다
+# 예측된 추세가 어떤 모양일지 도출 Determining what the predicted trend will look like
 figure3 = m.plot_components(forecast)
 ```
 
 ![image](https://user-images.githubusercontent.com/39285147/180626451-4193c24f-4667-483b-867e-934386363c79.png)
 
-시카고와 같은 경우 그래프에서 7월달(여름)까지 범죄율이 상승하다가, 그 이후로 겨울을 맞아 날씨가 추워지면서 범죄율이 하락하는 현상을 관찰해볼 수 있다.
+시카고와 같은 경우 그래프에서 7월달(여름)까지 범죄율이 상승하다가, 그 이후로 겨울을 맞아 날씨가 추워지면서 범죄율이 하락하는 현상을 관찰해볼 수 있다. <span style="color: blue"> In the case of Chicago, the graph shows that the crime rate rises until July (summer), and then the crime rate decreases as the weather gets colder in winter. </span>
 
 # PART 2: Avocado Market
 ![image](https://user-images.githubusercontent.com/39285147/180627180-230065b5-cac5-4905-9275-9a3b8c9c0201.png)
 
 ## Description
-페이스북 Prophet을 사용해 미래 물가를 예측한다.
+페이스북 Prophet을 사용해 미래 물가를 예측한다. <span style="color: blue">
 
-## 데이터 관찰
+## Observing the dataset
 **Some relevant columns in the dataset**:
 - Date - The date of the observation
 - AveragePrice - the average price of a single avocado
@@ -1420,7 +1420,7 @@ figure3 = m.plot_components(forecast)
 - 4225 - Total number of avocados with PLU 4225 sold
 - 4770 - Total number of avocados with PLU 4770 sold
 
-## 데이터 불러오기
+## Loading the dataset
 
 ```python
 # import libraries 
@@ -1439,8 +1439,8 @@ avocado_df = pd.read_csv('avocado.csv')
 ```
 
 ```python
-# 날짜별 아보카도 가격분포
-avocado_df = avocado_df.sort_values("Date") # 시간 순으로 정렬
+# 날짜별 아보카도 가격분포 Avocado price distribution by date
+avocado_df = avocado_df.sort_values("Date") # 시간 순으로 정렬 order by time
 plt.figure(figsize=(10,10))
 plt.plot(avocado_df['Date'], avocado_df['AveragePrice'])
 ```
@@ -1449,7 +1449,7 @@ plt.plot(avocado_df['Date'], avocado_df['AveragePrice'])
 
 
 ```python
-# 지역별 아보카도 가격분포
+# 지역별 아보카도 가격분포 Avocado Price Distribution by Region
 plt.figure(figsize=[25,12])
 sns.countplot(x = 'region', data = avocado_df)
 plt.xticks(rotation = 45)
@@ -1460,7 +1460,7 @@ plt.xticks(rotation = 45)
 
 
 ```python
-# 연도별 아보카도 가격분포
+# 연도별 아보카도 가격분포 Avocado Price Distribution by Year
 plt.figure(figsize=[25,12])
 sns.countplot(x = 'year', data = avocado_df)
 plt.xticks(rotation = 45)
@@ -1472,8 +1472,8 @@ plt.xticks(rotation = 45)
 ## Prediction
 
 ```python
-avocado_prophet_df = avocado_df[['Date', 'AveragePrice']] # Prophet에 필요한 열만 추출 
-avocado_prophet_df = avocado_prophet_df.rename(columns={'Date':'ds', 'AveragePrice':'y'}) # Prophet 열이름 사전설정
+avocado_prophet_df = avocado_df[['Date', 'AveragePrice']] # Prophet에 필요한 열만 추출 Extracting only the columns needed by Prophet
+avocado_prophet_df = avocado_prophet_df.rename(columns={'Date':'ds', 'AveragePrice':'y'}) # Prophet 열이름 사전설정 Prophet column name presets
 
 avocado_prophet_df
 ```
@@ -1482,12 +1482,12 @@ avocado_prophet_df
 
 
 ```python
-# Prophet 적용
+# Applying the Prophet
 m = Prophet()
 m.fit(avocado_prophet_df)
 
 # Forcasting into the future
-future = m.make_future_dataframe(periods=365) # 미래 1년 동안의 아보카도 가격 예측
+future = m.make_future_dataframe(periods=365) # 미래 1년 동안의 아보카도 가격 예측 Avocado Price Prediction for the Future Year
 forecast = m.predict(future)
 
 figure = m.plot(forecast, xlabel='Date', ylabel='Price')

@@ -15,19 +15,19 @@ sidebar:
 
 # PART 1: Text Mining
 ## 1-1) 텍스트 마이닝(Text Mining)이란?
-비정형(= 구조화 되지 않은) 텍스트 빅 데이터에 대하여 효과적인 탐색 및 분석을 통해 유용한 정보, 패턴 및 실행 가능한 통찰력을 도출하는 과정이다. 'Text Mining' utilizes effective exploration and analysis to produce feasible insights (i.e., valuable patterns) into the extensive dataset of unstructured texts.
+비정형(= 구조화 되지 않은) 텍스트 빅 데이터에 대하여 효과적인 탐색 및 분석을 통해 유용한 정보, 패턴 및 실행 가능한 통찰력을 도출하는 과정이다. <span style="color: blue">'Text Mining' utilizes effective exploration and analysis to produce feasible insights (i.e., valuable patterns) into the extensive dataset of unstructured texts.</span>
 
 ### 텍스트 마이닝의 필요성(Why We Need Text Mining?)
 
-일반적으로 텍스트 데이터는 구조화가 되어있지 않아서 비지도학습이 활용된다. Text data are the pivot of Unsupervised Learning because they are mostly not structured.
+일반적으로 텍스트 데이터는 구조화가 되어있지 않아서 비지도학습이 활용된다. <span style="color: blue">Text data are the pivot of Unsupervised Learning because they are mostly not structured.</span>
 
-하지만, 실생활에는 엄청나게 많은 양의 텍스트 데이터가 순간마다 생성되고 있다 ([차원의 저주](https://github.com/hchoi256/ai-terms)). In reality, however, a large amount of test data are emerging every second ([Curse of Dimension](https://github.com/hchoi256/ai-terms))
+하지만, 실생활에는 엄청나게 많은 양의 텍스트 데이터가 순간마다 생성되고 있다 ([차원의 저주](https://github.com/hchoi256/ai-terms)). <span style="color: blue">In reality, however, a large amount of test data are emerging every second ([Curse of Dimension](https://github.com/hchoi256/ai-terms))</span>
 
-따라서, 텍스트 마이닝은 이러한 텍스트 데이터에서 business insight를 식별하여 목표 성취의 위험을 줄이는 것에 뜻이 있다. Thus, text mining delivers its meaning in that it reduces risks in the process of achieving a business goal. 
+따라서, 텍스트 마이닝은 이러한 텍스트 데이터에서 business insight를 식별하여 목표 성취의 위험을 줄이는 것에 뜻이 있다. <span style="color: blue">Thus, text mining delivers its meaning in that it reduces risks in the process of achieving a business goal. </span>
 
-> 정보에 입각한 결정을 내리고, 프로세스를 자동화하고, 감정 분석을 사용한 시장 조사 등을 수행하고자 한다. It makes decisions with information, supports self-processing, and analyzes the market with sentiment analysis. 
+> 정보에 입각한 결정을 내리고, 프로세스를 자동화하고, 감정 분석을 사용한 시장 조사 등을 수행하고자 한다. <span style="color: blue">It makes decisions with information, supports self-processing, and analyzes the market with sentiment analysis. </span>
 
-### 텍스트 마이닝의 분야
+### Types of Text Mining
 
 * **정보 추출** (Information Extraction)
 * **문서 분류 및 클러스터링** (Document classification and clustering)
@@ -38,17 +38,17 @@ sidebar:
 
 ### 텍스트 마이닝의 핵심(Core of Text Mining)
 
-컴퓨터를 사용하여 인간의 언어를 이해, 해석 및 조작하는 것을 다루는 연구 분야이다. The research of understanding, interpreting, and controlling human languages using the computer.
+컴퓨터를 사용하여 인간의 언어를 이해, 해석 및 조작하는 것을 다루는 연구 분야이다. <span style="color: blue">The research of understanding, interpreting, and controlling human languages using the computer.</span>
 
-> Natural Language: 인간이 의사소통하는 모든 언어를 지칭한다! Every human language used for communication! 
+> Natural Language: 인간이 의사소통하는 모든 언어를 지칭한다! <span style="color: blue">Every human language used for communication! </span>
 
-NLP은 인공지능의 **하위 도메인**이고, 중요한 정보의 대부분은 **자연어**로 작성되어 편리하게 태그가 지정되지 않기 때문에 텍스트 분석을 위한 컨텐츠를 식별하고 추출한 후 다양한 NLP기술을 사용하여 의미 있는 정보를 추출하고자 한다. NLP is the **subdomain** of AI, and pivotal data are usually untagged. NLP helps identify the contents of the data and extract informative features using diverse NLP technologies. 
+NLP은 인공지능의 **하위 도메인**이고, 중요한 정보의 대부분은 **자연어**로 작성되어 편리하게 태그가 지정되지 않기 때문에 텍스트 분석을 위한 컨텐츠를 식별하고 추출한 후 다양한 NLP기술을 사용하여 의미 있는 정보를 추출하고자 한다. <span style="color: blue">NLP is the **subdomain** of AI, and pivotal data are usually untagged. NLP helps identify the contents of the data and extract informative features using diverse NLP technologies. </span>
 
 #### NLTK
 
-NLTK이란 NLP를 위해 가장 널리 사용되는 패키지 중에 하나로, 컴퓨터가 자연어와 텍스트를 전처리, 분석 및 이해하는데 도움이 되는 여러 알고리즘이 포함된 강력한 파이썬 패키지이다. NLTK, one of the most powerful packages used for NLP, includes various algorithms helpful for the computer to analyze texts and perform text preprocessing.
+NLTK이란 NLP를 위해 가장 널리 사용되는 패키지 중에 하나로, 컴퓨터가 자연어와 텍스트를 전처리, 분석 및 이해하는데 도움이 되는 여러 알고리즘이 포함된 강력한 파이썬 패키지이다. <span style="color: blue">NLTK, one of the most powerful packages used for NLP, includes various algorithms helpful for the computer to analyze texts and perform text preprocessing.</span>
 
-#### NLTK에서 사용 가능한 일반적인 알고리즘
+#### NLTK에서 사용 가능한 일반적인 알고리즘 (Common Algorithms Available in NLTK)
 * **Tokenization** : 토큰화
 * **Part of Speech Tagging** : 품사 태깅
 * **Named Entity Recognition** : NER (명명된 엔티티 인식)
@@ -93,14 +93,14 @@ names.words()
 
 
 > *corpus(말뭉치)*
->> 논리적으로 **최소한**의 의미를 전달할 수 있는 단일 텍스트들의 모음이다. a collection of written texts.
+>> 논리적으로 **최소한**의 의미를 전달할 수 있는 단일 텍스트들의 모음이다. <span style="color: blue">a collection of written texts.</span>
 
 # PART 2: Tokenization
 ## 2-1) Tokenization
-* **word tokenization** : 단어을 기준으로 토큰화  tokenize by work
-* **sentence tokenization** : 문장을 기준으로 토큰화 tokenize by sentence
-* **Regex tokenization** : Regex를 기준으로 해서 토큰화 tokenize with regex
-* **Blank line tokenization** : 빈 줄을 기준으로 토큰화 tokenize by empty sentence
+* **word tokenization** : 단어을 기준으로 토큰화 <span style="color: blue"> tokenize by work</span>
+* **sentence tokenization** : 문장을 기준으로 토큰화 <span style="color: blue">tokenize by sentence</span>
+* **Regex tokenization** : Regex를 기준으로 해서 토큰화 <span style="color: blue">tokenize with regex</span>
+* **Blank line tokenization** : 빈 줄을 기준으로 토큰화 <span style="color: blue">tokenize by empty sentence</span>
 
 
 ### Sentence Tokenization
@@ -364,7 +364,7 @@ BlanklineTokenizer().tokenize(sample)
 > **b""** : b-string (사람이 보기에는 일반 문자열처럼 보이지만, 내부적으로 byte형 문자열을 처리) (process byte strings internally)
 
 ## 2-2) Frequency Distribution (빈도 분포)
-텍스트에서 단어 빈도를 알아본다. Key가 단어이고, Value가 단어와 관련된 개수이다. frequency distribution of words in texts; key = a word and value = # words related to the word
+텍스트에서 단어 빈도를 알아본다. Key가 단어이고, Value가 단어와 관련된 개수이다. <span style="color: blue">frequency distribution of words in texts; key = a word and value = # words related to the word</span>
 
 
 ```python
@@ -475,11 +475,11 @@ fdist.plot(10, title="Top 10 Most Common Words")
 
 
 ## 2-3) Stop Words (불용어)
-일반적으로 자연어를 처리하기 전에 걸러내는 단어이다. A collection of unnecessary words
+일반적으로 자연어를 처리하기 전에 걸러내는 단어이다.<span style="color: blue">A collection of unnecessary words</span>
 
-실제로 모든 언어에서 가장 흔한 단어 (관사, 전치사, 대명사, 접속사 등)이며 텍스트에 많은 정보를 추가하지 않는다는 것이 특징이다. We don't want to consider unnecessary words (article, preposition, subject, transition words, etc.)
+실제로 모든 언어에서 가장 흔한 단어 (관사, 전치사, 대명사, 접속사 등)이며 텍스트에 많은 정보를 추가하지 않는다는 것이 특징이다. <span style="color: blue">We don't want to consider unnecessary words (article, preposition, subject, transition words, etc.)</span>
 
-주어진 말뭉치의 텍스트에서 불용어를 제거하여 데이터를 정리하고, 더 희귀하고 우리가 관심 있는 것과 잠재적으로 더 관련이 있는 단어를 식별하고자 하는 것이 목적이다! Removing those unnecessary words, we want to have distinctive words alive.
+주어진 말뭉치의 텍스트에서 불용어를 제거하여 데이터를 정리하고, 더 희귀하고 우리가 관심 있는 것과 잠재적으로 더 관련이 있는 단어를 식별하고자 하는 것이 목적이다! <span style="color: blue">Removing those unnecessary words, we want to have distinctive words alive.</span>
 
 
 ```python
@@ -613,10 +613,10 @@ nltk.download("stopwords", download_dir="./data")
 
 
 ## 2-4) Unigrams, Bigrams, Trigrams, ngrams
-기계는 한 번에 한 단어를 통과해야 할 때 문장의 의미를 완전히 이해할 수 없다. A machine cannot fully understand a sentence only with one word
-- 한 번에 하나씩 주어진 단어를 유니그램이라고 합니다. **Unigram**: one word
-- 한 번에 두 개의 단어 -> 바이그램 **Bigram**: two word
-- 한 번에 세 개의 단어 -> 트라이그램 **Trigram**: three word
+기계는 한 번에 한 단어를 통과해야 할 때 문장의 의미를 완전히 이해할 수 없다. <span style="color: blue">A machine cannot fully understand a sentence only with one word</span>
+- 한 번에 하나씩 주어진 단어를 유니그램이라고 합니다. **Unigram**: <span style="color: blue">one word</span>
+- 한 번에 두 개의 단어 -> 바이그램 **Bigram**: <span style="color: blue">two word</span>
+- 한 번에 세 개의 단어 -> 트라이그램 **Trigram**: <span style="color: blue">three word</span>
 
 
 ```python

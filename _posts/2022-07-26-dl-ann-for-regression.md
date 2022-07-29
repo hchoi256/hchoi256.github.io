@@ -33,7 +33,7 @@ search: false
 
 *PE*: Predicted Energy
 
-상기 데이터셋을 활용하여 하기 인공 신경망을 구축하고 새로운 데이터에 대해 효과적으로 예측값을 도출하는 것이 목표이다. Our goal is to build an ANN that refers to the dataset above and make predictions effectively.
+상기 데이터셋을 활용하여 하기 인공 신경망을 구축하고 새로운 데이터에 대해 효과적으로 예측값을 도출하는 것이 목표이다. <span style="color: blue"> Our goal is to build an ANN that refers to the dataset above and make predictions effectively.</span>
 
 <img width="2560" alt="ANN_Architecture" src="https://user-images.githubusercontent.com/39285147/181073579-8e6497c7-1ab6-4e37-859c-e024655c5d44.png">
 
@@ -106,4 +106,4 @@ print(np.concatenate((y_pred.reshape(len(y_pred),1), y_test.reshape(len(y_test),
         [458.55 463.28]]
 
         
-예측값과 실제값이 수직으로 배열된 2차원 행렬을 통해 가독성 좋게 비교가 가능하다. Through our 2-dimensional matrix, we can easily compare estimates with actual values.
+예측값과 실제값이 수직으로 배열된 2차원 행렬을 통해 가독성 좋게 비교가 가능하다. <span style="color: blue"> Through our 2-dimensional matrix, we can easily compare estimates with actual values. </span>

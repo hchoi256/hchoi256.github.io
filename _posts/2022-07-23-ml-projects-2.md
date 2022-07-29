@@ -13,17 +13,17 @@ sidebar:
     nav: "docs"
 ---
 
-# 코드
+# Code
 **[Notice]** [download here](https://github.com/hchoi256/machine-learning-development)
 {: .notice--danger}
 
 # Learning Goals
-1. 합성곱 신경망 모델 설계하여 케라스로 이미지 분류 Building the CNN and Image classification using keras
-2. Adam 옵티마이저로 신경망 가중치 최적화 Optimizing weights using 'Adam'
-3. 드롭아웃을 통한 과적합 개선 Drop-out
-4. 모델 평가 진행 (*confusion matrix*) Model evaluation
-5. *Image Augmentation*으로 신경망 일반화 성능 개선 Improving generalization error through image augmentation
-6. 훈련 신경망 가중치 조작 방법 How to adjust weights
+1. 합성곱 신경망 모델 설계하여 케라스로 이미지 분류 <span style="color: blue">Building the CNN and Image classification using keras</span>
+2. Adam 옵티마이저로 신경망 가중치 최적화 <span style="color: blue">Optimizing weights using 'Adam'</span>
+3. 드롭아웃을 통한 과적합 개선<span style="color: blue"> Drop-out</span>
+4. 모델 평가 진행 (*confusion matrix*) <span style="color: blue">Model evaluation</span>
+5. *Image Augmentation*으로 신경망 일반화 성능 개선 <span style="color: blue">Improving generalization error through image augmentation</span>
+6. 훈련 신경망 가중치 조작 방법 <span style="color: blue">How to adjust weights</span>
 
 # Background knowledge
 
@@ -31,27 +31,27 @@ sidebar:
 ![image](https://user-images.githubusercontent.com/39285147/180509114-3b492055-56eb-42c6-85b8-80fb8e077546.png)
 
 
-10가지 클래스로 나누어져 있는 **6만 개의** **컬러(RGB 채널)** 이미지로 구성된다 (airplanes, cars, birds, cats, etc.). Ten classes; each includes 60,000 color images 
-- 이미지 해상도가 **32x32** 픽셀로 매우 낮다. Image resolution = 32x32
-- 각 클래스마다 6천개의 이미지가 존재한다 (클래스 별 매우 균등한 이미지 분포). Uniform image distribution by class
+10가지 클래스로 나누어져 있는 **6만 개의** **컬러(RGB 채널)** 이미지로 구성된다 (airplanes, cars, birds, cats, etc.). <span style="color: blue">Ten classes; each includes 60,000 color images </span>
+- 이미지 해상도가 **32x32** 픽셀로 매우 낮다. <span style="color: blue">Image resolution = 32x32</span>
+- 각 클래스마다 6천개의 이미지가 존재한다 (클래스 별 매우 균등한 이미지 분포). <span style="color: blue">Uniform image distribution by class</span>
 
-이번 프로젝트에서 주어진 입력 이미지가 10개의 클래스 중 어디에 속하는지 분류 모델을 학습시켜보자. Training the model to put new image into certain class
+이번 프로젝트에서 주어진 입력 이미지가 10개의 클래스 중 어디에 속하는지 분류 모델을 학습시켜보자. <span style="color: blue">Training the model to put new image into certain class</span>
 
 ## [Convolutional Neural Network (CNN)](https://github.com/hchoi256/ai-boot-camp/blob/main/ai/deep-learning/cnn.md)
 ![image](https://user-images.githubusercontent.com/39285147/180512062-48c118e4-c9d4-4ea6-8281-958201289626.png)
 
-CNN 관련 배경지식은 상기 링크를 통해 숙지해주세요! Please refer to the link above.
+CNN 관련 배경지식은 상기 링크를 통해 숙지해주세요! <span style="color: blue">Please refer to the link above.</span>
 
 ![image](https://user-images.githubusercontent.com/39285147/180513584-f47d8136-4cc3-473b-b85f-437ddd376101.png)
 
-3x3 'sharpen' 커널 필터를 적용하면 인풋 이미지의 3x3 픽셀 범위에 대해 합성곱마다 가운데 값에 가중치를 높게줘서 출력 이미지에서 가운데 픽셀을 뚜렷하게 강조한다 (= 명확하게 보이게 한다). Applying a 3x3 'sharpen' kernel filter, the value in the center of convolution matrix takes a significant weight, which sharpens the image
+3x3 'sharpen' 커널 필터를 적용하면 인풋 이미지의 3x3 픽셀 범위에 대해 합성곱마다 가운데 값에 가중치를 높게줘서 출력 이미지에서 가운데 픽셀을 뚜렷하게 강조한다 (= 명확하게 보이게 한다). <span style="color: blue">Applying a 3x3 'sharpen' kernel filter, the value in the center of convolution matrix takes a significant weight, which sharpens the image</span>
 
 ## 성능지표: Key Performance Indicators (KPI)
 ![image](https://user-images.githubusercontent.com/39285147/180517136-7b390f93-0f67-4e21-9217-a482e74a1f41.png)
 
-**Precision**: 암이 없는 환자에게 있다고 오진할 확률 Probability of misdiagnosing a patient without cancer
+**Precision**: 암이 없는 환자에게 있다고 오진할 확률 <span style="color: blue">Probability of misdiagnosing a patient without cancer</span>
 
-**Recall**: 암이 있는 환자에게 없다고 오진할 확률 Probability of misdiagnosing a patient with cancer
+**Recall**: 암이 있는 환자에게 없다고 오진할 확률 <span style="color: blue">Probability of misdiagnosing a patient with cancer</span>
 
 > ![image](https://user-images.githubusercontent.com/39285147/180517030-eedfd66d-7cd8-4109-9fb2-87f6a29d3c7c.png)
 
@@ -91,9 +91,9 @@ print(y_train[i])
 ![image](https://user-images.githubusercontent.com/39285147/180518417-37e04fc2-210e-40db-b111-e219b5d66a9b.png)        
 
 
-클래스 리스트에서 인덱스가 1인 클래스, 즉 'Cars'에 속하는 이미지인 것을 확인할 수 있다. Index 1 represetns 'Cars'
+클래스 리스트에서 인덱스가 1인 클래스, 즉 'Cars'에 속하는 이미지인 것을 확인할 수 있다. <span style="color: blue">Index 1 represetns 'Cars'</span>
 
-이제, 한 번에 여러 이미지를 배출하여 직관적으로 비교해보자. Displaying multiple images at once for better intuition
+이제, 한 번에 여러 이미지를 배출하여 직관적으로 비교해보자.<span style="color: blue"> Displaying multiple images at once for better intuition</span>
 
 ```python
 W_grid = 4 # Grid width
@@ -134,13 +134,13 @@ y_train
             [1],
             [1]], dtype=uint8)
 
-클래스 인덱스로 종속변수인 2차원 배열이 표현된 것을 확인해볼 수 있다. expressed as a 2-dimensional array
+클래스 인덱스로 종속변수인 2차원 배열이 표현된 것을 확인해볼 수 있다. <span style="color: blue">expressed as a 2-dimensional array</span>
 
-각 숫자는 앞서 '데이터 시각화' 예제에서 보았던 클래스 인덱스 번호이다. Each number represents the index of classes
+각 숫자는 앞서 '데이터 시각화' 예제에서 보았던 클래스 인덱스 번호이다. <span style="color: blue">Each number represents the index of classes</span>
 
-이를 인덱스 번호가 아니라 'One-Hot Encoding' 방법을 활용하여 범주화 시켜서 신경망 학습 인자로 만들어보자. Performing categorization to the indexes using 'One-Hot Encoding'
+이를 인덱스 번호가 아니라 'One-Hot Encoding' 방법을 활용하여 범주화 시켜서 신경망 학습 인자로 만들어보자. <span style="color: blue">Performing categorization to the indexes using 'One-Hot Encoding'</span>
 
-> 신경망의 학습 데이터는 'numpy 2차원 배열'이여야 한다. Training dataset must be numpy 2-dimensional array
+> 신경망의 학습 데이터는 'numpy 2차원 배열'이여야 한다. <span style="color: blue">Training dataset must be numpy 2-dimensional array</span>
 
 ### Categorization (Categorical Data)
 
@@ -160,14 +160,14 @@ y_test = keras.utils.to_categorical(y_test, number_cat)
 
 
 ### 정규화
-독립변수들은 픽셀에 할당된 [0, 255] 사이의 수치이므로, [0, 1] 사이 값들로 *정규화*를 거칠 필요가 있다. Independent variables are in range [0, 255], so they need to be normalized
+독립변수들은 픽셀에 할당된 [0, 255] 사이의 수치이므로, [0, 1] 사이 값들로 *정규화*를 거칠 필요가 있다. <span style="color: blue">Independent variables are in range [0, 255], so they need to be normalized</span>
 
 ```python
 X_train = X_train/255
 X_test = X_test/255
 ```
 
-이렇게 255로 나누어주면 각 데이터들은 [0, 1] 사이 값을 가지게 된다. Dividing by 255 makes the data become a number in range [0, 1]
+이렇게 255로 나누어주면 각 데이터들은 [0, 1] 사이 값을 가지게 된다. <span style="color: blue">Dividing by 255 makes the data become a number in range [0, 1]</span>
 
 ## 모델 훈련하기
 
@@ -205,15 +205,15 @@ cnn_model.compile(loss = 'categorical_crossentropy', optimizer = keras.optimizer
 history = cnn_model.fit(X_train, y_train, batch_size = 32, epochs = 1, shuffle = True)
 ```
 
-> ReLU: 회귀 작업 관련 함수로 연속적인 출력값을 생성한다 continuous output
+> ReLU: 회귀 작업 관련 함수로 연속적인 출력값을 생성한다  <span style="color: blue">Continuous output</span>
 
-> Softmax: 분류에 사용된다. classification
+> Softmax: 분류에 사용된다. <span style="color: blue"> classification</span>
 
 > CPU vs. GPU
 >
-> CPU는 직렬, GPU는 병령 처리에 각각 능하다. 따라서, 하나의 학습이 오래 지속될 필요가 있는 경우 GPU가 아닌 CPU를 사용하면 보다 능률적인 처리가 가능하다. CPU <=> serialization, GPU <=> parellelism. Thus, if one training lasts for long, CPU is better than GPU
+> CPU는 직렬, GPU는 병령 처리에 각각 능하다. 따라서, 하나의 학습이 오래 지속될 필요가 있는 경우 GPU가 아닌 CPU를 사용하면 보다 능률적인 처리가 가능하다.<span style="color: blue"> CPU <=> serialization, GPU <=> parellelism. Thus, if one training lasts for long, CPU is better than GPU</span>
 
-> ANN 은닉층 *뉴런개수*와 CNN *필터개수*를 증가시키면, 모델 복잡도가 증가하여 학습 시간이 늘어난다. The more neurons in the hidden layer of an ANN and more filters in the CNN, the more complex the model and the longer it takes to train.
+> ANN 은닉층 *뉴런개수*와 CNN *필터개수*를 증가시키면, 모델 복잡도가 증가하여 학습 시간이 늘어난다. <span style="color: blue">The more neurons in the hidden layer of an ANN and more filters in the CNN, the more complex the model and the longer it takes to train.</span>
 
 ## Evaluating the model
 
@@ -240,13 +240,13 @@ plt.subplots_adjust(wspace = 1)
 ![image](https://user-images.githubusercontent.com/39285147/180562014-e6d8d90f-7dc5-449f-a7cb-233e50bd6fa3.png)
 
 
-이미지는 결과의 한 행을 보여준다. Showing one row of the result
+이미지는 결과의 한 행을 보여준다.<span style="color: blue"> Showing one row of the result</span>
 
-해당 행에 대하여 세 번째와 마지막 열을 제외하고, 분류기가 모두 올바른 예측을 해낸 것읋 확인해볼 수 있다. Excluding the third and last column on the row, the classifier performs prediction successfully 
+해당 행에 대하여 세 번째와 마지막 열을 제외하고, 분류기가 모두 올바른 예측을 해낸 것읋 확인해볼 수 있다. <span style="color: blue">Excluding the third and last column on the row, the classifier performs prediction successfully </span>
 
-여기서는 정확도를 결과값으로 따로 보여주지 않았지만, 정확도는 'evaluation' 변수에 담겨있다. The accuracy is in 'evaluation'
+여기서는 정확도를 결과값으로 따로 보여주지 않았지만, 정확도는 'evaluation' 변수에 담겨있다. <span style="color: blue">The accuracy is in 'evaluation'</span>
 
-이제 혼동 행렬을 사용하여 보다 직관적으로 평가지표를 분석해보자. How can we analyze the model performance using confusion matrix?
+이제 혼동 행렬을 사용하여 보다 직관적으로 평가지표를 분석해보자. <span style="color: blue">How can we analyze the model performance using confusion matrix?</span>
 
 ```python
 from sklearn.metrics import confusion_matrix
@@ -260,9 +260,9 @@ sns.heatmap(cm, annot = True) # 해당 데이터가 많거나 높은 경우 색�
 
 ![image](https://user-images.githubusercontent.com/39285147/180563602-b9035fea-733c-4514-a223-63c1e99608a6.png)
 
-대각선에 위치한 픽셀들은 'True Positive'과 'True Negative'로 모델이 실제값과 일치하는 데이터들 개수를 담고있다. 'TP' and 'TN' on the diagonal include the number of correct predictions
+대각선에 위치한 픽셀들은 'True Positive'과 'True Negative'로 모델이 실제값과 일치하는 데이터들 개수를 담고있다. <span style="color: blue">'TP' and 'TN' on the diagonal include the number of correct predictions</span>
 
-그 외 다른 모든 픽셀에 속한 수치들은 오분류('False Negative', 'False Positive')로 취급한다. Other pixels ('FN', 'FP') are errors
+그 외 다른 모든 픽셀에 속한 수치들은 오분류('False Negative', 'False Positive')로 취급한다. <span style="color: blue"> Other pixels ('FN', 'FP') are errors</span>
 
 ## Saving the model
 
@@ -279,13 +279,13 @@ cnn_model.save(model_path)
 
 ## Image Augmentation
 
-과적합 문제를 해소하고 정확도를 높이기 위해 기존 데이터에 변화를 적용하는 전처리 기법이다. Applying changes to existing data to solve overfitting problems and increase accuracy.
+과적합 문제를 해소하고 정확도를 높이기 위해 기존 데이터에 변화를 적용하는 전처리 기법이다. <span style="color: blue">Applying changes to existing data to solve overfitting problems and increase accuracy.</span>
 
-기존 인풋 이미지에 뒤집기, 회전 등 다양한 변화를 주어 학습하는 데이터량을 증가시키고, 데이터 차원이 모델 복잡도를 웃돌게 만든다. By applying various changes (i.e., flipping, rotation, etc.) to the existing input image, it increases the amount of learning data and makes the data dimension exceed the model complexity.
+기존 인풋 이미지에 뒤집기, 회전 등 다양한 변화를 주어 학습하는 데이터량을 증가시키고, 데이터 차원이 모델 복잡도를 웃돌게 만든다. <span style="color: blue">By applying various changes (i.e., flipping, rotation, etc.) to the existing input image, it increases the amount of learning data and makes the data dimension exceed the model complexity.</span>
 
-> *ImageDataGenerator* 클래스를 통해 이미지내 여러 변화를 끌어낸다. various changes to images
+> *ImageDataGenerator* 클래스를 통해 이미지내 여러 변화를 끌어낸다. <span style="color: blue">various changes to images</span>
 
-이는 차후 과적합 방지에 효과가 있다. Avoiding overfitting
+이는 차후 과적합 방지에 효과가 있다. <span style="color: blue">Avoiding overfitting</span>
 
 ### New dataset with image augmentation
 
@@ -330,9 +330,9 @@ for x_batch in dataget_train.flow(X_train_sample, batch_size = n):
 
 ![image](https://user-images.githubusercontent.com/39285147/180567864-9bef861d-2973-4367-9344-436ae78ee7c9.png)
 
-이미지 증감을 이용하여 기존 데이터에서 새로운 데이터로 개수를 부풀린 예시이다. This is an example of inflating the number from existing data to new data using image increase/decrease.
+이미지 증감을 이용하여 기존 데이터에서 새로운 데이터로 개수를 부풀린 예시이다. <span style="color: blue">This is an example of inflating the number from existing data to new data using image increase/decrease.</span>
 
-결과에서 보이는 것처럼 기존 인풋 이미지의 '밝기'를 수정하여 새로운 데이터를 만들어냈다! New data was created by modifying the 'brightness' of the existing input image!
+결과에서 보이는 것처럼 기존 인풋 이미지의 '밝기'를 수정하여 새로운 데이터를 만들어냈다! <span style="color: blue">New data was created by modifying the 'brightness' of the existing input image! </span>
 
 ### Training the model with image augmentation
 

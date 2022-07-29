@@ -15,7 +15,7 @@ sidebar:
 
 # 어간추출(Stemmer) vs. 표제어추출(Lemmatizer)
 ## Stemmer
-단어에서 일반적인 형태 및 굴절 어미를 제거하는 프로세스. A process for removing the commoner morphological and inflexional endings from words.
+단어에서 일반적인 형태 및 굴절 어미를 제거하는 프로세스. <span style="color: blue">A process for removing the commoner morphological and inflexional endings from words.</span>
 
 
 ```python
@@ -58,7 +58,7 @@ for word in input_words:
                 code            code            code             cod
 
 ## Lemmatizer
-'단어의 원형'을 찾고자 하는 또 다른 형태, 표제어는 단어의 다양한 굴절 형태를 그룹화하여 단일 항목으로 분석할 수 있도록 하는 과정이다. Lemmatization is the process of grouping together the different inflected forms of a word so they can be analyzed as a single item
+'단어의 원형'을 찾고자 하는 또 다른 형태, 표제어는 단어의 다양한 굴절 형태를 그룹화하여 단일 항목으로 분석할 수 있도록 하는 과정이다. <span style="color: blue">Lemmatization is the process of grouping together the different inflected forms of a word so they can be analyzed as a single item</span>
 
 ```python
 from nltk.stem import WordNetLemmatizer
@@ -95,7 +95,7 @@ for word in input_words:
 
 
 # Chunking
-텍스트 데이터는 일반적으로 추가 분석을 위해 조각으로 나누어야 할 필요가 있다. Text data usually needs to be broken into pieces for further analysis.
+텍스트 데이터는 일반적으로 추가 분석을 위해 조각으로 나누어야 할 필요가 있다. <span style="color: blue">Text data usually needs to be broken into pieces for further analysis.</span>
 
 
 ```python
@@ -132,7 +132,7 @@ chunk_size = 700
 chunks = chunker(input_data, chunk_size)
 ```
 
-상기 코드는 brown 라이브러리 데이터의 14000 단어를 불러와 700개의 단어 단위로 chunk를 생성한다. The above code fetches 14000 words of brown library data and creates chunks in units of 700 words.
+상기 코드는 brown 라이브러리 데이터의 14000 단어를 불러와 700개의 단어 단위로 chunk를 생성한다. <span style="color: blue">The above code fetches 14000 words of brown library data and creates chunks in units of 700 words.</span>
 
 ```python
 print("Number of text chunks =", len(chunks), "\n")
@@ -169,23 +169,23 @@ for i, chunk in enumerate(chunks):
 
 
 # Bag of Words
-Bag of Words 모델을 사용해서 텍스트 분석을 하는 주요 목적 중에 하나는 텍스트를 기계학습에서 사용할 수 있도록 텍스트를 숫자 형식으로 변환하는 것이다. One of the main purposes of text analysis using the Bag of Words model is to convert the text into a numeric form so that it can be used in machine learning.
+Bag of Words 모델을 사용해서 텍스트 분석을 하는 주요 목적 중에 하나는 텍스트를 기계학습에서 사용할 수 있도록 텍스트를 숫자 형식으로 변환하는 것이다. <span style="color: blue">One of the main purposes of text analysis using the Bag of Words model is to convert the text into a numeric form so that it can be used in machine learning.</span>
 
-수백만 단어가 포함된 텍스트 문서를 분석하려고 한다. You want to analyze a text document containing millions of words.
+수백만 단어가 포함된 텍스트 문서를 분석하려고 한다. <span style="color: blue">You want to analyze a text document containing millions of words.</span>
 
-그러기 위해선, 텍스트를 추출하고 숫자 표현 형식으로 변환해야 한다. To do that, we need to extract the text and convert it to a numeric representation.
+그러기 위해선, 텍스트를 추출하고 숫자 표현 형식으로 변환해야 한다. <span style="color: blue">To do that, we need to extract the text and convert it to a numeric representation.</span>
 
-기계 학습 알고리즘은 데이터를 분석하고 의미 있는 정보를 추출할 수 있도록 작업할 숫자 데이터가 필요하다. Machine learning algorithms need numeric data to work with so that they can analyze the data and extract meaningful information.
+기계 학습 알고리즘은 데이터를 분석하고 의미 있는 정보를 추출할 수 있도록 작업할 숫자 데이터가 필요하다. <span style="color: blue">Machine learning algorithms need numeric data to work with so that they can analyze the data and extract meaningful information.</span>
 
-Bag of Words 모델은 문서의 모든 단어에서 어휘를 추출하고 문서-용어 행렬 (matrix)를 사용하여 모델을 구축한다. The Bag of Words model extracts vocabulary from every word in a document and builds the model using a document-term matrix.
-- 이 모델을 사용하면 모든 문서를 단어 모음으로 나타낼 수 있다. This model allows any document to be represented as a collection of words.
-- 단어 갯수, 문법적 세부 사항, 단어 순서를 무시한다. Ignoring word count, grammatical details, and word order.
+Bag of Words 모델은 문서의 모든 단어에서 어휘를 추출하고 문서-용어 행렬 (matrix)를 사용하여 모델을 구축한다. <span style="color: blue">The Bag of Words model extracts vocabulary from every word in a document and builds the model using a document-term matrix.</span>
+- 이 모델을 사용하면 모든 문서를 단어 모음으로 나타낼 수 있다. <span style="color: blue">This model allows any document to be represented as a collection of words.</span>
+- 단어 갯수, 문법적 세부 사항, 단어 순서를 무시한다. <span style="color: blue">Ignoring word count, grammatical details, and word order.</span>
 
-문서-용어 행렬은 기본적으로 문서에서 발생하는 다양한 단어의 수를 제공하는 테이블이다. The document-term matrix is ​​basically a table that gives the number of different words that occur in a document.
+문서-용어 행렬은 기본적으로 문서에서 발생하는 다양한 단어의 수를 제공하는 테이블이다. <span style="color: blue">The document-term matrix is ​​basically a table that gives the number of different words that occur in a document.</span>
 
-텍스트 문서는 다양한 단어의 가중치 조항으로 표현되고, 임계값을 설정하고 더 의미 있는 단어를 선택할 수 있다. Text documents are represented by weighted clauses of various words; more meaningful with thresholds words can be selected.
+텍스트 문서는 다양한 단어의 가중치 조항으로 표현되고, 임계값을 설정하고 더 의미 있는 단어를 선택할 수 있다. <span style="color: blue">Text documents are represented by weighted clauses of various words; more meaningful with thresholds words can be selected.</span>
 
-feature vector로 사용될 문서의 모든 단어들의 히스토그램을 만들고, 이 feature vector는 텍스트 분류에 사용할 수 있다. Create a histogram of all words in the document to be used as a feature vector, and this feature vector can be used for text classification.
+feature vector로 사용될 문서의 모든 단어들의 히스토그램을 만들고, 이 feature vector는 텍스트 분류에 사용할 수 있다. <span style="color: blue">Creating a histogram of all words in the document to be used as a feature vector, and this feature vector can be used for text classification.</span>
 
 
 ```python
@@ -227,18 +227,18 @@ print(vocabulary)
 # Vectorization
 
 ## Why We Need Vectorization?
-Machine (기계)는 문자와 단어를 이해할 수 없다. Machines cannot understand sentences or words. 
+Machine (기계)는 문자와 단어를 이해할 수 없다. <span style="color: blue">Machines cannot understand sentences or words. </span>
 
-0과 1로 이루어진 이진 형태의 데이터를 기계는 이해할 수 있다. But they can understand binary data (i.e., 0101010)  
+0과 1로 이루어진 이진 형태의 데이터를 기계는 이해할 수 있다. <span style="color: blue">But they can understand binary data (i.e., 0101010)  </span>
 
-**Computer Vision**의 가장 기본은 이미지는 픽셀 (pixel)로 이루어져 있고, 픽셀에 대한 정보는 x, y와 같은 픽셀의 위치 그리고 해당 픽셀의 색상 정보 (보통 RGB)를 가지고 있다. 이런 정보들은 숫자로 쉽게 만들 수가 있다! **Computer Vision** is a collection of pixels requiring information about the location of x, y, and RGB. We can easily produce such information with numbers.
+**Computer Vision**의 가장 기본은 이미지는 픽셀 (pixel)로 이루어져 있고, 픽셀에 대한 정보는 x, y와 같은 픽셀의 위치 그리고 해당 픽셀의 색상 정보 (보통 RGB)를 가지고 있다. 이런 정보들은 숫자로 쉽게 만들 수가 있다! <span style="color: blue">**Computer Vision** is a collection of pixels requiring information about the location of x, y, and RGB. We can easily produce such information with numbers.</span>
 
-**NLP**의 텍스트 데이터 역시 기계가 이해할 수 있도록 숫자로 표현해야 한다. In NLP, text data must also be numbers.
+**NLP**의 텍스트 데이터 역시 기계가 이해할 수 있도록 숫자로 표현해야 한다. <span style="color: blue">In NLP, text data must also be numbers.</span>
 
-**CountVectorizer** 텍스트를 숫자 데이터로 변환하는 방법으로, 텍스트를 수치 데이터로 변화하는데 사용하는 method! sklearn을 통해 사용 가능하다. **CountVectorizer** is the method to convert text to numbers, which can be achieved with *sklearn*.
+**CountVectorizer** 텍스트를 숫자 데이터로 변환하는 방법으로, 텍스트를 수치 데이터로 변화하는데 사용하는 method! sklearn을 통해 사용 가능하다. <span style="color: blue">**CountVectorizer** is the method to convert text to numbers, which can be achieved with *sklearn*.</span>
 
 ## 1. CountVectorizer
-텍스트 데이터에서 '횟수'를 기준으로 특징을 추출하는 방법이다. Extracting features by 'number' from text data.
+텍스트 데이터에서 '횟수'를 기준으로 특징을 추출하는 방법이다. <span style="color: blue">Extracting features by 'number' from text data.</span>
 
 ```python
 %pip install scikit-learn
@@ -1108,17 +1108,17 @@ one_hot
 </div>
 
 ## 2. TF-IDF
-정보 검색과 텍스트 마이닝에서 이용하는 가중치로, 여러 문서로 이루어진 문서군이 있을 때 어떤 단어가 특정 문서 내에서 얼마나 중요한 것인지를 나타내는 통계적 수치이다. a statistical measure that evaluates how relevant a word is to a document in a collection of documents
+정보 검색과 텍스트 마이닝에서 이용하는 가중치로, 여러 문서로 이루어진 문서군이 있을 때 어떤 단어가 특정 문서 내에서 얼마나 중요한 것인지를 나타내는 통계적 수치이다. <span style="color: blue">a statistical measure that evaluates how relevant a word is to a document in a collection of documents</span>
 
-*TF*: 특정 단어가 하나의 데이터 안에서 등장하는 횟수 how many times certain word appears in one data
+*TF*: 특정 단어가 하나의 데이터 안에서 등장하는 횟수 <span style="color: blue">how many times certain word appears in one data</span>
 
-*DF*: 문제 빈도 값으로, 특정 단어가 여러 데이터에 자주 등장하는지 알려주는 지표 how many times certain word appears in other data
+*DF*: 문제 빈도 값으로, 특정 단어가 여러 데이터에 자주 등장하는지 알려주는 지표 <span style="color: blue">how many times certain word appears in other data</span>
 
-*IDF(Inverse)*: DF의 역수를 취해서 구하며, 특정 단어가 다른 데이터에 등장하지 않을 경우 값이 커진다 As a word doesn't appear in other data, IDF increases
+*IDF(Inverse)*: DF의 역수를 취해서 구하며, 특정 단어가 다른 데이터에 등장하지 않을 경우 값이 커진다 <span style="color: blue">As a word doesn't appear in other data, IDF increases</span>
 
-TF-IDF란 이 두 값을 곱해서 사용하므로 어떤 단어가 해당 문서에 자주 등장하지만 다른 문서에는 많이 없는 단어일수록 높은 값을 가진다. TF-IDF is computed by the multiplication of TF and IDF.
+TF-IDF란 이 두 값을 곱해서 사용하므로 어떤 단어가 해당 문서에 자주 등장하지만 다른 문서에는 많이 없는 단어일수록 높은 값을 가진다. <span style="color: blue">TF-IDF is computed by the multiplication of TF and IDF.</span>
 
-따라서, 조사나 지시대명사처럼 자주 등장하는 단어는 TF 값은 크지만 IDF 값은 작아지므로 CountVectorizer가 가진 문제점이 해결 가능하다. Thus, TF-IDF overcomes the limits of CountVectorizer.
+따라서, 조사나 지시대명사처럼 자주 등장하는 단어는 TF 값은 크지만 IDF 값은 작아지므로 CountVectorizer가 가진 문제점이 해결 가능하다.<span style="color: blue"> Thus, TF-IDF overcomes the limits of CountVectorizer.</span>
 
 
 
@@ -1378,14 +1378,14 @@ df0
 </div>
 
 
-'doc1'에서 숫자 0을 가지는 열에 해당되는 단어들은 'doc1' 문장에 포함되지 않은 단어들이다.
+'doc1'에서 숫자 0을 가지는 열에 해당되는 단어들은 'doc1' 문장에 포함되지 않은 단어들이다.<span style="color: blue">The words corresponding to the column with the number 0 in 'doc1' are words not included in the sentence 'doc1'.</span>
 
-TF-IDF 수치는 클수록 다른 문서에서 언급되지 않으면서 해당 문서에서 여러 번 사용되었다는 의미이다.
+TF-IDF 수치는 클수록 다른 문서에서 언급되지 않으면서 해당 문서에서 여러 번 사용되었다는 의미이다.<span style="color: blue"><A higher TF-IDF number means that it has been used multiple times in that document without being mentioned in other documents./span>
 
-따라서, 'about'의 0.495894가 'loves'의 0.220127 보다 큰 것은 'about'이 다른 문서에서는 덜 사용됐으면서 해당 문서에서만 많이 사용되었기 때문으로 해석할 수 있다.
+따라서, 'about'의 0.495894가 'loves'의 0.220127 보다 큰 것은 'about'이 다른 문서에서는 덜 사용됐으면서 해당 문서에서만 많이 사용되었기 때문으로 해석할 수 있다.<span style="color: blue">Therefore, the reason that 0.495894 of 'about' is greater than 0.220127 of 'loves' can be interpreted because 'about' is used less in other documents and is used a lot only in that document.</span>
 
 ### Cosine Similarity
-TF-IDF 벡터로 표현된 결과들 끼리의 코사인 연관성을 비교한다.
+TF-IDF 벡터로 표현된 결과들 끼리의 코사인 연관성을 비교한다.<span style="color: blue">Compare the cosine association between the results expressed as TF-IDF vectors.</span>
 
 ```python
 from sklearn.metrics.pairwise import cosine_similarity
@@ -1404,15 +1404,15 @@ cosine_similarity(df0[3:4], df0) # 문서 4와 나머지 문서들과의 코사�
 
 
 
-상기 결과는 문서4에 해당하는 인덱스 3 자리에 위치한 1이 자기 자신과의 유사도가 1로 완벽하다는 것을 의미한다.
+상기 결과는 문서4에 해당하는 인덱스 3 자리에 위치한 1이 자기 자신과의 유사도가 1로 완벽하다는 것을 의미한다.<span style="color: blue">The above result means that the 1 located at the 3rd position of the index corresponding to the document 4 has a perfect similarity of 1 to itself.</span>
 
-문서1과 4의 연관성은 0.1061인 것으로 관찰된다.
+문서1과 4의 연관성은 0.1061인 것으로 관찰된다.<span style="color: blue">
 
 
 ## 3. Hashing Vectorizer
-문장들을 token의 빈도수(= 횟수)로 행렬을 만드는 방법으로, CountVectorizer와 동일한 방식이다.
+문장들을 token의 빈도수(= 횟수)로 행렬을 만드는 방법으로, CountVectorizer와 동일한 방식이다.<span style="color: blue">This is a method of creating a matrix with the frequency (= number of times) of the tokens, in the same way as CountVectorizer.</span>
 
-하지만, 'CountVectorizer'과 다르게 텍스트를 처리할 때 '해시'를 이용하여 '실행시간을 줄인다'.
+하지만, 'CountVectorizer'과 다르게 텍스트를 처리할 때 '해시'를 이용하여 '실행시간을 줄인다'.<span style="color: blue">However, unlike 'CountVectorizer', when processing text, 'hash' is used to 'reduce execution time'.</span>
 
 
 
@@ -1426,8 +1426,8 @@ from sklearn.feature_extraction.text import HashingVectorizer
 vectorizer = HashingVectorizer(n_features = 2 ** 5) # 'n_features': 피쳐 개수 # features (default = 30,000) 
 ```
 
-해쉬 함수를 사용하여 토큰 이름들을 맵핑된 32개의 피처를 제어한다. take control of token names that have been mapped into 32 features using hash function
-- 해쉬 함수를 통하여 32개의 피처 중 알맞은 피처의 인덱스를 가져온다. hash function helps find the index of appropriate feature
+해쉬 함수를 사용하여 토큰 이름들을 맵핑된 32개의 피처를 제어한다. <span style="color: blue">take control of token names that have been mapped into 32 features using hash function</span>
+- 해쉬 함수를 통하여 32개의 피처 중 알맞은 피처의 인덱스를 가져온다.<span style="color: blue"> hash function helps find the index of appropriate feature</span>
 
 ```python
 X = vectorizer.fit_transform(corpus)
@@ -1641,7 +1641,7 @@ matrix
 
 
 ## 4. FeatureHasher
-Feature Hashing이라는 방법을 이용하여 '약간 메모리를 사용하고' 빠르게 벡터화 하는 방법이다.
+Feature Hashing이라는 방법을 이용하여 '약간 메모리를 사용하고' 빠르게 벡터화 하는 방법이다.<span style="color: blue">This is a fast vectorization method using a method called Feature Hashing 'using a little memory'.</span>
 
 
 ```python
@@ -1674,7 +1674,7 @@ vectors.toarray()
             8., 2., 2., 0., 1.]])
 
 ## 5. Dict Vectorizer
-CountVectorizer과 동일한 방식으로 동작하지만, **딕셔너리** 데이터를 인풋으로 받는다는 점에서 차이가 있다. Dic Vectorizer shares the same way to operate but receives dictionary input data.
+CountVectorizer과 동일한 방식으로 동작하지만, **딕셔너리** 데이터를 인풋으로 받는다는 점에서 차이가 있다. <span style="color: blue">Dic Vectorizer shares the same way to operate but receives dictionary input data.</span>
 
 ```python
 from sklearn.feature_extraction import DictVectorizer
@@ -1742,9 +1742,9 @@ vec.get_feature_names_out(), len(vec.get_feature_names_out())
     23)
 
 
-상기 과정에서 Dict Vectorizer를 통하여 딕셔너리 데이터를 수치에 기반하여 벡터화했다. The result shows how vectorization has been done using Dict Vectorizer.
+상기 과정에서 Dict Vectorizer를 통하여 딕셔너리 데이터를 수치에 기반하여 벡터화했다. <span style="color: blue">The result shows how vectorization has been done using Dict Vectorizer.</span>
 
-이후, TF-IDF를 사용하여 횟수 기반 벡터화된 행렬을 변환하여 보다 유의미한 단어를 도출해보자. Now, let's use TF-IDF to find informative words from the output.
+이후, TF-IDF를 사용하여 횟수 기반 벡터화된 행렬을 변환하여 보다 유의미한 단어를 도출해보자.<span style="color: blue"> Now, let's use TF-IDF to find informative words from the output. </span>
 
 ```python
 from sklearn.feature_extraction.text import TfidfTransformer

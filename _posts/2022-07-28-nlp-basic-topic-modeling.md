@@ -14,16 +14,16 @@ sidebar:
 ---
 
 # What is Topic Modeling?
-주제 모델링(Topic Modeling)이란 주제에 해당하는 텍스트 데이터의 패턴을 식별하는 과정이다. Topic Modeling is the process of identifying a pattern of text data corresponding to a topic.
+주제 모델링(Topic Modeling)이란 주제에 해당하는 텍스트 데이터의 패턴을 식별하는 과정이다. <span style="color: blue"> Topic Modeling is the process of identifying a pattern of text data corresponding to a topic. </span>
 
-텍스트에 여러 주제가 포함된 경우 이 기술을 사용하여 입력 텍스트 내에서 해당 주제를 식별하고 분리할 수 있다. If the text contains multiple subjects, this technique can be used to identify and isolate those subjects within the input text.
+텍스트에 여러 주제가 포함된 경우 이 기술을 사용하여 입력 텍스트 내에서 해당 주제를 식별하고 분리할 수 있다. <span style="color: blue"> If the text contains multiple subjects, this technique can be used to identify and isolate those subjects within the input text. </span>
 
-이 기술은 주어진 문서 셋에서 숨겨진 주제를 찾는데 사용할 수도 있다. This technique can also be used to find hidden topics in a given set of documents.
+이 기술은 주어진 문서 셋에서 숨겨진 주제를 찾는데 사용할 수도 있다. <span style="color: blue"> This technique can also be used to find hidden topics in a given set of documents. </span>
 
 ## Chracteristics of Topic Modeling
-레이블이 지정된 데이터가 필요하지 않다 (비지도학습) No labeling (Unsupervised Learning)
+레이블이 지정된 데이터가 필요하지 않다 (비지도학습) <span style="color: blue"> No labeling (Unsupervised Learning) </span>
 
-인터넷에서 생성되는 방대한 양의 텍스트 데이터를 감안할 때 토픽 모델링은 방대한 양을 데이터를 요약할 수 있기 때문에 중요하다. Topic Modeling can summarize tons of text data springing up online. 
+인터넷에서 생성되는 방대한 양의 텍스트 데이터를 감안할 때 토픽 모델링은 방대한 양을 데이터를 요약할 수 있기 때문에 중요하다. <span style="color: blue"> Topic Modeling can summarize tons of text data springing up online.  </span>
 
 
 # Loading the libraries
@@ -85,7 +85,7 @@ print(tokens)
                 [['roman', 'empir', 'expand', 'rapid', 'biggest', 'empir', 'world', 'long', 'time'], ['algebra', 'structur', 'set', 'one', 'finitari', 'oper', 'defin', 'satisfi', 'list', 'axiom'], ['renaiss', 'start', 'cultur', 'movement', 'itali', 'late', 'mediev', 'period', 'later', 'spread', 'rest', 'europ'], ['line', 'demarc', 'prehistor', 'histor', 'time', 'cross', 'peopl', 'ceas', 'live', 'present'], ['mathematician', 'seek', 'pattern', 'use', 'formul', 'new', 'conjectur'], ['notat', 'symbol', 'repres', 'number', 'call', 'numer', 'mathemat'], ['process', 'extract', 'under', 'essenc', 'mathemat', 'concept', 'call', 'abstract'], ['histor', 'peopl', 'frequent', 'wage', 'war', 'order', 'expand', 'empir'], ['ancient', 'histori', 'indic', 'various', 'outsid', 'influenc', 'help', 'formul', 'cultur', 'tradit', 'eastern', 'europ'], ['map', 'set', 'preserv', 'structur', 'special', 'interest', 'mani', 'field', 'mathemat']]
 
 
-상기 데이터가 2차원 배열로써 존재하기 때문에, 딕셔너리를 활용하여 이용하기 용이하게 변환해준다. Since the data exists as a two-dimensional array, we are using a dictionary to convert the data for easy use.
+상기 데이터가 2차원 배열로써 존재하기 때문에, 딕셔너리를 활용하여 이용하기 용이하게 변환해준다. <span style="color: blue"> Since the data exists as a two-dimensional array, we are using a dictionary to convert the data for easy use. </span>
 
 ```python
 dict_tokens = corpora.Dictionary(tokens)
@@ -125,7 +125,7 @@ num_topics = 2
 ldamodel = models.ldamodel.LdaModel(doc_term_mat, num_topics=num_topics, id2word=dict_tokens, passes=25)
 ```
 
-> **잠재 디리클레 할당(Latent Dirichlet allocation, LDA)**: 주어진 문서에 대하여 각 문서에 어떤 주제들이 존재하는지를 서술하는 대한 확률적 토픽 모델 기법 중 하나이다. It is one of the probabilistic topic model techniques for describing which topics exist in each document for a given document.
+> **잠재 디리클레 할당(Latent Dirichlet allocation, LDA)**: 주어진 문서에 대하여 각 문서에 어떤 주제들이 존재하는지를 서술하는 대한 확률적 토픽 모델 기법 중 하나이다. <span style="color: blue"> It is one of the probabilistic topic model techniques for describing which topics exist in each document for a given document. </span>
 
 
 ```python

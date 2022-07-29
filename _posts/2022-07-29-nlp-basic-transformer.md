@@ -35,7 +35,7 @@ WebText라 불리는 40GB 크기의 거대한 코퍼스에다가 인터넷에서
 
 ```python
 !pip install tensorflow
-!pip install transformers # 특정 모델을 쉽게 다운로드해서 사용할 수 있다! <span style="color: blue"> can easily download and use specific models!</span>
+!pip install transformers # 특정 모델을 쉽게 다운로드해서 사용할 수 있다! can easily download and use specific models!
 ```
 
 ## Loading the libraries
@@ -43,11 +43,11 @@ WebText라 불리는 40GB 크기의 거대한 코퍼스에다가 인터넷에서
 ```python
 from transformers import TFGPT2LMHeadModel, GPT2Tokenizer
 tokenizer = GPT2Tokenizer.from_pretrained("gpt2-large")
-GPT2 = TFGPT2LMHeadModel.from_pretrained("gpt2-large") # 문장 생성 <span style="color: blue"> sentence generation</span>
+GPT2 = TFGPT2LMHeadModel.from_pretrained("gpt2-large") # 문장 생성 sentence generation
 ```
 
 ```python
-GPT2 = TFGPT2LMHeadModel.from_pretrained("gpt2-large", pad_token_id = tokenizer.eos_token_id) # EOS토큰을 PAD토큰으로 지정하여 warning이 나오지 않게 한다 <span style="color: blue"> Designating EOS tokens as PAD tokens to avoid warnings</span>
+GPT2 = TFGPT2LMHeadModel.from_pretrained("gpt2-large", pad_token_id = tokenizer.eos_token_id) # EOS토큰을 PAD토큰으로 지정하여 warning이 나오지 않게 한다 Designating EOS tokens as PAD tokens to avoid warnings
 ```
 
 상기 코드에서 보는 것처럼 GPT는 사전 훈련 기반 모델이며, fine-tuning을 거치지 않는다. <span style="color: blue"> As shown in the code above, GPT is a pre-training-based model and does not undergo fine-tuning.</span>
