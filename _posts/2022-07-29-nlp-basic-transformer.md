@@ -43,28 +43,88 @@ WebText라 불리는 40GB 크기의 거대한 코퍼스에다가 인터넷에서
 ```python
 from transformers import TFGPT2LMHeadModel, GPT2Tokenizer
 tokenizer = GPT2Tokenizer.from_pretrained("gpt2-large")
-GPT2 = TFGPT2LMHeadModel.from_pretrained("gpt2-large") # 문장 생성 creating sentences
+GPT2 = TFGPT2LMHeadModel.from_pretrained("gpt2-large") # 문장 생성 sentence generation
 ```
 
 ```python
-
+GPT2 = TFGPT2LMHeadModel.from_pretrained("gpt2-large", pad_token_id = tokenizer.eos_token_id) # EOS토큰을 PAD토큰으로 지정하여 warning이 나오지 않게 한다 Designating EOS tokens as PAD tokens to avoid warnings
 ```
+
+상기 코드에서 보는 것처럼 GPT는 사전 훈련 기반 모델이며, fine-tuning을 거치지 않는다. As shown in the code above, GPT is a pre-training-based model and does not undergo fine-tuning.
+
+> **eos_token_id**: The end of sequence token.
 
 ```python
-
+SEED = 34
+import tensorflow as tf
+tf.random.set_seed(SEED)
 ```
+
+## Encoding
+input_sequence --- (encode) ---> tensor --- (decode) ---> greedy_output
 
 ```python
-
+MAX_LEN = 70 
+input_sequence = "There are times when we are really tired of people but we feel lonely too" # input sample
+input_ids = tokenizer.encode(input_sequence, return_tensors="tf") # encoding with tensor as output
+input_ids
 ```
+
+
+        <tf.Tensor: shape=(1, 15), dtype=int32, numpy=
+        array([[ 1858,   389,  1661,   618,   356,   389,  1107, 10032,   286,
+                661,   475,   356,  1254, 21757,  1165]])>
+
+
+## Decoding
 
 ```python
-
+sample_outputs = GPT2.generate(input_ids, max_length = MAX_LEN, 
+do_sample = True, top_k = 50, top_p = 0.85, num_return_sequences = 5)
 ```
+
+**generate()**
+- *max_length*: 출력 문자열이 가질 수 있는 단어의 최대 갯수 Max number of words the output string can have
+- *do_sample*: activate sampling
+- *top_k*: sampling only from the most likely k words
+- *top_p*: Top-p sampling chooses from the smallest possible set of words whose cumulative probability exceeds the probability p
+- *num_return_sequences*: 출력 개수 # outputs
+
 
 ```python
+print("Output:\n" + 100 * "-")
 
+for i, beam_output in enumerate(sample_outputs):
+    print("{}: {}.".format(i, tokenizer.decode(beam_output, skip_special_tokens=True)))
 ```
+
+
+        Output:
+        ----------------------------------------------------------------------------------------------------
+        0: There are times when we are really tired of people but we feel lonely too. There are times when we're not sure what to do and want to leave but there is a lot of pressure. There are times when we're frustrated and don't know what to do. There are times when we don't know if we're right or wrong. There.
+        1: There are times when we are really tired of people but we feel lonely too," he said.
+
+        He has no doubt that the Chinese government will try to silence the opposition in any way possible.
+
+        "The Chinese government is going to try to silence us with the use of the law, that's my feeling," he said.
+
+        .
+        2: There are times when we are really tired of people but we feel lonely too, which makes me think that our loneliness is a normal part of life," he said. "I think it's the fact that we live in a country where everyone can easily get into the spotlight or be in the news."
+
+        Szewczyk said he found.
+        3: There are times when we are really tired of people but we feel lonely too. In those times we can get along well together. If we are going to work, we can work together, if we are going out to do things, we can do things together. We can work together to find some peace, some happiness in our lives, and it.
+        4: There are times when we are really tired of people but we feel lonely too.
+
+        The first thing that happens is when you're in your 20s, I would think to myself, "I just want to go to the pub".
+
+        I'll walk to the train station and I'll just think, "I want to go to the.
+
+
+상기 결과에서 볼 수 있듯이, 하나의 문장 인풋으로 GPT-2가 유사도가 높은 여러 개의 문장을 생성해냈다. As can be seen from the above results, with one sentence input, GPT-2 generated several sentences with high similarity.
+
+생성된 각 문장은 우리가 지정한 아키텍쳐과 맞아 떨어진다; 문장 길이 최대 70자 이내. Each generated statement matches the architecture we specified; Sentence length up to 70 characters.
+
+> **Beam Search**: 매번 선택하는 단어의 갯수로, 선택은 확률 값이 높은 순서대로 한다. num_beams가 2인 경우, 다음 2가지 확률값이 높은 단어에 대해서 탐색한다. 단어 생성에서 가능성이 더 높은 다음 예측 단어를 놓치는 Greedy 방식의 단점을 보완하고자 고안되었다. With the number of words selected each time, the selection is made in order of highest probability value. When num_beams is 2, the following two high probability words are searched for. It was designed to compensate for the disadvantage of the Greedy method, which misses the next more likely predictive word in word generation.
 
 # BERT w/ PyTorch
 
