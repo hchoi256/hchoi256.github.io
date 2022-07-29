@@ -110,9 +110,9 @@ author:
   location         : "Madison"
   email            : "hchoi256@wisc.edu"
   links:
-    - label: "Email"
-      icon: "fas fa-fw fa-envelope-square"
-      url: "mailto:hchoi256@wisc.edu"
+    # - label: "Email"
+    #   icon: "fas fa-fw fa-envelope-square"
+    #   url: "mailto:hchoi256@wisc.edu"
     - label: "LinkedIn"
       icon: "fab fa-fw fa-linkedin"
       url: "https://www.linkedin.com/in/hojun-choi-2b10b11a0/"      
