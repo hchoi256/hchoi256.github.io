@@ -124,6 +124,8 @@ for i, beam_output in enumerate(sample_outputs):
 
 생성된 각 문장은 우리가 지정한 아키텍쳐과 맞아 떨어진다; 문장 길이 최대 70자 이내. Each generated statement matches the architecture we specified; Sentence length up to 70 characters.
 
+우리 아키텍쳐가 지침하는대로, 이러한 문장들은 인풋 텍스트와 유사도가 가장 높은 문장으로 선별한 50개 중 최대 5개를 추출하여 보여준다. As our architecture guides, these sentences extract and display up to 5 out of 50 sentences with the highest similarity to the input text.
+
 > **Beam Search**: 매번 선택하는 단어의 갯수로, 선택은 확률 값이 높은 순서대로 한다. num_beams가 2인 경우, 다음 2가지 확률값이 높은 단어에 대해서 탐색한다. 단어 생성에서 가능성이 더 높은 다음 예측 단어를 놓치는 Greedy 방식의 단점을 보완하고자 고안되었다. With the number of words selected each time, the selection is made in order of highest probability value. When num_beams is 2, the following two high probability words are searched for. It was designed to compensate for the disadvantage of the Greedy method, which misses the next more likely predictive word in word generation.
 
 # BERT w/ PyTorch
