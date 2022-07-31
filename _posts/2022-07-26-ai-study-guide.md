@@ -9,7 +9,6 @@ toc_label: "GITHUB BLOG JJUNS"
 #author_profile: false
 sidebar:
     nav: "docs"
-search: false
 ---
 
 # Math, Statistics
