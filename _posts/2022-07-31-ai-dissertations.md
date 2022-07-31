@@ -1,8 +1,8 @@
 ---
 layout: single
-title: "AI Study Guide"
+title: "AI Research Papers"
 categories: star
-tag: AI, dissertation, 논문
+tag: AI, dissertation, Research, 논문
 toc: false
 #toc_sticky: false
 toc_label: "GITHUB BLOG JJUNS"
