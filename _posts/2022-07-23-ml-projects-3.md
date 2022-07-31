@@ -100,7 +100,7 @@ chicago_df.index = pd.DatetimeIndex(chicago_df.Date)
 
 > *DatetimeIndex*: 특정한 순간에 기록된 타임스탬프(timestamp) 형식의 시계열 자료를 다루기 위한 인덱스 <span style="color: blue"> Index for handling time series data in timestamp format recorded at a specific moment</span>
 
-## 데이터 시각화
+## Data Visualization
 
 ```python
 plt.figure(figsize=(10,10))
@@ -128,6 +128,9 @@ plt.figure(figsize = (15, 10))
 sns.countplot(y= 'Location Description', data = chicago_df, order = chicago_df['Location Description'].value_counts().iloc[:15].index)
 ```
 
+![image](https://user-images.githubusercontent.com/39285147/182013808-c0f8a601-7e9e-4599-9b2e-75098fdc4cb9.png)
+
+
 '거리'에서 발생한 폭력이 가장 많은 것을 확인해볼 수 있다. <span style="color: blue"> It can be seen that the most violence occurred on the 'street'.</span>
 
 ```python
@@ -139,6 +142,7 @@ plt.ylabel('Number of Crimes')
 ```
 
 ![image](https://user-images.githubusercontent.com/39285147/180626221-6bc29e6a-a714-4dda-8654-54085509b499.png)
+
 
         Date
         2005-12-31    455811
@@ -155,6 +159,7 @@ plt.ylabel('Number of Crimes')
         2016-12-31    265462
         2017-12-31     11357
 
+
 ```python
 # 특정 달에 범죄가 얼마나 발생했나 How many crimes occurred in a particular month
 plt.plot(chicago_df.resample('M').size())
@@ -162,6 +167,7 @@ plt.title('Crimes Count Per Month')
 plt.xlabel('Months')
 plt.ylabel('Number of Crimes')
 ```
+
 
 ![image](https://user-images.githubusercontent.com/39285147/180626249-77bc4292-b858-4436-a7d1-16f7dd213c7d.png)
 
@@ -186,7 +192,8 @@ chicago_prophet_df = pd.DataFrame(chicago_prophet)
 chicago_prophet_df_final = chicago_prophet_df.rename(columns={'Date':'ds', 'Crime Count':'y'})
 ```
 
-[image](https://user-images.githubusercontent.com/39285147/180626349-87d721fd-31fc-4964-aabf-3fa9febbc6bd.png)
+![image](https://user-images.githubusercontent.com/39285147/180626349-87d721fd-31fc-4964-aabf-3fa9febbc6bd.png)
+
 
 ## Prediction
 

@@ -49,9 +49,13 @@ CNN 관련 배경지식은 상기 링크를 통해 숙지해주세요! <span sty
 ## 성능지표: Key Performance Indicators (KPI)
 ![image](https://user-images.githubusercontent.com/39285147/180517136-7b390f93-0f67-4e21-9217-a482e74a1f41.png)
 
-**Precision**: 암이 없는 환자에게 있다고 오진할 확률 <span style="color: blue">Probability of misdiagnosing a patient without cancer</span>
+**Type I Error**: 암이 없는 환자에게 있다고 오진할 확률 <span style="color: blue">Probability of misdiagnosing a patient without cancer</span>
 
-**Recall**: 암이 있는 환자에게 없다고 오진할 확률 <span style="color: blue">Probability of misdiagnosing a patient with cancer</span>
+**Type II Error**: 암이 있는 환자에게 없다고 오진할 확률 <span style="color: blue">Probability of misdiagnosing a patient with cancer</span>
+
+**Precision**: 암이 없는 환자에게 없다고 예측할 확률 <span style="color: blue">Probability of misdiagnosing a patient without cancer</span>
+
+**Recall**: 암이 있는 환자에게 있다고 예측할 확률 <span style="color: blue">Probability of misdiagnosing a patient with cancer</span>
 
 > ![image](https://user-images.githubusercontent.com/39285147/180517030-eedfd66d-7cd8-4109-9fb2-87f6a29d3c7c.png)
 
