@@ -273,7 +273,7 @@ sns.heatmap(cm, annot=True)
 ![image](https://user-images.githubusercontent.com/39285147/182373954-65745b56-8e8a-47fb-a6fe-cc4c5a781158.png)
 
 
-# Classification Report
+## Classification Report
 
 ```python
 from sklearn.metrics import classification_report
