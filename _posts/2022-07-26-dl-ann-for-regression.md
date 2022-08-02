@@ -7,10 +7,16 @@ toc: true
 toc_sticky: true
 toc_label: "GITHUB BLOG JJUNS"
 #author_profile: false
+header:
+    teaser: /assets/images/posts/dl-thumbnail.jpg
 sidebar:
     nav: "docs"
 search: false
 ---
+
+# Code
+**[Notice]** [download here](https://github.com/hchoi256/ai-workspace/blob/main/codes/artificial_neural_network.ipynb)
+{: .notice--danger}
 
 # Observing the dataset
         AT	    V	    AP	    RH	    PE
