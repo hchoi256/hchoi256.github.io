@@ -35,6 +35,9 @@ df
 
 
 
+상기 디렉토리에 *참조* 사이트에서 파일을 다운받자. <span style="color: blue"> Download the file from the *reference* site, then save it into the above directory. </span>
+
+
 ```python
 df.describe()
 ```
@@ -43,8 +46,11 @@ df.describe()
 ![image](https://user-images.githubusercontent.com/39285147/182352030-57851bf4-8910-4dcc-89f0-fd90475b217a.png)
 
 
+```python
+df.corr()
+```
 
-상기 디렉토리에 *참조* 사이트에서 파일을 다운받자. <span style="color: blue"> Download the file from the *reference* site, then save it into the above directory. </span>
+![image](https://user-images.githubusercontent.com/39285147/182361418-701dae63-639d-46dc-8532-0d1c8a6ca33b.png)
 
 
 ```python
@@ -53,6 +59,13 @@ sns.pairplot(df)
 
 ![image](https://user-images.githubusercontent.com/39285147/182352282-eaafad09-1ce0-4114-b6e7-fa80f923a533.png)
 
+
+```python
+f, ax = plt.subplots(figsize = (10, 10))
+sns.heatmap(df.corr(), annot=True)
+```
+
+![image](https://user-images.githubusercontent.com/39285147/182361578-93cd0623-48b6-4191-8ddf-cf72e3c11e16.png)
 
 
 씨본 라이브러리를 활용하여 한 눈에 변수들 간 상관관계를 시각화했다. <span style="color: blue"> The correlation between variables was visualized at a glance using the Seabone library. </span>
