@@ -181,6 +181,10 @@ plt.legend(['Training Loss', 'Validation Loss'])
 
 ![image](https://user-images.githubusercontent.com/39285147/182363306-02a5eef0-a504-47c2-a4e3-054ab9fac40a.png)
 
+
+이것은 마치 우리가 시험 성적에 영향을 미치는 요인 중에, 시험 전날 수면 시간이 주요한 입력 피처임에도 무시하고 있다가, 뒤늦게 모델 학습에 반영하여 모델이 새로운 데이터들에 대해 더 정확한 예측을 해내는 것과 비슷한 이치이다. <span style="color: blue"> For example, if you had an exam tomorrow but hadn't slept yesterday, you would likely screw up the exam. Similarly, we see that sleep time before the exam is a pivotal feature in training our AI model. </span>
+
+
 # Predicting the Test set
 
 ```python
@@ -197,7 +201,7 @@ plt.show()
 
 역시 시각화에서 단위가 정규화된 모습이다. <span style="color: blue"> As shown in the image, the units are normalized. </span>
 
-원래 단위로 변환시켜보자. <span style="color: blue"> Converting to the original unit</span>
+원래 단위로 변환시켜보자. <span style="color: blue"> Let's convert to the original unit</span>
 
 
 ```python
