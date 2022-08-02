@@ -19,7 +19,7 @@ ANN을 이용한 주택 가격 예측 <span style="color: blue">House Price Pred
 
 # Loading the dataset
 
-![Download Dataset (Kaggle)](https://www.kaggle.com/datasets/harlfoxem/housesalesprediction)
+[Download Dataset (Kaggle)](https://www.kaggle.com/datasets/harlfoxem/housesalesprediction)
 
 ```python
 import tensorflow as tf
