@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "ANN - Classification: Diabetes Prediction"
+title: "ANN - Classification: fashionMNIST"
 categories: DL
 tag: deep learning, ann, regression
 toc: true
