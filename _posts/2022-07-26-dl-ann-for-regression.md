@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "ANN for Regression"
+title: "ANN - Regression"
 categories: DL
 tag: deep learning, ann, regression
 toc: true

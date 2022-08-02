@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "ANN: Bike Rental Prediction"
+title: "ANN - Regression: Bike Rental Prediction"
 categories: DL
 tag: deep learning, ann, regression
 toc: true
