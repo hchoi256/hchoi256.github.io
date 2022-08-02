@@ -2,7 +2,7 @@
 layout: single
 title: "ANN - Regression: House Sales Prediction"
 categories: DL
-tag: deep learning, ann, regression
+tag: [deep learning, ann, regression]
 toc: true
 toc_sticky: true
 toc_label: "GITHUB BLOG JJUNS"
