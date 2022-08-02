@@ -14,7 +14,7 @@ sidebar:
 search: false
 ---
 
-# Background
+# Learning Goals
 ANN을 이용한 주택 가격 예측 <span style="color: blue">House Price Prediction Using ANN </span>
 
 # Loading the dataset
@@ -78,9 +78,13 @@ sns.heatmap(house_df.corr(), annot=True)
 sns.scatterplot(x = "sqft_living", y="price", data=house_df)
 ```
 
+맛보기로 'sqft_living' 변수와 종속변수('Price')의 상관관계 분포도를 만들었다. <span style="color: blue"> For testing, I created a plot of the correlation between 'sqft_living' and 'Price'. </span>
+
 
 ![image](https://user-images.githubusercontent.com/39285147/182361658-ed16e620-ce21-42b2-8f1c-c5fda874f1a4.png)
 
+
+상기 그리드는 모든 변수들 간의 상관관계 분포도를 나타낸다. <span style="color: blue"> The grid represents correlation distributions between all variables.</span>
 
 
 ```python
