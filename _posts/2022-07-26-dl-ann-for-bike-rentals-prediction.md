@@ -166,7 +166,7 @@ X_cat.shape
             
 
 ```python
-X_cat = pd.DataFrame(X_cat) # 신경망 학습위해 dataframe으로 변환 ANN requires X as dataframe
+X_cat = pd.DataFrame(X_cat) # 테이블 형태로 데이터 확인 converting to dataframe for visualization
 ```
 
 ```python
