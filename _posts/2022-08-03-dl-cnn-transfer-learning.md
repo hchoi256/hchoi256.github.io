@@ -26,11 +26,11 @@ Transfer learning is one of the most important techniques in deep learning.
 
 3) 모델 설계 디자인도 직접 해야 한다 -> 전문가와 시간도 필요하다 <span style="color: blue"> You have to do the model design yourself -> Consultation time with Experts required </span>
 
-기존의 모델에서 잘 하는 부분을 우리만의 새로운 모델로 만드는 것! -> 우리의 데이터로 모델을 새로 학습시킨다! <span style="color: blue"> Using good parts of the original model for building our own new model -> From pre-trained model to new model with my data. </span>
+**기존의 모델에서 잘 하는 부분을 우리만의 새로운 모델로 만드는 것! -> 우리의 데이터로 모델을 새로 학습시킨다!** <span style="color: blue"> Using good parts of the original model for building our own new model -> From pre-trained model to new model with my data. </span>
 
 전이학습은 딥러닝에서 굉장히 중요한 기법중에 하나이다. <span style="color: blue"> Transfer learning is one of the most important techniques in deep learning. </span>
-- Computing 시간을 줄어준다 (기존 모델에 나의 데이터만 학습시키기 때문에) <span style="color: blue"> Saving computing time (Training the existing model with only my data) </span>
-- 적은 데이터로도 정확도를 얻을 수 있다. <span style="color: blue"> Accuracy can be obtained with little data. </span>
+- **Computing 시간을 줄어준다** (기존 모델에 나의 데이터만 학습시키기 때문에) <span style="color: blue"> Saving computing time (Training the existing model with only my data) </span>
+- **적은 데이터로도 정확도를 얻을 수 있다.** <span style="color: blue"> Accuracy can be obtained with little data. </span>
 
 # Loading the pre-trained model
 
@@ -184,32 +184,8 @@ len(model.layers)
 
 hidden layer 등을 포함하는 모든 레이어 개수가 181개라는 것을 볼 수 있다. <span style="color: blue"> It can be seen that the number of all layers including hidden layers is 181. </span>
 
-
-```python
-train_datagen = tf.keras.preprocessing.image.ImageDataGenerator(preprocessing_function=tf.keras.applications.resnet50.preprocess_input)
-
-train_generator = train_datagen.flow_from_directory(
-    "./train/", 
-    target_size = (224, 224), 
-    color_mode="rgb", 
-    batch_size=32,
-    class_mode = "categorical",
-    shuffle = True
-)
-```
+실제 ImageNet 학습에 소요되는 시간은 어마어마하다. 우리는 그저 그 정보를 이용해 소량의 새로운 이미지와 모델 설계만 추가하여 목적에 맞는 task를 간편하게 완료한다. <span style="color: blue"> The time required for actual ImageNet training is enormous. We simply use that information to add a small number of new images and model designs to easily complete the task for the purpose. </span>
 
 
-```python
-
-```
-
-
-```python
-
-```
-
-
-```python
-
-```
+이제 이 모델을 가지고 여러 task를 수행하면 된다. <span style="color: blue"> Now we can perform several tasks with this model. </span>
 
