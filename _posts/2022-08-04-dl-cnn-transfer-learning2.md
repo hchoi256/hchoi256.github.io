@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "Transfer Learning 2 - Classification"
+title: "Transfer Learning #2 - Classification"
 categories: DL
 tag: [deep learning, cnn, transfer learning, classification]
 toc: true
@@ -181,9 +181,8 @@ for flowers_data_input_batch, flower_data_label_batch in flowers_data:
 
 64개의 꽃 이미지 사진이 주어졌고, 그들은 5개의 클래스로 각각 분류되어야 한다. <span style="color: blue"> 64 flower image pictures were given, and they should each be classified into 5 classes. </span>
 
-## Predicing the image
-
 ```python
+# Predicing the image
 predictions_batch = Trained_MobileNet.predict(flowers_data_input_batch)
 predictions_batch.shape
 ```

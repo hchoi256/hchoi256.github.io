@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "Transfer Learning 1 - Classification"
+title: "Transfer Learning #1 - Classification"
 categories: DL
 tag: [deep learning, cnn, transfer learning, classification]
 toc: true
