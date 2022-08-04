@@ -16,6 +16,12 @@ sidebar:
 **[Notice]** [Reference](https://github.com/Dataweekends/zero_to_deep_learning_udemy)
 {: .notice--danger}
 
+# RNN
+다른 딥러닝 모델처럼 은닉층 (Hidden Layer)을 제공할 뿐만 아니라, 자체적으로 지원하는 임시적인 루프가 존재한다; 시간이라는 차원이 추가된다. <span style="color: blue"> Not only does it provide a hidden layer like other deep learning models, but it also has its own ad hoc loops; **A dimension of time** is added. </span>
+
+따라서, RNN은 이전에서 발생한 일을 기억할 수 있다! <span style="color: blue"> Thus, RNNs can remember what happened in the past! </span>
+
+텍스트 시퀀스와 잘 잘동한다.<span style="color: blue"> Works well with text sequences. </span>
 
 # Loading the dataset
 
@@ -210,7 +216,8 @@ X_test_t = X_test.reshape(X_test.shape[0], 12, 1)
 
 따라서, 2차원이 아닌 3차원 배열 형태로 바꿔줘야 한다. <span style="color: blue"> Therefore, the input must be converted to a 3D array rather than a 2D. </span>
 
-# Building the model
+# Building the model: LSTM
+LSTM은 RNN이 가진 임시적인 루프를 좀더 장기적으로 유지할 수 있도록 설계되었다. <span style="color: blue"> LSTM is designed to maintain the temporary loop of RNN for a longer period of time. </span>
 
 ```python
 # LSTM
@@ -242,7 +249,6 @@ model.summary()
 
 
 LSTM 모델의 입력층 차원으로 (12, 1)을 넣어줬다. <span style="color: blue"> We put (12, 1) as the dimension of the input layer of the LSTM model. </span>
-
 
 여기서, 12는 시간 차원으로 12달을 의미한다. <span style="color: blue"> Here, 12 means 12 months in the time dimension.</span>
 
