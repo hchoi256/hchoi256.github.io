@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "CNN - Classification: Transfer Learning"
+title: "Transfer Learning 1 - Classification"
 categories: DL
 tag: [deep learning, cnn, transfer learning, classification]
 toc: true
@@ -32,7 +32,7 @@ Transfer learning is one of the most important techniques in deep learning.
 - **Computing 시간을 줄어준다** (기존 모델에 나의 데이터만 학습시키기 때문에) <span style="color: blue"> Saving computing time (Training the existing model with only my data) </span>
 - **적은 데이터로도 정확도를 얻을 수 있다.** <span style="color: blue"> Accuracy can be obtained with little data. </span>
 
-# Loading the pre-trained model
+# Loading the pre-trained model - ImageNet
 
 <!-- 
 **[Notice]** [Download Dataset (Kaggle)](https://www.kaggle.com/datasets/zalando-research/fashionmnist)
@@ -186,6 +186,10 @@ hidden layer 등을 포함하는 모든 레이어 개수가 181개라는 것을 
 
 실제 ImageNet 학습에 소요되는 시간은 어마어마하다. 우리는 그저 그 정보를 이용해 소량의 새로운 이미지와 모델 설계만 추가하여 목적에 맞는 task를 간편하게 완료한다. <span style="color: blue"> The time required for actual ImageNet training is enormous. We simply use that information to add a small number of new images and model designs to easily complete the task for the purpose. </span>
 
-
 이제 이 모델을 가지고 여러 task를 수행하면 된다. <span style="color: blue"> Now we can perform several tasks with this model. </span>
 
+지금까지는 전이 학습의 가장 기본적인 학습 구조를 알아보았다. <span style="color: blue"> So far, we have looked at the most basic learning structure of transfer learning. </span>
+
+다음 글에서 전이학습을 '실질적으로' 이용하는 법을 알아보자. <span style="color: blue"> In the next article, we will see how to use transfer learning 'practically'. </span>
+
+# [Next Post](https://hchoi256.github.io/dl/dl-cnn-transfer-learning2/)
