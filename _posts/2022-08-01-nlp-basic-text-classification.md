@@ -6,7 +6,7 @@ tag: [NLP, python, data preprocessing]
 toc: true
 toc_sticky: true
 toc_label: "GITHUB BLOG JJUNS"
-#author_profile: false
+# author_profile: false
 header:
     teaser: /assets/images/posts/nlp-thumbnail.jpg
 sidebar:
