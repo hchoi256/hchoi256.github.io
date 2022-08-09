@@ -128,4 +128,4 @@ for i, beam_output in enumerate(sample_outputs):
 
 > **Beam Search**: 매번 선택하는 단어의 갯수로, 선택은 확률 값이 높은 순서대로 한다. num_beams가 2인 경우, 다음 2가지 확률값이 높은 단어에 대해서 탐색한다. 단어 생성에서 가능성이 더 높은 다음 예측 단어를 놓치는 Greedy 방식의 단점을 보완하고자 고안되었다. <span style="color: blue"> With the number of words selected each time, the selection is made in order of highest probability value. When num_beams is 2, the following two high probability words are searched for. It was designed to compensate for the disadvantage of the Greedy method, which misses the next more likely predictive word in word generation.</span>
 
-# BERT (TBD)
+# [BERT](https://hchoi256.github.io/nlp/bert-1/)
