@@ -6,7 +6,9 @@ tag: [AI, data preprocessing]
 toc: false
 toc_sticky: false
 toc_label: "GITHUB BLOG JJUNS"
-author_profile: false
+# author_profile: false
+header:
+    teaser: /assets/images/posts/data-thumbnail.jpg
 sidebar:
     nav: "docs"
 ---
