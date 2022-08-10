@@ -43,7 +43,7 @@ st.code("""def myFunction()
 st.latex(r"""a + ar + a r^2 + a r^3 + \cdots +  a r^{n-1} = \sum_{k=0}^{n-1} ar^k = a \left(\frac{1-r^{n}}{1-r}\right)""")
 ```
 
-# 이미지, 오디오, 비디오, 카메라
+# Image, Audio, Video, Camera
 
 ```python
 # load an image
@@ -379,22 +379,4 @@ with st.container():
         label = "이름을 입력해 주세요"  
     )
 ```
-
-```python
-
-```
-
-```python
-
-```
-
-```python
-
-```
-
-```python
-
-```
-
-
 
