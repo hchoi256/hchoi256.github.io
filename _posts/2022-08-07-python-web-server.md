@@ -2,7 +2,7 @@
 layout: single
 title: "Python: Web Application without Server"
 categories: Python
-tag: [python, webserver]
+tag: [python, webserver, streamlit]
 toc: true
 toc_sticky: true
 toc_label: "GITHUB BLOG JJUNS"
