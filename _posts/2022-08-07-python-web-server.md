@@ -354,7 +354,7 @@ with tab3:
 ```
 
 ```python
-
+# 누르면 확장되서 내용 보임
 with st.expander("어떤 설명"):
     st.write("""뭔가 자세히 설명하고 싶지만,
 
@@ -367,7 +367,7 @@ with st.expander("어떤 설명"):
 ```
 
 ```python
-# 
+# 컴포넌트 포함하는 container 생성 (마치 html의 div와 같은 역할)
 
 with st.container():
     st.radio(
