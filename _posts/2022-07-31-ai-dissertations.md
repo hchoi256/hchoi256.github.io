@@ -7,6 +7,8 @@ toc: false
 #toc_sticky: false
 toc_label: "GITHUB BLOG JJUNS"
 #author_profile: false
+header:
+    teaser: /assets/images/posts/ai-thumbnail.jpg
 sidebar:
     nav: "docs"
 ---
