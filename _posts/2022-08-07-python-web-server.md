@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "Python: Web Application without Server"
+title: "Python: PART 1: Web Application without Server"
 categories: Python
 tag: [python, webserver, streamlit]
 toc: true
@@ -16,7 +16,7 @@ sidebar:
 파이썬으로 웹 서버 구동없이 웹 어플리케이션을 만들기 위해 '**streamlit**' 라이브러리가 활용된다. <span style="color: blue"> To create a web application without a server, we use the '**streamlit**' library. </span>
 
 
-# Loading the library
+# Loading the library for web server
 
 ```python
 import streamlit as st
@@ -380,3 +380,92 @@ with st.container():
     )
 ```
 
+
+# Pandas Profiling (간단한 EDA)
+좋은 머신 러닝 결과를 얻기 위하여 데이터의 성격을 파악하는 과정이다.
+
+방대한 양의 데이터를 가진 데이터프레임에 대한 **EDA** 과정을 ***profile_report()***라는 단 한 줄의 명령으로 수행한다.
+
+```python
+pip install -U pandas-profiling
+```
+
+```python
+import pandas as pd
+import pandas_profiling
+```
+
+```python
+pr=data.profile_report() # 프로파일링 결과 리포트를 pr에 저장
+data.profile_report() # 바로 결과 보기
+pr.to_file('./pr_report.html') # pr_report.html 파일로 저장
+```
+
+![image](https://user-images.githubusercontent.com/39285147/184286215-42eb44fd-6c32-4174-a31c-3ffa40fed888.png)
+
+상기와 같은 형태로 리포트로 간단히 EDA 과정을 수행한다
+
+# Cropper (이미지 자르기)
+
+```python
+pip install streamlit-cropper
+```
+
+```python
+import streamlit as st
+from streamlit_cropper import st_cropper
+st.set_option('deprecation.showfileUploaderEncoding', False)
+```
+
+```python
+# Get a cropped image from the frontend
+cropped_img = st_cropper(img, realtime_update=realtime_update, box_color=box_color,
+aspect_ratio=aspect_ratio)
+```
+
+![image](https://user-images.githubusercontent.com/39285147/184286457-bf489b8f-c617-4030-b89b-c515b78c6e0e.png)
+
+# Webrtc (실시간 웹캠)
+
+```python
+%pip install -U streamlit-webrtc
+```
+
+```python
+from streamlit_webrtc import webrtc_streamer
+
+webrtc_streamer(key="sample")
+```
+
+        $ streamlit run app.py
+
+![image](https://user-images.githubusercontent.com/39285147/184286726-72c7308d-3e9f-4067-9c5e-ae359cd11e53.png)
+
+보다 자세한 내용은 [여기](https://github.com/whitphx/streamlit-webrtc)를 참조하자.
+
+# folium (지도맵)
+
+```python
+import streamlit as st
+from streamlit_folium import st_folium
+import folium
+```
+```python
+# 지도맵 생성
+m = folium.Map(
+    location = [37.541602, 126.948721],
+    zoom_start = 16 # 1 ~ 18
+)
+```
+```python
+# 마커 생성
+folium.Marker(
+    location = [37.543668, 126.951639],
+    popup = "공덕역",
+    tooltip = "강의장이 있는 곳"
+).add_to(m)
+```
+
+```python
+st_data = st_folium(m) # 실제 반영
+```
