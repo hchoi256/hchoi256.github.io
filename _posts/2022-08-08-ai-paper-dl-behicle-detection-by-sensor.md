@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "AI Research Papers"
-categories: star
+categories: AI
 tag: [AI, dissertation, Research, 논문, self-driving]
 toc: false
 toc_sticky: false
