@@ -1,7 +1,7 @@
 ---
 layout: single
-title: "AI Research Papers"
-categories: star
+title: "[논문 분석] Learning loss for active learning (CVPR 2019)"
+categories: AI
 tag: [AI, dissertation, Research, 논문]
 toc: false
 toc_sticky: false
