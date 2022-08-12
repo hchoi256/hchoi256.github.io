@@ -15,13 +15,14 @@ sidebar:
 
 파이썬으로 웹 서버 구동없이 웹 어플리케이션을 만들기 위해 '**streamlit**' 라이브러리가 활용된다. <span style="color: blue"> To create a web application without a server, we use the '**streamlit**' library. </span>
 
-
+****
 # Loading the library for web server
 
 ```python
 import streamlit as st
 ```
 
+****
 # Texts
 
 ```python
@@ -43,6 +44,7 @@ st.code("""def myFunction()
 st.latex(r"""a + ar + a r^2 + a r^3 + \cdots +  a r^{n-1} = \sum_{k=0}^{n-1} ar^k = a \left(\frac{1-r^{n}}{1-r}\right)""")
 ```
 
+****
 # Image, Audio, Video, Camera
 
 ```python
@@ -92,6 +94,7 @@ st.write(
 ```
 
 
+****
 # Table
 
 ```python
@@ -137,6 +140,7 @@ data_json2 = {
 st.json(data_json2, expanded = False)
 ```
 
+****
 # Button, Checkbox, Radio, Selectbox, Slider,
 
 ```python
@@ -247,6 +251,7 @@ my_select_slide = st.select_slider(
 )
 ```
 
+****
 # Text Edit
 
 ```python
@@ -304,6 +309,7 @@ st.time_input(
 )
 ```
 
+****
 # Dashboard 생성하기
 ![image](https://user-images.githubusercontent.com/39285147/184014561-a79a7f04-db1e-4adc-9568-aebfe8f677ed.png)
 
@@ -381,6 +387,7 @@ with st.container():
 ```
 
 
+****
 # Pandas Profiling (간단한 EDA)
 좋은 머신 러닝 결과를 얻기 위하여 데이터의 성격을 파악하는 과정이다.
 
@@ -405,6 +412,7 @@ pr.to_file('./pr_report.html') # pr_report.html 파일로 저장
 
 상기와 같은 형태로 리포트로 간단히 EDA 과정을 수행한다
 
+****
 # Cropper (이미지 자르기)
 
 ```python
@@ -425,6 +433,7 @@ aspect_ratio=aspect_ratio)
 
 ![image](https://user-images.githubusercontent.com/39285147/184286457-bf489b8f-c617-4030-b89b-c515b78c6e0e.png)
 
+****
 # Webrtc (실시간 웹캠)
 
 ```python
@@ -443,6 +452,7 @@ webrtc_streamer(key="sample")
 
 보다 자세한 내용은 [여기](https://github.com/whitphx/streamlit-webrtc)를 참조하자.
 
+****
 # folium (지도맵)
 
 ```python
