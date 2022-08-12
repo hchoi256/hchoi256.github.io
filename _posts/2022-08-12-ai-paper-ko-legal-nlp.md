@@ -3,7 +3,7 @@ layout: single
 title: "[논문 분석] A Multi-Task Benchmark for Korean Legal Language Understanding and Judgement Prediction (arXiv 2022)"
 categories: AI
 tag: [AI, dissertation, Research, 논문, kaist]
-toc: false
+# toc: false
 toc_sticky: false
 toc_label: "GITHUB BLOG JJUNS"
 #author_profile: false
