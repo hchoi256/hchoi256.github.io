@@ -40,15 +40,15 @@ cv2 라이브러리는 opencv 패키지를 설치해서 불러올 수 있다.
 
 자, 이제 여러 장의 서로 다른 강아지 품종 이미지를 학습한 사전 학습 모델 'dog_breed.h5'를 전이학습을 위해 불러오자.
 
-> 해당 사전모델은 인터넷에서 쉽게 찾을 수 있다.
+> 해당 사전모델 요청 시 제공.
 
 ```python
 model = keras.models.load_model("dog_breed.h5")
 ```
 
-이후, 우리는 세 가지 강아지 품종으로 입력으로 들어온 이미지를 처리해주고 싶다고 해보자.
+불러온 사전학습 모델은 다음과 같이 세 가지 강아지 품종의 클래스로 최종 출력을 도출한다.
 
-이 작업을 위해 우리는 최종 Layer에서 개 품종 카테고리를 세 가지로 축소해줘야 한다.
+만약, 더 완성도 높은 분류 모델을 형성하고 싶다면 **fine-tuning** 작업을 통해 모델 개선 혹은 **ImageNet**을 사전모델로 채택하는 선택지를 취할 수 있을 것이다.
 
 ```python
 CLASS_NAMES = ['Scottish Deerhound','Maltese Dog','Bernese Mountain Dog']
@@ -171,3 +171,4 @@ with st.container():
 ```
 
 ![image](https://user-images.githubusercontent.com/39285147/184472175-c98abfb5-55c4-4af4-a688-521659032de1.png)
+
