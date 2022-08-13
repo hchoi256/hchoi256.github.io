@@ -2,7 +2,7 @@
 layout: single
 title: "AI Study Guide"
 categories: star
-tag: artificial intelligence
+tag: [AI, KAIST, SNU, 대학원]
 toc: true
 toc_sticky: true
 toc_label: "GITHUB BLOG JJUNS"
@@ -13,7 +13,7 @@ sidebar:
     nav: "docs"
 ---
 
-# [AI Terms: Preparing for AI Graduate School](https://github.com/hchoi256/ai-terms/blob/main/README.md)
+# [AI 대학원 전공 면접 질문 모음: Preparing for AI Graduate School](https://github.com/hchoi256/ai-terms/blob/main/README.md)
 {: .notice--danger}
 
 ****
