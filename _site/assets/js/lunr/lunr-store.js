@@ -161,6 +161,12 @@ var store = [{
         "url": "/dl/dl-miniplace-classification/",
         "teaser": "/assets/images/posts/lenet.JPG"
       },{
+        "title": "ML: A* Search - 8-tile Puzzle Game",
+        "excerpt":"A-star 알고리즘을 활용해서 8-tile Puzzle 게임을 구현한다.      8-tile Puzzle 정보는 여기서 참고하자.    이 게임에서 당신은 AI 로봇과 Teeko 보드 게임을 펼치게 될 것이다.   이 프로젝트는 A* 탐색 알고리즘을 이해하고 있다는 전제로 진행한다.      A* 탐색 알고리즘이란?    Code  [Notice] download here   ","categories": ["ML"],
+        "tags": ["machine learning","8-tile puzzle","game","A* Search","python"],
+        "url": "/ml/ml-8-tile-puzzle-a-star-algorithm/",
+        "teaser": "/assets/images/posts/8-tile-puzzle.png"
+      },{
         "title": "ML: Hierarchical Agglomerate Clustering(HAC) - 포켓몬 군집화",
         "excerpt":"Hierarchical Agglomerate Clustering(HAC) 이용해서 서로 다른 특성을 공유하는 Pokemon들을 군집으로 묶어보자. ‘Pokemon.csv’는 온라인에서 손쉽게 구할 수 있다. 이 프로젝트는 군집화(Clustering)의 개념을 숙지하고 있다는 전제로 수행한다. Code [Notice] download here 데이터셋 관찰 Columns: Attack, Sp. Atk, Speed, Defense, Sp. Def, and HP 라이브러리 불러오기 from scipy.cluster.hierarchy import dendrogram, linkage import csv...","categories": ["ML"],
         "tags": ["machine learning","hac","clustering","pokemon","python"],
@@ -174,7 +180,7 @@ var store = [{
         "teaser": "/assets/images/posts/pca-image-compression.png"
       },{
         "title": "ML: Minimax 알고리즘 - Teeko Game",
-        "excerpt":"Minimax 알고리즘을 활용해서 Teeko 게임을 구현한다. Teeko Game이란? It is a game between two players on a 5x5 board. Each player has four markers of either red or black. Beginning with black, they take turns placing markers (the “drop phase”) until all markers are on the board, with the goal...","categories": ["ML"],
+        "excerpt":"Minimax 알고리즘을 활용해서 Teeko 게임을 구현한다. Teeko 게임은 한국인들에게는 익숙하지 않은 보드 게임일 수도 있다 (하기 설명 참조). Teeko Game이란? It is a game between two players on a 5x5 board. Each player has four markers of either red or black. Beginning with black, they take turns placing markers (the...","categories": ["ML"],
         "tags": ["machine learning","teeko","game","minimax","python"],
         "url": "/ml/ml-teeko-minimax/",
         "teaser": "/assets/images/posts/teeko.png"
