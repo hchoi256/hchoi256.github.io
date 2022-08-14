@@ -1,0 +1,1076 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>RNN - Time Series: LSTM | 정리하여 내 것으로, AI</title>
+<meta name="description" content="[Notice] Reference">
+
+
+  <meta name="author" content="Hojun Eric Choi">
+  
+  <meta property="article:author" content="Hojun Eric Choi">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="정리하여 내 것으로, AI">
+<meta property="og:title" content="RNN - Time Series: LSTM">
+<meta property="og:url" content="http://localhost:4000/dl/dl-rnn-lstm/">
+
+
+  <meta property="og:description" content="[Notice] Reference">
+
+
+
+  <meta property="og:image" content="http://localhost:4000/assets/images/posts/dl-thumbnail.jpg">
+
+
+
+
+
+  <meta property="article:published_time" content="2022-08-01T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/dl/dl-rnn-lstm/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Hojun Eric Choi",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+  <meta name="naver-site-verification" content="57d020c8f9b26bf56ed7846608b8d873481e9b84">
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정리하여 내 것으로, AI Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/logo.ico/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/logo.ico/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/logo.ico/favicon-16x16.png">
+<link rel="mask-icon" href="/assets/logo.ico/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          정리하여 내 것으로, AI
+          <span class="site-subtitle">with jjuns</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tag</a>
+            </li><li class="masthead__menu-item">
+              <a href="/search/">Search</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+  
+    
+
+
+
+<nav class="breadcrumbs">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    
+    
+      
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/" itemprop="item"><span itemprop="name">Home</span></a>
+
+          <meta itemprop="position" content="1" />
+        </li>
+        <span class="sep">/</span>
+      
+      
+        
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/categories/#dl" itemprop="item"><span itemprop="name">Dl</span></a>
+          <meta itemprop="position" content="2" />
+        </li>
+        <span class="sep">/</span>
+      
+    
+      
+      
+        <li class="current">RNN - Time Series: LSTM</li>
+      
+    
+  </ol>
+</nav>
+
+  
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/echoi.jpg" alt="Hojun Eric Choi" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Hojun Eric Choi</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>I am a senior-year B.S. student in Computer Science and Data Science at the University of Wisconsin, Madison.</p>
+
+<p>My research interests are <strong>ML</strong>, <strong>deep NLP</strong>, and <strong>computer vision</strong> for emerging application domains.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Madison</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.linkedin.com/in/hojun-choi-2b10b11a0/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/hchoi256" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="/assets/CV.pdf" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">CV</span></a></li>
+          
+        
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:hchoi256@wisc.edu" rel="me" class="u-email">
+            <meta itemprop="email" content="hchoi256@wisc.edu" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">이메일</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items">
+    
+      <li>
+        
+          <span class="nav__sub-title">Table of Contents</span>
+        
+
+        
+        <ul>
+          
+            <li><a href="/categories/">Category</a></li>
+          
+            <li><a href="/tags/">Tag</a></li>
+          
+        </ul>
+        
+      </li>
+    
+  </ul>
+</nav>
+
+    
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="RNN - Time Series: LSTM">
+    <meta itemprop="description" content="[Notice] Reference">
+    <meta itemprop="datePublished" content="2022-08-01T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="http://localhost:4000/dl/dl-rnn-lstm/" class="u-url" itemprop="url">RNN - Time Series: LSTM
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2022-08-01T00:00:00+09:00">2022-08-01</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> GITHUB BLOG JJUNS</h4></header>
+              <ul class="toc__menu"><li><a href="#rnn">RNN</a></li><li><a href="#loading-the-dataset">Loading the dataset</a></li><li><a href="#preprocessing">Preprocessing</a></li><li><a href="#feature-scaling">Feature Scaling</a></li><li><a href="#splitting-the-dataset-into-the-training-set-and-test-set">Splitting the dataset into the Training set and Test set</a></li><li><a href="#building-the-model-lstm">Building the model: LSTM</a></li><li><a href="#training-the-model">Training the model</a></li><li><a href="#predicting-the-test-set">Predicting the Test set</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p class="notice--danger"><strong>[Notice]</strong> <a href="https://github.com/Dataweekends/zero_to_deep_learning_udemy">Reference</a></p>
+
+<h1 id="rnn">RNN</h1>
+<p>다른 딥러닝 모델처럼 은닉층 (Hidden Layer)을 제공할 뿐만 아니라, 자체적으로 지원하는 임시적인 루프가 존재한다; 시간이라는 차원이 추가된다. <span style="color: blue"> Not only does it provide a hidden layer like other deep learning models, but it also has its own ad hoc loops; <strong>A dimension of time</strong> is added. </span></p>
+
+<p>따라서, RNN은 이전에서 발생한 일을 기억할 수 있다! <span style="color: blue"> Thus, RNNs can remember what happened in the past! </span></p>
+
+<p>텍스트 시퀀스와 잘 잘동한다.<span style="color: blue"> Works well with text sequences. </span></p>
+
+<h1 id="loading-the-dataset">Loading the dataset</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'../assets/data/cansim-0800020-eng-6674700030567901031.csv'</span><span class="p">,</span>
+                 <span class="n">skiprows</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">skipfooter</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span>
+                 <span class="n">engine</span><span class="o">=</span><span class="s">'python'</span><span class="p">)</span>
+<span class="n">df</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182352758-1db7300d-249f-4ec2-b7f4-2b1f4e942a6f.png" alt="image" /></p>
+
+<p>상기 디렉토리에 <em>참조</em> 사이트에서 파일을 다운받자. <span style="color: blue"> Download the file from the <em>reference</em> site, then save it into the above directory. </span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">describe</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182352030-57851bf4-8910-4dcc-89f0-fd90475b217a.png" alt="image" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">corr</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182361418-701dae63-639d-46dc-8532-0d1c8a6ca33b.png" alt="image" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sns</span><span class="p">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182352282-eaafad09-1ce0-4114-b6e7-fa80f923a533.png" alt="image" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">sns</span><span class="p">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">df</span><span class="p">.</span><span class="n">corr</span><span class="p">(),</span> <span class="n">annot</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182361578-93cd0623-48b6-4191-8ddf-cf72e3c11e16.png" alt="image" /></p>
+
+<p>씨본 라이브러리를 활용하여 한 눈에 변수들 간 상관관계를 시각화했다. <span style="color: blue"> The correlation between variables was visualized at a glance using the Seabone library. </span></p>
+
+<p>‘Unadjusted’와 ‘Seasonally adjusted’는 서로 <strong>선형적인</strong> 상관관계가 있음을 발견할 수 있다. <span style="color: blue"> It can be found that ‘Unadjusted’ and ‘Seasonally adjusted’ have a <strong>linear</strong> correlation with each other. </span></p>
+
+<p>그렇다면, 이제 시간의 흐름에 따른 두 변수의 변화를 확인해보자. <span style="color: blue"> Now, let’s check the change of the two variables with the passage of time. </span></p>
+
+<h1 id="preprocessing">Preprocessing</h1>
+
+<p>시계열 데이터를 학습하기 위해서는 시간과 관련된 변수를 인덱스로 삼는 전처리 작업이 필수다. <span style="color: blue"> In order to address time series data, we should go through the process to have time-related variables as indexes. </span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pandas.tseries.offsets</span> <span class="kn">import</span> <span class="n">MonthEnd</span>
+
+<span class="n">df</span><span class="p">[</span><span class="s">'Adjustments'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'Adjustments'</span><span class="p">])</span> <span class="o">+</span> <span class="n">MonthEnd</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># date formatting
+</span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">set_index</span><span class="p">(</span><span class="s">'Adjustments'</span><span class="p">)</span> <span class="c1"># preprocessing for time series
+</span><span class="k">print</span><span class="p">(</span><span class="n">df</span><span class="p">.</span><span class="n">head</span><span class="p">())</span>
+<span class="n">df</span><span class="p">.</span><span class="n">plot</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>                Unadjusted  Seasonally adjusted
+    Adjustments                                 
+    1991-01-31     12588862             15026890
+    1991-02-28     12154321             15304585
+    1991-03-31     14337072             15413591
+    1991-04-30     15108570             15293409
+    1991-05-31     17225734             15676083
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182353479-97b1ba63-fa6f-4301-b5c7-722d18cd6c42.png" alt="image" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">time_pivot</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s">'01-01-2012'</span><span class="p">)</span>
+
+<span class="n">train</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">loc</span><span class="p">[:</span><span class="n">time_pivot</span><span class="p">,</span> <span class="p">[</span><span class="s">'Unadjusted'</span><span class="p">]]</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="n">time_pivot</span><span class="p">:,</span> <span class="p">[</span><span class="s">'Unadjusted'</span><span class="p">]]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># visualizing the datasets
+</span><span class="n">ax</span> <span class="o">=</span> <span class="n">train</span><span class="p">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">test</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">([</span><span class="s">'train'</span><span class="p">,</span> <span class="s">'test'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182354623-4dd81c45-f931-4d14-96b0-0b3d2a96d1b6.png" alt="image" /></p>
+
+<p><strong>Training set</strong>: 2012년 까지의 데이터 <span style="color: blue"> Data before 2012 </span></p>
+
+<p><strong>Test set</strong>: 2012년 이후 데이터 <span style="color: blue"> Data after 2012 </span></p>
+
+<p>파란 선은 ‘train’, 주황색은 ‘test’를 나타낸다. <span style="color: blue"> blue: train, orange: test</span></p>
+
+<h1 id="feature-scaling">Feature Scaling</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span>
+<span class="n">sc</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
+
+<span class="n">train_sc</span> <span class="o">=</span> <span class="n">sc</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
+<span class="n">test_sc</span> <span class="o">=</span> <span class="n">sc</span><span class="p">.</span><span class="n">transform</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+
+<span class="n">train</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    array([[0.01402033],
+        [0.        ],
+        [0.0704258 ],
+        [0.09531795],
+        [0.16362761],
+        [0.13514108],
+    ...
+        [0.81439355],
+        [0.79916654],
+        [0.80210057],
+        [0.81482896],
+        [1.        ]])
+</code></pre></div></div>
+
+<blockquote>
+  <p><a href="https://github.com/hchoi256/ai-terms">MinMaxScaler</a></p>
+</blockquote>
+
+<p>신경망 학습에 이용하기 전 테이블 형태로써 데이터를 확인하기 위해 dataframe 형태로 변형하자. <span style="color: blue"> Before using it for neural network training, let’s transform it into a dataframe format to check the data in a table format.</span></p>
+
+<p>직관적으로 확인해보기 위해 12달의 시계열 분석을 위한 테이블을 형성해보자. <span style="color: blue"> For intuition, let’s form a table for time series analysis of 13 months.</span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train_sc_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">train_sc</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s">'Scaled'</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">train</span><span class="p">.</span><span class="n">index</span><span class="p">)</span>
+<span class="n">test_sc_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">test_sc</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s">'Scaled'</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">test</span><span class="p">.</span><span class="n">index</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span class="p">):</span>
+    <span class="n">train_sc_df</span><span class="p">[</span><span class="s">'shift_{}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">s</span><span class="p">)]</span> <span class="o">=</span> <span class="n">train_sc_df</span><span class="p">[</span><span class="s">'Scaled'</span><span class="p">].</span><span class="n">shift</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="n">test_sc_df</span><span class="p">[</span><span class="s">'shift_{}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">s</span><span class="p">)]</span> <span class="o">=</span> <span class="n">test_sc_df</span><span class="p">[</span><span class="s">'Scaled'</span><span class="p">].</span><span class="n">shift</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182356292-733ab690-76e4-47a3-94f2-e43a66de6855.png" alt="image" /></p>
+
+<p>테이블에서 시간의 흐름에 따라 시계열 값들 또한 누적됨을 확인해볼 수 있다. <span style="color: blue"> In the table, it can be seen that the time series values ​​are accumulated over time.</span></p>
+
+<h1 id="splitting-the-dataset-into-the-training-set-and-test-set">Splitting the dataset into the Training set and Test set</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X_train</span> <span class="o">=</span> <span class="n">train_sc_df</span><span class="p">.</span><span class="n">dropna</span><span class="p">().</span><span class="n">drop</span><span class="p">(</span><span class="s">'Scaled'</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">train_sc_df</span><span class="p">.</span><span class="n">dropna</span><span class="p">()[[</span><span class="s">'Scaled'</span><span class="p">]]</span>
+
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">test_sc_df</span><span class="p">.</span><span class="n">dropna</span><span class="p">().</span><span class="n">drop</span><span class="p">(</span><span class="s">'Scaled'</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">y_test</span> <span class="o">=</span> <span class="n">test_sc_df</span><span class="p">.</span><span class="n">dropna</span><span class="p">()[[</span><span class="s">'Scaled'</span><span class="p">]]</span>
+</code></pre></div></div>
+
+<p>결측치가 존재하는 행을 제외한 후, 신경망 학습에 불필요한 ‘Scaled’를 제거한다. <span style="color: blue"> After excluding rows with missing values, ‘Scaled’ unnecessary for neural network training is removed. </span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Converting to ndarray
+</span><span class="n">X_train</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">.</span><span class="n">values</span>
+<span class="n">X_test</span><span class="o">=</span> <span class="n">X_test</span><span class="p">.</span><span class="n">values</span>
+
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">.</span><span class="n">values</span>
+<span class="n">y_test</span> <span class="o">=</span> <span class="n">y_test</span><span class="p">.</span><span class="n">values</span>
+</code></pre></div></div>
+
+<p>시각화 목적을 달성한 dataframe 형태를 다시 ndarray로 바꿔준다. <span style="color: blue"> Changing the dataframe type that has achieved the purpose of visualization back to ndarray. </span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># reshape(size, timestep, feature)
+</span><span class="n">X_train_t</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">X_train</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">X_test_t</span> <span class="o">=</span> <span class="n">X_test</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">X_test</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>기존 신경망 학습에 사용되는 X는 2차원 배열 형태여야 하지만, RNN은 ‘시간’이라는   새로운 차원이 존재한다.<span style="color: blue"> Neural network training usually requires 2-dimensional input data, but RNNs have a new dimension called ‘time’. </span></p>
+
+<p>따라서, 2차원이 아닌 3차원 배열 형태로 바꿔줘야 한다. <span style="color: blue"> Therefore, the input must be converted to a 3D array rather than a 2D. </span></p>
+
+<h1 id="building-the-model-lstm">Building the model: LSTM</h1>
+<p>LSTM은 RNN이 가진 임시적인 루프를 좀더 장기적으로 유지할 수 있도록 설계되었다. <span style="color: blue"> LSTM is designed to maintain the temporary loop of RNN for a longer period of time. </span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># LSTM
+</span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="n">tf</span>
+
+<span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">backend</span><span class="p">.</span><span class="n">clear_session</span><span class="p">()</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">Sequential</span><span class="p">()</span>
+<span class="n">model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">layers</span><span class="p">.</span><span class="n">LSTM</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span> <span class="c1"># (timestep, feature)
+</span><span class="n">model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">layers</span><span class="p">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">model</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s">'mean_squared_error'</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s">'adam'</span><span class="p">)</span>
+
+<span class="n">model</span><span class="p">.</span><span class="n">summary</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    Model: "sequential"
+    _________________________________________________________________
+    Layer (type)                Output Shape              Param #   
+    =================================================================
+    lstm (LSTM)                 (None, 20)                1760      
+                                                                    
+    dense (Dense)               (None, 1)                 21        
+                                                                    
+    =================================================================
+    Total params: 1,781
+    Trainable params: 1,781
+    Non-trainable params: 0
+    _________________________________________________________________
+</code></pre></div></div>
+
+<p>LSTM 모델의 입력층 차원으로 (12, 1)을 넣어줬다. <span style="color: blue"> We put (12, 1) as the dimension of the input layer of the LSTM model. </span></p>
+
+<p>여기서, 12는 시간 차원으로 12달을 의미한다. <span style="color: blue"> Here, 12 means 12 months in the time dimension.</span></p>
+
+<h1 id="training-the-model">Training the model</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">early_stop</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">callbacks</span><span class="p">.</span><span class="n">EarlyStopping</span><span class="p">(</span><span class="n">monitor</span><span class="o">=</span><span class="s">'loss'</span><span class="p">,</span> <span class="n">patience</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">model</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_t</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+          <span class="n">batch_size</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">early_stop</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    Epoch 1/100
+    8/8 [==============================] - 2s 6ms/step - loss: 0.2733
+    Epoch 2/100
+    8/8 [==============================] - 0s 6ms/step - loss: 0.1831
+    Epoch 3/100
+    8/8 [==============================] - 0s 6ms/step - loss: 0.1105
+    Epoch 4/100
+    8/8 [==============================] - 0s 5ms/step - loss: 0.0547
+    Epoch 5/100
+    8/8 [==============================] - 0s 5ms/step - loss: 0.0227
+    Epoch 6/100
+    8/8 [==============================] - 0s 5ms/step - loss: 0.0172
+    Epoch 7/100
+    8/8 [==============================] - 0s 5ms/step - loss: 0.0176
+    Epoch 7: early stopping
+</code></pre></div></div>
+
+<p>EarlyStopping을 활용해서 손실함수 변화가 1번 이상 없다면 학습을 중지하게 설계했다.<span style="color: blue"> By using EarlyStopping, it is designed to stop learning if there is no change in the loss function more than once.</span></p>
+
+<p>뉴런 개수와 같은 요소들은 <strong>자율적으로</strong> 설정한다.<span style="color: blue"> Factors such as the number of neurons are set <strong>autonomously</strong>.</span></p>
+
+<h1 id="predicting-the-test-set">Predicting the Test set</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">X_test_t</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    [[[1.06265011]
+    [0.87180554]
+    [0.84048091]
+    [0.86220767]
+    [0.88363094]
+    [0.89302107]
+    [0.92552046]
+    [0.89993326]
+    [0.83505683]
+    [0.77259579]
+    [0.56926634]
+    [0.61423187]]
+    ...
+    [1.05593537]
+    [0.9437244 ]
+    [0.75806325]
+    [0.78276721]]]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_t</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    [[0.7675418 ]
+    [0.7773328 ]
+    [0.79216003]
+    [0.79674876]
+    [0.7971103 ]
+    [0.7974134 ]
+    [0.7950487 ]
+    [0.7938808 ]
+    [0.79453826]
+    [0.7947075 ]
+    [0.797763  ]
+    [0.802348  ]
+    [0.7896755 ]
+    [0.7992326 ]
+    [0.80933905]
+    [0.8092701 ]
+    [0.81345344]
+    [0.81029963]
+    [0.8067038 ]
+    [0.80851555]
+    [0.8075502 ]
+    [0.81002915]
+    [0.8135476 ]
+    [0.81820446]
+    ...
+    [0.88950527]
+    [0.8895281 ]
+    [0.89572793]
+    [0.8883731 ]]
+</code></pre></div></div>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#deep-learning" class="page__taxonomy-item p-category" rel="tag">deep learning</a><span class="sep">, </span>
+    
+      <a href="/tags/#lstm" class="page__taxonomy-item p-category" rel="tag">lstm</a><span class="sep">, </span>
+    
+      <a href="/tags/#python" class="page__taxonomy-item p-category" rel="tag">python</a><span class="sep">, </span>
+    
+      <a href="/tags/#rnn" class="page__taxonomy-item p-category" rel="tag">rnn</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#dl" class="page__taxonomy-item p-category" rel="tag">DL</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-08-01T00:00:00+09:00">2022-08-01</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=RNN+-+Time+Series%3A+LSTM%20http%3A%2F%2Flocalhost%3A4000%2Fdl%2Fdl-rnn-lstm%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fdl%2Fdl-rnn-lstm%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fdl%2Fdl-rnn-lstm%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/dl/dl-mnist/" class="pagination--pager" title="CNN - Classification: MNIST with Tensorflow
+">이전</a>
+    
+    
+      <a href="/nlp/nlp-basic-text-classification/" class="pagination--pager" title="NLP - Part 0: Data Preprocessing
+">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">참고</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/teeko.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ml/ml-teeko-minimax/" rel="permalink">ML: Minimax 알고리즘 - Teeko Game
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2022-08-14T00:00:00+09:00">2022-08-14</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          5 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Minimax 알고리즘을 활용해서 Teeko 게임을 구현한다.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/pca-image-compression.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ml/ml-pca/" rel="permalink">ML: PCA - Image Compression(이미지 압축)
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2022-08-14T00:00:00+09:00">2022-08-14</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">PCA를 이용해서 이미지 압축을 진행해보자.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/hac.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ml/ml-hca/" rel="permalink">ML: Hierarchical Agglomerate Clustering(HAC) - 포켓몬 군집화
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2022-08-14T00:00:00+09:00">2022-08-14</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          4 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Hierarchical Agglomerate Clustering(HAC) 이용해서 서로 다른 특성을 공유하는 Pokemon들을 군집으로 묶어보자.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/lenet.JPG" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/dl/dl-miniplace-classification/" rel="permalink">DL: LeNet 신경망 - MiniPlaces 이미지 분류
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2022-08-14T00:00:00+09:00">2022-08-14</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">LeNet 신경망을 활용해서 MiniPlaces 데이터셋 이미지 분류 작업을 수행한다.
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="mailto:hchoi256@wisc.edu" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/in/hojun-choi-2b10b11a0/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://github.com/hchoi256" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="/assets/CV.pdf" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> CV</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 Hojun Eric Choi. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/dl/dl-rnn-lstm/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/dl/dl-rnn-lstm"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://jjunes.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+
+  </body>
+</html>

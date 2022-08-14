@@ -10,7 +10,7 @@
     <meta charset="utf-8">
 
 <!-- begin _includes/seo.html --><title>ML Project 2: Deep Learning - CIFAR-10 Classification | 정리하여 내 것으로, AI</title>
-<meta name="description" content="코드 [Notice] download here">
+<meta name="description" content="Code [Notice] download here">
 
 
   <meta name="author" content="Hojun Eric Choi">
@@ -23,10 +23,10 @@
 <meta property="og:locale" content="ko_KR">
 <meta property="og:site_name" content="정리하여 내 것으로, AI">
 <meta property="og:title" content="ML Project 2: Deep Learning - CIFAR-10 Classification">
-<meta property="og:url" content="http://localhost:4000/machine/learning/ml-projects-2/">
+<meta property="og:url" content="http://localhost:4000/ml/ml-projects-2/">
 
 
-  <meta property="og:description" content="코드 [Notice] download here">
+  <meta property="og:description" content="Code [Notice] download here">
 
 
 
@@ -47,7 +47,7 @@
   
 
 
-<link rel="canonical" href="http://localhost:4000/machine/learning/ml-projects-2/">
+<link rel="canonical" href="http://localhost:4000/ml/ml-projects-2/">
 
 
 
@@ -172,18 +172,8 @@
       
         
         <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a href="/categories/#machine" itemprop="item"><span itemprop="name">Machine</span></a>
+          <a href="/categories/#ml" itemprop="item"><span itemprop="name">Ml</span></a>
           <meta itemprop="position" content="2" />
-        </li>
-        <span class="sep">/</span>
-      
-    
-      
-      
-        
-        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a href="/categories/#learning" itemprop="item"><span itemprop="name">Learning</span></a>
-          <meta itemprop="position" content="3" />
         </li>
         <span class="sep">/</span>
       
@@ -239,10 +229,6 @@
       
 
       
-        
-          
-            <li><a href="mailto:hchoi256@wisc.edu" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
-          
         
           
             <li><a href="https://www.linkedin.com/in/hojun-choi-2b10b11a0/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
@@ -367,7 +353,7 @@
 
   <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="ML Project 2: Deep Learning - CIFAR-10 Classification">
-    <meta itemprop="description" content="코드[Notice] download here">
+    <meta itemprop="description" content="Code[Notice] download here">
     <meta itemprop="datePublished" content="2022-07-23T00:00:00+09:00">
     
 
@@ -375,7 +361,7 @@
       
         <header>
           <h1 id="page-title" class="page__title p-name" itemprop="headline">
-            <a href="http://localhost:4000/machine/learning/ml-projects-2/" class="u-url" itemprop="url">ML Project 2: Deep Learning - CIFAR-10 Classification
+            <a href="http://localhost:4000/ml/ml-projects-2/" class="u-url" itemprop="url">ML Project 2: Deep Learning - CIFAR-10 Classification
 </a>
           </h1>
           
@@ -399,7 +385,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          5 분 소요
+          7 분 소요
         
       </span>
     
@@ -414,59 +400,64 @@
           <aside class="sidebar__right sticky">
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> GITHUB BLOG JJUNS</h4></header>
-              <ul class="toc__menu"><li><a href="#코드">코드</a></li><li><a href="#learning-goals">Learning Goals</a></li><li><a href="#배경지식">배경지식</a><ul><li><a href="#cifar-10-데이터-세트">CIFAR-10 데이터 세트</a></li><li><a href="#convolutional-neural-network-cnn-기초">Convolutional Neural Network (CNN) 기초</a></li><li><a href="#성능지표-key-performance-indicators-kpi">성능지표: Key Performance Indicators (KPI)</a></li></ul></li><li><a href="#구현">구현</a><ul><li><a href="#데이터-관찰">데이터 관찰</a></li><li><a href="#데이터-시각화">데이터 시각화</a></li><li><a href="#데이터-전처리">데이터 전처리</a><ul><li><a href="#이미지-포맷-설정-float32">이미지 포맷 설정 (float32)</a></li><li><a href="#categorical-data-범주화시키기">Categorical Data 범주화시키기</a></li><li><a href="#정규화">정규화</a></li></ul></li><li><a href="#모델-훈련하기">모델 훈련하기</a></li><li><a href="#모델-평가">모델 평가</a></li><li><a href="#모델-저장하기">모델 저장하기</a></li><li><a href="#image-augmentation-활용-모델-개선">Image Augmentation 활용 모델 개선</a><ul><li><a href="#이미지-증강으로-새로운-데이터-만들어내기">이미지 증강으로 새로운 데이터 만들어내기</a></li><li><a href="#이미지-증강으로-만들어낸-데이터로-모델-새로-학습하기">이미지 증강으로 만들어낸 데이터로 모델 새로 학습하기</a></li></ul></li></ul></li></ul>
+              <ul class="toc__menu"><li><a href="#code">Code</a></li><li><a href="#learning-goals">Learning Goals</a></li><li><a href="#background-knowledge">Background knowledge</a><ul><li><a href="#cifar-10">CIFAR-10</a></li><li><a href="#convolutional-neural-network-cnn">Convolutional Neural Network (CNN)</a></li><li><a href="#성능지표-key-performance-indicators-kpi">성능지표: Key Performance Indicators (KPI)</a></li></ul></li><li><a href="#implementation">Implementation</a><ul><li><a href="#observing-the-dataset">Observing the dataset</a></li><li><a href="#data-visualization">Data visualization</a></li><li><a href="#data-preprocessing">Data Preprocessing</a><ul><li><a href="#formatting-the-imagefloat32">Formatting the image(float32)</a></li><li><a href="#categorization-categorical-data">Categorization (Categorical Data)</a></li><li><a href="#정규화">정규화</a></li></ul></li><li><a href="#모델-훈련하기">모델 훈련하기</a></li><li><a href="#evaluating-the-model">Evaluating the model</a></li><li><a href="#saving-the-model">Saving the model</a></li><li><a href="#image-augmentation">Image Augmentation</a><ul><li><a href="#new-dataset-with-image-augmentation">New dataset with image augmentation</a></li><li><a href="#training-the-model-with-image-augmentation">Training the model with image augmentation</a></li></ul></li></ul></li></ul>
 
             </nav>
           </aside>
         
-        <h1 id="코드">코드</h1>
+        <h1 id="code">Code</h1>
 <p class="notice--danger"><strong>[Notice]</strong> <a href="https://github.com/hchoi256/machine-learning-development">download here</a></p>
 
 <h1 id="learning-goals">Learning Goals</h1>
 <ol>
-  <li>합성곱 신경망 모델 설계하여 케라스로 이미지 분류</li>
-  <li>Adam 옵티마이저로 신경망 가중치 최적화</li>
-  <li>드롭아웃을 통한 과적합 개선</li>
-  <li>모델 평가 진행 (<em>confusion matrix</em>)</li>
-  <li><em>Image Augmentation</em>으로 신경망 일반화 성능 개선</li>
-  <li>훈련 신경망 가중치 조작 방법</li>
+  <li>합성곱 신경망 모델 설계하여 케라스로 이미지 분류 <span style="color: blue">Building the CNN and Image classification using keras</span></li>
+  <li>Adam 옵티마이저로 신경망 가중치 최적화 <span style="color: blue">Optimizing weights using ‘Adam’</span></li>
+  <li>드롭아웃을 통한 과적합 개선<span style="color: blue"> Drop-out</span></li>
+  <li>모델 평가 진행 (<em>confusion matrix</em>) <span style="color: blue">Model evaluation</span></li>
+  <li><em>Image Augmentation</em>으로 신경망 일반화 성능 개선 <span style="color: blue">Improving generalization error through image augmentation</span></li>
+  <li>훈련 신경망 가중치 조작 방법 <span style="color: blue">How to adjust weights</span></li>
 </ol>
 
-<h1 id="배경지식">배경지식</h1>
+<h1 id="background-knowledge">Background knowledge</h1>
 
-<h2 id="cifar-10-데이터-세트">CIFAR-10 데이터 세트</h2>
+<h2 id="cifar-10">CIFAR-10</h2>
 <p><img src="https://user-images.githubusercontent.com/39285147/180509114-3b492055-56eb-42c6-85b8-80fb8e077546.png" alt="image" /></p>
 
-<p>10가지 클래스로 나누어져 있는 <strong>6만 개의</strong> <strong>컬러(RGB 채널)</strong> 이미지로 구성된다 (airplanes, cars, birds, cats, etc.).</p>
+<p>10가지 클래스로 나누어져 있는 <strong>6만 개의</strong> <strong>컬러(RGB 채널)</strong> 이미지로 구성된다 (airplanes, cars, birds, cats, etc.). <span style="color: blue">Ten classes; each includes 60,000 color images </span></p>
 <ul>
-  <li>이미지 해상도가 <strong>32x32</strong> 픽셀로 매우 낮다.</li>
-  <li>각 클래스마다 6천개의 이미지가 존재한다 (클래스 별 매우 균등한 이미지 분포).</li>
+  <li>이미지 해상도가 <strong>32x32</strong> 픽셀로 매우 낮다. <span style="color: blue">Image resolution = 32x32</span></li>
+  <li>각 클래스마다 6천개의 이미지가 존재한다 (클래스 별 매우 균등한 이미지 분포). <span style="color: blue">Uniform image distribution by class</span></li>
 </ul>
 
-<p>이번 프로젝트에서 주어진 입력 이미지가 10개의 클래스 중 어디에 속하는지 분류 모델을 학습시켜보자.</p>
+<p>이번 프로젝트에서 주어진 입력 이미지가 10개의 클래스 중 어디에 속하는지 분류 모델을 학습시켜보자. <span style="color: blue">Training the model to put new image into certain class</span></p>
 
-<h2 id="convolutional-neural-network-cnn-기초"><a href="https://github.com/hchoi256/ai-boot-camp/blob/main/ai/deep-learning/cnn.md">Convolutional Neural Network (CNN) 기초</a></h2>
+<h2 id="convolutional-neural-network-cnn"><a href="https://github.com/hchoi256/ai-boot-camp/blob/main/ai/deep-learning/cnn.md">Convolutional Neural Network (CNN)</a></h2>
 <p><img src="https://user-images.githubusercontent.com/39285147/180512062-48c118e4-c9d4-4ea6-8281-958201289626.png" alt="image" /></p>
 
-<p>CNN 관련 배경지식은 상기 링크를 통해 숙지해주세요!</p>
+<p>CNN 관련 배경지식은 상기 링크를 통해 숙지해주세요! <span style="color: blue">Please refer to the link above.</span></p>
 
 <p><img src="https://user-images.githubusercontent.com/39285147/180513584-f47d8136-4cc3-473b-b85f-437ddd376101.png" alt="image" /></p>
 
-<p>‘sharpen’ 커널 필터를 적용하면 인풋 이미지의 3x3 픽셀 범위에 대해 가운데 값에 가중치를 높게줘서 출력 이미지에서 가운데 픽셀을 뚜렷하게 강조한다.</p>
+<p>3x3 ‘sharpen’ 커널 필터를 적용하면 인풋 이미지의 3x3 픽셀 범위에 대해 합성곱마다 가운데 값에 가중치를 높게줘서 출력 이미지에서 가운데 픽셀을 뚜렷하게 강조한다 (= 명확하게 보이게 한다). <span style="color: blue">Applying a 3x3 ‘sharpen’ kernel filter, the value in the center of convolution matrix takes a significant weight, which sharpens the image</span></p>
 
 <h2 id="성능지표-key-performance-indicators-kpi">성능지표: Key Performance Indicators (KPI)</h2>
 <p><img src="https://user-images.githubusercontent.com/39285147/180517136-7b390f93-0f67-4e21-9217-a482e74a1f41.png" alt="image" /></p>
 
-<p><strong>Precision</strong>: 암이 없는 환자에게 있다고 오진할 확률 50%
-<strong>Recall</strong>: 암이 있는 환자에게 없다고 오진할 확률이 11%</p>
+<p><strong>Type I Error</strong>: 암이 없는 환자에게 있다고 오진할 확률 <span style="color: blue">Probability of misdiagnosing a patient without cancer</span></p>
+
+<p><strong>Type II Error</strong>: 암이 있는 환자에게 없다고 오진할 확률 <span style="color: blue">Probability of misdiagnosing a patient with cancer</span></p>
+
+<p><strong>Precision</strong>: 암이 없는 환자에게 없다고 예측할 확률 <span style="color: blue">Probability of misdiagnosing a patient without cancer</span></p>
+
+<p><strong>Recall</strong>: 암이 있는 환자에게 있다고 예측할 확률 <span style="color: blue">Probability of misdiagnosing a patient with cancer</span></p>
 
 <blockquote>
   <p><img src="https://user-images.githubusercontent.com/39285147/180517030-eedfd66d-7cd8-4109-9fb2-87f6a29d3c7c.png" alt="image" /></p>
 </blockquote>
 
-<h1 id="구현">구현</h1>
+<h1 id="implementation">Implementation</h1>
 
-<h2 id="데이터-관찰">데이터 관찰</h2>
+<h2 id="observing-the-dataset">Observing the dataset</h2>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
@@ -474,20 +465,20 @@
 <span class="kn">import</span> <span class="nn">seaborn</span>
 
 <span class="kn">from</span> <span class="nn">keras.datasets</span> <span class="kn">import</span> <span class="n">cifar10</span>
-<span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span> <span class="p">,</span> <span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span> <span class="o">=</span> <span class="n">cifar10</span><span class="p">.</span><span class="n">load_data</span><span class="p">()</span> <span class="c1"># 훈련, 테스트 데이터 생성
-</span><span class="n">X_train</span><span class="p">.</span><span class="n">shape</span>
+<span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span> <span class="p">,</span> <span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span> <span class="o">=</span> <span class="n">cifar10</span><span class="p">.</span><span class="n">load_data</span><span class="p">()</span>
+<span class="n">X_train</span><span class="p">.</span><span class="n">shape</span>
 </code></pre></div></div>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    (50000, 32, 32, 3)
 </code></pre></div></div>
 
-<p>-* 이미지 개수*: 50000개</p>
 <ul>
-  <li><em>이미지 해상도</em>: 32x32</li>
-  <li><em>컬러 RGB</em>: 3</li>
+  <li><em># Images</em>: 50000개</li>
+  <li><em>Image resolution</em>: 32x32</li>
+  <li><em>RGB</em>: 3</li>
 </ul>
 
-<h2 id="데이터-시각화">데이터 시각화</h2>
+<h2 id="data-visualization">Data visualization</h2>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">i</span> <span class="o">=</span> <span class="mi">30009</span>
 <span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
@@ -499,81 +490,89 @@
 
 <p><img src="https://user-images.githubusercontent.com/39285147/180518417-37e04fc2-210e-40db-b111-e219b5d66a9b.png" alt="image" /></p>
 
-<p>클래스 리스트에서 인덱스가 1인 클래스, ‘Cars’에 속하는 이미지인 것을 확인할 수 있다.</p>
+<p>클래스 리스트에서 인덱스가 1인 클래스, 즉 ‘Cars’에 속하는 이미지인 것을 확인할 수 있다. <span style="color: blue">Index 1 represetns ‘Cars’</span></p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 한 번에 여러 이미지 배출하여 비교하기
-</span>
-<span class="n">W_grid</span> <span class="o">=</span> <span class="mi">4</span> <span class="c1"># 그리드 가로
-</span><span class="n">L_grid</span> <span class="o">=</span> <span class="mi">4</span> <span class="c1"># 그리드 세로
+<p>이제, 한 번에 여러 이미지를 배출하여 직관적으로 비교해보자.<span style="color: blue"> Displaying multiple images at once for better intuition</span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">W_grid</span> <span class="o">=</span> <span class="mi">4</span> <span class="c1"># Grid width
+</span><span class="n">L_grid</span> <span class="o">=</span> <span class="mi">4</span> <span class="c1"># Grid height
 </span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">L_grid</span><span class="p">,</span> <span class="n">W_grid</span><span class="p">,</span> <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">25</span><span class="p">))</span>
-<span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span><span class="p">.</span><span class="n">ravel</span><span class="p">()</span> <span class="c1"># 4x4 행렬을 16개의 요소를 가진 선형배열로 변환한다
-</span>
-<span class="n">n_training</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span><span class="p">.</span><span class="n">ravel</span><span class="p">()</span> <span class="c1"># 4x4 matrix --&gt; 16 elements 
+</span><span class="n">n_training</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">L_grid</span> <span class="o">*</span> <span class="n">W_grid</span><span class="p">):</span>
     <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_training</span><span class="p">)</span> <span class="c1"># pick a random number
 </span>    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">imshow</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
     <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">set_title</span><span class="p">(</span><span class="n">y_train</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
-    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">axis</span><span class="p">(</span><span class="s">'off'</span><span class="p">)</span> <span class="c1"># 축 안 보이게 만들기
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">axis</span><span class="p">(</span><span class="s">'off'</span><span class="p">)</span> <span class="c1"># hide axis
 </span>    
-<span class="n">plt</span><span class="p">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span> <span class="o">=</span> <span class="mf">0.4</span><span class="p">)</span> <span class="c1"># 이미지 사이 공간 벌리기
+<span class="n">plt</span><span class="p">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span> <span class="o">=</span> <span class="mf">0.4</span><span class="p">)</span> <span class="c1"># space out images
 </span></code></pre></div></div>
 
 <p><img src="https://user-images.githubusercontent.com/39285147/180518577-9f9298f7-ff70-4bf5-ba08-b353fa610a6a.png" alt="image" /></p>
 
-<h2 id="데이터-전처리">데이터 전처리</h2>
+<h2 id="data-preprocessing">Data Preprocessing</h2>
 
-<h3 id="이미지-포맷-설정-float32">이미지 포맷 설정 (float32)</h3>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 이미지 포맷은 'float32'여야 한다
-</span><span class="n">X_train</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">.</span><span class="n">astype</span><span class="p">(</span><span class="s">'float32'</span><span class="p">)</span>
+<h3 id="formatting-the-imagefloat32">Formatting the image(float32)</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X_train</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">.</span><span class="n">astype</span><span class="p">(</span><span class="s">'float32'</span><span class="p">)</span>
 <span class="n">X_test</span> <span class="o">=</span> <span class="n">X_test</span><span class="p">.</span><span class="n">astype</span><span class="p">(</span><span class="s">'float32'</span><span class="p">)</span>
 
-<span class="n">number_cat</span> <span class="o">=</span> <span class="mi">10</span> <span class="c1"># 클래스 개수
+<span class="n">number_cat</span> <span class="o">=</span> <span class="mi">10</span> <span class="c1"># number of classes
 </span><span class="n">y_train</span>
 
 </code></pre></div></div>
 
-<p>array([[6],
-    [9],
-    [9],
-    …,
-    [9],
-    [1],
-    [1]], dtype=uint8)</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    array([[6],
+        [9],
+        [9],
+        ...,
+        [9],
+        [1],
+        [1]], dtype=uint8)
+</code></pre></div></div>
 
-<p>클래스 인덱스로 종속변수가 표현된 것을 확인해볼 수 있다.</p>
+<p>클래스 인덱스로 종속변수인 2차원 배열이 표현된 것을 확인해볼 수 있다. <span style="color: blue">expressed as a 2-dimensional array</span></p>
 
-<p>이를 인덱스 번호가 아니라 ‘One-Hot Encoding’ 방법을 활용하여 범주화 시켜보자.</p>
+<p>각 숫자는 앞서 ‘데이터 시각화’ 예제에서 보았던 클래스 인덱스 번호이다. <span style="color: blue">Each number represents the index of classes</span></p>
 
-<h3 id="categorical-data-범주화시키기">Categorical Data 범주화시키기</h3>
+<p>이를 인덱스 번호가 아니라 ‘One-Hot Encoding’ 방법을 활용하여 범주화 시켜서 신경망 학습 인자로 만들어보자. <span style="color: blue">Performing categorization to the indexes using ‘One-Hot Encoding’</span></p>
+
+<blockquote>
+  <p>신경망의 학습 데이터는 ‘numpy 2차원 배열’이여야 한다. <span style="color: blue">Training dataset must be numpy 2-dimensional array</span></p>
+</blockquote>
+
+<h3 id="categorization-categorical-data">Categorization (Categorical Data)</h3>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">keras</span>
-<span class="n">y_train</span> <span class="o">=</span> <span class="n">keras</span><span class="p">.</span><span class="n">utils</span><span class="p">.</span><span class="n">to_categorical</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">number_cat</span><span class="p">)</span> <span class="c1"># one-hot encoding 범주형으로 변환하기
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">keras</span><span class="p">.</span><span class="n">utils</span><span class="p">.</span><span class="n">to_categorical</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">number_cat</span><span class="p">)</span> <span class="c1"># one-hot encoding
 </span><span class="n">y_test</span> <span class="o">=</span> <span class="n">keras</span><span class="p">.</span><span class="n">utils</span><span class="p">.</span><span class="n">to_categorical</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">number_cat</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>array([[0., 0., 0., …, 0., 0., 0.],
-       [0., 0., 0., …, 0., 0., 1.],
-       [0., 0., 0., …, 0., 0., 1.],
-       …,
-       [0., 0., 0., …, 0., 0., 1.],
-       [0., 1., 0., …, 0., 0., 0.],
-       [0., 1., 0., …, 0., 0., 0.]], dtype=float32)</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    array([[0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 1.],
+        [0., 0., 0., ..., 0., 0., 1.],
+        ...,
+        [0., 0., 0., ..., 0., 0., 1.],
+        [0., 1., 0., ..., 0., 0., 0.],
+        [0., 1., 0., ..., 0., 0., 0.]], dtype=float32)
+</code></pre></div></div>
 
 <h3 id="정규화">정규화</h3>
-<p>독립변수들은 픽셀에 할당된 [0, 255] 사이의 수치이므로, [0, 1] 사이 값들로 <em>정규화</em>를 거칠 필요가 있다.</p>
+<p>독립변수들은 픽셀에 할당된 [0, 255] 사이의 수치이므로, [0, 1] 사이 값들로 <em>정규화</em>를 거칠 필요가 있다. <span style="color: blue">Independent variables are in range [0, 255], so they need to be normalized</span></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X_train</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">/</span><span class="mi">255</span>
 <span class="n">X_test</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">/</span><span class="mi">255</span>
 </code></pre></div></div>
 
+<p>이렇게 255로 나누어주면 각 데이터들은 [0, 1] 사이 값을 가지게 된다. <span style="color: blue">Dividing by 255 makes the data become a number in range [0, 1]</span></p>
+
 <h2 id="모델-훈련하기">모델 훈련하기</h2>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span> <span class="c1"># 신경망을 순차적으로 쌓는다
-</span><span class="kn">from</span> <span class="nn">keras.layers</span> <span class="kn">import</span> <span class="n">Conv2D</span><span class="p">,</span> <span class="n">MaxPooling2D</span><span class="p">,</span> <span class="n">AveragePooling2D</span><span class="p">,</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Flatten</span><span class="p">,</span> <span class="n">Dropout</span> <span class="c1"># CNN 관련 클래스
-</span><span class="kn">from</span> <span class="nn">keras.optimizers</span> <span class="kn">import</span> <span class="n">Adam</span> <span class="c1"># Adam 최적화 옵티마이저
-</span><span class="kn">from</span> <span class="nn">keras.callbacks</span> <span class="kn">import</span> <span class="n">TensorBoard</span> <span class="c1"># TensorFlow 시각화 도구
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span> 
+<span class="kn">from</span> <span class="nn">keras.layers</span> <span class="kn">import</span> <span class="n">Conv2D</span><span class="p">,</span> <span class="n">MaxPooling2D</span><span class="p">,</span> <span class="n">AveragePooling2D</span><span class="p">,</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Flatten</span><span class="p">,</span> <span class="n">Dropout</span>
+<span class="kn">from</span> <span class="nn">keras.optimizers</span> <span class="kn">import</span> <span class="n">Adam</span>
+<span class="kn">from</span> <span class="nn">keras.callbacks</span> <span class="kn">import</span> <span class="n">TensorBoard</span> <span class="c1"># TensorFlow Visualization Tool
 </span></code></pre></div></div>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cnn_model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span>
@@ -594,37 +593,38 @@
 
 <span class="n">cnn_model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span> <span class="o">=</span> <span class="mi">1024</span><span class="p">,</span> <span class="n">activation</span> <span class="o">=</span> <span class="s">'relu'</span><span class="p">))</span>
 
-<span class="n">cnn_model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">activation</span> <span class="o">=</span> <span class="s">'softmax'</span><span class="p">))</span> <span class="c1"># 최종 출력 클래스 개수 10개
+<span class="n">cnn_model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">activation</span> <span class="o">=</span> <span class="s">'softmax'</span><span class="p">))</span> <span class="c1"># 최종 출력 클래스 개수 10개 # final output class = 10
 </span>
-<span class="n">cnn_model</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="n">loss</span> <span class="o">=</span> <span class="s">'categorical_crossentropy'</span><span class="p">,</span> <span class="n">optimizer</span> <span class="o">=</span> <span class="n">keras</span><span class="p">.</span><span class="n">optimizers</span><span class="p">.</span><span class="n">rmsprop</span><span class="p">(</span><span class="n">lr</span> <span class="o">=</span> <span class="mf">0.001</span><span class="p">),</span> <span class="n">metrics</span> <span class="o">=</span> <span class="p">[</span><span class="s">'accuracy'</span><span class="p">])</span> <span class="c1"># 범주형 크로스엔트로피 손실함수, rmsprop 옵티마이저와 accuracy를 척도로 사용한다.
-</span>
-<span class="n">history</span> <span class="o">=</span> <span class="n">cnn_model</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span> <span class="n">epochs</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">shuffle</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span> <span class="c1"># 이미지 순서를 섞어(shuffle) 모델 학습을 시작한다
-</span></code></pre></div></div>
+<span class="n">cnn_model</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="n">loss</span> <span class="o">=</span> <span class="s">'categorical_crossentropy'</span><span class="p">,</span> <span class="n">optimizer</span> <span class="o">=</span> <span class="n">keras</span><span class="p">.</span><span class="n">optimizers</span><span class="p">.</span><span class="n">rmsprop</span><span class="p">(</span><span class="n">lr</span> <span class="o">=</span> <span class="mf">0.001</span><span class="p">),</span> <span class="n">metrics</span> <span class="o">=</span> <span class="p">[</span><span class="s">'accuracy'</span><span class="p">])</span>
+
+<span class="n">history</span> <span class="o">=</span> <span class="n">cnn_model</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span> <span class="n">epochs</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">shuffle</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
 
 <blockquote>
-  <p>ReLU: 회귀 작업 관련 함수로 연속적인 출력값을 생성한다</p>
+  <p>ReLU: 회귀 작업 관련 함수로 연속적인 출력값을 생성한다  <span style="color: blue">Continuous output</span></p>
 </blockquote>
 
 <blockquote>
-  <p>Softmax: 분류에 사용된다.</p>
+  <p>Softmax: 분류에 사용된다. <span style="color: blue"> classification</span></p>
 </blockquote>
 
 <blockquote>
-  <p>CPU vs. GPU
-학습이 오래 지속된다면 GPU가 아닌 CPU를 사용한다.</p>
+  <p>CPU vs. GPU</p>
+
+  <p>CPU는 직렬, GPU는 병령 처리에 각각 능하다. 따라서, 하나의 학습이 오래 지속될 필요가 있는 경우 GPU가 아닌 CPU를 사용하면 보다 능률적인 처리가 가능하다.<span style="color: blue"> CPU &lt;=&gt; serialization, GPU &lt;=&gt; parellelism. Thus, if one training lasts for long, CPU is better than GPU</span></p>
 </blockquote>
 
 <blockquote>
-  <p>ANN 은닉층 <em>뉴런개수</em>와 CNN <em>필터개수</em>를 증가시키면, 모델 복잡도가 증가하여 학습 시간이 늘어난다.</p>
+  <p>ANN 은닉층 <em>뉴런개수</em>와 CNN <em>필터개수</em>를 증가시키면, 모델 복잡도가 증가하여 학습 시간이 늘어난다. <span style="color: blue">The more neurons in the hidden layer of an ANN and more filters in the CNN, the more complex the model and the longer it takes to train.</span></p>
 </blockquote>
 
-<h2 id="모델-평가">모델 평가</h2>
+<h2 id="evaluating-the-model">Evaluating the model</h2>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">evaluation</span> <span class="o">=</span> <span class="n">cnn_model</span><span class="p">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span> <span class="c1"># 실제값과 예측값을 비교하여 정확도를 도출한다
-</span>
-<span class="n">predicted_classes</span> <span class="o">=</span> <span class="n">cnn_model</span><span class="p">.</span><span class="n">predict_classes</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span> <span class="c1"># 모델 예측값을 도출한다
-</span>
-<span class="n">y_test</span> <span class="o">=</span> <span class="n">y_test</span><span class="p">.</span><span class="n">argmax</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># one hot 인코딩의 이진수로 표현된 값을 십진수로 바꿔준다
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">evaluation</span> <span class="o">=</span> <span class="n">cnn_model</span><span class="p">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+
+<span class="n">predicted_classes</span> <span class="o">=</span> <span class="n">cnn_model</span><span class="p">.</span><span class="n">predict_classes</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="n">y_test</span> <span class="o">=</span> <span class="n">y_test</span><span class="p">.</span><span class="n">argmax</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># one hot(binary) --&gt; decimal
 </span>
 <span class="n">L</span> <span class="o">=</span> <span class="mi">7</span>
 <span class="n">W</span> <span class="o">=</span> <span class="mi">7</span>
@@ -641,22 +641,30 @@
 
 <p><img src="https://user-images.githubusercontent.com/39285147/180562014-e6d8d90f-7dc5-449f-a7cb-233e50bd6fa3.png" alt="image" /></p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 혼동행렬로 평가지표 표현하기
-</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">confusion_matrix</span>
+<p>이미지는 결과의 한 행을 보여준다.<span style="color: blue"> Showing one row of the result</span></p>
+
+<p>해당 행에 대하여 세 번째와 마지막 열을 제외하고, 분류기가 모두 올바른 예측을 해낸 것읋 확인해볼 수 있다. <span style="color: blue">Excluding the third and last column on the row, the classifier performs prediction successfully </span></p>
+
+<p>여기서는 정확도를 결과값으로 따로 보여주지 않았지만, 정확도는 ‘evaluation’ 변수에 담겨있다. <span style="color: blue">The accuracy is in ‘evaluation’</span></p>
+
+<p>이제 혼동 행렬을 사용하여 보다 직관적으로 평가지표를 분석해보자. <span style="color: blue">How can we analyze the model performance using confusion matrix?</span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">confusion_matrix</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="n">sns</span>
 
 <span class="n">cm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predicted_classes</span><span class="p">)</span>
 <span class="n">cm</span>
 <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
-<span class="n">sns</span><span class="p">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">annot</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span> <span class="c1"># 해당 데이터가 많거나 높은 경우 색을 사용해 시각화하는 그래프
+<span class="n">sns</span><span class="p">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">annot</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span> <span class="c1"># 해당 데이터가 많거나 높은 경우 색을 사용해 시각화하는 그래프 color visualization in case that data 多
 </span></code></pre></div></div>
 
 <p><img src="https://user-images.githubusercontent.com/39285147/180563602-b9035fea-733c-4514-a223-63c1e99608a6.png" alt="image" /></p>
 
-<p>혼동행렬에서 큰 수치를 띄는 값들은 오류(False Negative, False Positive)를 의미한다.</p>
+<p>대각선에 위치한 픽셀들은 ‘True Positive’과 ‘True Negative’로 모델이 실제값과 일치하는 데이터들 개수를 담고있다. <span style="color: blue">‘TP’ and ‘TN’ on the diagonal include the number of correct predictions</span></p>
 
-<h2 id="모델-저장하기">모델 저장하기</h2>
+<p>그 외 다른 모든 픽셀에 속한 수치들은 오분류(‘False Negative’, ‘False Positive’)로 취급한다. <span style="color: blue"> Other pixels (‘FN’, ‘FP’) are errors</span></p>
+
+<h2 id="saving-the-model">Saving the model</h2>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">os</span> 
 <span class="n">directory</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s">'saved_models'</span><span class="p">)</span> <span class="c1"># getcwd: get current working directory
@@ -667,18 +675,19 @@
 <span class="n">cnn_model</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span>
 </code></pre></div></div>
 
-<h2 id="image-augmentation-활용-모델-개선">Image Augmentation 활용 모델 개선</h2>
+<h2 id="image-augmentation">Image Augmentation</h2>
 
-<p>Image Augmentation</p>
-<ul>
-  <li>과적합 문제를 해소하고 정확도를 높이기 위해 변화를 적용하는 전처리 기법. 주로, 기존 인풋 이미지에 조금씩 변화(뒤집기, 회전, etc.)를 주어 학습 데이터량을 증가시켜 데이터 차원이 모델 복잡도를 웃돌게 만든다.</li>
-</ul>
+<p>과적합 문제를 해소하고 정확도를 높이기 위해 기존 데이터에 변화를 적용하는 전처리 기법이다. <span style="color: blue">Applying changes to existing data to solve overfitting problems and increase accuracy.</span></p>
+
+<p>기존 인풋 이미지에 뒤집기, 회전 등 다양한 변화를 주어 학습하는 데이터량을 증가시키고, 데이터 차원이 모델 복잡도를 웃돌게 만든다. <span style="color: blue">By applying various changes (i.e., flipping, rotation, etc.) to the existing input image, it increases the amount of learning data and makes the data dimension exceed the model complexity.</span></p>
 
 <blockquote>
-  <p><em>ImageDataGenerator</em> 클래스를 통해 변화를 끌어낸다.</p>
+  <p><em>ImageDataGenerator</em> 클래스를 통해 이미지내 여러 변화를 끌어낸다. <span style="color: blue">various changes to images</span></p>
 </blockquote>
 
-<h3 id="이미지-증강으로-새로운-데이터-만들어내기">이미지 증강으로 새로운 데이터 만들어내기</h3>
+<p>이는 차후 과적합 방지에 효과가 있다. <span style="color: blue">Avoiding overfitting</span></p>
+
+<h3 id="new-dataset-with-image-augmentation">New dataset with image augmentation</h3>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">keras</span>
 <span class="kn">from</span> <span class="nn">keras.datasets</span> <span class="kn">import</span> <span class="n">cifar10</span>
@@ -688,27 +697,25 @@
 <span class="n">X_test</span> <span class="o">=</span> <span class="n">X_test</span><span class="p">.</span><span class="n">astype</span><span class="p">(</span><span class="s">'float32'</span><span class="p">)</span>
 
 <span class="n">n</span> <span class="o">=</span> <span class="mi">8</span> 
-<span class="n">X_train_sample</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[:</span><span class="n">n</span><span class="p">]</span> <span class="c1"># 8개의 샘플 이미지를 가져온다
+<span class="n">X_train_sample</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[:</span><span class="n">n</span><span class="p">]</span> <span class="c1"># 8개의 샘플 이미지를 가져온다 Loading 8 samples
 </span></code></pre></div></div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 이미지 변화주기
-</span><span class="kn">from</span> <span class="nn">keras.preprocessing.image</span> <span class="kn">import</span> <span class="n">ImageDataGenerator</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">keras.preprocessing.image</span> <span class="kn">import</span> <span class="n">ImageDataGenerator</span>
 
-<span class="c1"># dataget_train = ImageDataGenerator(rotation_range = 90) # 이미지 회전
-# dataget_train = ImageDataGenerator(vertical_flip=True) # 뒤집기/반전
-# dataget_train = ImageDataGenerator(height_shift_range=0.5) ## 
-</span><span class="n">dataget_train</span> <span class="o">=</span> <span class="n">ImageDataGenerator</span><span class="p">(</span><span class="n">brightness_range</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span> <span class="c1"># 밝기 조정
+<span class="c1"># dataget_train = ImageDataGenerator(rotation_range = 90) # rotation
+# dataget_train = ImageDataGenerator(vertical_flip=True) # flipping/inversion
+# dataget_train = ImageDataGenerator(height_shift_range=0.5) # 이미지 평면 위치 이동 move image plane position
+</span><span class="n">dataget_train</span> <span class="o">=</span> <span class="n">ImageDataGenerator</span><span class="p">(</span><span class="n">brightness_range</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span> <span class="c1"># brightness
 </span>
-<span class="n">dataget_train</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_sample</span><span class="p">)</span> <span class="c1"># 이미지 생성기 적용
+<span class="n">dataget_train</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_sample</span><span class="p">)</span> <span class="c1"># applying the image genearter
 </span></code></pre></div></div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 이미지에 변화 적용하기
-</span><span class="kn">from</span> <span class="nn">scipy.misc</span> <span class="kn">import</span> <span class="n">toimage</span> <span class="c1"># 배열을 이미지로 변환한다
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">scipy.misc</span> <span class="kn">import</span> <span class="n">toimage</span> <span class="c1"># array to image
 </span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span> <span class="c1"># 새로 생성될 이미지 사이즈 조정
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span> <span class="c1"># 새로 생성될 이미지 사이즈 조정 adjusting the size of new image
 </span>
-<span class="c1"># 훈련 샘플을 가져와 이미지 flow를 생성한다.
-# 변형된 이미지를 배치 단위로 불러올 수 있는 Generator(*flow()*)을 생성해 준다 (8개 요소 포함하는 리스트 형태로 한 번에 가져오게 된다)
+<span class="c1"># 훈련 샘플을 가져와 이미지 flow를 생성한다. Creating the image flow with the training dataset
+# 변형된 이미지를 배치 단위로 불러올 수 있는 Generator(*flow()*)을 생성해 준다 (8개 요소 포함하는 리스트 형태로 한 번에 가져오게 된다) Loading the certain number of adjusted images
 </span><span class="k">for</span> <span class="n">x_batch</span> <span class="ow">in</span> <span class="n">dataget_train</span><span class="p">.</span><span class="n">flow</span><span class="p">(</span><span class="n">X_train_sample</span><span class="p">,</span> <span class="n">batch_size</span> <span class="o">=</span> <span class="n">n</span><span class="p">):</span>
      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
             <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
@@ -720,26 +727,27 @@
 
 <p><img src="https://user-images.githubusercontent.com/39285147/180567864-9bef861d-2973-4367-9344-436ae78ee7c9.png" alt="image" /></p>
 
-<p>결과에서 보이는 것처럼 기존 인풋 이미지의 밝기를 수정하여 새로운 데이터를 만들어냈다!</p>
+<p>이미지 증감을 이용하여 기존 데이터에서 새로운 데이터로 개수를 부풀린 예시이다. <span style="color: blue">This is an example of inflating the number from existing data to new data using image increase/decrease.</span></p>
 
-<h3 id="이미지-증강으로-만들어낸-데이터로-모델-새로-학습하기">이미지 증강으로 만들어낸 데이터로 모델 새로 학습하기</h3>
+<p>결과에서 보이는 것처럼 기존 인풋 이미지의 ‘밝기’를 수정하여 새로운 데이터를 만들어냈다! <span style="color: blue">New data was created by modifying the ‘brightness’ of the existing input image! </span></p>
+
+<h3 id="training-the-model-with-image-augmentation">Training the model with image augmentation</h3>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">keras.preprocessing.image</span> <span class="kn">import</span> <span class="n">ImageDataGenerator</span>
 
-<span class="c1"># 이미지 생성기 특성 정의
-</span><span class="n">datagen</span> <span class="o">=</span> <span class="n">ImageDataGenerator</span><span class="p">(</span>
+<span class="n">datagen</span> <span class="o">=</span> <span class="n">ImageDataGenerator</span><span class="p">(</span>
                             <span class="n">rotation_range</span> <span class="o">=</span> <span class="mi">90</span><span class="p">,</span>
                             <span class="n">width_shift_range</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
                             <span class="n">horizontal_flip</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
                             <span class="n">vertical_flip</span> <span class="o">=</span> <span class="bp">True</span>
                              <span class="p">)</span>
 
-<span class="n">datagen</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span> <span class="c1"># 이미지 생성기 특성 적용
+<span class="n">datagen</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+
+<span class="n">cnn_model</span><span class="p">.</span><span class="n">fit_generator</span><span class="p">(</span><span class="n">datagen</span><span class="p">.</span><span class="n">flow</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">32</span><span class="p">),</span> <span class="n">epochs</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span> <span class="c1"># 이미지 생성기로 만든 데이터를 학습에 이용할 때 fit_generator() 함수를 사용한다 fit_generator() when using data made by image generator
 </span>
-<span class="n">cnn_model</span><span class="p">.</span><span class="n">fit_generator</span><span class="p">(</span><span class="n">datagen</span><span class="p">.</span><span class="n">flow</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">32</span><span class="p">),</span> <span class="n">epochs</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span> <span class="c1"># 이미지 생성기로 만든 데이터 학습에 이용할 때 fit_generator() 함수를 사용한다
-</span>
-<span class="n">score</span> <span class="o">=</span> <span class="n">cnn_model</span><span class="p">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span> <span class="c1"># 모델 성능평가
-</span><span class="k">print</span><span class="p">(</span><span class="s">'Test accuracy'</span><span class="p">,</span> <span class="n">score</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">cnn_model</span><span class="p">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'Test accuracy'</span><span class="p">,</span> <span class="n">score</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
 <span class="c1"># save the model
 </span><span class="n">directory</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s">'saved_models'</span><span class="p">)</span>
@@ -765,7 +773,7 @@
     <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
     <span itemprop="keywords">
     
-      <a href="/tags/#machine-learning" class="page__taxonomy-item p-category" rel="tag">machine-learning</a><span class="sep">, </span>
+      <a href="/tags/#machine-learning" class="page__taxonomy-item p-category" rel="tag">machine learning</a><span class="sep">, </span>
     
       <a href="/tags/#python" class="page__taxonomy-item p-category" rel="tag">python</a>
     
@@ -784,9 +792,7 @@
     <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
     <span itemprop="keywords">
     
-      <a href="/categories/#learning" class="page__taxonomy-item p-category" rel="tag">Learning</a><span class="sep">, </span>
-    
-      <a href="/categories/#machine" class="page__taxonomy-item p-category" rel="tag">Machine</a>
+      <a href="/categories/#ml" class="page__taxonomy-item p-category" rel="tag">ML</a>
     
     </span>
   </p>
@@ -803,11 +809,11 @@
     <h4 class="page__share-title">공유하기</h4>
   
 
-  <a href="https://twitter.com/intent/tweet?text=ML+Project+2%3A+Deep+Learning+-+CIFAR-10+Classification%20http%3A%2F%2Flocalhost%3A4000%2Fmachine%2Flearning%2Fml-projects-2%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=ML+Project+2%3A+Deep+Learning+-+CIFAR-10+Classification%20http%3A%2F%2Flocalhost%3A4000%2Fml%2Fml-projects-2%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fmachine%2Flearning%2Fml-projects-2%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fml%2Fml-projects-2%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fmachine%2Flearning%2Fml-projects-2%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fml%2Fml-projects-2%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 </section>
 
 
@@ -818,7 +824,7 @@
 ">이전</a>
     
     
-      <a href="/machine/learning/ml-projects-3/" class="pagination--pager" title="ML Project 3: Profit Time Series
+      <a href="/ml/ml-projects-3/" class="pagination--pager" title="ML Project 3: Profit Time Series
 ">다음</a>
     
   </nav>
@@ -842,12 +848,12 @@
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
       <div class="archive__item-teaser">
-        <img src="/assets/images/posts/ml-thumbnail.jpg" alt="">
+        <img src="/assets/images/posts/teeko.png" alt="">
       </div>
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
       
-        <a href="/machine/learning/ml-projects-3/" rel="permalink">ML Project 3: Profit Time Series
+        <a href="/ml/ml-teeko-minimax/" rel="permalink">ML: Minimax 알고리즘 - Teeko Game
 </a>
       
     </h2>
@@ -859,7 +865,7 @@
       <span class="page__meta-date">
         <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
         
-        <time datetime="2022-07-23T00:00:00+09:00">2022-07-23</time>
+        <time datetime="2022-08-14T00:00:00+09:00">2022-08-14</time>
       </span>
     
 
@@ -872,15 +878,14 @@
       <span class="page__meta-readtime">
         <i class="far fa-fw fa-clock" aria-hidden="true"></i>
         
-          최대 1 분 소요
+          5 분 소요
         
       </span>
     
   </p>
 
 
-    <p class="archive__item-excerpt" itemprop="description">코드
-[Notice] download here
+    <p class="archive__item-excerpt" itemprop="description">Minimax 알고리즘을 활용해서 Teeko 게임을 구현한다.
 </p>
   </article>
 </div>
@@ -894,12 +899,12 @@
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
       <div class="archive__item-teaser">
-        <img src="/assets/images/posts/nlp-thumbnail.jpg" alt="">
+        <img src="/assets/images/posts/pca-image-compression.png" alt="">
       </div>
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
       
-        <a href="/nlp/nlp-voice-recognition/" rel="permalink">NLP - Part 3: Voice Recognition
+        <a href="/ml/ml-pca/" rel="permalink">ML: PCA - Image Compression(이미지 압축)
 </a>
       
     </h2>
@@ -911,7 +916,7 @@
       <span class="page__meta-date">
         <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
         
-        <time datetime="2022-07-22T00:00:00+09:00">2022-07-22</time>
+        <time datetime="2022-08-14T00:00:00+09:00">2022-08-14</time>
       </span>
     
 
@@ -924,14 +929,14 @@
       <span class="page__meta-readtime">
         <i class="far fa-fw fa-clock" aria-hidden="true"></i>
         
-          1 분 소요
+          2 분 소요
         
       </span>
     
   </p>
 
 
-    <p class="archive__item-excerpt" itemprop="description">PART 1: SST(Speech to Text)
+    <p class="archive__item-excerpt" itemprop="description">PCA를 이용해서 이미지 압축을 진행해보자.
 </p>
   </article>
 </div>
@@ -945,12 +950,12 @@
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
       <div class="archive__item-teaser">
-        <img src="/assets/images/posts/ml-thumbnail.jpg" alt="">
+        <img src="/assets/images/posts/hac.png" alt="">
       </div>
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
       
-        <a href="/machine/learning/ml-projects-1/" rel="permalink">ML Project 1: ANN - Car Sales Prediction
+        <a href="/ml/ml-hca/" rel="permalink">ML: Hierarchical Agglomerate Clustering(HAC) - 포켓몬 군집화
 </a>
       
     </h2>
@@ -962,7 +967,7 @@
       <span class="page__meta-date">
         <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
         
-        <time datetime="2022-07-22T00:00:00+09:00">2022-07-22</time>
+        <time datetime="2022-08-14T00:00:00+09:00">2022-08-14</time>
       </span>
     
 
@@ -975,15 +980,14 @@
       <span class="page__meta-readtime">
         <i class="far fa-fw fa-clock" aria-hidden="true"></i>
         
-          3 분 소요
+          4 분 소요
         
       </span>
     
   </p>
 
 
-    <p class="archive__item-excerpt" itemprop="description">코드
-[Notice] download here
+    <p class="archive__item-excerpt" itemprop="description">Hierarchical Agglomerate Clustering(HAC) 이용해서 서로 다른 특성을 공유하는 Pokemon들을 군집으로 묶어보자.
 </p>
   </article>
 </div>
@@ -997,12 +1001,12 @@
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
       <div class="archive__item-teaser">
-        <img src="/assets/images/posts/nlp-thumbnail.jpg" alt="">
+        <img src="/assets/images/posts/lenet.JPG" alt="">
       </div>
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
       
-        <a href="/nlp/nlp-basic-word-embedding/" rel="permalink">NLP - Part 2: Word Embedding
+        <a href="/dl/dl-miniplace-classification/" rel="permalink">DL: LeNet 신경망 - MiniPlaces 이미지 분류
 </a>
       
     </h2>
@@ -1014,7 +1018,7 @@
       <span class="page__meta-date">
         <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
         
-        <time datetime="2022-07-20T00:00:00+09:00">2022-07-20</time>
+        <time datetime="2022-08-14T00:00:00+09:00">2022-08-14</time>
       </span>
     
 
@@ -1027,14 +1031,14 @@
       <span class="page__meta-readtime">
         <i class="far fa-fw fa-clock" aria-hidden="true"></i>
         
-          7 분 소요
+          2 분 소요
         
       </span>
     
   </p>
 
 
-    <p class="archive__item-excerpt" itemprop="description">PART 1: Vectorization
+    <p class="archive__item-excerpt" itemprop="description">LeNet 신경망을 활용해서 MiniPlaces 데이터셋 이미지 분류 작업을 수행한다.
 </p>
   </article>
 </div>
@@ -1104,8 +1108,8 @@
     
   <script>
     var disqus_config = function () {
-      this.page.url = "http://localhost:4000/machine/learning/ml-projects-2/";  /* Replace PAGE_URL with your page's canonical URL variable */
-      this.page.identifier = "/machine/learning/ml-projects-2"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+      this.page.url = "http://localhost:4000/ml/ml-projects-2/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/ml/ml-projects-2"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
     };
     (function() { /* DON'T EDIT BELOW THIS LINE */
       var d = document, s = d.createElement('script');

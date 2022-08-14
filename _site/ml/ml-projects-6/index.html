@@ -1,0 +1,952 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>ML Project 6: 사용자 기반 협업 필터링 (Collaborative Filtering) - 영화 추천 시스템 (Movie Recommender Systems) | 정리하여 내 것으로, AI</title>
+<meta name="description" content="Code [Notice] download here">
+
+
+  <meta name="author" content="Hojun Eric Choi">
+  
+  <meta property="article:author" content="Hojun Eric Choi">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="정리하여 내 것으로, AI">
+<meta property="og:title" content="ML Project 6: 사용자 기반 협업 필터링 (Collaborative Filtering) - 영화 추천 시스템 (Movie Recommender Systems)">
+<meta property="og:url" content="http://localhost:4000/ml/ml-projects-6/">
+
+
+  <meta property="og:description" content="Code [Notice] download here">
+
+
+
+  <meta property="og:image" content="http://localhost:4000/assets/images/posts/ml-thumbnail.jpg">
+
+
+
+
+
+  <meta property="article:published_time" content="2022-07-25T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/ml/ml-projects-6/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Hojun Eric Choi",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+  <meta name="naver-site-verification" content="57d020c8f9b26bf56ed7846608b8d873481e9b84">
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정리하여 내 것으로, AI Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/logo.ico/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/logo.ico/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/logo.ico/favicon-16x16.png">
+<link rel="mask-icon" href="/assets/logo.ico/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          정리하여 내 것으로, AI
+          <span class="site-subtitle">with jjuns</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tag</a>
+            </li><li class="masthead__menu-item">
+              <a href="/search/">Search</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+  
+    
+
+
+
+<nav class="breadcrumbs">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    
+    
+      
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/" itemprop="item"><span itemprop="name">Home</span></a>
+
+          <meta itemprop="position" content="1" />
+        </li>
+        <span class="sep">/</span>
+      
+      
+        
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/categories/#ml" itemprop="item"><span itemprop="name">Ml</span></a>
+          <meta itemprop="position" content="2" />
+        </li>
+        <span class="sep">/</span>
+      
+    
+      
+      
+        <li class="current">ML Project 6: 사용자 기반 협업 필터링 (Collaborative Filtering) - 영화 추천 시스템 (Movie Recommender Systems)</li>
+      
+    
+  </ol>
+</nav>
+
+  
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/echoi.jpg" alt="Hojun Eric Choi" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Hojun Eric Choi</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>I am a senior-year B.S. student in Computer Science and Data Science at the University of Wisconsin, Madison.</p>
+
+<p>My research interests are <strong>ML</strong>, <strong>deep NLP</strong>, and <strong>computer vision</strong> for emerging application domains.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Madison</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.linkedin.com/in/hojun-choi-2b10b11a0/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/hchoi256" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="/assets/CV.pdf" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">CV</span></a></li>
+          
+        
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:hchoi256@wisc.edu" rel="me" class="u-email">
+            <meta itemprop="email" content="hchoi256@wisc.edu" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">이메일</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items">
+    
+      <li>
+        
+          <span class="nav__sub-title">Table of Contents</span>
+        
+
+        
+        <ul>
+          
+            <li><a href="/categories/">Category</a></li>
+          
+            <li><a href="/tags/">Tag</a></li>
+          
+        </ul>
+        
+      </li>
+    
+  </ul>
+</nav>
+
+    
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="ML Project 6: 사용자 기반 협업 필터링 (Collaborative Filtering) - 영화 추천 시스템 (Movie Recommender Systems)">
+    <meta itemprop="description" content="Code[Notice] download here">
+    <meta itemprop="datePublished" content="2022-07-25T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="http://localhost:4000/ml/ml-projects-6/" class="u-url" itemprop="url">ML Project 6: 사용자 기반 협업 필터링 (Collaborative Filtering) - 영화 추천 시스템 (Movie Recommender Systems)
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2022-07-25T00:00:00+09:00">2022-07-25</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> GITHUB BLOG JJUNS</h4></header>
+              <ul class="toc__menu"><li><a href="#code">Code</a></li><li><a href="#description">Description</a></li><li><a href="#loading-the-dataset">Loading the dataset</a></li><li><a href="#data-visualization">Data Visualization</a></li><li><a href="#아이템-기반-협력-필터링-item-based-collaborative-filtering">아이템 기반 협력 필터링 (item-based collaborative filtering)</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <h1 id="code">Code</h1>
+<p class="notice--danger"><strong>[Notice]</strong> <a href="https://github.com/hchoi256/machine-learning-development">download here</a></p>
+
+<h1 id="description">Description</h1>
+<p>추천 시스템이란 가령, 아마존에서 제품을 구매하면 이 제품을 구매하는 고객들이 다른 상품에도 관심이 있을 것이라 판단해 추천해주는 방법이다. <span style="color: blue"> Providing suggestions for items that are most pertinent to a particular user</span></p>
+
+<p>‘아이템’을 기반으로 사용자에게 추천을 제공한다. <span style="color: blue"> Item-based recommendation systems, not user-based</span></p>
+
+<p>이게 무슨 말인고 하니, 세상 인구 80억 명을 전부 조사하여 단 몇 편의 영화를 기호에 따라 추천해주는 것은 지극히 비효율적인 문제일 것이다. <span style="color: blue"> It will be not effective to recommend movies after investigating huge volumne of populations</span></p>
+
+<p>따라서, 사람이 아닌 아이템, 즉 영화와 같은 시간이 지나도 한결같은 것들에 기준을 두고 추천 시스템을 적용한다. <span style="color: blue"> Thus, we need to focus on consistent data like movies</span></p>
+
+<p>가령, 영화 ‘타이타닉’을 본 서로 다른 두 사람이 비슷한 장르의 로맨스 장르의 ‘어바웃 타임’을 시청했다면, 추천 시스템은 타이타닉을 본 새로운 사용자에게 어바웃 타임을 추천할 것이다. <span style="color: blue"> For example, if two people watched ‘Titanic’ and ‘About Time’, the model would suggest ‘About Time’ for new people who watched ‘Titanic’ </span></p>
+
+<h1 id="loading-the-dataset">Loading the dataset</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="n">sns</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">movie_titles_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">"Movie_Id_Titles"</span><span class="p">)</span>
+<span class="n">movie_titles_df</span><span class="p">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/180880109-84645976-273c-4788-84bd-d7acd7986f70.png" alt="image" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">movies_rating_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'u.data'</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">'</span><span class="se">\t</span><span class="s">'</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s">'user_id'</span><span class="p">,</span> <span class="s">'item_id'</span><span class="p">,</span> <span class="s">'rating'</span><span class="p">])</span>
+<span class="n">movies_rating_df</span><span class="p">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/180880472-49cbbb8f-d2f9-4de9-93cd-0fb847df79fc.png" alt="image" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># user_id를 기준으로 두 테이블 합치기 merge two tables by 'user_id'
+</span><span class="n">movies_rating_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">merge</span><span class="p">(</span><span class="n">movies_rating_df</span><span class="p">,</span> <span class="n">movie_titles_df</span><span class="p">,</span> <span class="n">on</span> <span class="o">=</span> <span class="s">'item_id'</span><span class="p">)</span> 
+<span class="n">movies_rating_df</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/180881533-77bc2c71-4ac8-4d9b-b3ae-f5685614393c.png" alt="image" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">movies_rating_df</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    (100003, 4)
+</code></pre></div></div>
+
+<h1 id="data-visualization">Data Visualization</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ratings_df_mean</span> <span class="o">=</span> <span class="n">movies_rating_df</span><span class="p">.</span><span class="n">groupby</span><span class="p">(</span><span class="s">'title'</span><span class="p">)[</span><span class="s">'rating'</span><span class="p">].</span><span class="n">describe</span><span class="p">()[</span><span class="s">'mean'</span><span class="p">]</span> <span class="c1"># title을 기준으로 rating을 정렬한 평균값 저장 saving the average of ratings aligned by 'title'
+</span><span class="n">ratings_df_count</span> <span class="o">=</span> <span class="n">movies_rating_df</span><span class="p">.</span><span class="n">groupby</span><span class="p">(</span><span class="s">'title'</span><span class="p">)[</span><span class="s">'rating'</span><span class="p">].</span><span class="n">describe</span><span class="p">()[</span><span class="s">'count'</span><span class="p">]</span>
+<span class="n">ratings_df_count</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    title
+    'Til There Was You (1997)                                     9.0
+    1-900 (1994)                                                  5.0
+    101 Dalmatians (1996)                                       109.0
+    12 Angry Men (1957)                                         125.0
+    187 (1997)                                                   41.0
+    2 Days in the Valley (1996)                                  93.0
+    20,000 Leagues Under the Sea (1954)                          72.0
+    2001: A Space Odyssey (1968)                                259.0
+    ...
+    Young Poisoner's Handbook, The (1995)                        41.0
+    Zeus and Roxanne (1997)                                       6.0
+    unknown                                                       9.0
+    Á köldum klaka (Cold Fever) (1994)                            1.0
+    Name: count, Length: 1664, dtype: float64
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ratings_mean_count_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">concat</span><span class="p">([</span><span class="n">ratings_df_count</span><span class="p">,</span> <span class="n">ratings_df_mean</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">ratings_mean_count_df</span><span class="p">.</span><span class="n">reset_index</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/180882121-0e696587-3dec-4078-b2a6-52e5d3aca6b9.png" alt="image" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ratings_mean_count_df</span><span class="p">[</span><span class="s">'mean'</span><span class="p">].</span><span class="n">plot</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s">'hist'</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s">'r'</span><span class="p">)</span> 
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/180882141-f4292103-5f94-40c2-88a6-233e34978d3e.png" alt="image" /></p>
+
+<p>상기 분포도에서 별점 평균이 3인 경우가 가장 많이 차지하는 것을 확인할 수 있다. <span style="color: blue"> Star rate 3 appears the most in the distribution above</span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ratings_mean_count_df</span><span class="p">[</span><span class="s">'count'</span><span class="p">].</span><span class="n">plot</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s">'hist'</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s">'r'</span><span class="p">)</span> 
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/180882216-a837effd-7434-4b2b-a8f1-a31350bb8041.png" alt="image" /></p>
+
+<p>분포도에서 확인할 수 있듯이, 대다수의 영화가 대략 한 두번 정도 이내로 평가받은 것을 볼 수 있다. <span style="color: blue"> As shown in the distribution, most movies are rated at most two times</span></p>
+
+<h1 id="아이템-기반-협력-필터링-item-based-collaborative-filtering">아이템 기반 협력 필터링 (item-based collaborative filtering)</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">userid_movietitle_matrix</span> <span class="o">=</span> <span class="n">movies_rating_df</span><span class="p">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">index</span> <span class="o">=</span> <span class="s">'user_id'</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="s">'title'</span><span class="p">,</span> <span class="n">values</span> <span class="o">=</span> <span class="s">'rating'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>상기 코드로 만들어진 테이블은 요소값으로 ‘rating’, 즉 별점을 나타낸다. <span style="color: blue">‘rating’ = star rate</span></p>
+
+<p>열은 ‘title’, 그리고 행들은 ‘user_id’이다. <span style="color: blue">column = ‘title’ and row = ‘user_id’</span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">titanic</span> <span class="o">=</span> <span class="n">userid_movietitle_matrix</span><span class="p">[</span><span class="s">'Titanic (1997)'</span><span class="p">]</span>
+
+<span class="c1"># Let's calculate the correlations
+</span><span class="n">titanic_correlations</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">userid_movietitle_matrix</span><span class="p">.</span><span class="n">corrwith</span><span class="p">(</span><span class="n">titanic</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s">'Correlation'</span><span class="p">])</span>
+<span class="n">titanic_correlations</span> <span class="o">=</span> <span class="n">titanic_correlations</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">ratings_mean_count_df</span><span class="p">[</span><span class="s">'count'</span><span class="p">])</span>
+<span class="n">titanic_correlations</span><span class="p">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c1"># Let's sort the correlations vector
+</span><span class="n">titanic_correlations</span><span class="p">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s">'Correlation'</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/180883922-2164ef1f-d80f-4089-afef-55fc56e551ed.png" alt="image" /></p>
+
+<p>영화 ‘타이타닉’이 다른 영화들과 연관성이 얼마만큼 있는지 <em>Correlation</em> 열의 요소값들을 통하여 확인 가능하다. <span style="color: blue"> Can check how much ‘Titanic’ is related to other movies using <em>Correlation</em></span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">titanic_correlations</span><span class="p">[</span><span class="n">titanic_correlations</span><span class="p">[</span><span class="s">'count'</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">80</span><span class="p">].</span><span class="n">sort_values</span><span class="p">(</span><span class="s">'Correlation'</span><span class="p">,</span><span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">).</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/180883994-d9fe6bc6-509b-42a5-a077-20386409ad8b.png" alt="image" /></p>
+
+<p>결과 테이블에서 우리는 ‘타이타닉’을 본 사람에게 추천해줄 영화로써 가장 적절한 영화는 타이타닉 자기자신을 제외하고 ‘River Wild, The (1994)’인 것을 확인한다. <span style="color: blue"> The resultant table tells us the second most appropriate movie for people who watched ‘Titanic’ is ‘River Wild, The (1994)’</span></p>
+
+<p>그렇다면, 타이타닉처럼 특정 영화와 연관성이 높은 타영화가 아니라 전체 데이터를 대상으로 한 번에 연관성을 확인해볼 수는 없을까? <span style="color: blue"> Can’t we check the correlation for all the data at once?</span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Obtain the correlations between all movies in the dataframe
+</span><span class="n">movie_correlations</span> <span class="o">=</span> <span class="n">userid_movietitle_matrix</span><span class="p">.</span><span class="n">corr</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s">'pearson'</span><span class="p">,</span> <span class="n">min_periods</span> <span class="o">=</span> <span class="mi">80</span><span class="p">)</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p><em>pearson</em> : standard correlation coefficient</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">myRatings</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">"My_Ratings.csv"</span><span class="p">)</span>
+<span class="n">myRatings</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/180887705-dbfd782e-92d3-4f04-afc8-0078208bb656.png" alt="image" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">similar_movies_list</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">Series</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+    <span class="n">similar_movie</span> <span class="o">=</span> <span class="n">movie_correlations</span><span class="p">[</span><span class="n">myRatings</span><span class="p">[</span><span class="s">'Movie Name'</span><span class="p">][</span><span class="n">i</span><span class="p">]].</span><span class="n">dropna</span><span class="p">()</span> <span class="c1"># Get same movies with same ratings
+</span>    <span class="n">similar_movie</span> <span class="o">=</span> <span class="n">similar_movie</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">myRatings</span><span class="p">[</span><span class="s">'Ratings'</span><span class="p">][</span><span class="n">i</span><span class="p">])</span> <span class="c1"># Scale the similarity by your given ratings
+</span>    <span class="n">similar_movies_list</span> <span class="o">=</span> <span class="n">similar_movies_list</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">similar_movie</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>‘movie_correlations’의 데이터 수치들은 [0, 1] 사이 값으로, 서로 다른 타이틀 간의 상관관계를 나타내는 지표이다. <span style="color: blue"> ‘movie_correlations’ is in range [0, 1] and represents the correlation among titles</span></p>
+
+<p>따라서, ‘상관관계’가 가장 클 경우 그 값은 1일 것이고, 우리가 다루는 ‘별점’의 총점은 5점이다. <span style="color: blue"> The max <strong>corrlation</strong> and <strong>star rate</strong> is 1 and 5, respectively</span></p>
+
+<p>따라서, [0, 1]의 상관계수에 별점을 곱하여, 그 값이 높은 순서로 나열한다면, 그것은 해당 사용자에게 가장 알맞은 추천 리스트가 도출될 것이다.<span style="color: blue">  Recommendation systems based on the value of <strong>corrlation</strong> * <strong>star rate</strong></span></p>
+
+<p><code class="language-plaintext highlighter-rouge">python
+similar_movies_list.sort_values(inplace = True, ascending = False)
+print (similar_movies_list.head(10))
+       </code></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    Liar Liar (1997)                             5.000000
+    Con Air (1997)                               2.349141
+    Pretty Woman (1990)                          2.348951
+    Michael (1996)                               2.210110
+    Indiana Jones and the Last Crusade (1989)    2.072136
+    Top Gun (1986)                               2.028602
+    G.I. Jane (1997)                             1.989656
+    Multiplicity (1996)                          1.984302
+    Grumpier Old Men (1995)                      1.953494
+    Ghost and the Darkness, The (1996)           1.895376
+    dtype: float64
+</code></pre></div></div>
+
+<p>상기 결과는 ‘Liar Liar’이라는 영화에 높은 별점을 선사한 해당 사용자에게 추천할만한 타영화 리스트이다. <span style="color: blue"> Recommending the shown movies for people who watched ‘Liar Liar’</span></p>
+
+<p>별점으로써 표현된 가장 높은 연관성을 나타내는 ‘Liar Liar’ 자기자신을 제외하고 ‘Con Air’라는 영화가 두 번째로 해당 사용자에게 가장 추천해줄 영화일 것이다. <span style="color: blue"> The movie ‘Con Air’ will be the best recommendation for the people. </span></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#machine-learning" class="page__taxonomy-item p-category" rel="tag">machine learning</a><span class="sep">, </span>
+    
+      <a href="/tags/#python" class="page__taxonomy-item p-category" rel="tag">python</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#ml" class="page__taxonomy-item p-category" rel="tag">ML</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-07-25T00:00:00+09:00">2022-07-25</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=ML+Project+6%3A+%EC%82%AC%EC%9A%A9%EC%9E%90+%EA%B8%B0%EB%B0%98+%ED%98%91%EC%97%85+%ED%95%84%ED%84%B0%EB%A7%81+%28Collaborative+Filtering%29+-+%EC%98%81%ED%99%94+%EC%B6%94%EC%B2%9C+%EC%8B%9C%EC%8A%A4%ED%85%9C+%28Movie+Recommender+Systems%29%20http%3A%2F%2Flocalhost%3A4000%2Fml%2Fml-projects-6%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fml%2Fml-projects-6%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fml%2Fml-projects-6%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/ml/ml-projects-5/" class="pagination--pager" title="ML Project 5: Natural Language Processing
+">이전</a>
+    
+    
+      <a href="/star/ai-study-guide/" class="pagination--pager" title="AI Study Guide
+">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">참고</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/teeko.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ml/ml-teeko-minimax/" rel="permalink">ML: Minimax 알고리즘 - Teeko Game
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2022-08-14T00:00:00+09:00">2022-08-14</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          5 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Minimax 알고리즘을 활용해서 Teeko 게임을 구현한다.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/pca-image-compression.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ml/ml-pca/" rel="permalink">ML: PCA - Image Compression(이미지 압축)
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2022-08-14T00:00:00+09:00">2022-08-14</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">PCA를 이용해서 이미지 압축을 진행해보자.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/hac.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ml/ml-hca/" rel="permalink">ML: Hierarchical Agglomerate Clustering(HAC) - 포켓몬 군집화
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2022-08-14T00:00:00+09:00">2022-08-14</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          4 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Hierarchical Agglomerate Clustering(HAC) 이용해서 서로 다른 특성을 공유하는 Pokemon들을 군집으로 묶어보자.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/lenet.JPG" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/dl/dl-miniplace-classification/" rel="permalink">DL: LeNet 신경망 - MiniPlaces 이미지 분류
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2022-08-14T00:00:00+09:00">2022-08-14</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">LeNet 신경망을 활용해서 MiniPlaces 데이터셋 이미지 분류 작업을 수행한다.
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="mailto:hchoi256@wisc.edu" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/in/hojun-choi-2b10b11a0/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://github.com/hchoi256" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="/assets/CV.pdf" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> CV</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 Hojun Eric Choi. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/ml/ml-projects-6/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/ml/ml-projects-6"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://jjunes.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+
+  </body>
+</html>

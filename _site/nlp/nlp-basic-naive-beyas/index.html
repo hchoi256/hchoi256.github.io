@@ -1,0 +1,970 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>NLP - Part 4: Naive Classifier | 정리하여 내 것으로, AI</title>
+<meta name="description" content="PART 1: Gender Identifier Corpus의 영어 이름에서 마지막 ‘몇 글자’를 보고 남자 혹은 여자 이름인지 확인하여 분류한다.  Identifying sex through the last ‘few letters’ of the corpus">
+
+
+  <meta name="author" content="Hojun Eric Choi">
+  
+  <meta property="article:author" content="Hojun Eric Choi">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="정리하여 내 것으로, AI">
+<meta property="og:title" content="NLP - Part 4: Naive Classifier">
+<meta property="og:url" content="http://localhost:4000/nlp/nlp-basic-naive-beyas/">
+
+
+  <meta property="og:description" content="PART 1: Gender Identifier Corpus의 영어 이름에서 마지막 ‘몇 글자’를 보고 남자 혹은 여자 이름인지 확인하여 분류한다.  Identifying sex through the last ‘few letters’ of the corpus">
+
+
+
+  <meta property="og:image" content="http://localhost:4000/assets/images/posts/nlp-thumbnail.jpg">
+
+
+
+
+
+  <meta property="article:published_time" content="2022-07-28T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/nlp/nlp-basic-naive-beyas/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Hojun Eric Choi",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+  <meta name="naver-site-verification" content="57d020c8f9b26bf56ed7846608b8d873481e9b84">
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정리하여 내 것으로, AI Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/logo.ico/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/logo.ico/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/logo.ico/favicon-16x16.png">
+<link rel="mask-icon" href="/assets/logo.ico/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          정리하여 내 것으로, AI
+          <span class="site-subtitle">with jjuns</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tag</a>
+            </li><li class="masthead__menu-item">
+              <a href="/search/">Search</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+  
+    
+
+
+
+<nav class="breadcrumbs">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    
+    
+      
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/" itemprop="item"><span itemprop="name">Home</span></a>
+
+          <meta itemprop="position" content="1" />
+        </li>
+        <span class="sep">/</span>
+      
+      
+        
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/categories/#nlp" itemprop="item"><span itemprop="name">Nlp</span></a>
+          <meta itemprop="position" content="2" />
+        </li>
+        <span class="sep">/</span>
+      
+    
+      
+      
+        <li class="current">NLP - Part 4: Naive Classifier</li>
+      
+    
+  </ol>
+</nav>
+
+  
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/echoi.jpg" alt="Hojun Eric Choi" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Hojun Eric Choi</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>I am a senior-year B.S. student in Computer Science and Data Science at the University of Wisconsin, Madison.</p>
+
+<p>My research interests are <strong>ML</strong>, <strong>deep NLP</strong>, and <strong>computer vision</strong> for emerging application domains.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Madison</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.linkedin.com/in/hojun-choi-2b10b11a0/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/hchoi256" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="/assets/CV.pdf" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">CV</span></a></li>
+          
+        
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:hchoi256@wisc.edu" rel="me" class="u-email">
+            <meta itemprop="email" content="hchoi256@wisc.edu" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">이메일</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items">
+    
+      <li>
+        
+          <span class="nav__sub-title">Table of Contents</span>
+        
+
+        
+        <ul>
+          
+            <li><a href="/categories/">Category</a></li>
+          
+            <li><a href="/tags/">Tag</a></li>
+          
+        </ul>
+        
+      </li>
+    
+  </ul>
+</nav>
+
+    
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="NLP - Part 4: Naive Classifier">
+    <meta itemprop="description" content="PART 1: Gender IdentifierCorpus의 영어 이름에서 마지막 ‘몇 글자’를 보고 남자 혹은 여자 이름인지 확인하여 분류한다.  Identifying sex through the last ‘few letters’ of the corpus">
+    <meta itemprop="datePublished" content="2022-07-28T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="http://localhost:4000/nlp/nlp-basic-naive-beyas/" class="u-url" itemprop="url">NLP - Part 4: Naive Classifier
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2022-07-28T00:00:00+09:00">2022-07-28</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> GITHUB BLOG JJUNS</h4></header>
+              <ul class="toc__menu"><li><a href="#part-1-gender-identifier">PART 1: Gender Identifier</a><ul><li><a href="#loading-the-libraries-and-dataset">Loading the libraries and dataset</a></li><li><a href="#training-the-model">Training the model</a></li></ul></li><li><a href="#part-2-sentimental-analysis">PART 2: Sentimental Analysis</a><ul><li><a href="#loading-the-libraries">Loading the libraries</a></li></ul></li></ul>
+
+            </nav>
+          </aside>
+        
+        <h1 id="part-1-gender-identifier">PART 1: Gender Identifier</h1>
+<p>Corpus의 영어 이름에서 마지막 ‘몇 글자’를 보고 남자 혹은 여자 이름인지 확인하여 분류한다. <span style="color: blue"> Identifying sex through the last ‘few letters’ of the corpus</span></p>
+
+<p>Naive Bayes Classifier</p>
+<ol>
+  <li>모든 고유한 단어가 텍스트에서 추출 <span style="color: blue"> extracting words from texts</span></li>
+  <li>라벨 확인 <span style="color: blue"> checking labels</span></li>
+  <li>분류 <span style="color: blue"> classification </span></li>
+</ol>
+
+<blockquote>
+  <p><a href="https://github.com/hchoi256/ai-boot-camp/blob/main/ai/machine-learning/supervised-learning/classification/naive-bayes.md">Naive Beyas</a></p>
+</blockquote>
+
+<h2 id="loading-the-libraries-and-dataset">Loading the libraries and dataset</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">nltk</span> <span class="kn">import</span> <span class="n">NaiveBayesClassifier</span>
+<span class="kn">from</span> <span class="nn">nltk.classify</span> <span class="kn">import</span> <span class="n">accuracy</span> <span class="k">as</span> <span class="n">nltk_accuracy</span>
+<span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">names</span>
+<span class="kn">import</span> <span class="nn">nltk</span>
+<span class="n">nltk</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="s">"names"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">male_list</span> <span class="o">=</span> <span class="p">[(</span><span class="n">name</span><span class="p">,</span> <span class="s">"male"</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span><span class="p">.</span><span class="n">words</span><span class="p">(</span><span class="s">"male.txt"</span><span class="p">)]</span>
+<span class="n">female_list</span> <span class="o">=</span> <span class="p">[(</span><span class="n">name</span><span class="p">,</span> <span class="s">"female"</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span><span class="p">.</span><span class="n">words</span><span class="p">(</span><span class="s">"female.txt"</span><span class="p">)]</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="n">male_list</span> <span class="o">+</span> <span class="n">female_list</span><span class="p">)</span> <span class="c1"># corpus
+</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">male_list</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">female_list</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    2943
+    5001
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">data</span><span class="p">[:</span><span class="mi">30</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    [('Aamir', 'male'),
+    ('Aaron', 'male'),
+    ('Abbey', 'male'),
+    ('Abbie', 'male'),
+    ('Abbot', 'male'),
+    ('Abbott', 'male'),
+    ('Abby', 'male'),
+    ...
+    ('Adnan', 'male'),
+    ('Adolf', 'male'),
+    ('Adolfo', 'male'),
+    ('Adolph', 'male'),
+    ('Adolphe', 'male')]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># loading the last few words
+</span><span class="k">def</span> <span class="nf">extract_features</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="n">last_n_letters</span> <span class="o">=</span> <span class="n">worda</span><span class="p">[</span><span class="o">-</span><span class="n">N</span><span class="p">:]</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s">"feature:"</span><span class="p">:</span><span class="n">last_n_letters</span><span class="p">.</span><span class="n">lower</span><span class="p">()}</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">random</span><span class="p">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">random</span><span class="p">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="c1"># avoid overfitting
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">input_names</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Alexander"</span><span class="p">,</span> <span class="s">"Daniellle"</span><span class="p">,</span> <span class="s">"David"</span><span class="p">,</span> <span class="s">"Cheryl"</span><span class="p">]</span>  <span class="c1"># sample
+</span><span class="n">num_train</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.8</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span> <span class="c1"># train/test ratio
+</span></code></pre></div></div>
+
+<h2 id="training-the-model">Training the model</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Number of end letters: "</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+    <span class="n">features</span> <span class="o">=</span> <span class="p">[(</span><span class="n">extract_features</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="p">),</span> <span class="n">gender</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">gender</span><span class="p">)</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
+    <span class="n">train_data</span><span class="p">,</span> <span class="n">test_data</span> <span class="o">=</span> <span class="n">features</span><span class="p">[:</span><span class="n">num_train</span><span class="p">],</span> <span class="n">features</span><span class="p">[</span><span class="n">num_train</span><span class="p">:]</span>
+    <span class="n">classifier</span> <span class="o">=</span> <span class="n">NaiveBayesClassifier</span><span class="p">.</span><span class="n">train</span><span class="p">(</span><span class="n">train_data</span><span class="p">)</span>
+    <span class="n">accuracy</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">nltk_accuracy</span><span class="p">(</span><span class="n">classifier</span><span class="p">,</span> <span class="n">test_data</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Accuracy = "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">accuracy</span><span class="p">)</span> <span class="o">+</span> <span class="s">'%'</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">input_names</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s">"===&gt;"</span><span class="p">,</span> <span class="n">classifier</span><span class="p">.</span><span class="n">classify</span><span class="p">(</span><span class="n">extract_features</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">i</span><span class="p">)))</span>
+    
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    Number of end letters:  1
+    Accuracy = 74.7%
+    Alexander ===&gt; male
+    Daniellle ===&gt; female
+    David ===&gt; male
+    Cheryl ===&gt; male
+    Number of end letters:  2
+    Accuracy = 78.79%
+    Alexander ===&gt; male
+    Daniellle ===&gt; female
+    David ===&gt; male
+    Cheryl ===&gt; female
+    ...
+</code></pre></div></div>
+
+<p>상기 결과는 단어의 마지막 문자 1, 2개를 기준으로 성별을 분류했을 때 정확도이다. <span style="color: blue"> The result represents the accuracy of the classifier that identifies sex based on the last one and two words respectively.</span></p>
+
+<p>나머지 마지막 문자 3개 이상을 기준으로한 결과값은 편의상 생략하였다. <span style="color: blue"> The other outcomes are omitted for convenience.</span></p>
+
+<h1 id="part-2-sentimental-analysis">PART 2: Sentimental Analysis</h1>
+<p>감성분석(Sentiment Analysis): 텍스트 일부로 감정을 결정하는 과정이다 (좋아, 나뻐). <span style="color: blue"> Sentiment Analysis studies how to determine sentiment through part of texts (good, poor).</span></p>
+
+<p>남자 이름인지 여자 이름인지… / 영화 리뷰가 긍정인지… 부정인지… <span style="color: blue"> Man/Woman, Positive/Negative</span></p>
+
+<p>제품이 좋은지 나쁜지… 여론조사 등등 확장이 가능 <span style="color: blue"> Good/Poor, etc.</span></p>
+
+<h2 id="loading-the-libraries">Loading the libraries</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">nltk</span> <span class="kn">import</span> <span class="n">NaiveBayesClassifier</span>
+<span class="kn">from</span> <span class="nn">nltk.classify</span> <span class="kn">import</span> <span class="n">accuracy</span> <span class="k">as</span> <span class="n">nltk_accuracy</span>
+<span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">movie_reviews</span>
+<span class="kn">import</span> <span class="nn">nltk</span>
+<span class="n">nltk</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="s">"movie_reviews"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fileids_pos</span> <span class="o">=</span> <span class="n">movie_reviews</span><span class="p">.</span><span class="n">fileids</span><span class="p">(</span><span class="s">"pos"</span><span class="p">)</span>
+<span class="n">fileids_neg</span> <span class="o">=</span> <span class="n">movie_reviews</span><span class="p">.</span><span class="n">fileids</span><span class="p">(</span><span class="s">"neg"</span><span class="p">)</span>
+<span class="n">fileids_pos</span><span class="p">[:</span><span class="mi">1</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    ['pos/cv000_29590.txt']
+</code></pre></div></div>
+
+<p>상기 라이브러리의 ‘pos’ 디렉토리의 해당 텍스트에 긍정 단어들이 포함되어 있다. <span style="color: blue"> The directory above incldues positive words.</span></p>
+
+<p>어떤 단어들이 속해있는지 지금 바로 확인해보자. <span style="color: blue"> Let’s go check those words now.</span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">movie_reviews</span><span class="p">.</span><span class="n">words</span><span class="p">(</span><span class="n">fileids</span><span class="o">=</span><span class="p">[</span><span class="s">'pos/cv000_29590.txt'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    ['films', 'adapted', 'from', 'comic', 'books', 'have', ...]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">extract_features</span><span class="p">(</span><span class="n">words</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">([</span> <span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">features_pos</span><span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="n">extract_features</span><span class="p">(</span><span class="n">movie_reviews</span><span class="p">.</span><span class="n">words</span><span class="p">(</span><span class="n">fileids</span><span class="o">=</span><span class="p">[</span><span class="n">f</span><span class="p">])),</span> <span class="s">"Positive"</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fileids_pos</span> <span class="p">]</span>
+<span class="n">features_neg</span><span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="n">extract_features</span><span class="p">(</span><span class="n">movie_reviews</span><span class="p">.</span><span class="n">words</span><span class="p">(</span><span class="n">fileids</span><span class="o">=</span><span class="p">[</span><span class="n">f</span><span class="p">])),</span> <span class="s">"Negative"</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fileids_neg</span> <span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.8</span> <span class="c1"># train/test set ratio
+</span><span class="n">num_pos</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">threshold</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">features_pos</span><span class="p">))</span>
+<span class="n">num_neg</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">threshold</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">features_neg</span><span class="p">))</span>
+
+<span class="n">features_train</span> <span class="o">=</span> <span class="n">features_pos</span><span class="p">[:</span><span class="n">num_pos</span><span class="p">]</span> <span class="o">+</span> <span class="n">features_neg</span><span class="p">[:</span><span class="n">num_neg</span><span class="p">]</span>
+<span class="n">features_test</span> <span class="o">=</span> <span class="n">features_pos</span><span class="p">[</span><span class="n">num_pos</span><span class="p">:]</span> <span class="o">+</span> <span class="n">features_neg</span><span class="p">[</span><span class="n">num_neg</span><span class="p">:]</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Train Dataset : "</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">features_train</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Test Dataset : "</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">features_test</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    Train Dataset :  1600
+    Test Dataset :  400
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">classifier</span> <span class="o">=</span> <span class="n">NaiveBayesClassifier</span><span class="p">.</span><span class="n">train</span><span class="p">(</span><span class="n">features_train</span><span class="p">)</span> <span class="c1"># training the model
+</span><span class="n">accuracy</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">nltk_accuracy</span><span class="p">(</span><span class="n">classifier</span><span class="p">,</span> <span class="n">features_test</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span> <span class="c1"># prediction
+</span><span class="n">accuracy</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    73.5
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># test sample
+</span><span class="n">input_reviews</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">'The costumes in this movie were great'</span><span class="p">,</span> 
+    <span class="s">'I think the story was terrible and the characters were very weak'</span><span class="p">,</span>
+    <span class="s">'People say that the director of the movie is amazing'</span><span class="p">,</span> 
+    <span class="s">'This is such an idiotic movie. I will not recommend it to anyone.'</span> 
+<span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk</span> <span class="kn">import</span> <span class="n">probability</span>
+
+<span class="n">probabilities</span> <span class="o">=</span> <span class="n">classifier</span><span class="p">.</span><span class="n">prob_classify</span><span class="p">(</span><span class="n">extract_features</span><span class="p">(</span><span class="n">review</span><span class="p">.</span><span class="n">split</span><span class="p">()))</span>
+<span class="n">predicted_sentiment</span> <span class="o">=</span> <span class="n">probabilities</span><span class="p">.</span><span class="nb">max</span><span class="p">()</span> <span class="c1"># 긍부정 우위 선택 pos vs. neg
+</span><span class="k">print</span><span class="p">(</span><span class="s">"Predicted sentiment :"</span><span class="p">,</span> <span class="n">predicted_sentiment</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Probabilities : "</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">probabilities</span><span class="p">.</span><span class="n">prob</span><span class="p">(</span><span class="n">predicted_sentiment</span><span class="p">),</span> <span class="mi">2</span><span class="p">))</span>
+
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    Predicted sentiment : Negative
+    Probabilities :  0.8
+</code></pre></div></div>
+
+<p>긍부정 단어 개수를 계산하여 빈도수가 더 많이 등장한 선택지로 결론내린다. <span style="color: blue"> By counting the number of positive and negative words, we conclude with the option that appears more frequently.</span></p>
+
+<p>결과는 Negative로 부정 단어가 더 많이 포함된 문장이었고, 그 빈도수는 0.8이며 긍정은 0.2이다. <span style="color: blue"> The result was a sentence containing more negative words as negative, and the frequency was 0.8 and positive was 0.2.</span></p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#nlp" class="page__taxonomy-item p-category" rel="tag">NLP</a><span class="sep">, </span>
+    
+      <a href="/tags/#python" class="page__taxonomy-item p-category" rel="tag">python</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#nlp" class="page__taxonomy-item p-category" rel="tag">NLP</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-07-28T00:00:00+09:00">2022-07-28</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=NLP+-+Part+4%3A+Naive+Classifier%20http%3A%2F%2Flocalhost%3A4000%2Fnlp%2Fnlp-basic-naive-beyas%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fnlp%2Fnlp-basic-naive-beyas%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fnlp%2Fnlp-basic-naive-beyas%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/dl/dl-ann-for-regression/" class="pagination--pager" title="ANN - Regression
+">이전</a>
+    
+    
+      <a href="/nlp/nlp-basic-topic-modeling/" class="pagination--pager" title="NLP - Part 5: Topic Modeling
+">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">참고</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/teeko.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ml/ml-teeko-minimax/" rel="permalink">ML: Minimax 알고리즘 - Teeko Game
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2022-08-14T00:00:00+09:00">2022-08-14</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          5 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Minimax 알고리즘을 활용해서 Teeko 게임을 구현한다.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/pca-image-compression.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ml/ml-pca/" rel="permalink">ML: PCA - Image Compression(이미지 압축)
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2022-08-14T00:00:00+09:00">2022-08-14</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">PCA를 이용해서 이미지 압축을 진행해보자.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/hac.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ml/ml-hca/" rel="permalink">ML: Hierarchical Agglomerate Clustering(HAC) - 포켓몬 군집화
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2022-08-14T00:00:00+09:00">2022-08-14</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          4 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Hierarchical Agglomerate Clustering(HAC) 이용해서 서로 다른 특성을 공유하는 Pokemon들을 군집으로 묶어보자.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/lenet.JPG" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/dl/dl-miniplace-classification/" rel="permalink">DL: LeNet 신경망 - MiniPlaces 이미지 분류
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2022-08-14T00:00:00+09:00">2022-08-14</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">LeNet 신경망을 활용해서 MiniPlaces 데이터셋 이미지 분류 작업을 수행한다.
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="mailto:hchoi256@wisc.edu" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/in/hojun-choi-2b10b11a0/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://github.com/hchoi256" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="/assets/CV.pdf" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> CV</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 Hojun Eric Choi. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/nlp/nlp-basic-naive-beyas/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/nlp/nlp-basic-naive-beyas"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://jjunes.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+
+  </body>
+</html>

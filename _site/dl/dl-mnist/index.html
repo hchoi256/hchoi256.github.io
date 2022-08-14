@@ -1,0 +1,1059 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>CNN - Classification: MNIST with Tensorflow | 정리하여 내 것으로, AI</title>
+<meta name="description" content="Code [Notice] download here">
+
+
+  <meta name="author" content="Hojun Eric Choi">
+  
+  <meta property="article:author" content="Hojun Eric Choi">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="정리하여 내 것으로, AI">
+<meta property="og:title" content="CNN - Classification: MNIST with Tensorflow">
+<meta property="og:url" content="http://localhost:4000/dl/dl-mnist/">
+
+
+  <meta property="og:description" content="Code [Notice] download here">
+
+
+
+  <meta property="og:image" content="http://localhost:4000/assets/images/posts/dl-thumbnail.jpg">
+
+
+
+
+
+  <meta property="article:published_time" content="2022-08-01T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/dl/dl-mnist/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Hojun Eric Choi",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+  <meta name="naver-site-verification" content="57d020c8f9b26bf56ed7846608b8d873481e9b84">
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정리하여 내 것으로, AI Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/logo.ico/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/logo.ico/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/logo.ico/favicon-16x16.png">
+<link rel="mask-icon" href="/assets/logo.ico/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          정리하여 내 것으로, AI
+          <span class="site-subtitle">with jjuns</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tag</a>
+            </li><li class="masthead__menu-item">
+              <a href="/search/">Search</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+  
+    
+
+
+
+<nav class="breadcrumbs">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    
+    
+      
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/" itemprop="item"><span itemprop="name">Home</span></a>
+
+          <meta itemprop="position" content="1" />
+        </li>
+        <span class="sep">/</span>
+      
+      
+        
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/categories/#dl" itemprop="item"><span itemprop="name">Dl</span></a>
+          <meta itemprop="position" content="2" />
+        </li>
+        <span class="sep">/</span>
+      
+    
+      
+      
+        <li class="current">CNN - Classification: MNIST with Tensorflow</li>
+      
+    
+  </ol>
+</nav>
+
+  
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/echoi.jpg" alt="Hojun Eric Choi" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Hojun Eric Choi</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>I am a senior-year B.S. student in Computer Science and Data Science at the University of Wisconsin, Madison.</p>
+
+<p>My research interests are <strong>ML</strong>, <strong>deep NLP</strong>, and <strong>computer vision</strong> for emerging application domains.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Madison</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.linkedin.com/in/hojun-choi-2b10b11a0/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/hchoi256" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="/assets/CV.pdf" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">CV</span></a></li>
+          
+        
+      
+
+      
+
+      
+        <li>
+          <a href="mailto:hchoi256@wisc.edu" rel="me" class="u-email">
+            <meta itemprop="email" content="hchoi256@wisc.edu" />
+            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">이메일</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items">
+    
+      <li>
+        
+          <span class="nav__sub-title">Table of Contents</span>
+        
+
+        
+        <ul>
+          
+            <li><a href="/categories/">Category</a></li>
+          
+            <li><a href="/tags/">Tag</a></li>
+          
+        </ul>
+        
+      </li>
+    
+  </ul>
+</nav>
+
+    
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="CNN - Classification: MNIST with Tensorflow">
+    <meta itemprop="description" content="Code[Notice] download here">
+    <meta itemprop="datePublished" content="2022-08-01T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="http://localhost:4000/dl/dl-mnist/" class="u-url" itemprop="url">CNN - Classification: MNIST with Tensorflow
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2022-08-01T00:00:00+09:00">2022-08-01</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          9 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> GITHUB BLOG JJUNS</h4></header>
+              <ul class="toc__menu"><li><a href="#code">Code</a></li><li><a href="#observing-the-dataset">Observing the dataset</a></li><li><a href="#loading-the-dataset">Loading the dataset</a></li><li><a href="#visualizing-the-dataset">Visualizing the dataset</a></li><li><a href="#building-the-model">Building the model</a></li><li><a href="#training-the-model">Training the model</a></li><li><a href="#training-the-model-with-image-augmentation">Training the model with image augmentation</a></li><li><a href="#evaluating-the-model">Evaluating the model</a><ul><li><a href="#comparison-actual-vs-predicted">Comparison: Actual vs. Predicted</a></li><li><a href="#confusion-matrix">Confusion matrix</a></li></ul></li></ul>
+
+            </nav>
+          </aside>
+        
+        <h1 id="code">Code</h1>
+<p class="notice--danger"><strong>[Notice]</strong> <a href="https://github.com/hchoi256/ai-workspace/blob/main/codes/MNIST-with-tensorflow.ipynb">download here</a></p>
+
+<h1 id="observing-the-dataset">Observing the dataset</h1>
+<p>MNIST 데이터셋에는 0부터 9까지 10종류의 숫자가 여러 2차원 이미지 데이터 형태로 저장되어 있으며, RGB 차원은 따로 없는 흑백사진이다. <span style="color: blue">In the MNIST dataset, 10 types of numbers from 0 to 9 are stored in the form of several two-dimensional image data, and it is a black-and-white photograph without 3 RGB dimensions. </span></p>
+
+<p>각 이미지 해상도는 28x28 픽셀 단위로 이루어져 있으며, 학습 데이터 6만장 테스트 데이터 1만장으로 구성되어 있다. <span style="color: blue"> Each image resolution consists of 28x28 pixel units, and consists of 60,000 training data sheets and 10,000 test data sheets. </span></p>
+
+<p>해당 데이트셋을 활용하여 이미지 분류를 수행하는 모델을 학습시키는 것을 목표로 한다! <span style="color: blue"> It aims to train a model that performs image classification using the data set!</span></p>
+
+<h1 id="loading-the-dataset">Loading the dataset</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="n">tf</span>
+
+<span class="p">((</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">),</span> <span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">))</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">datasets</span><span class="p">.</span><span class="n">mnist</span><span class="p">.</span><span class="n">load_data</span><span class="p">()</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span> <span class="o">=</span> <span class="n">X_train</span> <span class="o">/</span> <span class="mf">255.0</span><span class="p">,</span> <span class="n">X_test</span> <span class="o">/</span> <span class="mf">255.0</span> <span class="c1"># normalization
+</span>
+<span class="c1"># reshape for image generator
+</span><span class="n">X_train</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">60000</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">X_test</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="c1"># print(X_train.shape, X_test.shape)
+# print(y_train.shape, y_test.shape)
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    [5 0 4 ... 5 6 8]
+</code></pre></div></div>
+
+<p>상기 종속변수 결과는 각 클래스에 해당하는 인덱스를 나타낸다. <span style="color: blue"> The result of the dependent variable indicates an index corresponding to each class.</span></p>
+
+<p>가령, 맨 앞의 5는 모델이 새로운 데이터에 대하여 숫자 5일 것으로 예측하는 결과값일 것이다. <span style="color: blue"> For example, the first 5 will be the result value that the model predicts to be the number 5 for new data. </span></p>
+
+<p>또한, 우리는 각 픽셀마다 [0, 255] 색상값이 할당된 이미지 데이터에 대하여 <strong>정규화</strong>(normalization)를 수행하여 <em>학습 속도를 빠르게</em> 한다. <span style="color: blue"> In addition, we perform <strong>normalization</strong> on the image data to which the [0, 255] color value is assigned to each pixel to <em>fasten the learning speed</em>. </span></p>
+
+<p>그리고, 우리는 <strong>이미지 증강(image augmentation)</strong> 기법을 사용하여 <em>학습 데이터 수를 늘려</em> 더욱 정확한 모델 성능을 끌어내고자 한다. <span style="color: blue"> And, we use <strong>image augmentation</strong> to <em>increase the number of training data</em> to get more accurate model performance. </span></p>
+
+<p>이를 위해, 주어진 데이터를 쓰임에 맞게 reshape 한다. <span style="color: blue"> To do this, the given data is reshaped for use. </span></p>
+
+<p>이것은 RGB 열을 추가하는 작업으로, 흑백사진이기 때문에 3이 아닌 1을 할당한 모습이다. <span style="color: blue"> This is an operation to add an RGB column, and since it is a black-and-white photo, 1 is assigned instead of 3. </span></p>
+
+<h1 id="visualizing-the-dataset">Visualizing the dataset</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">figure</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">figure</span><span class="p">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+
+<span class="n">axes</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">):</span>
+    <span class="n">axes</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">figure</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">matshow</span><span class="p">(</span><span class="n">x_train</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182051405-8180e3cd-c511-438e-9f85-d1cb10132788.png" alt="image" /></p>
+
+<p>상기 이미지 결과표는 MNIST 데이터셋에서 랜덤하게 5가지 숫자 이미지를 나타낸다. <span style="color: blue">  The image result table shows five numerical images randomly from the MNIST dataset.</span></p>
+
+<p>이러한 이미지와 같은 새로운 데이터들에 대한 다중 클래스 숫자 분류를 수행하는 CNN 모델을 구축해보자! <span style="color: blue"> Let’s build a CNN model that performs multi-class numeric classification on new data such as images! </span></p>
+
+<h1 id="building-the-model">Building the model</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span> 
+<span class="kn">from</span> <span class="nn">keras.layers</span> <span class="kn">import</span> <span class="n">Conv2D</span><span class="p">,</span> <span class="n">MaxPooling2D</span><span class="p">,</span> <span class="n">AveragePooling2D</span><span class="p">,</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Flatten</span><span class="p">,</span> <span class="n">Dropout</span><span class="p">,</span> <span class="n">Activation</span><span class="p">,</span> <span class="n">BatchNormalization</span>
+<span class="kn">from</span> <span class="nn">keras.optimizers</span> <span class="kn">import</span> <span class="n">Adam</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cnn_model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span>
+
+<span class="n">cnn_model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">strides</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">padding</span> <span class="o">=</span> <span class="s">'same'</span><span class="p">,</span> <span class="n">activation</span> <span class="o">=</span> <span class="s">'relu'</span><span class="p">,</span> <span class="n">input_shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>
+<span class="n">cnn_model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">MaxPooling2D</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+
+<span class="n">cnn_model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">strides</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">padding</span> <span class="o">=</span> <span class="s">'same'</span><span class="p">,</span> <span class="n">activation</span> <span class="o">=</span> <span class="s">'relu'</span><span class="p">))</span>
+<span class="n">cnn_model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">MaxPooling2D</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+
+<span class="n">cnn_model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Flatten</span><span class="p">())</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span> <span class="c1"># 3 hidden layers 
+</span>    <span class="n">cnn_model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
+    <span class="n">cnn_model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">BatchNormalization</span><span class="p">())</span>
+    <span class="n">cnn_model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Activation</span><span class="p">(</span><span class="n">activation</span> <span class="o">=</span> <span class="s">'relu'</span><span class="p">))</span>
+
+<span class="n">cnn_model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.2</span><span class="p">))</span>
+<span class="n">cnn_model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span> <span class="o">=</span> <span class="s">'softmax'</span><span class="p">))</span> <span class="c1"># class: 10, multiclass --&gt; softmax
+</span></code></pre></div></div>
+
+<p>본 과제에서 우리는 순차적(‘Sequential’) CNN을 구축한다: <span style="color: blue"> </span></p>
+<ul>
+  <li><em>Number of kernels</em>(= filters): 10 (3x3)</li>
+  <li><em>Input_shape</em>: 28x28 (RGB = 1)</li>
+  <li><em>Pooling</em>: 2x2
+    <ul>
+      <li>실험 결과 <strong>MaxPooling</strong>이 AveragePooling보다 더 좋은 정확도를 보여주었다. <span style="color: blue">In this task, we build a ‘Sequential’ CNN. </span></li>
+    </ul>
+  </li>
+  <li><em>Number of FCL(= hidden layers)</em>: 3 (# neurons=100, activation=relu)</li>
+  <li><em>Output Layer</em>: softmax (multiclass classification task)</li>
+  <li><em>BatchNormalization()</em>: <a href="https://github.com/hchoi256/ai-terms">internal covariate shift</a> 문제 해결을 통한 <strong>과적합 개선</strong> <span style="color: blue"><strong>Improved overfitting by solving the internal covariate shift problem</strong> </span></li>
+</ul>
+
+<p>FCL 층 개수, 뉴런 개수와 같은 피라미터는 <strong>자율적으로</strong> 작성한다. <span style="color: blue"> Parameters such as the number of FCL layers and the number of neurons are created <strong>autonomously</strong>. </span></p>
+
+<p>피라미터 변화에 따른 모델 손실함수 시각화를 관찰하여 <strong>유의미한 감소</strong>를 보이지 않기 시작하는 지점에서의 수치로 피라미터를 설정하는 것이 바람직하다. <span style="color: blue"> By observing the visualization of the model loss function according to the parameter change, it is desirable to set the parameter to a value at the point where it does not show a significant decrease. </span></p>
+
+<p>이 부분에 대한 보다 자세한 내용은 본 과제에서는 생략한다(<strong>TBD</strong>). <span style="color: blue"> Further details on this part will be omitted from this project (<strong>TBD</strong>). </span></p>
+
+<h1 id="training-the-model">Training the model</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cnn_model</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="n">loss</span> <span class="o">=</span> <span class="s">'sparse_categorical_crossentropy'</span><span class="p">,</span> <span class="n">optimizer</span> <span class="o">=</span> <span class="n">Adam</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.001</span><span class="p">),</span> <span class="n">metrics</span> <span class="o">=</span> <span class="p">[</span><span class="s">'accuracy'</span><span class="p">])</span>
+<span class="n">early_stop</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">callbacks</span><span class="p">.</span><span class="n">EarlyStopping</span><span class="p">(</span><span class="n">monitor</span><span class="o">=</span><span class="s">'loss'</span><span class="p">,</span> <span class="n">patience</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">history</span> <span class="o">=</span> <span class="n">cnn_model</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">epochs</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">validation_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">],</span> <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">early_stop</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    Epoch 1/10
+    1200/1200 [==============================] - 16s 12ms/step - loss: 0.1787 - accuracy: 0.9496 - val_loss: 0.0658 - val_accuracy: 0.9794
+    Epoch 2/10
+    1200/1200 [==============================] - 14s 11ms/step - loss: 0.0674 - accuracy: 0.9797 - val_loss: 0.0839 - val_accuracy: 0.9747
+    ...
+    Epoch 9/10
+    1200/1200 [==============================] - 15s 12ms/step - loss: 0.0222 - accuracy: 0.9929 - val_loss: 0.0481 - val_accuracy: 0.9860
+    Epoch 10/10
+    1200/1200 [==============================] - 14s 12ms/step - loss: 0.0217 - accuracy: 0.9932 - val_loss: 0.0518 - val_accuracy: 0.9866
+</code></pre></div></div>
+
+<p>자, <del>간식 타임</del> 모델 훈련의 시간이다.</p>
+
+<p>분류 문제를 다루고 있기에 <a href="https://github.com/hchoi256/ai-terms/blob/main/entropy.md">‘<strong>크로스 엔트로피</strong>’</a>를 손실함수로, 가장 좋은 성능을 보이는 ‘<strong>Adam</strong>‘을 옵티마이저로, 그리고 모델 성능 척도는 ‘<strong>정확도</strong>‘로 설정했다. <span style="color: blue"> Since we are dealing with a classification problem, we set ‘<strong>Cross Entropy</strong>’ as the loss function, ‘<strong>Adam</strong>’ with the best performance as the optimizer, and ‘<strong>Accuracy</strong>’ as the model performance measure. </span></p>
+<ul>
+  <li><em>verbose</em>: output에 정확도, validation 및 test 정확도를 표현한다. <span style="color: blue"> Expresses accuracy, validation, and test accuracy in the output.</span></li>
+  <li><em>epoch</em>: 모델 학습의 순/역전파 과정에서 신경망 전체를 몇 번 통과할지 결정한다. <span style="color: blue"> Determines how many times to pass through the entire neural network in the forward/backward propagation process of model training. </span></li>
+  <li><em>batch_size</em>: 한 epoch에 대하여 학습할 데이터 크기, 즉 mini batch 크기를 결정한다. <span style="color: blue"> Determines the size of the data to be trained for one epoch, that is, the mini batch size. </span></li>
+  <li><em>validation_data</em>: 모델 예측성능 평가에 활용할 검증 데이터이다. <span style="color: blue">  verification data to be used for model prediction performance evaluation.</span></li>
+</ul>
+
+<p>‘<strong>Early_stop</strong>‘을 활용하여 모델 학습과정에서 성능 변화가 일어나지 않으면 학습을 자동으로 멈추는 처리를 추가했다. <span style="color: blue"> By using ‘<strong>Early_stop</strong>’, we added a process that automatically stops learning if there is no performance change in the model training process. </span></p>
+<ul>
+  <li><em>patience</em>: 몇 번의 성능 무변화를 용인해줄건지 설정한다. <span style="color: blue"> Sets how many times of no performance change to tolerate. </span></li>
+</ul>
+
+<p>이 과정에서 모델의 테스트셋 정확도는 <strong>99.32%</strong>, 검증 데이터의 정확도는 <strong>98.66%</strong>로 도출되었다. <span style="color: blue"> In this process, the accuracy of the model (test set) was <strong>99.32%</strong>, and the accuracy of the model (validation data) was <strong>98.66%</strong>. </span></p>
+
+<p>참고로, <strong>BatchNormalization()</strong>이 없을 경우, 정확도는 99%가 나오지 못했고, 학습 속도가 눈에 띄게 더딘 것이 확인되었다. <span style="color: blue"> For reference, in the absence of <strong>BatchNormalization()</strong>, the accuracy did not come out to 99%, and it was confirmed that the learning speed was noticeably slow. </span></p>
+
+<h1 id="training-the-model-with-image-augmentation">Training the model with image augmentation</h1>
+<p><em>히딩크(Hiddink)</em>, “I’m still hungry.”</p>
+
+<p>사람의 욕심은 끝이없다. <span style="color: blue"> There is no end to human greed.</span></p>
+
+<p>우리는 여기서 그치지 않고 모델의 성능 더 끌어내고 싶다. <span style="color: blue">We don’t want to stop there, but we want to bring out the performance of the model further. </span></p>
+
+<p>그러기 위해서, 이미지 증강 기법을 활용하여 기존 인풋 이미지에 여러 변화를 주어 <strong>데이터 수를 증가시킨다.</strong> <span style="color: blue"> To do so, by using image augmentation techniques, various changes are made to the existing input image to <strong>increase the number of data.</strong></span></p>
+
+<p><strong>학습 데이터의 증가</strong>는 모델의 <strong>과적합을 방지</strong>하여 더 높은 예측성능을 끌어낼 수 있다. <span style="color: blue"> <strong>Increasing training data</strong> can lead to higher predictive performance by avoiding overfitting the model.</span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">keras.preprocessing.image</span> <span class="kn">import</span> <span class="n">ImageDataGenerator</span>
+
+<span class="n">datagen</span> <span class="o">=</span> <span class="n">ImageDataGenerator</span><span class="p">(</span>
+                            <span class="n">rotation_range</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+                            <span class="c1">#width_shift_range = 0.1,
+</span>                            <span class="c1">#horizontal_flip = True,
+</span>                            <span class="c1">#vertical_flip = True,
+</span>                            <span class="c1">#brightness_range=(.9, 1)
+</span>                            <span class="c1">#zoom_range = 0.7,
+</span>                            <span class="c1">#height_shift_range=0
+</span>                             <span class="p">)</span>
+
+<span class="n">datagen</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="c1"># Creating the image flow with the training dataset
+# Loading the certain number of adjusted images
+</span><span class="k">for</span> <span class="n">x_batch</span> <span class="ow">in</span> <span class="n">datagen</span><span class="p">.</span><span class="n">flow</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">batch_size</span> <span class="o">=</span> <span class="n">n</span><span class="p">):</span>
+     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">ax</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">x_batch</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+     <span class="n">fig</span><span class="p">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s">'Augmented images (rotated 90 degrees)'</span><span class="p">)</span>
+     <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+     <span class="k">break</span><span class="p">;</span>
+
+<span class="n">cnn_model</span><span class="p">.</span><span class="n">fit_generator</span><span class="p">(</span><span class="n">datagen</span><span class="p">.</span><span class="n">flow</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">50</span><span class="p">),</span> <span class="n">epochs</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span> <span class="c1"># fit_generator() when using data made by image generator
+</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">cnn_model</span><span class="p">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'Test accuracy'</span><span class="p">,</span> <span class="n">score</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+ 
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182052312-f21c4327-4c66-4203-b6be-15e2e1e8d67d.png" alt="image" /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    Epoch 1/10
+    1200/1200 [==============================] - 20s 16ms/step - loss: 0.1346 - accuracy: 0.9613
+    Epoch 2/10
+    1200/1200 [==============================] - 18s 15ms/step - loss: 0.0799 - accuracy: 0.9756
+    ...
+    Epoch 9/10
+    1200/1200 [==============================] - 18s 15ms/step - loss: 0.0521 - accuracy: 0.9843
+    Epoch 10/10
+    1200/1200 [==============================] - 18s 15ms/step - loss: 0.0481 - accuracy: 0.9850
+    313/313 [==============================] - 1s 3ms/step - loss: 0.0461 - accuracy: 0.9860
+    Test accuracy 0.9860000014305115
+</code></pre></div></div>
+
+<p>상기 이미지는 기존 이미지에 50도 안팎의 회전도를 부여하여 전혀 다른 새로운 이미지를 만들어낸 결과이다. <span style="color: blue"> The above image is the result of creating a completely different new image by giving a rotation of around 50 degrees to the existing image.</span></p>
+
+<p>두 번째 이미지인 4와 같이 회전을 받아 기울어진 새로운 데이터가 주어졌을 때, 모델은 정확한 예측을 해내기 어려울 수 있다. <span style="color: blue"> When new data is rotated and tilted as in the second image 4, it may be difficult for the model to make accurate predictions.</span></p>
+
+<p>우리는 이러한 변별력있는 데이터를 생성하여 모델의 성능을 더 끌어낸다. <span style="color: blue">We generate these discriminative data to further drive the performance of our models. </span></p>
+
+<p>구현 과정에서 하나 특별한 점은, 이미지 생성기를 통하여 모델을 학습할 경우 fit()이 아닌 <strong>fit_generator()</strong> 함수를 사용한다. <span style="color: blue"> One special thing in the implementation process is that when training a model through an image generator, use the <strong>fit_generator()</strong> function rather than fit().</span></p>
+
+<p>최종적으로 모델의 성능은 0.9860000014305115, 즉 <strong>98.6%</strong>로 매우 높은 정확도를 보여준다. <span style="color: blue"> Finally, the performance of the model is 0.9860000014305115, that is, <strong>98.6%</strong>, which shows a very high accuracy.</span></p>
+
+<p>자, 이제 직관적인 시각화로 실제값과 예측값을 비교하고, 혼동 행렬로 표현하여 모델 평가를 진행해보자. <span style="color: blue"> Now, let’s compare the actual value and the predicted value with an intuitive visualization and evaluate the model by expressing it as a confusion matrix.</span></p>
+
+<h1 id="evaluating-the-model">Evaluating the model</h1>
+
+<h2 id="comparison-actual-vs-predicted">Comparison: Actual vs. Predicted</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">evaluation</span> <span class="o">=</span> <span class="n">cnn_model</span><span class="p">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+
+<span class="n">predicted_classes</span> <span class="o">=</span> <span class="n">cnn_model</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">predicted_classes</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">predicted_classes</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">L</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="n">W</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span><span class="p">.</span><span class="n">ravel</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">L</span><span class="o">*</span><span class="n">W</span><span class="p">):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">imshow</span><span class="p">(</span><span class="n">X_test</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">set_title</span><span class="p">(</span><span class="s">'Prediction = {}</span><span class="se">\n</span><span class="s"> True = {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">predicted_classes</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">y_test</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">axis</span><span class="p">(</span><span class="s">'off'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">wspace</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182052768-75e7abd5-4c6e-462d-a2dd-83cba24cb115.png" alt="image" /></p>
+
+<p>랜덤하게 선택된 테스트 데이터에 대한 실제값과 예측값을 보여주는 해당 결과표에서 ‘오분류’가 존재하지 않음을 발견했다. <span style="color: blue"> We found that there was no ‘misclassification’ in the corresponding result table showing the actual and predicted values ​​for the randomly selected test data.</span></p>
+
+<p>이것은 99%에 육박하는 우리 모델의 강력한 성능에서 비롯된 결과일 것이다. <span style="color: blue">This is probably the result of the strong performance of our model, which is close to 99%. </span></p>
+
+<p>하지만, 우리는 오분류의 개수 역시 한 눈에 파악하고 싶다. <span style="color: blue">However, we also want to know the number of misclassifications at a glance. </span></p>
+
+<p>이럴 때, 혼동 행렬로써 성능 평가를 진행하면 매우 유용하다. <span style="color: blue">In this case, it is very useful to perform performance evaluation with a confusion matrix. </span></p>
+
+<h2 id="confusion-matrix">Confusion matrix</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">confusion_matrix</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="n">sns</span>
+
+<span class="n">cm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predicted_classes</span><span class="p">)</span>
+<span class="n">cm</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">sns</span><span class="p">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">annot</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182052904-2de7452e-58dd-4de5-b76e-6138b130ced2.png" alt="image" /></p>
+
+<p>우리는 손쉽게 혼동행렬를 구현하고자 <strong>‘씨본(seaborn)’</strong> 라이브러리를 활용한다. <span style="color: blue">We use the <strong>‘seaborn’</strong> library to easily implement the confusion matrix. </span></p>
+
+<p>단 몇 줄만으로 혼동 행렬 구현이 가능하다. <span style="color: blue"> A confusion matrix can be implemented with just a few lines.</span></p>
+
+<p>많은 데이터가 포함되있을 수록 밝은 색에 가까운 픽셀값을 가진다. <span style="color: blue"> The more data is included, the closer the pixel value is to a bright color.</span></p>
+
+<p>직관적으로도 대각선, 즉 참분류 (TP, TN) 개수가 압도적인 것을 볼 수 있고, 그 외 검정색에 근사한 픽셀에 적힌 수치들은 모두 오분류이다. <span style="color: blue"> Intuitively, it can be seen that the diagonal, the number of true classifications (TP, TN), is overwhelming, and all other figures written in pixels that are close to black are misclassifications.</span></p>
+
+<p>7만 개의 기존 이미지 데이터와 ‘이미지 증강’을 통해 추가된 새로운 이미지 7만 장, 도합 14만장의 인풋을 학습한 모델이 내놓은 오분류 치고 굉장히 낮은 오분류 개수를 확인할 수 있다. <span style="color: blue"> You can see a very low number of misclassifications, considering the input of 140,000 in total; 70,000 existing image data and 70,000 new images added through ‘image augmentation’. </span></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#cnn" class="page__taxonomy-item p-category" rel="tag">cnn</a><span class="sep">, </span>
+    
+      <a href="/tags/#deep-learning" class="page__taxonomy-item p-category" rel="tag">deep learning</a><span class="sep">, </span>
+    
+      <a href="/tags/#mnist" class="page__taxonomy-item p-category" rel="tag">mnist</a><span class="sep">, </span>
+    
+      <a href="/tags/#python" class="page__taxonomy-item p-category" rel="tag">python</a><span class="sep">, </span>
+    
+      <a href="/tags/#tensorflow" class="page__taxonomy-item p-category" rel="tag">tensorflow</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#dl" class="page__taxonomy-item p-category" rel="tag">DL</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-08-01T00:00:00+09:00">2022-08-01</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=CNN+-+Classification%3A+MNIST+with+Tensorflow%20http%3A%2F%2Flocalhost%3A4000%2Fdl%2Fdl-mnist%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fdl%2Fdl-mnist%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fdl%2Fdl-mnist%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/ai/ai-paper-learning-loss-for-active-learning/" class="pagination--pager" title="[논문 분석] Learning loss for active learning (CVPR 2019)
+">이전</a>
+    
+    
+      <a href="/dl/dl-rnn-lstm/" class="pagination--pager" title="RNN - Time Series: LSTM
+">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">참고</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/teeko.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ml/ml-teeko-minimax/" rel="permalink">ML: Minimax 알고리즘 - Teeko Game
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2022-08-14T00:00:00+09:00">2022-08-14</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          5 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Minimax 알고리즘을 활용해서 Teeko 게임을 구현한다.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/pca-image-compression.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ml/ml-pca/" rel="permalink">ML: PCA - Image Compression(이미지 압축)
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2022-08-14T00:00:00+09:00">2022-08-14</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">PCA를 이용해서 이미지 압축을 진행해보자.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/hac.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ml/ml-hca/" rel="permalink">ML: Hierarchical Agglomerate Clustering(HAC) - 포켓몬 군집화
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2022-08-14T00:00:00+09:00">2022-08-14</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          4 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Hierarchical Agglomerate Clustering(HAC) 이용해서 서로 다른 특성을 공유하는 Pokemon들을 군집으로 묶어보자.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/lenet.JPG" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/dl/dl-miniplace-classification/" rel="permalink">DL: LeNet 신경망 - MiniPlaces 이미지 분류
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2022-08-14T00:00:00+09:00">2022-08-14</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">LeNet 신경망을 활용해서 MiniPlaces 데이터셋 이미지 분류 작업을 수행한다.
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="mailto:hchoi256@wisc.edu" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+          <li><a href="https://www.linkedin.com/in/hojun-choi-2b10b11a0/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://github.com/hchoi256" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="/assets/CV.pdf" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> CV</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 Hojun Eric Choi. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/dl/dl-mnist/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/dl/dl-mnist"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://jjunes.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+
+  </body>
+</html>

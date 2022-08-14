@@ -231,10 +231,6 @@
       
         
           
-            <li><a href="mailto:hchoi256@wisc.edu" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
-          
-        
-          
             <li><a href="https://www.linkedin.com/in/hojun-choi-2b10b11a0/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
           
         
@@ -389,7 +385,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          1 분 소요
+          2 분 소요
         
       </span>
     
@@ -404,7 +400,7 @@
           <aside class="sidebar__right sticky">
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> GITHUB BLOG JJUNS</h4></header>
-              <ul class="toc__menu"><li><a href="#part-1-sstspeech-to-text">PART 1: SST(Speech to Text)</a></li><li><a href="#part-2-ttstext-to-speech">PART 2: TTS(Text to Speech)</a><ul><li><a href="#tts-실습-1-요일시간-음성-출력하기">TTS 실습 1: 요일/시간 음성 출력하기</a></li><li><a href="#tts-실습-2-stt--tts---마이크-출력을-다시-읊어주기">TTS 실습 2: STT + TTS - 마이크 출력을 다시 읊어주기</a></li></ul></li><li><a href="#bonus-keyboard-io">Bonus: Keyboard I/O</a></li></ul>
+              <ul class="toc__menu"><li><a href="#part-1-sstspeech-to-text">PART 1: SST(Speech to Text)</a></li><li><a href="#part-2-ttstext-to-speech">PART 2: TTS(Text to Speech)</a><ul><li><a href="#tts-exercise-1-요일시간-음성-출력하기-audio-output-daytime">TTS Exercise 1: 요일/시간 음성 출력하기 Audio Output (Day/Time)</a></li><li><a href="#tts-exercise-2-stt--tts">TTS Exercise 2: STT + TTS</a></li></ul></li><li><a href="#bonus-keyboard-io">Bonus: Keyboard I/O</a></li></ul>
 
             </nav>
           </aside>
@@ -421,21 +417,21 @@
     <span class="n">r</span> <span class="o">=</span> <span class="n">sr</span><span class="p">.</span><span class="n">Recognizer</span><span class="p">()</span>
 
     <span class="k">with</span> <span class="n">sr</span><span class="p">.</span><span class="n">Microphone</span><span class="p">()</span> <span class="k">as</span> <span class="n">source</span><span class="p">:</span>
-        <span class="n">r</span><span class="p">.</span><span class="n">pause_threshold</span> <span class="o">=</span> <span class="mf">0.8</span> <span class="c1"># 0.8초 동안 정적이면 자동으로 음성 녹음을 종료한다
-</span>        <span class="n">said</span> <span class="o">=</span> <span class="n">r</span><span class="p">.</span><span class="n">listen</span><span class="p">(</span><span class="n">source</span><span class="p">)</span> <span class="c1"># 녹음본 'said'에 저장하기
+        <span class="n">r</span><span class="p">.</span><span class="n">pause_threshold</span> <span class="o">=</span> <span class="mf">0.8</span> <span class="c1"># 0.8초 동안 정적이면 자동으로 음성 녹음을 종료한다 terminate recording in 0.8 seconds of silence
+</span>        <span class="n">said</span> <span class="o">=</span> <span class="n">r</span><span class="p">.</span><span class="n">listen</span><span class="p">(</span><span class="n">source</span><span class="p">)</span> <span class="c1"># 녹음본 'said'에 저장하기 save the record into 'said'
 </span>        <span class="k">try</span><span class="p">:</span>
-            <span class="n">q</span> <span class="o">=</span> <span class="n">r</span><span class="p">.</span><span class="n">recognize_google</span><span class="p">(</span><span class="n">said</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s">"ko"</span><span class="p">)</span> <span class="c1"># google 언어팩 사용
+            <span class="n">q</span> <span class="o">=</span> <span class="n">r</span><span class="p">.</span><span class="n">recognize_google</span><span class="p">(</span><span class="n">said</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s">"ko"</span><span class="p">)</span> <span class="c1"># google 언어팩 사용 using google language package
 </span>            <span class="k">return</span> <span class="n">q</span>
         <span class="k">except</span> <span class="n">sr</span><span class="p">.</span><span class="n">UnknownValueError</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s">"무슨 말인지 이해를 잘 못 했어요"</span>
-        <span class="k">except</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s">"대기중입니다."</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">transform</span><span class="p">()</span> <span class="c1"># STT 작업 시작
+            <span class="k">return</span> <span class="s">"무슨 말인지 이해를 잘 못 했어요"</span> <span class="c1"># "Cannot understnad your saying"
+</span>        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s">"대기중입니다."</span> <span class="c1"># "Awaiting"
 </span></code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>마이크를 켜고, 음성을 녹음하면 메시지로 출력되는 것을 보실 수 있습니다.
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">transform</span><span class="p">()</span> <span class="c1"># Start STT
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>마이크를 켜고, 음성을 녹음하면 메시지로 출력되는 것을 보실 수 있습니다. Turn on your microphone, then check if the program creates your record 
 </code></pre></div></div>
 
 <h1 id="part-2-ttstext-to-speech">PART 2: TTS(Text to Speech)</h1>
@@ -446,31 +442,31 @@
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pyttsx3</span>
 
 <span class="k">def</span> <span class="nf">speaking</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
-    <span class="n">engine</span> <span class="o">=</span> <span class="n">pyttsx3</span><span class="p">.</span><span class="n">init</span><span class="p">()</span> <span class="c1"># TTS 엔진 가동
-</span>    <span class="n">engine</span><span class="p">.</span><span class="n">say</span><span class="p">(</span><span class="n">message</span><span class="p">)</span> <span class="c1"># 메시지 내용 엔진에 전달
-</span>    <span class="n">engine</span><span class="p">.</span><span class="n">runAndWait</span><span class="p">()</span> <span class="c1"># 메시지 음성출력
+    <span class="n">engine</span> <span class="o">=</span> <span class="n">pyttsx3</span><span class="p">.</span><span class="n">init</span><span class="p">()</span> <span class="c1"># Run TTS engine
+</span>    <span class="n">engine</span><span class="p">.</span><span class="n">say</span><span class="p">(</span><span class="n">message</span><span class="p">)</span> <span class="c1"># 메시지 내용 엔진에 전달 Transfer message to the engine
+</span>    <span class="n">engine</span><span class="p">.</span><span class="n">runAndWait</span><span class="p">()</span> <span class="c1"># 메시지 음성출력 speak out the message
 </span></code></pre></div></div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">speaking</span><span class="p">(</span><span class="s">"이제 STT가 준비가 되었습니다. 계속 해서 Voice Assistance를 만들어 보겠습니다."</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">speaking</span><span class="p">(</span><span class="s">"이제 STT가 준비가 되었습니다. 계속 해서 Voice Assistance를 만들어 보겠습니다."</span><span class="p">)</span> <span class="c1"># "Now, STT is ready. We are going to make 'Voice Assistance'"
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>스피커에서 상기 메시지가 출력되는 것을 보실 수 있습니다. Your speaker will produce the message above
 </code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>스피커에서 상기 메시지가 출력되는 것을 보실 수 있습니다.
-</code></pre></div></div>
-
-<h2 id="tts-실습-1-요일시간-음성-출력하기">TTS 실습 1: 요일/시간 음성 출력하기</h2>
+<h2 id="tts-exercise-1-요일시간-음성-출력하기-audio-output-daytime">TTS Exercise 1: 요일/시간 음성 출력하기 Audio Output (Day/Time)</h2>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">query_day</span><span class="p">():</span>
     <span class="n">day</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="n">date</span><span class="p">.</span><span class="n">today</span><span class="p">()</span>
     <span class="n">weekday</span> <span class="o">=</span> <span class="n">day</span><span class="p">.</span><span class="n">weekday</span><span class="p">()</span>
     <span class="n">week_mapping</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="mi">0</span><span class="p">:</span> <span class="s">"월요일"</span><span class="p">,</span>
-        <span class="mi">1</span><span class="p">:</span> <span class="s">"화요일"</span><span class="p">,</span>
-        <span class="mi">2</span><span class="p">:</span> <span class="s">"수요일"</span><span class="p">,</span>
-        <span class="mi">3</span><span class="p">:</span> <span class="s">"목요일"</span><span class="p">,</span>
-        <span class="mi">4</span><span class="p">:</span> <span class="s">"금요일"</span><span class="p">,</span>
-        <span class="mi">5</span><span class="p">:</span> <span class="s">"토요일"</span><span class="p">,</span>
-        <span class="mi">6</span><span class="p">:</span> <span class="s">"일요일"</span><span class="p">,</span>
-    <span class="p">}</span>
+        <span class="mi">0</span><span class="p">:</span> <span class="s">"월요일"</span><span class="p">,</span> <span class="c1"># Monday
+</span>        <span class="mi">1</span><span class="p">:</span> <span class="s">"화요일"</span><span class="p">,</span> <span class="c1"># Tuesday
+</span>        <span class="mi">2</span><span class="p">:</span> <span class="s">"수요일"</span><span class="p">,</span> <span class="c1"># Wednesday
+</span>        <span class="mi">3</span><span class="p">:</span> <span class="s">"목요일"</span><span class="p">,</span> <span class="c1"># Thursday
+</span>        <span class="mi">4</span><span class="p">:</span> <span class="s">"금요일"</span><span class="p">,</span> <span class="c1"># Friday
+</span>        <span class="mi">5</span><span class="p">:</span> <span class="s">"토요일"</span><span class="p">,</span> <span class="c1"># Saturday
+</span>        <span class="mi">6</span><span class="p">:</span> <span class="s">"일요일"</span><span class="p">,</span> <span class="c1"># Sunday
+</span>    <span class="p">}</span>
 
     <span class="n">speaking</span><span class="p">(</span><span class="sa">f</span><span class="s">"오늘은 </span><span class="si">{</span><span class="n">week_mapping</span><span class="p">[</span><span class="n">weekday</span><span class="p">]</span><span class="si">}</span><span class="s">입니다. </span><span class="si">{</span><span class="n">week_mapping</span><span class="p">[</span><span class="n">weekday</span><span class="p">]</span><span class="si">}</span><span class="s">에도 공부하느라 고생이시네요!"</span> <span class="p">)</span>
 </code></pre></div></div>
@@ -478,7 +474,7 @@
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">query_day</span><span class="p">()</span>
 </code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>오늘 요일이 음성 출력되는 것을 보실 수 있습니다.
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>오늘 요일이 음성 출력되는 것을 보실 수 있습니다. Audio output successfully produced
 </code></pre></div></div>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">query_time</span><span class="p">():</span>
@@ -489,10 +485,10 @@
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">query_time</span><span class="p">()</span>
 </code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>현재 시간이 음성 출력되는 것을 보실 수 있습니다.
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>현재 시간이 음성 출력되는 것을 보실 수 있습니다. Audio output successfully produced
 </code></pre></div></div>
 
-<h2 id="tts-실습-2-stt--tts---마이크-출력을-다시-읊어주기">TTS 실습 2: STT + TTS - 마이크 출력을 다시 읊어주기</h2>
+<h2 id="tts-exercise-2-stt--tts">TTS Exercise 2: STT + TTS</h2>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">webbrowser</span>
 </code></pre></div></div>
@@ -521,8 +517,7 @@
         <span class="k">break</span>
 </code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>가령, '네이버 시작'이라는 마이크 입력을 넣으면, '네이버 시작'이라는 말이 스피커로 반향되며 webbrowser 라이브러리를 통하여 네이버를 브라우저에서 띄워준다.
-</code></pre></div></div>
+<p>가령, ‘네이버 시작’이라는 마이크 입력을 넣으면, ‘네이버 시작’이라는 말이 스피커로 반향되며 webbrowser 라이브러리를 통하여 네이버를 브라우저에서 띄워준다. <span style="color: blue">If you say ‘NAVER’, your speaker will produce “Start NAVER” and then open the site on your browser.  </span></p>
 
 <h1 id="bonus-keyboard-io">Bonus: Keyboard I/O</h1>
 
@@ -532,10 +527,10 @@
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pyautogui</span>
 </code></pre></div></div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">screenWidth</span><span class="p">,</span> <span class="n">screenHeight</span> <span class="o">=</span> <span class="n">pyautogui</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="c1"># 현재 화면 해상도
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">screenWidth</span><span class="p">,</span> <span class="n">screenHeight</span> <span class="o">=</span> <span class="n">pyautogui</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="c1"># screen resolution
 </span>
-<span class="n">pyautogui</span><span class="p">.</span><span class="n">moveTo</span><span class="p">(</span><span class="mi">700</span><span class="p">,</span> <span class="mi">1050</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="c1"># # 마우스 커서를 x, y 좌표로 이동
-</span><span class="n">pyautogui</span><span class="p">.</span><span class="n">click</span><span class="p">(</span><span class="n">button</span><span class="o">=</span><span class="s">"left"</span><span class="p">)</span> <span class="c1"># 해당 위치 버튼을 좌클릭
+<span class="n">pyautogui</span><span class="p">.</span><span class="n">moveTo</span><span class="p">(</span><span class="mi">700</span><span class="p">,</span> <span class="mi">1050</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="c1"># 마우스 커서를 x, y 좌표로 이동 Move the cursor to the coordinate of x and y
+</span><span class="n">pyautogui</span><span class="p">.</span><span class="n">click</span><span class="p">(</span><span class="n">button</span><span class="o">=</span><span class="s">"left"</span><span class="p">)</span> <span class="c1"># 해당 위치 버튼을 좌클릭 left-click the current position
 </span></code></pre></div></div>
 
         
@@ -600,11 +595,11 @@
       
   <nav class="pagination">
     
-      <a href="/machine/learning/ml-projects-1/" class="pagination--pager" title="ML Project 1: ANN - Car Sales Prediction
+      <a href="/ml/ml-projects-1/" class="pagination--pager" title="ML Project 1: ANN - Car Sales Prediction
 ">이전</a>
     
     
-      <a href="/machine/learning/ml-projects-2/" class="pagination--pager" title="ML Project 2: Deep Learning - CIFAR-10 Classification
+      <a href="/ml/ml-projects-2/" class="pagination--pager" title="ML Project 2: Deep Learning - CIFAR-10 Classification
 ">다음</a>
     
   </nav>
@@ -628,12 +623,12 @@
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
       <div class="archive__item-teaser">
-        <img src="/assets/images/posts/ml-thumbnail.jpg" alt="">
+        <img src="/assets/images/posts/teeko.png" alt="">
       </div>
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
       
-        <a href="/machine/learning/ml-projects-3/" rel="permalink">ML Project 3: Profit Time Series
+        <a href="/ml/ml-teeko-minimax/" rel="permalink">ML: Minimax 알고리즘 - Teeko Game
 </a>
       
     </h2>
@@ -645,59 +640,7 @@
       <span class="page__meta-date">
         <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
         
-        <time datetime="2022-07-23T00:00:00+09:00">2022-07-23</time>
-      </span>
-    
-
-    <span class="page__meta-sep"></span>
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
-        
-          최대 1 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">코드
-[Notice] download here
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/assets/images/posts/ml-thumbnail.jpg" alt="">
-      </div>
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/machine/learning/ml-projects-2/" rel="permalink">ML Project 2: Deep Learning - CIFAR-10 Classification
-</a>
-      
-    </h2>
-    
-
-  <p class="page__meta">
-    
-      
-      <span class="page__meta-date">
-        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
-        
-        <time datetime="2022-07-23T00:00:00+09:00">2022-07-23</time>
+        <time datetime="2022-08-14T00:00:00+09:00">2022-08-14</time>
       </span>
     
 
@@ -717,8 +660,7 @@
   </p>
 
 
-    <p class="archive__item-excerpt" itemprop="description">코드
-[Notice] download here
+    <p class="archive__item-excerpt" itemprop="description">Minimax 알고리즘을 활용해서 Teeko 게임을 구현한다.
 </p>
   </article>
 </div>
@@ -732,12 +674,12 @@
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
       <div class="archive__item-teaser">
-        <img src="/assets/images/posts/ml-thumbnail.jpg" alt="">
+        <img src="/assets/images/posts/pca-image-compression.png" alt="">
       </div>
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
       
-        <a href="/machine/learning/ml-projects-1/" rel="permalink">ML Project 1: ANN - Car Sales Prediction
+        <a href="/ml/ml-pca/" rel="permalink">ML: PCA - Image Compression(이미지 압축)
 </a>
       
     </h2>
@@ -749,7 +691,7 @@
       <span class="page__meta-date">
         <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
         
-        <time datetime="2022-07-22T00:00:00+09:00">2022-07-22</time>
+        <time datetime="2022-08-14T00:00:00+09:00">2022-08-14</time>
       </span>
     
 
@@ -762,15 +704,14 @@
       <span class="page__meta-readtime">
         <i class="far fa-fw fa-clock" aria-hidden="true"></i>
         
-          3 분 소요
+          2 분 소요
         
       </span>
     
   </p>
 
 
-    <p class="archive__item-excerpt" itemprop="description">코드
-[Notice] download here
+    <p class="archive__item-excerpt" itemprop="description">PCA를 이용해서 이미지 압축을 진행해보자.
 </p>
   </article>
 </div>
@@ -784,12 +725,12 @@
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
       <div class="archive__item-teaser">
-        <img src="/assets/images/posts/nlp-thumbnail.jpg" alt="">
+        <img src="/assets/images/posts/hac.png" alt="">
       </div>
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
       
-        <a href="/nlp/nlp-basic-word-embedding/" rel="permalink">NLP - Part 2: Word Embedding
+        <a href="/ml/ml-hca/" rel="permalink">ML: Hierarchical Agglomerate Clustering(HAC) - 포켓몬 군집화
 </a>
       
     </h2>
@@ -801,7 +742,7 @@
       <span class="page__meta-date">
         <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
         
-        <time datetime="2022-07-20T00:00:00+09:00">2022-07-20</time>
+        <time datetime="2022-08-14T00:00:00+09:00">2022-08-14</time>
       </span>
     
 
@@ -814,14 +755,65 @@
       <span class="page__meta-readtime">
         <i class="far fa-fw fa-clock" aria-hidden="true"></i>
         
-          7 분 소요
+          4 분 소요
         
       </span>
     
   </p>
 
 
-    <p class="archive__item-excerpt" itemprop="description">PART 1: Vectorization
+    <p class="archive__item-excerpt" itemprop="description">Hierarchical Agglomerate Clustering(HAC) 이용해서 서로 다른 특성을 공유하는 Pokemon들을 군집으로 묶어보자.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/lenet.JPG" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/dl/dl-miniplace-classification/" rel="permalink">DL: LeNet 신경망 - MiniPlaces 이미지 분류
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        
+        <time datetime="2022-08-14T00:00:00+09:00">2022-08-14</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">LeNet 신경망을 활용해서 MiniPlaces 데이터셋 이미지 분류 작업을 수행한다.
 </p>
   </article>
 </div>

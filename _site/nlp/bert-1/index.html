@@ -9,8 +9,8 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>ML Project 3: Profit Time Series | 정리하여 내 것으로, AI</title>
-<meta name="description" content="코드 [Notice] download here">
+<!-- begin _includes/seo.html --><title>BERT Language Model - Part 1 | 정리하여 내 것으로, AI</title>
+<meta name="description" content="자연어 처리(Natural Language Processing, NLP) 자연어란?">
 
 
   <meta name="author" content="Hojun Eric Choi">
@@ -22,32 +22,32 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:site_name" content="정리하여 내 것으로, AI">
-<meta property="og:title" content="ML Project 3: Profit Time Series">
-<meta property="og:url" content="http://localhost:4000/machine/learning/ml-projects-3/">
+<meta property="og:title" content="BERT Language Model - Part 1">
+<meta property="og:url" content="http://localhost:4000/nlp/bert-1/">
 
 
-  <meta property="og:description" content="코드 [Notice] download here">
-
-
-
-  <meta property="og:image" content="http://localhost:4000/assets/images/posts/ml-thumbnail.jpg">
+  <meta property="og:description" content="자연어 처리(Natural Language Processing, NLP) 자연어란?">
 
 
 
-
-
-  <meta property="article:published_time" content="2022-07-23T00:00:00+09:00">
+  <meta property="og:image" content="http://localhost:4000/assets/images/posts/bert-thumbnail.png">
 
 
 
 
 
-  
+  <meta property="article:published_time" content="2022-08-08T00:00:00+09:00">
+
+
+
+
 
   
 
+  
 
-<link rel="canonical" href="http://localhost:4000/machine/learning/ml-projects-3/">
+
+<link rel="canonical" href="http://localhost:4000/nlp/bert-1/">
 
 
 
@@ -172,7 +172,7 @@
       
         
         <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a href="/categories/#machine" itemprop="item"><span itemprop="name">Machine</span></a>
+          <a href="/categories/#nlp" itemprop="item"><span itemprop="name">Nlp</span></a>
           <meta itemprop="position" content="2" />
         </li>
         <span class="sep">/</span>
@@ -180,17 +180,7 @@
     
       
       
-        
-        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a href="/categories/#learning" itemprop="item"><span itemprop="name">Learning</span></a>
-          <meta itemprop="position" content="3" />
-        </li>
-        <span class="sep">/</span>
-      
-    
-      
-      
-        <li class="current">ML Project 3: Profit Time Series</li>
+        <li class="current">BERT Language Model - Part 1</li>
       
     
   </ol>
@@ -239,10 +229,6 @@
       
 
       
-        
-          
-            <li><a href="mailto:hchoi256@wisc.edu" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
-          
         
           
             <li><a href="https://www.linkedin.com/in/hojun-choi-2b10b11a0/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
@@ -366,16 +352,16 @@
 
 
   <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="ML Project 3: Profit Time Series">
-    <meta itemprop="description" content="코드[Notice] download here">
-    <meta itemprop="datePublished" content="2022-07-23T00:00:00+09:00">
+    <meta itemprop="headline" content="BERT Language Model - Part 1">
+    <meta itemprop="description" content="자연어 처리(Natural Language Processing, NLP)자연어란?">
+    <meta itemprop="datePublished" content="2022-08-08T00:00:00+09:00">
     
 
     <div class="page__inner-wrap">
       
         <header>
           <h1 id="page-title" class="page__title p-name" itemprop="headline">
-            <a href="http://localhost:4000/machine/learning/ml-projects-3/" class="u-url" itemprop="url">ML Project 3: Profit Time Series
+            <a href="http://localhost:4000/nlp/bert-1/" class="u-url" itemprop="url">BERT Language Model - Part 1
 </a>
           </h1>
           
@@ -386,7 +372,7 @@
       <span class="page__meta-date">
         <i class="far fa-calendar-alt" aria-hidden="true"></i>
         
-        <time datetime="2022-07-23T00:00:00+09:00">2022-07-23</time>
+        <time datetime="2022-08-08T00:00:00+09:00">2022-08-08</time>
       </span>
     
 
@@ -399,7 +385,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          최대 1 분 소요
+          1 분 소요
         
       </span>
     
@@ -414,17 +400,147 @@
           <aside class="sidebar__right sticky">
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> GITHUB BLOG JJUNS</h4></header>
-              <ul class="toc__menu"><li><a href="#코드">코드</a></li><li><a href="#part-1-chicago-crime-rate">PART 1: Chicago Crime Rate</a></li><li><a href="#part-2-avocado-market">PART 2: Avocado Market</a></li></ul>
+              <ul class="toc__menu"><li><a href="#자연어-처리natural-language-processing-nlp">자연어 처리(Natural Language Processing, NLP)</a><ul><li><a href="#자연어란">자연어란?</a></li><li><a href="#자연어-처리의-두-종류">자연어 처리의 두 종류</a></li><li><a href="#자연어-처리의-단계">자연어 처리의 단계</a></li><li><a href="#nlp-활용-분야">NLP 활용 분야</a></li></ul></li><li><a href="#word-embedding">Word embedding</a><ul><li><a href="#1-one-hot-encoding-sparse-representation">1. One-hot encoding (sparse representation)</a></li><li><a href="#2-word2vec-dense-representation">2. Word2Vec (dense representation)</a></li><li><a href="#3-fasttext">3. FastText</a></li><li><a href="#word-embedding-한계점">Word embedding 한계점</a></li></ul></li></ul>
 
             </nav>
           </aside>
         
-        <h1 id="코드">코드</h1>
-<p class="notice--danger"><strong>[Notice]</strong> <a href="https://github.com/hchoi256/machine-learning-development">download here</a></p>
+        <h1 id="자연어-처리natural-language-processing-nlp">자연어 처리(Natural Language Processing, NLP)</h1>
+<h2 id="자연어란">자연어란?</h2>
+<p><img src="https://user-images.githubusercontent.com/39285147/183526289-0d7a43a8-f329-4ed1-9e0b-31259a32fe6f.png" alt="image" /></p>
 
-<h1 id="part-1-chicago-crime-rate">PART 1: Chicago Crime Rate</h1>
+<ul>
+  <li>부호화(Encoding)</li>
+  <li>해독(Decoding)</li>
+</ul>
 
-<h1 id="part-2-avocado-market">PART 2: Avocado Market</h1>
+<p>자연어 처리는 상기 도표에서 컴퓨터가 <strong>텍스트를 해독하는 과정</strong>을 의미한다.</p>
+
+<p>일상에서 사용하는 모든 인간의 언어로, 한국어, 영어와 같은 것들이 예시이다.</p>
+
+<blockquote>
+  <p>인공언어: 프로그래밍 언어, etc.</p>
+</blockquote>
+
+<h2 id="자연어-처리의-두-종류">자연어 처리의 두 종류</h2>
+<ol>
+  <li>
+    <p><strong>규칙 기반 접근법 (Symbolic approach)</strong></p>
+  </li>
+  <li>
+    <p><strong>확률 기반 접근법 (Statistical approach)</strong></p>
+    <ul>
+      <li><em>TF-IDF</em>
+        <ul>
+          <li>TF(Term frequency): 단어가 문서에 등장한 개수 (TF ↑, 중요단어확률 ↑)</li>
+          <li>DF(Document frequency): 해당 단어가 등장한 문서의 개수 (DF ↑, 중요단어확률 ↓)</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="자연어-처리의-단계">자연어 처리의 단계</h2>
+<p>① <strong>전처리</strong></p>
+
+<ul>
+  <li>개행문자, 특수문자, 공백, 중복 표현, 이메일 및 링크, 불용어, 조사 제거</li>
+  <li>띄어쓰기, 문장분리 보정</li>
+  <li>어간추출</li>
+</ul>
+
+<p>② <strong>Tokenizing</strong></p>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/183527388-2369aaca-6791-42d0-821b-1e09460d713f.png" alt="image" /></p>
+
+<ul>
+  <li>어절 tokenizing</li>
+  <li>형태소 tokenizing</li>
+  <li>n-gram tokenizing</li>
+  <li><strong>WordPiece tokenizing</strong> (BERT)</li>
+</ul>
+
+<p>③ <strong>Lexical analysis</strong></p>
+
+<ul>
+  <li>어휘, 형태소 분석</li>
+  <li>개체명 인식</li>
+  <li>상호 참조</li>
+</ul>
+
+<p>④ <strong>Syntactic analysis</strong></p>
+
+<ul>
+  <li>구문 분석</li>
+</ul>
+
+<p>⑤ <strong>Semantic analysis</strong></p>
+
+<ul>
+  <li>의미 분석</li>
+</ul>
+
+<h2 id="nlp-활용-분야">NLP 활용 분야</h2>
+<ul>
+  <li>의미 분석 (i.e., 최초의 컴퓨터는 무엇 –&gt; ‘질문’)</li>
+  <li>구문 분석 (i.e., 문법 구문 분석)</li>
+  <li>감성 분석</li>
+  <li>형태소 분석</li>
+  <li>개체명 인식 (i.e., 네이버는 어떤 회사 –&gt; ‘기관’)</li>
+</ul>
+
+<h1 id="word-embedding">Word embedding</h1>
+<p>‘자연어’에서 특징을 추출하는 방법이다.</p>
+
+<p>텍스트를 컴퓨터가 이해하고, 효율적으로 처리하게 하기 위해서는 컴퓨터가 이해할 수 있도록 텍스트를 적절히 숫자로 변환하여 좌표평면 위에 표현할 필요가 있다.</p>
+
+<p>그러한 방법으로 가장 첫 번째로 제시된 것이 <strong>One-hot encoding</strong>이다.</p>
+
+<h2 id="1-one-hot-encoding-sparse-representation">1. <strong>One-hot encoding</strong> (sparse representation)</h2>
+<p><img src="https://user-images.githubusercontent.com/39285147/183528088-8343c972-2c27-4f45-812b-3259e39e2151.png" alt="image" /></p>
+
+<ul>
+  <li>각 단어가 가지는 <strong>의미 파악이 불가능하다</strong></li>
+  <li>단어 간 <strong>유사성 비교가 불가능하다</strong>.</li>
+  <li><a href="https://github.com/hchoi256/ai-terms"><strong>차원의 저주</strong></a>에 빠질 위험성 多</li>
+</ul>
+
+<h2 id="2-word2vec-dense-representation">2. Word2Vec (dense representation)</h2>
+<p><img src="https://user-images.githubusercontent.com/39285147/183535690-05358c7b-a9ba-4893-8959-53e36b521513.png" alt="image" /></p>
+
+<ul>
+  <li>자연어의 <strong>의미를 ‘벡터 공간’에 임베딩</strong>하여, one-hot encoding의 한계점을 해결한다.
+    <ul>
+      <li>i.e., <em>한국 - 서울 + 도쿄 = 일본</em></li>
+    </ul>
+  </li>
+  <li>한 단어의 <strong>주변 단어들을 통해</strong> 비지도학습으로 그 단어의 의미 파악이 가능하다 (유사성 有).</li>
+  <li><strong>한정된 자원</strong>으로 표현이 가능하다.</li>
+</ul>
+
+<p>One-hot 벡터들을 인풋으로 받고, 2개의 간단한 hidden layer를 가진 신경망으로 구성되있다.</p>
+
+<p>주변부 단어를 예측하는 방식으로 학습하여 인풋 단어를 올바르게 유츄해낸다.</p>
+
+<p>단어 벡터의 유사성과 semantic 혹은 syntactic analogy를 통하여 Word2Vec 성능을 검증한다.</p>
+
+<p>하지만, 단어의 <strong>subword information(i,e., 서울 vs 서울시)을 무시</strong>하고 <strong>학습에 사용될 충분한 vocabulary가 주어져야 한다</strong>는 한계가 존재한다.</p>
+
+<h2 id="3-fasttext">3. FastText</h2>
+<p><img src="https://user-images.githubusercontent.com/39285147/183534835-d42db067-905f-483d-a738-e437e4dc4e78.png" alt="image" /></p>
+
+<p>subword information을 무시하는 Word2Vec 한계를 <strong>n-gram 기법</strong>을 통해 subword를 직접 학습하면서 극복한다 (i.e., assumption에 2-gram을 적용하면 as, ss, su,..).</p>
+
+<p>FastText는 단어를 n-gram으로 분리한 후, 모든 n-gram vector를 합산한 평균을 통해 단어 벡터를 획득한다.</p>
+
+<p><strong>오탈자, OOV (Out of Vocabulary), 그리고 빈도수가 적은 단어</strong>에 대한 학습이 용이하다.</p>
+
+<h2 id="word-embedding-한계점">Word embedding 한계점</h2>
+<p><strong>동형어, 다의어</strong>(<em>account: 계좌, 차지하다, etc.</em>)와 같은 단어에 대한 embedding 성능이 좋지 않다.</p>
+
+<p><del>주변 단어를 예측하는 방식으로 학습하기 때문에 <strong>‘문맥’을 고려할 수 없다</strong>.</del></p>
+
+<p>이러한 한계점을 타파하는 <a href="https://hchoi256.github.io/nlp/bert-2/"><strong>언어 모델(Language Model)</strong></a>에 대해 다음 시간에 알아보자.</p>
 
         
       </section>
@@ -441,7 +557,11 @@
     <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
     <span itemprop="keywords">
     
-      <a href="/tags/#machine-learning" class="page__taxonomy-item p-category" rel="tag">machine-learning</a><span class="sep">, </span>
+      <a href="/tags/#bert" class="page__taxonomy-item p-category" rel="tag">BERT</a><span class="sep">, </span>
+    
+      <a href="/tags/#language-model" class="page__taxonomy-item p-category" rel="tag">Language Model</a><span class="sep">, </span>
+    
+      <a href="/tags/#nlp" class="page__taxonomy-item p-category" rel="tag">NLP</a><span class="sep">, </span>
     
       <a href="/tags/#python" class="page__taxonomy-item p-category" rel="tag">python</a>
     
@@ -460,9 +580,7 @@
     <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
     <span itemprop="keywords">
     
-      <a href="/categories/#learning" class="page__taxonomy-item p-category" rel="tag">Learning</a><span class="sep">, </span>
-    
-      <a href="/categories/#machine" class="page__taxonomy-item p-category" rel="tag">Machine</a>
+      <a href="/categories/#nlp" class="page__taxonomy-item p-category" rel="tag">NLP</a>
     
     </span>
   </p>
@@ -470,7 +588,7 @@
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-07-23T00:00:00+09:00">2022-07-23</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-08-08T00:00:00+09:00">2022-08-08</time></p>
 
       </footer>
 
@@ -479,22 +597,23 @@
     <h4 class="page__share-title">공유하기</h4>
   
 
-  <a href="https://twitter.com/intent/tweet?text=ML+Project+3%3A+Profit+Time+Series%20http%3A%2F%2Flocalhost%3A4000%2Fmachine%2Flearning%2Fml-projects-3%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=BERT+Language+Model+-+Part+1%20http%3A%2F%2Flocalhost%3A4000%2Fnlp%2Fbert-1%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fmachine%2Flearning%2Fml-projects-3%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fnlp%2Fbert-1%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fmachine%2Flearning%2Fml-projects-3%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fnlp%2Fbert-1%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 </section>
 
 
       
   <nav class="pagination">
     
-      <a href="/machine/learning/ml-projects-2/" class="pagination--pager" title="ML Project 2: Deep Learning - CIFAR-10 Classification
+      <a href="/ai/ai-paper-dl-behicle-detection-by-sensor/" class="pagination--pager" title="[논문 분석] Deep Learning-Based Vehicle Anomaly Detection by Combining Vehicle Sensor Data (KAIS 2021)
 ">이전</a>
     
     
-      <a href="#" class="pagination--pager disabled">다음</a>
+      <a href="/nlp/bert-2/" class="pagination--pager" title="BERT Language Model - Part 2
+">다음</a>
     
   </nav>
 
@@ -517,12 +636,12 @@
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
       <div class="archive__item-teaser">
-        <img src="/assets/images/posts/ml-thumbnail.jpg" alt="">
+        <img src="/assets/images/posts/teeko.png" alt="">
       </div>
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
       
-        <a href="/machine/learning/ml-projects-2/" rel="permalink">ML Project 2: Deep Learning - CIFAR-10 Classification
+        <a href="/ml/ml-teeko-minimax/" rel="permalink">ML: Minimax 알고리즘 - Teeko Game
 </a>
       
     </h2>
@@ -534,7 +653,7 @@
       <span class="page__meta-date">
         <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
         
-        <time datetime="2022-07-23T00:00:00+09:00">2022-07-23</time>
+        <time datetime="2022-08-14T00:00:00+09:00">2022-08-14</time>
       </span>
     
 
@@ -554,8 +673,7 @@
   </p>
 
 
-    <p class="archive__item-excerpt" itemprop="description">코드
-[Notice] download here
+    <p class="archive__item-excerpt" itemprop="description">Minimax 알고리즘을 활용해서 Teeko 게임을 구현한다.
 </p>
   </article>
 </div>
@@ -569,12 +687,12 @@
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
       <div class="archive__item-teaser">
-        <img src="/assets/images/posts/nlp-thumbnail.jpg" alt="">
+        <img src="/assets/images/posts/pca-image-compression.png" alt="">
       </div>
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
       
-        <a href="/nlp/nlp-voice-recognition/" rel="permalink">NLP - Part 3: Voice Recognition
+        <a href="/ml/ml-pca/" rel="permalink">ML: PCA - Image Compression(이미지 압축)
 </a>
       
     </h2>
@@ -586,7 +704,7 @@
       <span class="page__meta-date">
         <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
         
-        <time datetime="2022-07-22T00:00:00+09:00">2022-07-22</time>
+        <time datetime="2022-08-14T00:00:00+09:00">2022-08-14</time>
       </span>
     
 
@@ -599,14 +717,14 @@
       <span class="page__meta-readtime">
         <i class="far fa-fw fa-clock" aria-hidden="true"></i>
         
-          1 분 소요
+          2 분 소요
         
       </span>
     
   </p>
 
 
-    <p class="archive__item-excerpt" itemprop="description">PART 1: SST(Speech to Text)
+    <p class="archive__item-excerpt" itemprop="description">PCA를 이용해서 이미지 압축을 진행해보자.
 </p>
   </article>
 </div>
@@ -620,12 +738,12 @@
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
       <div class="archive__item-teaser">
-        <img src="/assets/images/posts/ml-thumbnail.jpg" alt="">
+        <img src="/assets/images/posts/hac.png" alt="">
       </div>
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
       
-        <a href="/machine/learning/ml-projects-1/" rel="permalink">ML Project 1: ANN - Car Sales Prediction
+        <a href="/ml/ml-hca/" rel="permalink">ML: Hierarchical Agglomerate Clustering(HAC) - 포켓몬 군집화
 </a>
       
     </h2>
@@ -637,7 +755,7 @@
       <span class="page__meta-date">
         <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
         
-        <time datetime="2022-07-22T00:00:00+09:00">2022-07-22</time>
+        <time datetime="2022-08-14T00:00:00+09:00">2022-08-14</time>
       </span>
     
 
@@ -650,15 +768,14 @@
       <span class="page__meta-readtime">
         <i class="far fa-fw fa-clock" aria-hidden="true"></i>
         
-          3 분 소요
+          4 분 소요
         
       </span>
     
   </p>
 
 
-    <p class="archive__item-excerpt" itemprop="description">코드
-[Notice] download here
+    <p class="archive__item-excerpt" itemprop="description">Hierarchical Agglomerate Clustering(HAC) 이용해서 서로 다른 특성을 공유하는 Pokemon들을 군집으로 묶어보자.
 </p>
   </article>
 </div>
@@ -672,12 +789,12 @@
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
       <div class="archive__item-teaser">
-        <img src="/assets/images/posts/nlp-thumbnail.jpg" alt="">
+        <img src="/assets/images/posts/lenet.JPG" alt="">
       </div>
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
       
-        <a href="/nlp/nlp-basic-word-embedding/" rel="permalink">NLP - Part 2: Word Embedding
+        <a href="/dl/dl-miniplace-classification/" rel="permalink">DL: LeNet 신경망 - MiniPlaces 이미지 분류
 </a>
       
     </h2>
@@ -689,7 +806,7 @@
       <span class="page__meta-date">
         <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
         
-        <time datetime="2022-07-20T00:00:00+09:00">2022-07-20</time>
+        <time datetime="2022-08-14T00:00:00+09:00">2022-08-14</time>
       </span>
     
 
@@ -702,14 +819,14 @@
       <span class="page__meta-readtime">
         <i class="far fa-fw fa-clock" aria-hidden="true"></i>
         
-          7 분 소요
+          2 분 소요
         
       </span>
     
   </p>
 
 
-    <p class="archive__item-excerpt" itemprop="description">PART 1: Vectorization
+    <p class="archive__item-excerpt" itemprop="description">LeNet 신경망을 활용해서 MiniPlaces 데이터셋 이미지 분류 작업을 수행한다.
 </p>
   </article>
 </div>
@@ -779,8 +896,8 @@
     
   <script>
     var disqus_config = function () {
-      this.page.url = "http://localhost:4000/machine/learning/ml-projects-3/";  /* Replace PAGE_URL with your page's canonical URL variable */
-      this.page.identifier = "/machine/learning/ml-projects-3"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+      this.page.url = "http://localhost:4000/nlp/bert-1/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/nlp/bert-1"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
     };
     (function() { /* DON'T EDIT BELOW THIS LINE */
       var d = document, s = d.createElement('script');
