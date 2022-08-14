@@ -8,7 +8,7 @@ toc_sticky: true
 toc_label: "GITHUB BLOG JJUNS"
 #author_profile: false
 header:
-    teaser: /assets/images/posts/8-tile-puzzle.png
+    teaser: /assets/images/posts/q-learning.png
 sidebar:
     nav: "docs"
 ---
