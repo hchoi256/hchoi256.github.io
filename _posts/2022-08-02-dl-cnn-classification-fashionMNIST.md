@@ -14,8 +14,11 @@ sidebar:
 search: false
 ---
 
-# Learning Goals
-CNN 활용 fashionMNIST 이미지 분류 <span style="color: blue"> fashionMNIST image classification using CNN </span>
+Tensorflow & PyTorch 활용 CNN 모델의 fashionMNIST 이미지 분류 <span style="color: blue"> fashionMNIST image classification using CNN w/ Tensorflow and PyTorch </span>
+
+# Code
+**[Notice]** [fasionMNIST(PyTorch)](https://github.com/hchoi256/cs540-AI/tree/main/introduction-to-pytorch)
+{: .notice--danger}
 
 # Loading the dataset
 
