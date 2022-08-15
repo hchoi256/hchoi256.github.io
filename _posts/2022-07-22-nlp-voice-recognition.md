@@ -13,7 +13,7 @@ sidebar:
     nav: "docs"
 ---
 
-# PART 1: SST(Speech to Text)
+# PART 1: STT(Speech to Text)
 
 ```python
 !pip install SpeechRecognition
