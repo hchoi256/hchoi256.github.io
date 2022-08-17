@@ -106,7 +106,7 @@ analytics:
 author:
   name             : "Hojun Eric Choi"
   avatar           : "/assets/images/echoi.jpg"
-  bio              : "I am a senior-year B.S. student in Computer Science and Data Science at the University of Wisconsin, Madison.\n\nMy research interests are **ML**, **deep NLP**, and **computer vision** for emerging application domains."
+  bio              : "I am a senior-year B.S. student in Computer Science and Data Science at the University of Wisconsin, Madison.\n\nMy research interests are **hyper-scale AI**, **ML**, **deep NLP**, and **XAI in computer vision**."
   location         : "Madison"
   email            : "hchoi256@wisc.edu"
   links:
@@ -119,10 +119,12 @@ author:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/hchoi256"
+    - label: "Portfolio"
+      icon: "fas fa-fw fa-link"
+      url: "/assets/포트폴리오.pdf"
     - label: "CV"
       icon: "fas fa-fw fa-link"
       url: "/assets/CV.pdf"
-
 # Site Footer
 footer:
   links:
@@ -135,6 +137,9 @@ footer:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/hchoi256"
+    - label: "Portfolio"
+      icon: "fas fa-fw fa-link"
+      url: "/assets/포트폴리오.pdf"
     - label: "CV"
       icon: "fas fa-fw fa-link"
       url: "/assets/CV.pdf"
