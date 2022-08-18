@@ -15,7 +15,7 @@ search: false
 ---
 
 # Background
-ANN을 이용한 자전거 대여량 예측 <span style="color: blue">Prediction of bicycle rental volume using ANN </span>
+ANN을 이용한 자전거 대여량 예측 <span style="color: yellow">Prediction of bicycle rental volume using ANN </span>
 
 # Loading the dataset
 
@@ -50,7 +50,7 @@ bike.isnull().sum() # 결측치 확인 missing values
         cnt           0
         dtype: int64
 
-상기 결과는 결측치가 없음을 보여준다. <span style="color: blue">The results show that there are no missing values. </span>
+상기 결과는 결측치가 없음을 보여준다. <span style="color: yellow">The results show that there are no missing values. </span>
 
 ```python
 # 불필요한 열 제거 Removing unnecessary columns
@@ -140,7 +140,7 @@ sns.heatmap(X_numerical.corr(), annot = True) # confusion matrix
 ![image](https://user-images.githubusercontent.com/39285147/182334975-f15f4f95-6213-45f3-b5b6-7dbaed6466f5.png)
 
 
-*annot*: 수치 표시 <span style="color: blue"> showing numerical values </span> 
+*annot*: 수치 표시 <span style="color: yellow"> showing numerical values </span> 
 
 ## Preprocessing
 
@@ -152,7 +152,7 @@ X_cat
 ![image](https://user-images.githubusercontent.com/39285147/182335361-63b27c61-e7f3-4eb8-8b1b-366bb93fef9a.png)
 
 
-상기 언급된 독립변수를 신경망 학습에 사용한다. <span style="color: blue"> We are going to train an ANN with the independent variables listed above.</span>
+상기 언급된 독립변수를 신경망 학습에 사용한다. <span style="color: yellow"> We are going to train an ANN with the independent variables listed above.</span>
 
 ```python
 # converting categorical data
@@ -293,9 +293,9 @@ epochs_hist.history.keys()
         dict_keys(['loss', 'val_loss'])
 
 
-모델 성능 평가 피라미터로 'loss'와 'val_loss'가 있다. <span style="color: blue">We have two evaluating parameters, 'loss' and 'val_loss'. </span>
+모델 성능 평가 피라미터로 'loss'와 'val_loss'가 있다. <span style="color: yellow">We have two evaluating parameters, 'loss' and 'val_loss'. </span>
 
-'loss'는 테스트셋을 대상으로 학습한 손실값, 'val_loss'는 학습 데이터의 검증셋으로 도출한 손실값 분포이다.  <span style="color: blue"> 'loss' is based on the test set, and 'val_loss' is based on the validation set that is part of the training set. </span>
+'loss'는 테스트셋을 대상으로 학습한 손실값, 'val_loss'는 학습 데이터의 검증셋으로 도출한 손실값 분포이다.  <span style="color: yellow"> 'loss' is based on the test set, and 'val_loss' is based on the validation set that is part of the training set. </span>
 
 ## Visualizing the training and test results
 
@@ -322,9 +322,9 @@ plt.ylabel("True Values")
 ![image](https://user-images.githubusercontent.com/39285147/182338196-2dc8b1c6-41b5-4b98-93f8-812ab3abb882.png)
 
 
-상기 분포의 단위가 정규화된 것을 볼 수 있다. <span style="color: blue"> It can be seen that the units of the distribution are normalized. </span>
+상기 분포의 단위가 정규화된 것을 볼 수 있다. <span style="color: yellow"> It can be seen that the units of the distribution are normalized. </span>
 
-따라서, 원래 단위로 다시 변환해주도록 하자. <span style="color: blue"> So, let's convert it back to the original unit. </span>
+따라서, 원래 단위로 다시 변환해주도록 하자. <span style="color: yellow"> So, let's convert it back to the original unit. </span>
 
 ```python
 y_predict_org = scaler.inverse_transform(y_predict)
@@ -350,9 +350,9 @@ r2 = r2_score(y_test_org, y_predict_org)
 adj_r2 = 1 - (1-r2)*(n-1)/(n-147-1)
 ```
 
-모델의 성능을 검증하기 위한 손실/비용 함수의 종류에는 여러 가지가 존재한다. <span style="color: blue"> There are several types of loss/cost functions for verifying the performance of the model. </span>
+모델의 성능을 검증하기 위한 손실/비용 함수의 종류에는 여러 가지가 존재한다. <span style="color: yellow"> There are several types of loss/cost functions for verifying the performance of the model. </span>
 
-각 손실함수 사용에 따른 모델 성능을 확인해보자. <span style="color: blue"> Let's check the model performance according to the use of each loss function. </span>
+각 손실함수 사용에 따른 모델 성능을 확인해보자. <span style="color: yellow"> Let's check the model performance according to the use of each loss function. </span>
 
 ```python
 print(f"RMSE = {RMSE}, MSE = {MSE}, MAE = {MAE}, R2 = {r2}, Adjusted R2 = {adj_r2}")
@@ -364,6 +364,6 @@ print(f"RMSE = {RMSE}, MSE = {MSE}, MAE = {MAE}, R2 = {r2}, Adjusted R2 = {adj_r
         R2 = 0.7237822988637166, 
         Adjusted R2 = 41.32778436589738
 
-공통적으로 모두 수치가 낮을수록 모델의 좋은 성능을 의미한다. <span style="color: blue">In general, the lower the number, the better the model's performance. </span>
+공통적으로 모두 수치가 낮을수록 모델의 좋은 성능을 의미한다. <span style="color: yellow">In general, the lower the number, the better the model's performance. </span>
 
-각각에 대한 보다 자세한 설명은 생략한다. <span style="color: blue"> A more detailed description of each will be omitted. </span>
+각각에 대한 보다 자세한 설명은 생략한다. <span style="color: yellow"> A more detailed description of each will be omitted. </span>

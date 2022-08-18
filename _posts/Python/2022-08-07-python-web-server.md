@@ -13,7 +13,7 @@ sidebar:
     nav: "docs"
 ---
 
-파이썬으로 웹 서버 구동없이 웹 어플리케이션을 만들기 위해 '**streamlit**' 라이브러리가 활용된다. <span style="color: blue"> To create a web application without a server, we use the '**streamlit**' library. </span>
+파이썬으로 웹 서버 구동없이 웹 어플리케이션을 만들기 위해 '**streamlit**' 라이브러리가 활용된다. <span style="color: yellow"> To create a web application without a server, we use the '**streamlit**' library. </span>
 
 ****
 # Loading the library for web server

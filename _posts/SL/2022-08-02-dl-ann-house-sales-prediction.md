@@ -15,7 +15,7 @@ search: false
 ---
 
 # Learning Goals
-ANN을 이용한 주택 가격 예측 <span style="color: blue">House Price Prediction Using ANN </span>
+ANN을 이용한 주택 가격 예측 <span style="color: yellow">House Price Prediction Using ANN </span>
 
 # Loading the dataset
 
@@ -78,13 +78,13 @@ sns.heatmap(house_df.corr(), annot=True)
 sns.scatterplot(x = "sqft_living", y="price", data=house_df)
 ```
 
-맛보기로 'sqft_living' 변수와 종속변수('Price')의 상관관계 분포도를 만들었다. <span style="color: blue"> For testing, I created a plot of the correlation between 'sqft_living' and 'Price'. </span>
+맛보기로 'sqft_living' 변수와 종속변수('Price')의 상관관계 분포도를 만들었다. <span style="color: yellow"> For testing, I created a plot of the correlation between 'sqft_living' and 'Price'. </span>
 
 
 ![image](https://user-images.githubusercontent.com/39285147/182361658-ed16e620-ce21-42b2-8f1c-c5fda874f1a4.png)
 
 
-상기 그리드는 모든 변수들 간의 상관관계 분포도를 나타낸다. <span style="color: blue"> The grid represents correlation distributions between all variables.</span>
+상기 그리드는 모든 변수들 간의 상관관계 분포도를 나타낸다. <span style="color: yellow"> The grid represents correlation distributions between all variables.</span>
 
 
 ```python
@@ -148,10 +148,10 @@ epochs_hist = model.fit(X_train, y_train, epochs = 50, batch_size = 50, validati
 
 
 
-'epoch' 개수를 증가시키면 모델이 적은 손실값과 함께 더 정확한 예측을 해낼 것이다. <span style="color: blue"> Increasing the number of 'epochs' will cause the model to make more accurate predictions with fewer losses. </span>
+'epoch' 개수를 증가시키면 모델이 적은 손실값과 함께 더 정확한 예측을 해낼 것이다. <span style="color: yellow"> Increasing the number of 'epochs' will cause the model to make more accurate predictions with fewer losses. </span>
 
 
-하지만, 이것은 **과적합** 현상을 불러올 수 있으니, 적절한 개수 설정을 수동으로 바꿔가며 확인해볼 필요가 있다. <span style="color: blue"> However, this can lead to **overfitting**, so you need to manually change the appropriate number setting to check.</span>
+하지만, 이것은 **과적합** 현상을 불러올 수 있으니, 적절한 개수 설정을 수동으로 바꿔가며 확인해볼 필요가 있다. <span style="color: yellow"> However, this can lead to **overfitting**, so you need to manually change the appropriate number setting to check.</span>
 
 
 ```python
@@ -175,14 +175,14 @@ plt.legend(['Training Loss', 'Validation Loss'])
 ![image](https://user-images.githubusercontent.com/39285147/182364127-10aef50f-9e03-4abf-9d80-4520885520cc.png)
 
 
-만약, 학습 과정에서 epoch' 개수를 50이 아니라 100으로 했다면, 'validation loss' 분산이 더 적게 나타났을 것이다. <span style="color: blue"> If the number of epochs was 100 instead of 50 in the training process, the 'validation loss' variance would be smaller. </span>
+만약, 학습 과정에서 epoch' 개수를 50이 아니라 100으로 했다면, 'validation loss' 분산이 더 적게 나타났을 것이다. <span style="color: yellow"> If the number of epochs was 100 instead of 50 in the training process, the 'validation loss' variance would be smaller. </span>
 
-참고로, 입력 피처의 개수를 적게 설정하면 하기 분포처럼 'Validation loss'가 굉장히 튀는 모습을 보일 것이다. <span style="color: blue"> For reference, if the number of input features is set to be smaller, the 'Validation loss' will be very bouncing like the following distribution. </span>
+참고로, 입력 피처의 개수를 적게 설정하면 하기 분포처럼 'Validation loss'가 굉장히 튀는 모습을 보일 것이다. <span style="color: yellow"> For reference, if the number of input features is set to be smaller, the 'Validation loss' will be very bouncing like the following distribution. </span>
 
 ![image](https://user-images.githubusercontent.com/39285147/182363306-02a5eef0-a504-47c2-a4e3-054ab9fac40a.png)
 
 
-이것은 마치 우리가 시험 성적에 영향을 미치는 요인 중에, 시험 전날 수면 시간이 주요한 입력 피처임에도 무시하고 있다가, 뒤늦게 모델 학습에 반영하여 모델이 새로운 데이터들에 대해 더 정확한 예측을 해내는 것과 비슷한 이치이다. <span style="color: blue"> For example, if you had an exam tomorrow but hadn't slept yesterday, you would likely screw up the exam. Similarly, we see that sleep time before the exam is a pivotal feature in training our AI model. </span>
+이것은 마치 우리가 시험 성적에 영향을 미치는 요인 중에, 시험 전날 수면 시간이 주요한 입력 피처임에도 무시하고 있다가, 뒤늦게 모델 학습에 반영하여 모델이 새로운 데이터들에 대해 더 정확한 예측을 해내는 것과 비슷한 이치이다. <span style="color: yellow"> For example, if you had an exam tomorrow but hadn't slept yesterday, you would likely screw up the exam. Similarly, we see that sleep time before the exam is a pivotal feature in training our AI model. </span>
 
 
 # Predicting the Test set
@@ -199,9 +199,9 @@ plt.show()
 ![image](https://user-images.githubusercontent.com/39285147/182363900-7d34d060-edd2-47e6-a2eb-95834311003b.png)
 
 
-역시 시각화에서 단위가 정규화된 모습이다. <span style="color: blue"> As shown in the image, the units are normalized. </span>
+역시 시각화에서 단위가 정규화된 모습이다. <span style="color: yellow"> As shown in the image, the units are normalized. </span>
 
-원래 단위로 변환시켜보자. <span style="color: blue"> Let's convert to the original unit</span>
+원래 단위로 변환시켜보자. <span style="color: yellow"> Let's convert to the original unit</span>
 
 
 ```python
@@ -241,12 +241,12 @@ print('RMSE =',RMSE, '\nMSE =',MSE, '\nMAE =',MAE, '\nR2 =', r2, '\nAdjusted R2 
 
 
 
-상기 다양한 종류의 손실값을 활용하여 모델 성능 평가가 가능하다. <span style="color: blue">It is possible to evaluate the model performance by using the above various types of loss values.</span>
+상기 다양한 종류의 손실값을 활용하여 모델 성능 평가가 가능하다. <span style="color: yellow">It is possible to evaluate the model performance by using the above various types of loss values.</span>
 
-좋은 모델일수록 각 손실값이 작을 것이다. <span style="color: blue">The better the model, the smaller each loss value will be.</span>
+좋은 모델일수록 각 손실값이 작을 것이다. <span style="color: yellow">The better the model, the smaller each loss value will be.</span>
 
-앞서 언급한 'epoch'와 같은 요인들을 수동으로 바꿔가며 각 손실값들의 변화를 관찰하여 최적의 설정값을 구하자.<span style="color: blue"> You need to manually change factors such as 'epoch' and find the optimal combination of parameters by observing the change in each loss value.</span>
+앞서 언급한 'epoch'와 같은 요인들을 수동으로 바꿔가며 각 손실값들의 변화를 관찰하여 최적의 설정값을 구하자.<span style="color: yellow"> You need to manually change factors such as 'epoch' and find the optimal combination of parameters by observing the change in each loss value.</span>
 
 
-또한, 혼동 행렬 같은 기법으로 성능 분석이 가능할 것이다. <span style="color: blue"> You might want to use 'confusion matrix' for performance analysis.</span>
+또한, 혼동 행렬 같은 기법으로 성능 분석이 가능할 것이다. <span style="color: yellow"> You might want to use 'confusion matrix' for performance analysis.</span>
 

@@ -141,7 +141,7 @@ while (True):
         break
 ```
 
-가령, '네이버 시작'이라는 마이크 입력을 넣으면, '네이버 시작'이라는 말이 스피커로 반향되며 webbrowser 라이브러리를 통하여 네이버를 브라우저에서 띄워준다. <span style="color: blue">If you say 'NAVER', your speaker will produce "Start NAVER" and then open the site on your browser.  </span>
+가령, '네이버 시작'이라는 마이크 입력을 넣으면, '네이버 시작'이라는 말이 스피커로 반향되며 webbrowser 라이브러리를 통하여 네이버를 브라우저에서 띄워준다. <span style="color: yellow">If you say 'NAVER', your speaker will produce "Start NAVER" and then open the site on your browser.  </span>
 
 
 

@@ -16,17 +16,17 @@ search: false
 
 # Learning Goals
 
-전이학습을 어떻게 우리의 task에 맞게 이용할 수 있는지 알아본다. <span style="color: blue">Let's see how transfer learning can be used for our tasks. </span>
+전이학습을 어떻게 우리의 task에 맞게 이용할 수 있는지 알아본다. <span style="color: yellow">Let's see how transfer learning can be used for our tasks. </span>
 
-가령, 우리는 수많은 사람의 얼굴 데이터를 학습한 모델을 전이학습으로 불러올 수 있다. <span style="color: blue"> For example, we can load a model that learned face data from a large number of people (transfer learning). </span>
+가령, 우리는 수많은 사람의 얼굴 데이터를 학습한 모델을 전이학습으로 불러올 수 있다. <span style="color: yellow"> For example, we can load a model that learned face data from a large number of people (transfer learning). </span>
 
-이후, 우리 회사 부서 사람 몇명을 그 모델의 output layer에 클래스로써 할당하면, 예측 결과로 주어진 부서 사람들 얼굴 중 가장 비슷한 사람 얼굴을 결과로써 배출할 것이다. <span style="color: blue"> After that, if we set a few people from our company's department as classes to the output layer of the model, the most similar person's face will be the prediction result. </span>
+이후, 우리 회사 부서 사람 몇명을 그 모델의 output layer에 클래스로써 할당하면, 예측 결과로 주어진 부서 사람들 얼굴 중 가장 비슷한 사람 얼굴을 결과로써 배출할 것이다. <span style="color: yellow"> After that, if we set a few people from our company's department as classes to the output layer of the model, the most similar person's face will be the prediction result. </span>
 
-그렇다면, 내가 수행하려는 task에 맞는 사전학습 모델은 어떻게 찾아올까 (가령, 사람 얼굴 학습한 모델)? <span style="color: blue"> Then, how can we download the pre-trained model suitable for our task (i.e., a model that learned face data)?  </span>
+그렇다면, 내가 수행하려는 task에 맞는 사전학습 모델은 어떻게 찾아올까 (가령, 사람 얼굴 학습한 모델)? <span style="color: yellow"> Then, how can we download the pre-trained model suitable for our task (i.e., a model that learned face data)?  </span>
 
-'***TensorFlow Hub***'라는 사이트는 다양한 사전학습 모델을 제공한다. <span style="color: blue"> 'TensorFlow Hub' provides diverse pre-trained models. </span>
+'***TensorFlow Hub***'라는 사이트는 다양한 사전학습 모델을 제공한다. <span style="color: yellow"> 'TensorFlow Hub' provides diverse pre-trained models. </span>
 
-가령, 모바일 데이터를 학습하고자 이와 관련된 사전 모델인 '*MobileNet*'을 전이학습해보자. <span style="color: blue"> Let's load a pre-trained model '*MobileNet*' that trained miscellaneous mobile data. </span>
+가령, 모바일 데이터를 학습하고자 이와 관련된 사전 모델인 '*MobileNet*'을 전이학습해보자. <span style="color: yellow"> Let's load a pre-trained model '*MobileNet*' that trained miscellaneous mobile data. </span>
 
 # Example 1: Identifying 'Watch'
 
@@ -61,9 +61,9 @@ Trained_MobileNet.summary()
         _________________________________________________________________
 
 
-MobileNet 모델을 가져와 우리의 목적에 맞게 마지막 레이어만 하나 추가했다. <span style="color: blue"> We took the MobileNet model and added just one last layer for our purposes. </span>
+MobileNet 모델을 가져와 우리의 목적에 맞게 마지막 레이어만 하나 추가했다. <span style="color: yellow"> We took the MobileNet model and added just one last layer for our purposes. </span>
 
-이제 이 모델에 이미지를 넣어 예측을 수행해보자.  <span style="color: blue"> Now let's put an image into this model. </span>
+이제 이 모델에 이미지를 넣어 예측을 수행해보자.  <span style="color: yellow"> Now let's put an image into this model. </span>
 
 ```python
 # Predicting the image
@@ -73,9 +73,9 @@ Sample_Image = tf.keras.preprocessing.image.load_img("watch.jpg", target_size=(2
 ![image](https://user-images.githubusercontent.com/39285147/182831989-d3678292-8342-4652-adf4-251ec039a67a.png)
 
 
-TensorFlow에서 제공하는 이미지 데이터 하나를 끌고왔다. <span style="color: blue"> We are using one image data provided by TensorFlow. </span>
+TensorFlow에서 제공하는 이미지 데이터 하나를 끌고왔다. <span style="color: yellow"> We are using one image data provided by TensorFlow. </span>
 
-신경망 학습을 위해 알맞은 형태로 이미지 데이터를 변환시켜주자. <span style="color: blue"> Let's transform the image data into an appropriate form for neural network training. </span>
+신경망 학습을 위해 알맞은 형태로 이미지 데이터를 변환시켜주자. <span style="color: yellow"> Let's transform the image data into an appropriate form for neural network training. </span>
 
 
 ```python
@@ -100,11 +100,11 @@ predicted_class.shape
         (1, 1001)
 
 
-ImageNet은 서로 다른 클래스 1001개에 대한 이미지 데이터를 학습한 모델이다. <span style="color: blue"> ImageNet is a model trained on image data for 1001 different classes. </span>
+ImageNet은 서로 다른 클래스 1001개에 대한 이미지 데이터를 학습한 모델이다. <span style="color: yellow"> ImageNet is a model trained on image data for 1001 different classes. </span>
 
 > ImageNet dataset has '1001' classes
 
-이제, 이 1001개의 클래스 중 모델이 예측한 가장 높은 확률의 연관성을 가지는 클래스 이름을 가져와보자. <span style="color: blue"> Now, let's get the class name with the highest probability of association among these 1001 classes predicted by the model. </span>
+이제, 이 1001개의 클래스 중 모델이 예측한 가장 높은 확률의 연관성을 가지는 클래스 이름을 가져와보자. <span style="color: yellow"> Now, let's get the class name with the highest probability of association among these 1001 classes predicted by the model. </span>
 
 
 ```python
@@ -113,11 +113,11 @@ predicted_class = np.argmax(predicted_class)
 
         827
 
-우리 모델은 클래스 인덱스 827번을 차지하는 것이 인풋 사진의 클래스라고 예측했다. <span style="color: blue"> Our model predicted that the class occupying class index 827 is the class of the input picture.</span>
+우리 모델은 클래스 인덱스 827번을 차지하는 것이 인풋 사진의 클래스라고 예측했다. <span style="color: yellow"> Our model predicted that the class occupying class index 827 is the class of the input picture.</span>
 
-여기서 MobileNet 사이트에 들어가보면, 이 모델은 ImageNet 데이터셋에 기반해서 학습을 수행했다.  <span style="color: blue"> If you go to the MobileNet site, the model was trained based on the ImageNet dataset. </span>
+여기서 MobileNet 사이트에 들어가보면, 이 모델은 ImageNet 데이터셋에 기반해서 학습을 수행했다.  <span style="color: yellow"> If you go to the MobileNet site, the model was trained based on the ImageNet dataset. </span>
 
-따라서, 우리는 ImageNet 데이터셋의 클래스 인덱스 827을 확인해야 한다. <span style="color: blue"> Therefore, we need to check the class index 827 of the ImageNet dataset. </span>
+따라서, 우리는 ImageNet 데이터셋의 클래스 인덱스 827을 확인해야 한다. <span style="color: yellow"> Therefore, we need to check the class index 827 of the ImageNet dataset. </span>
 
 ```python
 labels_path = tf.keras.utils.get_file("ImageNetLabels.txt", "https://storage.googleapis.com/download.tensorflow.org/data/ImageNetLabels.txt") # loading the dataset from the website
@@ -142,16 +142,16 @@ predicted_class_name
         'watch'
 
 
-모델이 맞게 예측한 모습이다. <span style="color: blue"> Our model got the correct answer. </span>
+모델이 맞게 예측한 모습이다. <span style="color: yellow"> Our model got the correct answer. </span>
 
-하지만, 시계는 사실 ImageNet dataset 안에 포함된 학습 클래스 중 하나로, 전이학습으로 불러온 모델은 이미 시계에 대한 분류를 잘한다.  <span style="color: blue"> However, 'clock' is actually one of the classes included in the ImageNet dataset, and the model imported by transfer learning is already good at classifying clocks. </span>
+하지만, 시계는 사실 ImageNet dataset 안에 포함된 학습 클래스 중 하나로, 전이학습으로 불러온 모델은 이미 시계에 대한 분류를 잘한다.  <span style="color: yellow"> However, 'clock' is actually one of the classes included in the ImageNet dataset, and the model imported by transfer learning is already good at classifying clocks. </span>
 
-만약, 그 모델이 한 번도 분류해보지 못한 클래스로 분류해야 하는 새로운 이미지가 주어진다면 주어진 클래스 풀 안에서 그나마 비슷한 이상한 답을 도출할 것이다.  <span style="color: blue"> If given a new image that the model should classify into a class that it has never classified before, it will derive a similar but strange answer within the given class pool. </span>
+만약, 그 모델이 한 번도 분류해보지 못한 클래스로 분류해야 하는 새로운 이미지가 주어진다면 주어진 클래스 풀 안에서 그나마 비슷한 이상한 답을 도출할 것이다.  <span style="color: yellow"> If given a new image that the model should classify into a class that it has never classified before, it will derive a similar but strange answer within the given class pool. </span>
 
 
 # Example 2: Classifying 'Flower'
 
-이번에는 이 모델에게 TensorFlow 라이브러리에서 완전히 새로운 꽃 사진 하나를 가져와서 기존 모델에 예측시켜보자. <span style="color: blue"> This time, let's get this model an entirely new picture of a flower from the TensorFlow library and make predictions on the old model. </span>
+이번에는 이 모델에게 TensorFlow 라이브러리에서 완전히 새로운 꽃 사진 하나를 가져와서 기존 모델에 예측시켜보자. <span style="color: yellow"> This time, let's get this model an entirely new picture of a flower from the TensorFlow library and make predictions on the old model. </span>
 
 ```python
 # Loading the dataset of flowers
@@ -164,9 +164,9 @@ flowers_data = image_generator.flow_from_directory(str(flowers_data_url), target
 ```
 
 
-'image_generator.flow_from_directory'를 활용하여 한 batch(묶음)에 64개의 224x224 사이즈 이미지가 포함된 집합을 만들었다. <span style="color: blue"> Making a batch with 64 images of 224x224 using 'image_generator.flow_from_directory'. </span>
+'image_generator.flow_from_directory'를 활용하여 한 batch(묶음)에 64개의 224x224 사이즈 이미지가 포함된 집합을 만들었다. <span style="color: yellow"> Making a batch with 64 images of 224x224 using 'image_generator.flow_from_directory'. </span>
 
-여기서 *shuffle*은 매번 이미지를 섞어서 모델이 같은 순서로 같은 이미지를 매번 학습하는 불상사를 피하기 위함이다. <span style="color: blue"> We set *shuffle* to True so that our model won't train the images in the same order. </span>
+여기서 *shuffle*은 매번 이미지를 섞어서 모델이 같은 순서로 같은 이미지를 매번 학습하는 불상사를 피하기 위함이다. <span style="color: yellow"> We set *shuffle* to True so that our model won't train the images in the same order. </span>
 
 ```python
 for flowers_data_input_batch, flower_data_label_batch in flowers_data:
@@ -179,7 +179,7 @@ for flowers_data_input_batch, flower_data_label_batch in flowers_data:
         Image batch shape (64, 224, 224, 3)
         Label batch shape (64, 5)
 
-64개의 꽃 이미지 사진이 주어졌고, 그들은 5개의 클래스로 각각 분류되어야 한다. <span style="color: blue"> 64 flower image pictures were given, and they should each be classified into 5 classes. </span>
+64개의 꽃 이미지 사진이 주어졌고, 그들은 5개의 클래스로 각각 분류되어야 한다. <span style="color: yellow"> 64 flower image pictures were given, and they should each be classified into 5 classes. </span>
 
 ```python
 # Predicing the image
@@ -192,15 +192,15 @@ predictions_batch.shape
         (64, 1001)
 
 
-앞서 전이학습을 통해 불러온 MobileNet 모델을 활용해서 꽃 이미지를 분류해보자. <span style="color: blue"> Let's classify flower images using the MobileNet model loaded through transfer learning. </span>
+앞서 전이학습을 통해 불러온 MobileNet 모델을 활용해서 꽃 이미지를 분류해보자. <span style="color: yellow"> Let's classify flower images using the MobileNet model loaded through transfer learning. </span>
 
 ```python
 predicted_class_name = imagenet_labels[np.argmax(predictions_batch, axis = -1)]
 ```
 
-여기서 'axis=-1' 은 64개의 행(=이미지 개수) 각각에 대한 열(데이터)들 중에서 가장 큰 값의 인덱스를 가져오라는 말이다. <span style="color: blue"> Here, 'axis=-1 'means to get the index of the largest value among the columns (data) belonging to 64 rows (= number of images). </span>
+여기서 'axis=-1' 은 64개의 행(=이미지 개수) 각각에 대한 열(데이터)들 중에서 가장 큰 값의 인덱스를 가져오라는 말이다. <span style="color: yellow"> Here, 'axis=-1 'means to get the index of the largest value among the columns (data) belonging to 64 rows (= number of images). </span>
 
-무슨 말인지 헷갈린다면 아래 예시를 보자. <span style="color: blue"> If you are still confused, don't worry and look at the following example. </span>
+무슨 말인지 헷갈린다면 아래 예시를 보자. <span style="color: yellow"> If you are still confused, don't worry and look at the following example. </span>
 
 ```python
 import numpy as np
@@ -219,15 +219,15 @@ print("Max elements", np.argmax(a, axis=-1))
         Max elements [2 2 2 2]
 
 
-이 예시는 4개의 행을 가지고 있고, 각 행에서 가장 큰 데이터의 인덱스를 가져온다. <span style="color: blue"> This example has 4 rows, and in each row we get the index of the biggest data. </span>
+이 예시는 4개의 행을 가지고 있고, 각 행에서 가장 큰 데이터의 인덱스를 가져온다. <span style="color: yellow"> This example has 4 rows, and in each row we get the index of the biggest data. </span>
 
-'axis=0'이라면, **세로**를 기준으로 가령 '10 13 16 19' 중에서 가장 큰 값의 인덱스인 3을 가져온다. <span style="color: blue"> If 'axis=0', for example, 3, the index of the largest value among '10 13 16 19', is taken based on the vertical. </span>
+'axis=0'이라면, **세로**를 기준으로 가령 '10 13 16 19' 중에서 가장 큰 값의 인덱스인 3을 가져온다. <span style="color: yellow"> If 'axis=0', for example, 3, the index of the largest value among '10 13 16 19', is taken based on the vertical. </span>
 
-반대로 'axis=-1'이라면, **가로**를 기준으로 가령 '10 11 12' 중에서 가장 큰 값의 인덱스인 2을 가져온다. <span style="color: blue"> If 'axis=-1', for example, 2, the index of the largest value among '10 11 12', is taken based on the horizontal. </span>
+반대로 'axis=-1'이라면, **가로**를 기준으로 가령 '10 11 12' 중에서 가장 큰 값의 인덱스인 2을 가져온다. <span style="color: yellow"> If 'axis=-1', for example, 2, the index of the largest value among '10 11 12', is taken based on the horizontal. </span>
 
 > 'axis=1' is same as 'axis=-1' in this example.
 
-자, 이제 원래 문제로 돌아와서 예측 클래스 이름을 확인해보자. <span style="color: blue"> Now, back to the original problem, let's check the prediction class name. </span>
+자, 이제 원래 문제로 돌아와서 예측 클래스 이름을 확인해보자. <span style="color: yellow"> Now, back to the original problem, let's check the prediction class name. </span>
 
 ```python
 predicted_class_name
@@ -262,15 +262,15 @@ for n in range(64):
 ![image](https://user-images.githubusercontent.com/39285147/182841799-08d3230c-52b2-40ef-a6c3-4732921e8642.png)
 
 
-64개의 꽃 이미지들에 대한 모델의 예측 결과를 시각화했다. <span style="color: blue"> The prediction results of the model for 64 flower images were visualized. </span>
+64개의 꽃 이미지들에 대한 모델의 예측 결과를 시각화했다. <span style="color: yellow"> The prediction results of the model for 64 flower images were visualized. </span>
 
-가장 첫 번째 이미지 분류만 봐도 결과가 이상하다. <span style="color: blue"> Just looking at the first image classification, the result is strange. </span>
+가장 첫 번째 이미지 분류만 봐도 결과가 이상하다. <span style="color: yellow"> Just looking at the first image classification, the result is strange. </span>
 
-'해바라기' 사진에 대하여 '데이지'라는 잘못된 분류 결과가 나타났다. <span style="color: blue"> Misclassified 'Sunflower' as 'Daisy' </span>
+'해바라기' 사진에 대하여 '데이지'라는 잘못된 분류 결과가 나타났다. <span style="color: yellow"> Misclassified 'Sunflower' as 'Daisy' </span>
 
-아마, ImageNet dataset에서 학습한 몇몇의 꽃 관련 사진들은 '해바라기' 클래스가 없어서 '데이지'라는 꽃으로 분류된 것 같다. <span style="color: blue"> Perhaps, some flower-related pictures learned from the ImageNet dataset are classified as a flower called 'daisy' because there was no class 'sunflower'. </span>
+아마, ImageNet dataset에서 학습한 몇몇의 꽃 관련 사진들은 '해바라기' 클래스가 없어서 '데이지'라는 꽃으로 분류된 것 같다. <span style="color: yellow"> Perhaps, some flower-related pictures learned from the ImageNet dataset are classified as a flower called 'daisy' because there was no class 'sunflower'. </span>
 
-우리는 '데이지'가 아닌 '해바라기'로 해당 이미지의 예측 결과를 보고싶다. <span style="color: blue"> We would like to see the predictions for that image as sunflowers, not daisies. </span>
+우리는 '데이지'가 아닌 '해바라기'로 해당 이미지의 예측 결과를 보고싶다. <span style="color: yellow"> We would like to see the predictions for that image as sunflowers, not daisies. </span>
 
 
 ```python
@@ -286,10 +286,10 @@ feature_batch.shape
         TensorShape([64, 1280])
 
 
-아까와 같은 64개의 꽃 사진들을 1280개의 클래스로 구분하는 base model이다. <span style="color: blue"> This is a base model that identifies the previous 64 flower photos into 1280 classes. </span>
+아까와 같은 64개의 꽃 사진들을 1280개의 클래스로 구분하는 base model이다. <span style="color: yellow"> This is a base model that identifies the previous 64 flower photos into 1280 classes. </span>
 
 
-'MobileNet_feature_extractor_layer'에 base model의 신경망을 저장하고, 차후에 output layer만 추가하여 우리가 원하는 5개 클래스 내로 예측 결과를 볼 수 있게 만들자. <span style="color: blue"> Let's save the neural network of the base model in 'MobileNet_feature_extractor_layer' and add only an output layer later so that we can see the prediction results in the 5 classes we want. </span>
+'MobileNet_feature_extractor_layer'에 base model의 신경망을 저장하고, 차후에 output layer만 추가하여 우리가 원하는 5개 클래스 내로 예측 결과를 볼 수 있게 만들자. <span style="color: yellow"> Let's save the neural network of the base model in 'MobileNet_feature_extractor_layer' and add only an output layer later so that we can see the prediction results in the 5 classes we want. </span>
 
 
 ```python
@@ -321,7 +321,7 @@ model = tf.keras.Sequential([
         _________________________________________________________________
 
 
-base model가 학습하여 얻은 가중치와 편향은 그대로 가져가고, 마지막에 output layer만 수정하여 우리가 원하는 분류 결과를 보여주도록 한다. <span style="color: blue"> We don't want to change the weights and biases obtained from the base model and only the output layer to be modified. </span>
+base model가 학습하여 얻은 가중치와 편향은 그대로 가져가고, 마지막에 output layer만 수정하여 우리가 원하는 분류 결과를 보여주도록 한다. <span style="color: yellow"> We don't want to change the weights and biases obtained from the base model and only the output layer to be modified. </span>
 
 
 ```python
@@ -348,9 +348,9 @@ print(flowers_data.class_indices.items())
         dict_items([('daisy', 0), ('dandelion', 1), ('roses', 2), ('sunflowers', 3), ('tulips', 4)])
 
 
-상기 결과처럼 모델은 총 다섯 개의 꽃 클래스로 인풋 이미지들을 분류하는 학습을 수행한다.  <span style="color: blue"> As shown above, the model classifies input images into a total of five flower classes. </span>
+상기 결과처럼 모델은 총 다섯 개의 꽃 클래스로 인풋 이미지들을 분류하는 학습을 수행한다.  <span style="color: yellow"> As shown above, the model classifies input images into a total of five flower classes. </span>
 
-이제 아까 '해바라기'를 '데이지'라 잘못 분류했던 예측이 어떻게 바뀔지 확인해보자.  <span style="color: blue"> Now let's see how the prediction that our model had previously misclassified sunflowers as daisies would change. </span>
+이제 아까 '해바라기'를 '데이지'라 잘못 분류했던 예측이 어떻게 바뀔지 확인해보자.  <span style="color: yellow"> Now let's see how the prediction that our model had previously misclassified sunflowers as daisies would change. </span>
 
 
 
@@ -392,6 +392,6 @@ for n in range(64):
 
 
 
-이제서야 '해바라기'를 맞게 예측하는 모습이다. <span style="color: blue"> Now, our model does the trick in prediction tasks! </span>
+이제서야 '해바라기'를 맞게 예측하는 모습이다. <span style="color: yellow"> Now, our model does the trick in prediction tasks! </span>
 
 

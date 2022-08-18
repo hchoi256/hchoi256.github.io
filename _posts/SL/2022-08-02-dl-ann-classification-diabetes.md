@@ -15,7 +15,7 @@ search: false
 ---
 
 # Learning Goals
-ANN을 이용한 당뇨병 예측 모델 구축 <span style="color: blue">Diabetes prediction model using ANN </span>
+ANN을 이용한 당뇨병 예측 모델 구축 <span style="color: yellow">Diabetes prediction model using ANN </span>
 
 # Loading the dataset
 
@@ -70,7 +70,7 @@ sns.countplot(x = "Outcome", data = diabetes)
 ![image](https://user-images.githubusercontent.com/39285147/182371347-15c6e961-32c5-4f5d-8778-014a78aefeab.png)
 
 
-당뇨가 있다면 1, 없으면 0이다. <span style="color: blue">1 if diabetes is present, 0 otherwise. </span>
+당뇨가 있다면 1, 없으면 0이다. <span style="color: yellow">1 if diabetes is present, 0 otherwise. </span>
 
 
 ```python
@@ -80,7 +80,7 @@ sns.heatmap(diabetes.corr(), annot = True)
 ![image](https://user-images.githubusercontent.com/39285147/182371518-7c5cd6b4-45a3-48f3-b046-097f88ef301f.png)
 
 
-한 눈에 보기 좋게 변수들 간 상관관계를 히트맵으로 표시했다. <span style="color: blue">At a glance, correlations between variables are displayed in a heat map. </span>
+한 눈에 보기 좋게 변수들 간 상관관계를 히트맵으로 표시했다. <span style="color: yellow">At a glance, correlations between variables are displayed in a heat map. </span>
 
 
 ```python
@@ -95,7 +95,7 @@ X.shape, y.shape
 
 
 
-독립변수는 8개, 종속 변수는 output 한 개만 존재한다. <span style="color: blue"> # independent variables: 8, # dependent variables: 1  </span>
+독립변수는 8개, 종속 변수는 output 한 개만 존재한다. <span style="color: yellow"> # independent variables: 8, # dependent variables: 1  </span>
 
 
 # Feature Scaling
@@ -107,7 +107,7 @@ X = sc.fit_transform(X)
 ```
 
 
-종속 변수는 당뇨병 유무로 0 or 1이기 때문에, scaling이 필요없다. <span style="color: blue"> Since the dependent variable determines whether a patient has diabetes or not (0 or 1), it doesn't require scaling. </span>
+종속 변수는 당뇨병 유무로 0 or 1이기 때문에, scaling이 필요없다. <span style="color: yellow"> Since the dependent variable determines whether a patient has diabetes or not (0 or 1), it doesn't require scaling. </span>
 
 
 # Splitting the dataset into the Training set and Test set
@@ -154,7 +154,7 @@ classifier.summary()
         _________________________________________________________________
 
 
-뉴런 개수는 임의로 설정한 값이므로 수동으로 바꿔가며 최적값을 찾을 필요가 있다. <span style="color: blue"> Since the number of neurons is an arbitrarily set value, it is necessary to find the optimal value by manually changing it. </span>
+뉴런 개수는 임의로 설정한 값이므로 수동으로 바꿔가며 최적값을 찾을 필요가 있다. <span style="color: yellow"> Since the number of neurons is an arbitrarily set value, it is necessary to find the optimal value by manually changing it. </span>
 
 > [Why Sigmoid over Softmas (or other functions)](https://github.com/hchoi256/ai-terms)
 
@@ -197,9 +197,9 @@ y_pred
             [4.79539931e-02]], dtype=float32)
 
 
-상기 수치들은 각각의 시행에 대하여 당뇨병이 존재할 확률을 의미한다. <span style="color: blue"> The above figures represent the probability of the presence of diabetes for each trial. </span>
+상기 수치들은 각각의 시행에 대하여 당뇨병이 존재할 확률을 의미한다. <span style="color: yellow"> The above figures represent the probability of the presence of diabetes for each trial. </span>
 
-만약, 그 확률이 절반 이상일 경우 당뇨가 있다고 가정해보자. <span style="color: blue"> If the probability is more than half, let's assume that you have diabetes. </span>
+만약, 그 확률이 절반 이상일 경우 당뇨가 있다고 가정해보자. <span style="color: yellow"> If the probability is more than half, let's assume that you have diabetes. </span>
 
 
 
@@ -245,17 +245,17 @@ plt.legend(['Training Loss'])
 ![image](https://user-images.githubusercontent.com/39285147/182373972-618963de-f8f6-4c00-8d92-af0cc7abee9e.png)
 
 
-손실 분포의 분산을 낮추려면, batch 혹은 뉴런 개수를 늘리면 된다. <span style="color: blue"> To lower the variance of the loss distribution, you can increase the number of batches or neurons. </span>
+손실 분포의 분산을 낮추려면, batch 혹은 뉴런 개수를 늘리면 된다. <span style="color: yellow"> To lower the variance of the loss distribution, you can increase the number of batches or neurons. </span>
 
-하지만 이렇게 할 경우, 학습 속도가 느려진다. <span style="color: blue"> However, doing so slows down learning. </span>
+하지만 이렇게 할 경우, 학습 속도가 느려진다. <span style="color: yellow"> However, doing so slows down learning. </span>
 
-대신, 모델 정확도가 올라가서 학습 데이터의 오분류 개수가 줄어들 수 있다. <span style="color: blue"> Instead, the number of misclassifications in the training data may be reduced by increasing the model accuracy. </span>
+대신, 모델 정확도가 올라가서 학습 데이터의 오분류 개수가 줄어들 수 있다. <span style="color: yellow"> Instead, the number of misclassifications in the training data may be reduced by increasing the model accuracy. </span>
 
-하지만, 과적합 가능성 또한 증가한다. <span style="color: blue"> However, the possibility of overfitting also increases. </span>
+하지만, 과적합 가능성 또한 증가한다. <span style="color: yellow"> However, the possibility of overfitting also increases. </span>
 
-모델 학습에는 이러한 [trade-off](https://github.com/hchoi256/lg-ai-auto-driving-radar-sensor/blob/main/supervised-learning/sl-foundation.md) 관계가 존재한다. <span style="color: blue"> This trade-off relationship exists in model training. </span>
+모델 학습에는 이러한 [trade-off](https://github.com/hchoi256/lg-ai-auto-driving-radar-sensor/blob/main/supervised-learning/sl-foundation.md) 관계가 존재한다. <span style="color: yellow"> This trade-off relationship exists in model training. </span>
 
-보다 자세한 내용은 [SGD vs. Mini-Batch vs. BGD](https://github.com/hchoi256/lg-ai-auto-driving-radar-sensor/blob/main/supervised-learning/gradient-discent.md)를 참조하자. <span style="color: blue"> For more information, see [SGD vs. Mini-Batch vs. BGD](https://github.com/hchoi256/lg-ai-auto-driving-radar-sensor/blob/main/supervised-learning/gradient-discent.md). </span>
+보다 자세한 내용은 [SGD vs. Mini-Batch vs. BGD](https://github.com/hchoi256/lg-ai-auto-driving-radar-sensor/blob/main/supervised-learning/gradient-discent.md)를 참조하자. <span style="color: yellow"> For more information, see [SGD vs. Mini-Batch vs. BGD](https://github.com/hchoi256/lg-ai-auto-driving-radar-sensor/blob/main/supervised-learning/gradient-discent.md). </span>
 
 
 ## Confusion Matrix
