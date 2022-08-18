@@ -2,7 +2,7 @@
 layout: single
 title: "설명 가능한 AI (XAI): Saliency Map"
 categories: XAI
-tag: [XAI, Saliency Map]
+tag: [XAI, Saliency Map, CAM, Grad CAM]
 toc: true
 toc_sticky: true
 toc_label: "쭌스log"
