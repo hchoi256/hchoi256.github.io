@@ -109,7 +109,7 @@ var store = [{
       },{
         "title": "Python: PART 1 - Web Application without Server",
         "excerpt":"파이썬으로 웹 서버 구동없이 웹 어플리케이션을 만들기 위해 ‘streamlit’ 라이브러리가 활용된다. To create a web application without a server, we use the ‘streamlit’ library. Loading the library for web server import streamlit as st Texts st.write(\"Hello, World!\") # print out the message to the web page st.markdown(\"\"\"This is an H1=============\"\"\")...","categories": ["Python"],
-        "tags": ["Python Web Application","Streamlit"],
+        "tags": ["Python Web App","Streamlit"],
         "url": "http://localhost:4000/python/python-web-server/",
         "teaser": "http://localhost:4000/assets/images/posts/streamlit-thumbnail.png"
       },{
