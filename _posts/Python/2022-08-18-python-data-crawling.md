@@ -1,8 +1,8 @@
 ---
 layout: single
-title: "Python: Data Crawling"
+title: "Python: Data Crawling (BeautifulSoup)"
 categories: Python
-tag: [Python, Data Crawling]
+tag: [Python, Data Crawling, BeautifulSoup]
 toc: true
 toc_sticky: true
 toc_label: "쭌스log"

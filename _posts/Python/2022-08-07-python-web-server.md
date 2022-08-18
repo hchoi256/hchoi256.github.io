@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "Python: PART 1 - Web Application without Server"
+title: "Python: PART 1 - 서버없이 웹 어플 구현하기 (Streamlit)"
 categories: Python
 tag: [Python Web App, Streamlit]
 toc: true
