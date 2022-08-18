@@ -137,6 +137,5 @@ CAM에서는 Feature Map에 GAP를 적용해 나온 가중치를 가지고 설�
 
 ## Reference
 - [Grad-CAM: 대선주자 얼굴 위치 추적기](https://jsideas.net/grad_cam/)
-
 - **LG Aimers** 교육 프로그램
 
