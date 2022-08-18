@@ -5,7 +5,7 @@ categories: SL
 tag: [CNN, Classification, FashionMNIST]
 toc: true
 toc_sticky: true
-toc_label: "GITHUB BLOG JJUNS"
+toc_label: "쭌스log"
 #author_profile: false
 header:
     teaser: /assets/images/posts/dl-thumbnail.jpg

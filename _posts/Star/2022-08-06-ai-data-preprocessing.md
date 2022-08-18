@@ -5,7 +5,7 @@ categories: Study
 tag: [AI, Data Preprocessing]
 toc: false
 toc_sticky: false
-toc_label: "GITHUB BLOG JJUNS"
+toc_label: "쭌스log"
 # author_profile: false
 header:
     teaser: /assets/images/posts/data-thumbnail.jpg

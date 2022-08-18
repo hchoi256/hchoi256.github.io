@@ -5,7 +5,7 @@ categories: AIPaperNLP
 tag: [AI Research Paper, Kaist]
 toc: true
 toc_sticky: true
-toc_label: "GITHUB BLOG JJUNS"
+toc_label: "쭌스log"
 #author_profile: false
 header:
     teaser: /assets/images/posts/ai-thumbnail.jpg

@@ -5,7 +5,7 @@ categories: RL
 tag: [Reinforcement Learning, Q-learning]
 toc: true
 toc_sticky: true
-toc_label: "GITHUB BLOG JJUNS"
+toc_label: "쭌스log"
 #author_profile: false
 header:
     teaser: /assets/images/posts/q-learning.png

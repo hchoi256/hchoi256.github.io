@@ -5,7 +5,7 @@ categories: Star
 tag: [AI, KAIST, SNU, Graduate School]
 toc: true
 toc_sticky: true
-toc_label: "GITHUB BLOG JJUNS"
+toc_label: "쭌스log"
 #author_profile: false
 header:
     teaser: /assets/images/posts/data-thumbnail.jpg
