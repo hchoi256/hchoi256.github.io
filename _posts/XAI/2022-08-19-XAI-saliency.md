@@ -126,6 +126,8 @@ CAM에서는 Feature Map에 GAP를 적용해 나온 가중치를 가지고 설�
 이후, 'pixel-wise sum'을 적용하고, ReLU 함수를 적용해 강조할 부분(= 출력의 근거가 되는 부분, 양의 가중치)을 골라낸 결과가 Grad CAM이다.
 
 ## 장단점
+![image](https://user-images.githubusercontent.com/39285147/185497804-21df50eb-e05c-41f9-9d7b-15519592ba49.png)
+
 **장점**
 - **Model agnostic**: can be applied to various output models
 
@@ -133,4 +135,8 @@ CAM에서는 Feature Map에 GAP를 적용해 나온 가중치를 가지고 설�
 - Average gradient sometimes is not accurate
     - Gradient ↑ (절대적으로 옳은 중요도 X) --> 해당 Activation 출력 값 민감도 ↑
 
+## Reference
+- [Grad-CAM: 대선주자 얼굴 위치 추적기](https://jsideas.net/grad_cam/)
+
+- **LG Aimers** 교육 프로그램
 
