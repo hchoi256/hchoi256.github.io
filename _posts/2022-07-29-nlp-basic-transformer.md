@@ -1,8 +1,8 @@
 ---
 layout: single
-title: "NLP - Part 6: Transformer"
-categories: NLP
-tag: [NLP, python]
+title: "NLP: Transformer - GPT-2"
+categories: GPT
+tag: [NLP, GPT, Transformer]
 toc: true
 toc_sticky: true
 toc_label: "GITHUB BLOG JJUNS"

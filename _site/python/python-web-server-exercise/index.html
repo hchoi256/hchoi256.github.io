@@ -7,22 +7,33 @@
 -->
 <html lang="ko" class="no-js">
   <head>
+    <!--폰트 : "Nanum Gothic Coding", "Coming Soon"-->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Coming+Soon&family=Nanum+Gothic+Coding&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Coming+Soon&family=Nanum+Gothic+Coding&display=swap">
+    
+    <!--폰트 : "Iropke Batang"-->
+    <link rel="preload" as="style" href="https://cdn.jsdelivr.net/font-iropke-batang/1.2/font-iropke-batang.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/font-iropke-batang/1.2/font-iropke-batang.css">
+
+    <!--폰트 : "Cafe24Oneprettynight"-->
+    <link rel="preload" as="style" href="/assets/css/main.css">
+
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>Python: PART 2: Web Application without Server | 정리하여 내 것으로, AI</title>
+<!-- begin _includes/seo.html --><title>Python: PART 2 - Web Application without Server | 정리하여 내 것으로, AI 📂</title>
 <meta name="description" content="강아지 품종 분류 AI 웹페이지">
 
 
-  <meta name="author" content="Hojun Eric Choi">
+  <meta name="author" content="쭌스🎄">
   
-  <meta property="article:author" content="Hojun Eric Choi">
+  <meta property="article:author" content="쭌스🎄">
   
 
 
 <meta property="og:type" content="article">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:site_name" content="정리하여 내 것으로, AI">
-<meta property="og:title" content="Python: PART 2: Web Application without Server">
+<meta property="og:site_name" content="정리하여 내 것으로, AI 📂">
+<meta property="og:title" content="Python: PART 2 - Web Application without Server">
 <meta property="og:url" content="http://localhost:4000/python/python-web-server-exercise/">
 
 
@@ -57,7 +68,7 @@
     "@context": "https://schema.org",
     
       "@type": "Person",
-      "name": "Hojun Eric Choi",
+      "name": "쭌스🎄",
       "url": "http://localhost:4000/"
     
   }
@@ -75,7 +86,7 @@
 
 
 
-  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정리하여 내 것으로, AI Feed">
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정리하여 내 것으로, AI 📂 Feed">
 
 
 <!-- https://t.co/dKP3o1e -->
@@ -104,6 +115,19 @@
 
 <!-- end custom head snippets -->
 
+    <!-- 스크롤바 커스터마이징 -->
+    <style> 
+      ::-webkit-scrollbar{width: 16px;}
+      ::-webkit-scrollbar-track {background-color:#4b4f52; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb {background-color:#5e6265; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb:hover {background: #ffd24c;}
+      ::-webkit-scrollbar-button:start:decrement,::-webkit-scrollbar-button:end:increment 
+      {
+          width:12px;height:12px;background:transparent;}
+      }  
+
+      
+    </style>
   </head>
 
   <body class="layout--single">
@@ -123,13 +147,11 @@
       <nav id="site-nav" class="greedy-nav">
         
         <a class="site-title" href="/">
-          정리하여 내 것으로, AI
-          <span class="site-subtitle">with jjuns</span>
+          정리하여 내 것으로, AI 📂
+          
         </a>
         <ul class="visible-links"><li class="masthead__menu-item">
               <a href="/categories/">Category</a>
-            </li><li class="masthead__menu-item">
-              <a href="/tags/">Tag</a>
             </li><li class="masthead__menu-item">
               <a href="/search/">Search</a>
             </li></ul>
@@ -180,7 +202,7 @@
     
       
       
-        <li class="current">Python: PART 2: Web Application without Server</li>
+        <li class="current">Python: PART 2 - Web Application without Server</li>
       
     
   </ol>
@@ -200,20 +222,20 @@
   
     <div class="author__avatar">
       <a href="http://localhost:4000/">
-        <img src="/assets/images/echoi.jpg" alt="Hojun Eric Choi" itemprop="image" class="u-photo">
+        <img src="/assets/images/echoi.jpg" alt="쭌스🎄" itemprop="image" class="u-photo">
       </a>
     </div>
   
 
   <div class="author__content">
     <h3 class="author__name p-name" itemprop="name">
-      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Hojun Eric Choi</a>
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">쭌스🎄</a>
     </h3>
     
       <div class="author__bio p-note" itemprop="description">
         <p>I am a senior-year B.S. student in Computer Science and Data Science at the University of Wisconsin, Madison.</p>
 
-<p>My research interests are <strong>ML</strong>, <strong>deep NLP</strong>, and <strong>computer vision</strong> for emerging application domains.</p>
+<p>My research interests are <strong>hyper-scale AI</strong>, <strong>ML</strong>, <strong>deep NLP</strong>, and <strong>XAI in computer vision</strong>.</p>
 
       </div>
     
@@ -223,15 +245,11 @@
     <button class="btn btn--inverse">팔로우</button>
     <ul class="author__urls social-icons">
       
-        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
-          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Madison</span>
-        </li>
-      
 
       
         
           
-            <li><a href="https://www.linkedin.com/in/hojun-choi-2b10b11a0/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+            <li><a href="mailto:hchoi256@wisc.edu" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
           
         
           
@@ -239,20 +257,13 @@
           
         
           
-            <li><a href="/assets/CV.pdf" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">CV</span></a></li>
+            <li><a href="/assets/포트폴리오.pdf" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Portfolio</span></a></li>
           
         
       
 
       
 
-      
-        <li>
-          <a href="mailto:hchoi256@wisc.edu" rel="me" class="u-email">
-            <meta itemprop="email" content="hchoi256@wisc.edu" />
-            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">이메일</span>
-          </a>
-        </li>
       
 
       
@@ -326,33 +337,485 @@
   <label for="ac-toc">토글 메뉴</label>
   <ul class="nav__items">
     
-      <li>
-        
-          <span class="nav__sub-title">Table of Contents</span>
-        
-
-        
-        <ul>
-          
-            <li><a href="/categories/">Category</a></li>
-          
-            <li><a href="/tags/">Tag</a></li>
-          
-        </ul>
-        
-      </li>
-    
   </ul>
 </nav>
 
     
   
+
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">40</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
+      </li>
+      <li>
+        <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C#-->
+        <span class="nav__sub-title">Important</span>
+        <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+        <ul>
+            <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+            <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/categories/Star" class="">공지사항 (1)</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </ul>
+        <ul>
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/categories/Study" class="">AI 기본지식 (1)</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </ul>
+        <ul>
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/categories/Python" class="">Python (2)</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </ul>
+        <ul>
+            
+                
+                    <li><a href="/categories/Basic" class="">기타 (1)</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </ul>
+        <span class="nav__sub-title">ML/DL</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/SL" class="">지도학습 (14)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/USL" class="">비지도학습 (2)</a></li>
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/RL" class="">강화학습 (1)</a></li>
+                    
+                
+            </ul>
+        <span class="nav__sub-title">NLP</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                        <li><a href="/categories/NLP" class="">NLP (8)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/BERT" class="">BERT (3)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/GPT" class="">GPT (1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        <span class="nav__sub-title">AI Research Papers</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/AIPaperCV" class="">CV (1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/AIPaperNLP" class="">NLP (1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/AIPaperOthers" class="">기타 (1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>        
+      </li>
+  </ul>
+</nav>
+
+  
+
   </div>
 
 
-
   <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="Python: PART 2: Web Application without Server">
+    <meta itemprop="headline" content="Python: PART 2 - Web Application without Server">
     <meta itemprop="description" content="강아지 품종 분류 AI 웹페이지">
     <meta itemprop="datePublished" content="2022-08-13T00:00:00+09:00">
     
@@ -361,22 +824,15 @@
       
         <header>
           <h1 id="page-title" class="page__title p-name" itemprop="headline">
-            <a href="http://localhost:4000/python/python-web-server-exercise/" class="u-url" itemprop="url">Python: PART 2: Web Application without Server
+            <a href="http://localhost:4000/python/python-web-server-exercise/" class="u-url" itemprop="url">Python: PART 2 - Web Application without Server
 </a>
           </h1>
           
 
   <p class="page__meta">
     
-      
-      <span class="page__meta-date">
-        <i class="far fa-calendar-alt" aria-hidden="true"></i>
-        
-        <time datetime="2022-08-13T00:00:00+09:00">2022-08-13</time>
-      </span>
-    
 
-    <span class="page__meta-sep"></span>
+    
 
     
       
@@ -570,13 +1026,11 @@
     <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
     <span itemprop="keywords">
     
-      <a href="/tags/#opencv" class="page__taxonomy-item p-category" rel="tag">opencv</a><span class="sep">, </span>
+      <a href="/tags/#opencv" class="page__taxonomy-item p-category" rel="tag">Opencv</a><span class="sep">, </span>
     
-      <a href="/tags/#python" class="page__taxonomy-item p-category" rel="tag">python</a><span class="sep">, </span>
+      <a href="/tags/#python-web-app" class="page__taxonomy-item p-category" rel="tag">Python Web App</a><span class="sep">, </span>
     
-      <a href="/tags/#streamlit" class="page__taxonomy-item p-category" rel="tag">streamlit</a><span class="sep">, </span>
-    
-      <a href="/tags/#webserver" class="page__taxonomy-item p-category" rel="tag">webserver</a>
+      <a href="/tags/#streamlit" class="page__taxonomy-item p-category" rel="tag">Streamlit</a>
     
     </span>
   </p>
@@ -610,7 +1064,7 @@
     <h4 class="page__share-title">공유하기</h4>
   
 
-  <a href="https://twitter.com/intent/tweet?text=Python%3A+PART+2%3A+Web+Application+without+Server%20http%3A%2F%2Flocalhost%3A4000%2Fpython%2Fpython-web-server-exercise%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=Python%3A+PART+2+-+Web+Application+without+Server%20http%3A%2F%2Flocalhost%3A4000%2Fpython%2Fpython-web-server-exercise%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
   <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fpython%2Fpython-web-server-exercise%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
@@ -621,11 +1075,11 @@
       
   <nav class="pagination">
     
-      <a href="/ai/ai-paper-ko-legal-nlp/" class="pagination--pager" title="[논문 분석] A Multi-Task Benchmark for Korean Legal Language Understanding and Judgement Prediction (arXiv 2022)
+      <a href="/aipapernlp/ai-paper-ko-legal-nlp/" class="pagination--pager" title="[논문 분석] A Multi-Task Benchmark for Korean Legal Language Understanding and Judgement Prediction (arXiv 2022)
 ">이전</a>
     
     
-      <a href="/dl/dl-miniplace-classification/" class="pagination--pager" title="DL: LeNet 신경망 - MiniPlaces 이미지 분류
+      <a href="/sl/dl-miniplace-classification/" class="pagination--pager" title="LeNet 신경망 - MiniPlaces 이미지 분류
 ">다음</a>
     
   </nav>
@@ -649,12 +1103,12 @@
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
       <div class="archive__item-teaser">
-        <img src="/assets/images/posts/teeko.png" alt="">
+        <img src="/assets/images/posts/nlp-thumbnail.jpg" alt="">
       </div>
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
       
-        <a href="/ml/ml-teeko-minimax/" rel="permalink">ML: Minimax 알고리즘 - Teeko Game
+        <a href="/nlp/nlp-NER/" rel="permalink">NLP - Part 7: Name Entity Recognition (NER) 앱
 </a>
       
     </h2>
@@ -662,22 +1116,59 @@
 
   <p class="page__meta">
     
-      
-      <span class="page__meta-date">
-        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
-        
-        <time datetime="2022-08-14T00:00:00+09:00">2022-08-14</time>
-      </span>
-    
 
-    <span class="page__meta-sep"></span>
+    
 
     
       
       
 
       <span class="page__meta-readtime">
-        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          최대 1 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">사전 설정
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/teeko.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/others/ml-teeko-minimax/" rel="permalink">Minimax 알고리즘 - Teeko Game
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
         
           12 분 소요
         
@@ -700,12 +1191,12 @@
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
       <div class="archive__item-teaser">
-        <img src="/assets/images/posts/pca-image-compression.png" alt="">
+        <img src="/assets/images/posts/q-learning.png" alt="">
       </div>
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
       
-        <a href="/ml/ml-pca/" rel="permalink">ML: PCA - Image Compression(이미지 압축)
+        <a href="/rl/ml-reinforcement-learning-q-learning/" rel="permalink">Reinforcement Learning - Q-Learning 알고리즘
 </a>
       
     </h2>
@@ -713,22 +1204,59 @@
 
   <p class="page__meta">
     
-      
-      <span class="page__meta-date">
-        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
-        
-        <time datetime="2022-08-14T00:00:00+09:00">2022-08-14</time>
-      </span>
-    
 
-    <span class="page__meta-sep"></span>
+    
 
     
       
       
 
       <span class="page__meta-readtime">
-        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          최대 1 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Q-Learning 알고리즘을 활용한 예제이다.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/pca-image-compression.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/usl/ml-pca/" rel="permalink">PCA - Image Compression(이미지 압축)
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
         
           2 분 소요
         
@@ -756,7 +1284,7 @@
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
       
-        <a href="/ml/ml-hca/" rel="permalink">ML: Hierarchical Agglomerate Clustering(HAC) - 포켓몬 군집화
+        <a href="/usl/ml-hca/" rel="permalink">Hierarchical Agglomerate Clustering(HAC) - 포켓몬 군집화
 </a>
       
     </h2>
@@ -764,22 +1292,15 @@
 
   <p class="page__meta">
     
-      
-      <span class="page__meta-date">
-        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
-        
-        <time datetime="2022-08-14T00:00:00+09:00">2022-08-14</time>
-      </span>
-    
 
-    <span class="page__meta-sep"></span>
+    
 
     
       
       
 
       <span class="page__meta-readtime">
-        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        <i class="far fa-clock" aria-hidden="true"></i>
         
           4 분 소요
         
@@ -807,7 +1328,7 @@
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
       
-        <a href="/ml/ml-8-tile-puzzle-a-star-algorithm/" rel="permalink">ML: A* Search - 8-tile Puzzle Game
+        <a href="/others/ml-8-tile-puzzle-a-search/" rel="permalink">A* Search - 8-tile Puzzle Game
 </a>
       
     </h2>
@@ -815,22 +1336,15 @@
 
   <p class="page__meta">
     
-      
-      <span class="page__meta-date">
-        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
-        
-        <time datetime="2022-08-14T00:00:00+09:00">2022-08-14</time>
-      </span>
-    
 
-    <span class="page__meta-sep"></span>
+    
 
     
       
       
 
       <span class="page__meta-readtime">
-        <i class="far fa-fw fa-clock" aria-hidden="true"></i>
+        <i class="far fa-clock" aria-hidden="true"></i>
         
           최대 1 분 소요
         
@@ -840,6 +1354,184 @@
 
 
     <p class="archive__item-excerpt" itemprop="description">A-star 알고리즘을 활용해서 8-tile Puzzle 게임을 구현한다.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/lenet.JPG" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/sl/dl-miniplace-classification/" rel="permalink">LeNet 신경망 - MiniPlaces 이미지 분류
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">LeNet 신경망을 활용해서 MiniPlaces 데이터셋 이미지 분류 작업을 수행한다.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/ai-thumbnail.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/aipapernlp/ai-paper-ko-legal-nlp/" rel="permalink">[논문 분석] A Multi-Task Benchmark for Korean Legal Language Understanding and Judgement Prediction (arXiv 2022)
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/bert-thumbnail.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/bert/bert-3/" rel="permalink">Part 3: BERT Language Model
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          1 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">BERT
+Bi-directional transformer로 이루어진 언어모델로, BERT 언어모델 위에 1개의 classification layer만 부착하여 다양한 NLP task를 수행한다.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/bert-thumbnail.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/bert/bert-2/" rel="permalink">Part 2: BERT Language Model
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          1 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">언어 모델 (Language Model, LM)
+‘자연어’의 법칙을 컴퓨터로 모사하는 모델로, 다음에 등장할 단어 예측을 수행한다(= ‘맥락’을 고려한다).
 </p>
   </article>
 </div>
@@ -873,15 +1565,11 @@
         
       
         
-          <li><a href="https://www.linkedin.com/in/hojun-choi-2b10b11a0/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
-        
-      
-        
           <li><a href="https://github.com/hchoi256" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
         
       
         
-          <li><a href="/assets/CV.pdf" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> CV</a></li>
+          <li><a href="/assets/포트폴리오.pdf" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Portfolio</a></li>
         
       
     
@@ -892,11 +1580,10 @@
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2022 Hojun Eric Choi. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">&copy; 2022 쭌스🎄. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
       </footer>
     </div>
-
     
   <script src="/assets/js/main.min.js"></script>
 
@@ -907,20 +1594,6 @@
 
 
     
-  <script>
-    var disqus_config = function () {
-      this.page.url = "http://localhost:4000/python/python-web-server-exercise/";  /* Replace PAGE_URL with your page's canonical URL variable */
-      this.page.identifier = "/python/python-web-server-exercise"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
-    };
-    (function() { /* DON'T EDIT BELOW THIS LINE */
-      var d = document, s = d.createElement('script');
-      s.src = 'https://jjunes.disqus.com/embed.js';
-      s.setAttribute('data-timestamp', +new Date());
-      (d.head || d.body).appendChild(s);
-    })();
-  </script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
 
   
 

@@ -1,8 +1,8 @@
 ---
 layout: single
-title: "ML: Minimax 알고리즘 - Teeko Game"
-categories: ML
-tag: [machine learning, teeko, game, minimax, python]
+title: "Minimax 알고리즘 - Teeko Game"
+categories: Others
+tag: [Machine Learning, Teeko Board Game, Minimax]
 toc: true
 toc_sticky: true
 toc_label: "GITHUB BLOG JJUNS"

@@ -1,8 +1,8 @@
 ---
 layout: single
-title: "AI Study Guide"
-categories: star
-tag: [AI, KAIST, SNU, 대학원]
+title: "AI 학습자료"
+categories: Star
+tag: [AI, KAIST, SNU, Graduate School]
 toc: true
 toc_sticky: true
 toc_label: "GITHUB BLOG JJUNS"

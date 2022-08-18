@@ -1,0 +1,155 @@
+I"�A<p>Tensorflow &amp; PyTorch 활용 CNN 모델의 fashionMNIST 이미지 분류 <span style="color: blue"> fashionMNIST image classification using CNN w/ Tensorflow and PyTorch </span></p>
+
+<h1 id="code">Code</h1>
+<p class="notice--danger"><strong>[Notice]</strong> <a href="https://github.com/hchoi256/cs540-AI/tree/main/introduction-to-pytorch">fasionMNIST(PyTorch)</a></p>
+
+<h1 id="loading-the-dataset">Loading the dataset</h1>
+
+<p class="notice--danger"><strong>[Notice]</strong> <a href="https://www.kaggle.com/datasets/zalando-research/fashionmnist">Download Dataset (Kaggle)</a></p>
+
+<p>Fashion MNIST Dataset: 28×28 픽셀의 이미지 70,000개 <span style="color: blue"> fashionMNIST: 70,000 images (28x28) </span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="n">tf</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="n">sns</span>
+
+<span class="n">fashion_train_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">"fashion-mnist-train.csv"</span><span class="p">)</span>
+<span class="n">fashion_test_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">"fashion-mnist-test.csv"</span><span class="p">)</span>
+
+<span class="n">fashion_train_df</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">fashion_test_df</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    (60000, 785) (10000, 785)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">training</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span> <span class="n">fashion_train_df</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="s">"float32"</span> <span class="p">)</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span> <span class="n">fashion_test_df</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="s">"float32"</span> <span class="p">)</span>
+
+<span class="nb">type</span><span class="p">(</span><span class="n">training</span><span class="p">),</span> <span class="nb">type</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    (numpy.ndarray, numpy.ndarray)
+</code></pre></div></div>
+
+<p>신경망 학습을 위해 dataframe 에서 ndarray로 변환한다. <span style="color: blue"> Converting ‘dataframe’ to ‘ndarray’ for neural network training. </span></p>
+
+<h1 id="observing-the-dataset">Observing the dataset</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">random</span>
+
+<span class="n">i</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">60000</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">training</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">:].</span><span class="n">reshape</span><span class="p">(</span> <span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span> <span class="p">))</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182385271-f1ff8063-f94e-4429-a4b4-297a03614bc3.png" alt="image" /></p>
+
+<p>맛보기로 한 이미지를 가져와서 시각화했다. <span style="color: blue"> For testing, I randomly extracted an image and visualized it. </span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">training</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">:].</span><span class="n">reshape</span><span class="p">(</span> <span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span> <span class="p">),</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s">"gray"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182385314-997733f2-2858-4d25-a767-37387a3d2033.png" alt="image" /></p>
+
+<p>흑백 사진으로 변환하려면, ‘cmap’ 속성만 추가하면 된다. <span style="color: blue"> To convert to a dark image, you can simply add the ‘cmap’ attribute. </span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 0 =&gt; T-shirt/top
+# 1 =&gt; Trouser
+# 2 =&gt; Pullover
+# 3 =&gt; Dress
+# 4 =&gt; Coat
+# 5 =&gt; Sandal
+# 6 =&gt; Shirt
+# 7 =&gt; Sneaker
+# 8 =&gt; Bag
+# 9 =&gt; Ankle boot
+</span>
+<span class="n">label</span> <span class="o">=</span> <span class="n">training</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">label</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    7.0
+</code></pre></div></div>
+
+<p>7은 Sneaker 클래스의 인덱스이다. <span style="color: blue"> This image is classified as ‘sneaker’.</span></p>
+
+<h1 id="splitting-the-dataset-into-the-training-set-and-test-set">Splitting the dataset into the Training set and Test set</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># normalizing the images
+</span><span class="n">X_train</span> <span class="o">=</span> <span class="n">training</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span><span class="o">/</span><span class="mi">255</span>
+<span class="n">X_train</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">X_train</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">*</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">training</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> 
+
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">test</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span><span class="o">/</span><span class="mi">255</span>
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">X_test</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">X_test</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">*</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">y_test</span> <span class="o">=</span> <span class="n">test</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+
+<span class="n">X_train</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y_train</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    (60000, 28, 28, 1) (60000,)
+</code></pre></div></div>
+
+<p>흑백사진의 RGB 차원(1)도 추가해주기 위해 reshape하였다. <span style="color: blue"> Adding a dimension for the RGB of the dark images. </span></p>
+
+<h1 id="building-the-model">Building the model</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tensorflow.keras</span> <span class="kn">import</span> <span class="n">datasets</span><span class="p">,</span> <span class="n">layers</span><span class="p">,</span> <span class="n">models</span>
+
+<span class="n">cnn</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">Sequential</span><span class="p">()</span>
+
+<span class="n">cnn</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="p">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">activation</span> <span class="o">=</span> <span class="s">"relu"</span><span class="p">,</span> <span class="n">input_shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>
+<span class="n">cnn</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="p">.</span><span class="n">MaxPooling2D</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">cnn</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="p">.</span><span class="n">BatchNormalization</span><span class="p">())</span>
+
+<span class="n">cnn</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="p">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">activation</span> <span class="o">=</span> <span class="s">"relu"</span><span class="p">))</span>
+<span class="n">cnn</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="p">.</span><span class="n">MaxPooling2D</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">cnn</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="p">.</span><span class="n">BatchNormalization</span><span class="p">())</span>
+
+<span class="n">cnn</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="p">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">activation</span> <span class="o">=</span> <span class="s">"relu"</span><span class="p">))</span>
+
+<span class="n">cnn</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="p">.</span><span class="n">Flatten</span><span class="p">())</span>
+
+<span class="n">cnn</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="p">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">activation</span> <span class="o">=</span> <span class="s">"relu"</span><span class="p">))</span>
+<span class="n">cnn</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="p">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span> <span class="o">=</span> <span class="s">"softmax"</span><span class="p">))</span>
+
+<span class="n">cnn</span><span class="p">.</span><span class="n">summary</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    Model: "sequential_2"
+    _________________________________________________________________
+    Layer (type)                Output Shape              Param #   
+    =================================================================
+    conv2d_1 (Conv2D)           (None, 26, 26, 32)        320       
+                                                                    
+    max_pooling2d (MaxPooling2D  (None, 13, 13, 32)       0         
+    )                                                               
+                                                                    
+    conv2d_2 (Conv2D)           (None, 11, 11, 64)        18496     
+                                                                    
+    max_pooling2d_1 (MaxPooling  (None, 5, 5, 64)         0         
+    2D)                                                             
+                                                                    
+    conv2d_3 (Conv2D)           (None, 3, 3, 64)          36928     
+                                                                    
+    flatten (Flatten)           (None, 576)               0         
+                                                                    
+    dense (Dense)               (None, 64)                36928     
+                                                                    
+    dense_1 (Dense)             (None, 10)                650       
+                                                                    
+    =================================================================
+    Total params: 93,322
+    Trainable params: 93,322
+    Non-trainable params: 0
+    _________________________________________________________________
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cnn</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s">"Adam"</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s">"sparse_categorical_crossentropy"</span><span class="p">,</span> <span class="n">metrics</span> <span class="o">=</span> <span class="p">[</span><span class="s">"accuracy"</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>이전 글에서도 꾸준히 사용했던 것처럼, 이번에도 ‘Adam’과 크로스 엔트로피를 활용해서 분류 문제를 해결해보자.<span style="color: blue"> As we used to do in the previous posts, we also use ‘Adam’ and ‘Cross Entrophy’. </span></p>
+
+<p>이전 글에서 지속적으로 모델 형성 공식을 언급했으므로, 이 부분에 대한 추가적인 설명은 생략한다. <span style="color: blue"> Since the model formation has been continuously mentioned in the previous posts, additional explanations on this part will be omitted. </span></p>
+:ET

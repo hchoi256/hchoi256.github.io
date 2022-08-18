@@ -2,7 +2,7 @@
 layout: single
 title: "NLP - Part 4: Naive Classifier"
 categories: NLP
-tag: [NLP, python]
+tag: [NLP, Naive Classifier]
 toc: true
 toc_sticky: true
 toc_label: "GITHUB BLOG JJUNS"

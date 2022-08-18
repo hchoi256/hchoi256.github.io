@@ -1,0 +1,128 @@
+I"�:<h1 id="part-1-sttspeech-to-text">PART 1: STT(Speech to Text)</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">SpeechRecognition</span>
+<span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">PyAudio</span>
+
+<span class="kn">import</span> <span class="nn">speech_recognition</span> <span class="k">as</span> <span class="n">sr</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">transform</span><span class="p">():</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">sr</span><span class="p">.</span><span class="n">Recognizer</span><span class="p">()</span>
+
+    <span class="k">with</span> <span class="n">sr</span><span class="p">.</span><span class="n">Microphone</span><span class="p">()</span> <span class="k">as</span> <span class="n">source</span><span class="p">:</span>
+        <span class="n">r</span><span class="p">.</span><span class="n">pause_threshold</span> <span class="o">=</span> <span class="mf">0.8</span> <span class="c1"># 0.8초 동안 정적이면 자동으로 음성 녹음을 종료한다 terminate recording in 0.8 seconds of silence
+</span>        <span class="n">said</span> <span class="o">=</span> <span class="n">r</span><span class="p">.</span><span class="n">listen</span><span class="p">(</span><span class="n">source</span><span class="p">)</span> <span class="c1"># 녹음본 'said'에 저장하기 save the record into 'said'
+</span>        <span class="k">try</span><span class="p">:</span>
+            <span class="n">q</span> <span class="o">=</span> <span class="n">r</span><span class="p">.</span><span class="n">recognize_google</span><span class="p">(</span><span class="n">said</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s">"ko"</span><span class="p">)</span> <span class="c1"># google 언어팩 사용 using google language package
+</span>            <span class="k">return</span> <span class="n">q</span>
+        <span class="k">except</span> <span class="n">sr</span><span class="p">.</span><span class="n">UnknownValueError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s">"무슨 말인지 이해를 잘 못 했어요"</span> <span class="c1"># "Cannot understnad your saying"
+</span>        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s">"대기중입니다."</span> <span class="c1"># "Awaiting"
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">transform</span><span class="p">()</span> <span class="c1"># Start STT
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>마이크를 켜고, 음성을 녹음하면 메시지로 출력되는 것을 보실 수 있습니다. Turn on your microphone, then check if the program creates your record 
+</code></pre></div></div>
+
+<h1 id="part-2-ttstext-to-speech">PART 2: TTS(Text to Speech)</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">pyttsx3</span> <span class="c1"># TTS 클래스
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pyttsx3</span>
+
+<span class="k">def</span> <span class="nf">speaking</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="n">engine</span> <span class="o">=</span> <span class="n">pyttsx3</span><span class="p">.</span><span class="n">init</span><span class="p">()</span> <span class="c1"># Run TTS engine
+</span>    <span class="n">engine</span><span class="p">.</span><span class="n">say</span><span class="p">(</span><span class="n">message</span><span class="p">)</span> <span class="c1"># 메시지 내용 엔진에 전달 Transfer message to the engine
+</span>    <span class="n">engine</span><span class="p">.</span><span class="n">runAndWait</span><span class="p">()</span> <span class="c1"># 메시지 음성출력 speak out the message
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">speaking</span><span class="p">(</span><span class="s">"이제 STT가 준비가 되었습니다. 계속 해서 Voice Assistance를 만들어 보겠습니다."</span><span class="p">)</span> <span class="c1"># "Now, STT is ready. We are going to make 'Voice Assistance'"
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>스피커에서 상기 메시지가 출력되는 것을 보실 수 있습니다. Your speaker will produce the message above
+</code></pre></div></div>
+
+<h2 id="tts-exercise-1-요일시간-음성-출력하기-audio-output-daytime">TTS Exercise 1: 요일/시간 음성 출력하기 Audio Output (Day/Time)</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">query_day</span><span class="p">():</span>
+    <span class="n">day</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="n">date</span><span class="p">.</span><span class="n">today</span><span class="p">()</span>
+    <span class="n">weekday</span> <span class="o">=</span> <span class="n">day</span><span class="p">.</span><span class="n">weekday</span><span class="p">()</span>
+    <span class="n">week_mapping</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="mi">0</span><span class="p">:</span> <span class="s">"월요일"</span><span class="p">,</span> <span class="c1"># Monday
+</span>        <span class="mi">1</span><span class="p">:</span> <span class="s">"화요일"</span><span class="p">,</span> <span class="c1"># Tuesday
+</span>        <span class="mi">2</span><span class="p">:</span> <span class="s">"수요일"</span><span class="p">,</span> <span class="c1"># Wednesday
+</span>        <span class="mi">3</span><span class="p">:</span> <span class="s">"목요일"</span><span class="p">,</span> <span class="c1"># Thursday
+</span>        <span class="mi">4</span><span class="p">:</span> <span class="s">"금요일"</span><span class="p">,</span> <span class="c1"># Friday
+</span>        <span class="mi">5</span><span class="p">:</span> <span class="s">"토요일"</span><span class="p">,</span> <span class="c1"># Saturday
+</span>        <span class="mi">6</span><span class="p">:</span> <span class="s">"일요일"</span><span class="p">,</span> <span class="c1"># Sunday
+</span>    <span class="p">}</span>
+
+    <span class="n">speaking</span><span class="p">(</span><span class="sa">f</span><span class="s">"오늘은 </span><span class="si">{</span><span class="n">week_mapping</span><span class="p">[</span><span class="n">weekday</span><span class="p">]</span><span class="si">}</span><span class="s">입니다. </span><span class="si">{</span><span class="n">week_mapping</span><span class="p">[</span><span class="n">weekday</span><span class="p">]</span><span class="si">}</span><span class="s">에도 공부하느라 고생이시네요!"</span> <span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">query_day</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>오늘 요일이 음성 출력되는 것을 보실 수 있습니다. Audio output successfully produced
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">query_time</span><span class="p">():</span>
+    <span class="n">time</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="n">datetime</span><span class="p">.</span><span class="n">now</span><span class="p">().</span><span class="n">strftime</span><span class="p">(</span><span class="s">"%H:%M:%S"</span><span class="p">)</span>
+    <span class="n">speaking</span><span class="p">(</span><span class="sa">f</span><span class="s">"현재는 </span><span class="si">{</span><span class="n">time</span><span class="p">[</span><span class="si">:</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s">시 </span><span class="si">{</span><span class="n">time</span><span class="p">[</span><span class="mi">3</span><span class="si">:</span><span class="mi">5</span><span class="p">]</span><span class="si">}</span><span class="s">분입니다."</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">query_time</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>현재 시간이 음성 출력되는 것을 보실 수 있습니다. Audio output successfully produced
+</code></pre></div></div>
+
+<h2 id="tts-exercise-2-stt--tts">TTS Exercise 2: STT + TTS</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">webbrowser</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">while</span> <span class="p">(</span><span class="bp">True</span><span class="p">):</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">transform</span><span class="p">()</span>
+
+    <span class="k">if</span>  <span class="s">"무슨 요일"</span> <span class="ow">in</span> <span class="n">q</span><span class="p">:</span>
+        <span class="n">query_day</span><span class="p">()</span>
+        <span class="k">continue</span>
+    <span class="k">elif</span> <span class="s">"몇 시"</span> <span class="ow">in</span> <span class="n">q</span><span class="p">:</span>
+        <span class="n">query_time</span><span class="p">()</span>
+        <span class="k">continue</span> 
+    <span class="k">elif</span> <span class="s">"유튜브 시작"</span> <span class="ow">in</span> <span class="n">q</span><span class="p">:</span>
+        <span class="n">speaking</span><span class="p">(</span><span class="s">"유튜브를 시작하겠습니다. 잠시만 기다려주세요!"</span><span class="p">)</span>
+        <span class="n">webbrowser</span><span class="p">.</span><span class="nb">open</span><span class="p">(</span><span class="s">"https://www.youtube.com"</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="s">"네이버 시작"</span> <span class="ow">in</span> <span class="n">q</span><span class="p">:</span>
+        <span class="n">speaking</span><span class="p">(</span><span class="s">"네이버를 시작하겠습니다. 잠시만 기다려주세요!"</span><span class="p">)</span>
+        <span class="n">webbrowser</span><span class="p">.</span><span class="nb">open</span><span class="p">(</span><span class="s">"https://www.naver.com"</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="s">"이동"</span> <span class="ow">in</span> <span class="n">q</span><span class="p">:</span>
+        <span class="n">speaking</span><span class="p">(</span><span class="s">"윈도우키를 실행하겠습니다. 잠시만 기다려주세요!"</span><span class="p">)</span>
+        <span class="n">pyautogui</span><span class="p">.</span><span class="n">moveTo</span><span class="p">(</span><span class="mi">700</span><span class="p">,</span> <span class="mi">1050</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="n">pyautogui</span><span class="p">.</span><span class="n">click</span><span class="p">(</span><span class="n">button</span><span class="o">=</span><span class="s">"left"</span><span class="p">)</span>        
+    <span class="k">elif</span> <span class="s">"이제 그만"</span> <span class="ow">in</span> <span class="n">q</span><span class="p">:</span>
+        <span class="n">speaking</span><span class="p">(</span><span class="s">"아쉽지만 다음에 또 뵙겠습니다"</span><span class="p">)</span>
+        <span class="k">break</span>
+</code></pre></div></div>
+
+<p>가령, ‘네이버 시작’이라는 마이크 입력을 넣으면, ‘네이버 시작’이라는 말이 스피커로 반향되며 webbrowser 라이브러리를 통하여 네이버를 브라우저에서 띄워준다. <span style="color: blue">If you say ‘NAVER’, your speaker will produce “Start NAVER” and then open the site on your browser.  </span></p>
+
+<h1 id="bonus-keyboard-io">Bonus: Keyboard I/O</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">pyautogui</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pyautogui</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">screenWidth</span><span class="p">,</span> <span class="n">screenHeight</span> <span class="o">=</span> <span class="n">pyautogui</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="c1"># screen resolution
+</span>
+<span class="n">pyautogui</span><span class="p">.</span><span class="n">moveTo</span><span class="p">(</span><span class="mi">700</span><span class="p">,</span> <span class="mi">1050</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="c1"># 마우스 커서를 x, y 좌표로 이동 Move the cursor to the coordinate of x and y
+</span><span class="n">pyautogui</span><span class="p">.</span><span class="n">click</span><span class="p">(</span><span class="n">button</span><span class="o">=</span><span class="s">"left"</span><span class="p">)</span> <span class="c1"># 해당 위치 버튼을 좌클릭 left-click the current position
+</span></code></pre></div></div>
+:ET

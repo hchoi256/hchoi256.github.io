@@ -1,8 +1,8 @@
 ---
 layout: single
-title: "DL: LeNet 신경망 - MiniPlaces 이미지 분류"
-categories: DL
-tag: [deep learning, classification, MiniPlaces, PyTorch, python]
+title: "LeNet 신경망 - MiniPlaces 이미지 분류"
+categories: SL
+tag: [LeNet, Classification, PyTorch]
 toc: true
 toc_sticky: true
 toc_label: "GITHUB BLOG JJUNS"

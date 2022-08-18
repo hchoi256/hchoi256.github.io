@@ -1,0 +1,37 @@
+I"L
+<div class="list__item">
+    <article class="archive-item">
+        <div>
+            <span>
+              <a href="/star/ai-study-guide/">AI 학습자료</a>
+            </span>
+            <small> 
+              <i class="fas fa-fw fa-calendar-alt" aria-hidden="true"> </i> 2022.07.26
+              <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#star" class="page__taxonomy-item-category" rel="tag">Star</a>
+                    
+                    
+                    <a href="/tags/#ai" class="page__taxonomy-item-tag" rel="tag">AI</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#graduate-school" class="page__taxonomy-item-tag" rel="tag">Graduate School</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#kaist" class="page__taxonomy-item-tag" rel="tag">KAIST</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#snu" class="page__taxonomy-item-tag" rel="tag">SNU</a>
+                
+            </span>
+        </span>
+            </small>
+        </div>
+      </article>
+</div>
+:ET

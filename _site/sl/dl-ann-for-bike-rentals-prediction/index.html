@@ -1,0 +1,1749 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <!--폰트 : "Nanum Gothic Coding", "Coming Soon"-->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Coming+Soon&family=Nanum+Gothic+Coding&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Coming+Soon&family=Nanum+Gothic+Coding&display=swap">
+    
+    <!--폰트 : "Iropke Batang"-->
+    <link rel="preload" as="style" href="https://cdn.jsdelivr.net/font-iropke-batang/1.2/font-iropke-batang.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/font-iropke-batang/1.2/font-iropke-batang.css">
+
+    <!--폰트 : "Cafe24Oneprettynight"-->
+    <link rel="preload" as="style" href="/assets/css/main.css">
+
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>ANN - Regression: Bike Rental Prediction | 정리하여 내 것으로, AI 📂</title>
+<meta name="description" content="Background ANN을 이용한 자전거 대여량 예측 Prediction of bicycle rental volume using ANN">
+
+
+  <meta name="author" content="쭌스🎄">
+  
+  <meta property="article:author" content="쭌스🎄">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="정리하여 내 것으로, AI 📂">
+<meta property="og:title" content="ANN - Regression: Bike Rental Prediction">
+<meta property="og:url" content="http://localhost:4000/sl/dl-ann-for-bike-rentals-prediction/">
+
+
+  <meta property="og:description" content="Background ANN을 이용한 자전거 대여량 예측 Prediction of bicycle rental volume using ANN">
+
+
+
+  <meta property="og:image" content="http://localhost:4000/assets/images/posts/dl-thumbnail.jpg">
+
+
+
+
+
+  <meta property="article:published_time" content="2022-07-26T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/sl/dl-ann-for-bike-rentals-prediction/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "쭌스🎄",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+  <meta name="naver-site-verification" content="57d020c8f9b26bf56ed7846608b8d873481e9b84">
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정리하여 내 것으로, AI 📂 Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/logo.ico/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/logo.ico/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/logo.ico/favicon-16x16.png">
+<link rel="mask-icon" href="/assets/logo.ico/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+<!-- end custom head snippets -->
+
+    <!-- 스크롤바 커스터마이징 -->
+    <style> 
+      ::-webkit-scrollbar{width: 16px;}
+      ::-webkit-scrollbar-track {background-color:#4b4f52; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb {background-color:#5e6265; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb:hover {background: #ffd24c;}
+      ::-webkit-scrollbar-button:start:decrement,::-webkit-scrollbar-button:end:increment 
+      {
+          width:12px;height:12px;background:transparent;}
+      }  
+
+      
+    </style>
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          정리하여 내 것으로, AI 📂
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/search/">Search</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+  
+    
+
+
+
+<nav class="breadcrumbs">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    
+    
+      
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/" itemprop="item"><span itemprop="name">Home</span></a>
+
+          <meta itemprop="position" content="1" />
+        </li>
+        <span class="sep">/</span>
+      
+      
+        
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/categories/#sl" itemprop="item"><span itemprop="name">Sl</span></a>
+          <meta itemprop="position" content="2" />
+        </li>
+        <span class="sep">/</span>
+      
+    
+      
+      
+        <li class="current">ANN - Regression: Bike Rental Prediction</li>
+      
+    
+  </ol>
+</nav>
+
+  
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/echoi.jpg" alt="쭌스🎄" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">쭌스🎄</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>I am a senior-year B.S. student in Computer Science and Data Science at the University of Wisconsin, Madison.</p>
+
+<p>My research interests are <strong>hyper-scale AI</strong>, <strong>ML</strong>, <strong>deep NLP</strong>, and <strong>XAI in computer vision</strong>.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="mailto:hchoi256@wisc.edu" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/hchoi256" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="/assets/포트폴리오.pdf" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Portfolio</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items">
+    
+  </ul>
+</nav>
+
+    
+  
+
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">40</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
+      </li>
+      <li>
+        <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C#-->
+        <span class="nav__sub-title">Important</span>
+        <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+        <ul>
+            <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+            <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/categories/Star" class="">공지사항 (1)</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </ul>
+        <ul>
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/categories/Study" class="">AI 기본지식 (1)</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </ul>
+        <ul>
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/categories/Python" class="">Python (2)</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </ul>
+        <ul>
+            
+                
+                    <li><a href="/categories/Basic" class="">기타 (1)</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </ul>
+        <span class="nav__sub-title">ML/DL</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/SL" class="">지도학습 (14)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/USL" class="">비지도학습 (2)</a></li>
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/RL" class="">강화학습 (1)</a></li>
+                    
+                
+            </ul>
+        <span class="nav__sub-title">NLP</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                        <li><a href="/categories/NLP" class="">NLP (8)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/BERT" class="">BERT (3)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/GPT" class="">GPT (1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        <span class="nav__sub-title">AI Research Papers</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/AIPaperCV" class="">CV (1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/AIPaperNLP" class="">NLP (1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/AIPaperOthers" class="">기타 (1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>        
+      </li>
+  </ul>
+</nav>
+
+  
+
+  </div>
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="ANN - Regression: Bike Rental Prediction">
+    <meta itemprop="description" content="BackgroundANN을 이용한 자전거 대여량 예측 Prediction of bicycle rental volume using ANN ">
+    <meta itemprop="datePublished" content="2022-07-26T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="http://localhost:4000/sl/dl-ann-for-bike-rentals-prediction/" class="u-url" itemprop="url">ANN - Regression: Bike Rental Prediction
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> GITHUB BLOG JJUNS</h4></header>
+              <ul class="toc__menu"><li><a href="#background">Background</a></li><li><a href="#loading-the-dataset">Loading the dataset</a></li><li><a href="#visualizing-the-dataset">Visualizing the dataset</a></li><li><a href="#building-the-ann">Building the ANN</a><ul><li><a href="#eda">EDA</a></li><li><a href="#preprocessing">Preprocessing</a></li><li><a href="#feature-scaling">Feature Scaling</a></li><li><a href="#splitting-the-dataset-into-training-set-and-test-set">Splitting the dataset into Training set and Test set</a></li><li><a href="#designing-the-model">Designing the model</a></li><li><a href="#training-the-model">Training the model</a></li><li><a href="#visualizing-the-training-and-test-results">Visualizing the training and test results</a></li><li><a href="#evaluating-the-model">Evaluating the model</a></li></ul></li></ul>
+
+            </nav>
+          </aside>
+        
+        <h1 id="background">Background</h1>
+<p>ANN을 이용한 자전거 대여량 예측 <span style="color: blue">Prediction of bicycle rental volume using ANN </span></p>
+
+<h1 id="loading-the-dataset">Loading the dataset</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="n">tf</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="n">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bike</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">"bike-sharing-daily.csv"</span><span class="p">)</span>
+
+<span class="n">bike</span><span class="p">.</span><span class="n">isnull</span><span class="p">().</span><span class="nb">sum</span><span class="p">()</span> <span class="c1"># 결측치 확인 missing values
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    instant       0
+    dteday        0
+    season        0
+    yr            0
+    mnth          0
+    holiday       0
+    weekday       0
+    workingday    0
+    weathersit    0
+    temp          0
+    hum           0
+    windspeed     0
+    casual        0
+    registered    0
+    cnt           0
+    dtype: int64
+</code></pre></div></div>
+
+<p>상기 결과는 결측치가 없음을 보여준다. <span style="color: blue">The results show that there are no missing values. </span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 불필요한 열 제거 Removing unnecessary columns
+</span><span class="n">bike</span><span class="p">.</span><span class="n">drop</span><span class="p">(</span><span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s">"instant"</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="c1"># inplace: apply changes to 'bike'
+</span>
+<span class="c1"># 시계열 time series
+</span><span class="n">bike</span><span class="p">.</span><span class="n">dteday</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">bike</span><span class="p">.</span><span class="n">dteday</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s">"%m/%d/%Y"</span><span class="p">)</span> <span class="c1"># formatting datetime
+</span><span class="n">bike</span><span class="p">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DatetimeIndex</span><span class="p">(</span><span class="n">bike</span><span class="p">.</span><span class="n">dteday</span><span class="p">)</span> <span class="c1"># indexing the datetime
+</span><span class="n">bike</span><span class="p">.</span><span class="n">drop</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s">"dteday"</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="c1"># removing the duplicate 'dteday' column
+</span></code></pre></div></div>
+
+<h1 id="visualizing-the-dataset">Visualizing the dataset</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bike</span><span class="p">[</span><span class="s">"cnt"</span><span class="p">].</span><span class="n">asfreq</span><span class="p">(</span><span class="s">"W"</span><span class="p">).</span><span class="n">plot</span><span class="p">(</span><span class="n">linewidth</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span> <span class="c1"># by week
+</span><span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">"Bike Usage Per Week"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">"Week"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">"Bike Rental"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182334062-7da5e907-cfbb-459f-952e-175ee471dbaa.png" alt="image" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bike</span><span class="p">[</span><span class="s">"cnt"</span><span class="p">].</span><span class="n">asfreq</span><span class="p">(</span><span class="s">"M"</span><span class="p">).</span><span class="n">plot</span><span class="p">(</span><span class="n">linewidth</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span> <span class="c1"># by month
+</span><span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">"Bike Usage Per Month"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">"Month"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">"Bike Rental"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182334125-6875404b-a15c-4272-8ca8-303bef79478a.png" alt="image" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bike</span><span class="p">[</span><span class="s">"cnt"</span><span class="p">].</span><span class="n">asfreq</span><span class="p">(</span><span class="s">"Q"</span><span class="p">).</span><span class="n">plot</span><span class="p">(</span><span class="n">linewidth</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span> <span class="c1"># by quarter
+</span><span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">"Bike Usage Per Quarter"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">"Quarter"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">"Bike Rental"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182334180-d63a71ea-861c-45de-9ad1-002937fbc639.png" alt="image" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 한 눈에 여러 시각화 확인 Using the visualization tool
+</span><span class="n">sns</span><span class="p">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">bike</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182334415-553ca6bb-35bb-4412-92db-b88a60130547.png" alt="image" /></p>
+
+<h1 id="building-the-ann">Building the ANN</h1>
+
+<h2 id="eda">EDA</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X_numerical</span> <span class="o">=</span> <span class="n">bike</span><span class="p">[</span> <span class="p">[</span><span class="s">"temp"</span><span class="p">,</span> <span class="s">"hum"</span><span class="p">,</span> <span class="s">"windspeed"</span><span class="p">,</span> <span class="s">"cnt"</span><span class="p">]</span> <span class="p">]</span>
+<span class="n">X_numerical</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182334541-957387c3-1bb5-496b-a702-201249a31694.png" alt="image" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sns</span><span class="p">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">X_numerical</span><span class="p">)</span> <span class="c1"># correlation between independent variables
+</span></code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182334687-6d9a0ca1-3b4c-49d0-8e2e-645effddf397.png" alt="image" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X_numerical</span><span class="p">.</span><span class="n">corr</span><span class="p">()</span> <span class="c1"># correlation analysis
+</span></code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182334770-7d4ae794-a646-4ab3-9a5b-aec76cd6fca2.png" alt="image" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sns</span><span class="p">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">X_numerical</span><span class="p">.</span><span class="n">corr</span><span class="p">(),</span> <span class="n">annot</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span> <span class="c1"># confusion matrix
+</span></code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182334975-f15f4f95-6213-45f3-b5b6-7dbaed6466f5.png" alt="image" /></p>
+
+<p><em>annot</em>: 수치 표시 <span style="color: blue"> showing numerical values </span></p>
+
+<h2 id="preprocessing">Preprocessing</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X_cat</span> <span class="o">=</span> <span class="n">bike</span><span class="p">[</span> <span class="p">[</span><span class="s">"season"</span><span class="p">,</span> <span class="s">"yr"</span><span class="p">,</span> <span class="s">"mnth"</span><span class="p">,</span> <span class="s">"holiday"</span><span class="p">,</span> <span class="s">"weekday"</span><span class="p">,</span> <span class="s">"workingday"</span><span class="p">,</span> <span class="s">"weathersit"</span><span class="p">]</span> <span class="p">]</span>
+<span class="n">X_cat</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182335361-63b27c61-e7f3-4eb8-8b1b-366bb93fef9a.png" alt="image" /></p>
+
+<p>상기 언급된 독립변수를 신경망 학습에 사용한다. <span style="color: blue"> We are going to train an ANN with the independent variables listed above.</span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># converting categorical data
+</span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span>
+<span class="n">onehotencoder</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">()</span>
+<span class="n">X_cat</span> <span class="o">=</span> <span class="n">onehotencoder</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_cat</span><span class="p">).</span><span class="n">toarray</span><span class="p">()</span>
+<span class="n">X_cat</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    (731, 32)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X_cat</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X_cat</span><span class="p">)</span> <span class="c1"># 테이블 형태로 데이터 확인 converting to dataframe for visualization
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X_cat</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182336299-c0b2915a-a373-4a06-84b2-7234b4941cf1.png" alt="image" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X_numerical</span> <span class="o">=</span> <span class="n">X_numerical</span><span class="p">.</span><span class="n">reset_index</span><span class="p">()</span> <span class="c1"># 이전에 datetime이 인덱스로 지정되있었음 previously datetime set to index
+</span><span class="n">X_numerical</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182336665-6388c298-eb8c-4721-bbc3-b6d58af4680a.png" alt="image" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># integrating all the X candidates
+</span><span class="n">X_all</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">concat</span><span class="p">(</span> <span class="p">[</span><span class="n">X_cat</span><span class="p">,</span> <span class="n">X_numerical</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># removing unnecessary variables
+</span><span class="n">X_all</span><span class="p">.</span><span class="n">drop</span><span class="p">(</span><span class="s">"dteday"</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X</span> <span class="o">=</span> <span class="n">X_all</span><span class="p">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">].</span><span class="n">values</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">X_all</span><span class="p">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">:].</span><span class="n">values</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    ((731, 35), numpy.ndarray)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">y</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    ((731, 1), numpy.ndarray)        
+</code></pre></div></div>
+
+<h2 id="feature-scaling">Feature Scaling</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">scaler</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="splitting-the-dataset-into-training-set-and-test-set">Splitting the dataset into Training set and Test set</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="designing-the-model">Designing the model</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">Sequential</span><span class="p">()</span>
+<span class="n">model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">layers</span><span class="p">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">activation</span> <span class="o">=</span> <span class="s">"relu"</span><span class="p">,</span> <span class="n">input_shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">35</span><span class="p">,</span> <span class="p">)))</span>
+<span class="n">model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">layers</span><span class="p">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">activation</span> <span class="o">=</span> <span class="s">"relu"</span><span class="p">))</span>
+<span class="n">model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">layers</span><span class="p">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">activation</span> <span class="o">=</span> <span class="s">"relu"</span><span class="p">))</span>
+<span class="n">model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">layers</span><span class="p">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">"linear"</span><span class="p">))</span>
+
+<span class="n">model</span><span class="p">.</span><span class="n">summary</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    Model: "sequential_1"
+    _________________________________________________________________
+    Layer (type)                Output Shape              Param #   
+    =================================================================
+    dense_2 (Dense)             (None, 100)               3600      
+                                                                    
+    dense_3 (Dense)             (None, 100)               10100     
+                                                                    
+    dense_4 (Dense)             (None, 100)               10100     
+                                                                    
+    dense_5 (Dense)             (None, 1)                 101       
+                                                                    
+    =================================================================
+    Total params: 23,901
+    Trainable params: 23,901
+    Non-trainable params: 0
+    _________________________________________________________________
+</code></pre></div></div>
+
+<h2 id="training-the-model">Training the model</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s">"Adam"</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s">"mean_squared_error"</span><span class="p">)</span>
+<span class="n">epochs_hist</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">validation_split</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    Output exceeds the size limit. Open the full output data in a text editor
+    Epoch 1/50
+    10/10 [==============================] - 1s 43ms/step - loss: 0.1554 - val_loss: 0.0687
+    Epoch 2/50
+    10/10 [==============================] - 0s 13ms/step - loss: 0.0343 - val_loss: 0.0355
+    Epoch 3/50
+    10/10 [==============================] - 0s 13ms/step - loss: 0.0188 - val_loss: 0.0208
+    Epoch 4/50
+    ...
+    Epoch 49/50
+    10/10 [==============================] - 0s 21ms/step - loss: 0.0019 - val_loss: 0.0129
+    Epoch 50/50
+    10/10 [==============================] - 0s 19ms/step - loss: 0.0025 - val_loss: 0.0115
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">epochs_hist</span><span class="p">.</span><span class="n">history</span><span class="p">.</span><span class="n">keys</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    dict_keys(['loss', 'val_loss'])
+</code></pre></div></div>
+
+<p>모델 성능 평가 피라미터로 ‘loss’와 ‘val_loss’가 있다. <span style="color: blue">We have two evaluating parameters, ‘loss’ and ‘val_loss’. </span></p>
+
+<p>‘loss’는 테스트셋을 대상으로 학습한 손실값, ‘val_loss’는 학습 데이터의 검증셋으로 도출한 손실값 분포이다.  <span style="color: blue"> ‘loss’ is based on the test set, and ‘val_loss’ is based on the validation set that is part of the training set. </span></p>
+
+<h2 id="visualizing-the-training-and-test-results">Visualizing the training and test results</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epochs_hist</span><span class="p">.</span><span class="n">history</span><span class="p">[</span><span class="s">"loss"</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epochs_hist</span><span class="p">.</span><span class="n">history</span><span class="p">[</span><span class="s">"val_loss"</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">"Model Loss Progress During Traning"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">"Epoch"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">"Traning Loss and Validation Loss"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">([</span><span class="s">"Traning Loss"</span><span class="p">,</span> <span class="s">"Validation Loss"</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182337724-49a1d046-4d1e-42d5-9737-09d950947a16.png" alt="image" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">y_predict</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_predict</span><span class="p">,</span> <span class="s">"^"</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s">"r"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">"Model Predictions"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">"True Values"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182338196-2dc8b1c6-41b5-4b98-93f8-812ab3abb882.png" alt="image" /></p>
+
+<p>상기 분포의 단위가 정규화된 것을 볼 수 있다. <span style="color: blue"> It can be seen that the units of the distribution are normalized. </span></p>
+
+<p>따라서, 원래 단위로 다시 변환해주도록 하자. <span style="color: blue"> So, let’s convert it back to the original unit. </span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">y_predict_org</span> <span class="o">=</span> <span class="n">scaler</span><span class="p">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">y_predict</span><span class="p">)</span>
+<span class="n">y_test_org</span> <span class="o">=</span> <span class="n">scaler</span><span class="p">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182338615-e41b09a8-0200-4e32-8995-c82dfbe1b79e.png" alt="image" /></p>
+
+<h2 id="evaluating-the-model">Evaluating the model</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span><span class="p">,</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">mean_absolute_error</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">RMSE</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">format</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test_org</span><span class="p">,</span> <span class="n">y_predict_org</span><span class="p">)),</span> <span class="s">".3f"</span><span class="p">))</span>
+<span class="n">MSE</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test_org</span><span class="p">,</span> <span class="n">y_predict_org</span><span class="p">)</span>
+<span class="n">MAE</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">y_test_org</span><span class="p">,</span> <span class="n">y_predict_org</span><span class="p">)</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y_test_org</span><span class="p">,</span> <span class="n">y_predict_org</span><span class="p">)</span>
+<span class="n">adj_r2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">r2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">147</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>모델의 성능을 검증하기 위한 손실/비용 함수의 종류에는 여러 가지가 존재한다. <span style="color: blue"> There are several types of loss/cost functions for verifying the performance of the model. </span></p>
+
+<p>각 손실함수 사용에 따른 모델 성능을 확인해보자. <span style="color: blue"> Let’s check the model performance according to the use of each loss function. </span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"RMSE = </span><span class="si">{</span><span class="n">RMSE</span><span class="si">}</span><span class="s">, MSE = </span><span class="si">{</span><span class="n">MSE</span><span class="si">}</span><span class="s">, MAE = </span><span class="si">{</span><span class="n">MAE</span><span class="si">}</span><span class="s">, R2 = </span><span class="si">{</span><span class="n">r2</span><span class="si">}</span><span class="s">, Adjusted R2 = </span><span class="si">{</span><span class="n">adj_r2</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    RMSE = 1070.871, 
+    MSE = 1146764.4761727168, 
+    MAE = 807.9534366633617, 
+    R2 = 0.7237822988637166, 
+    Adjusted R2 = 41.32778436589738
+</code></pre></div></div>
+
+<p>공통적으로 모두 수치가 낮을수록 모델의 좋은 성능을 의미한다. <span style="color: blue">In general, the lower the number, the better the model’s performance. </span></p>
+
+<p>각각에 대한 보다 자세한 설명은 생략한다. <span style="color: blue"> A more detailed description of each will be omitted. </span></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#ann" class="page__taxonomy-item p-category" rel="tag">ANN</a><span class="sep">, </span>
+    
+      <a href="/tags/#regression" class="page__taxonomy-item p-category" rel="tag">Regression</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#sl" class="page__taxonomy-item p-category" rel="tag">SL</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-07-26T00:00:00+09:00">2022-07-26</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=ANN+-+Regression%3A+Bike+Rental+Prediction%20http%3A%2F%2Flocalhost%3A4000%2Fsl%2Fdl-ann-for-bike-rentals-prediction%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fsl%2Fdl-ann-for-bike-rentals-prediction%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fsl%2Fdl-ann-for-bike-rentals-prediction%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/star/ai-study-guide/" class="pagination--pager" title="AI 학습자료
+">이전</a>
+    
+    
+      <a href="/sl/dl-ann-for-regression/" class="pagination--pager" title="ANN - Regression
+">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">참고</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/nlp-thumbnail.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/nlp/nlp-NER/" rel="permalink">NLP - Part 7: Name Entity Recognition (NER) 앱
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          최대 1 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">사전 설정
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/teeko.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/others/ml-teeko-minimax/" rel="permalink">Minimax 알고리즘 - Teeko Game
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          12 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Minimax 알고리즘을 활용해서 Teeko 게임을 구현한다.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/q-learning.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/rl/ml-reinforcement-learning-q-learning/" rel="permalink">Reinforcement Learning - Q-Learning 알고리즘
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          최대 1 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Q-Learning 알고리즘을 활용한 예제이다.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/pca-image-compression.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/usl/ml-pca/" rel="permalink">PCA - Image Compression(이미지 압축)
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">PCA를 이용해서 이미지 압축을 진행해보자.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/hac.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/usl/ml-hca/" rel="permalink">Hierarchical Agglomerate Clustering(HAC) - 포켓몬 군집화
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Hierarchical Agglomerate Clustering(HAC) 이용해서 서로 다른 특성을 공유하는 Pokemon들을 군집으로 묶어보자.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/8-tile-puzzle.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/others/ml-8-tile-puzzle-a-search/" rel="permalink">A* Search - 8-tile Puzzle Game
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          최대 1 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">A-star 알고리즘을 활용해서 8-tile Puzzle 게임을 구현한다.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/lenet.JPG" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/sl/dl-miniplace-classification/" rel="permalink">LeNet 신경망 - MiniPlaces 이미지 분류
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">LeNet 신경망을 활용해서 MiniPlaces 데이터셋 이미지 분류 작업을 수행한다.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/streamlit-thumbnail.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/python/python-web-server-exercise/" rel="permalink">Python: PART 2 - Web Application without Server
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+강아지 품종 분류 AI 웹페이지
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/ai-thumbnail.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/aipapernlp/ai-paper-ko-legal-nlp/" rel="permalink">[논문 분석] A Multi-Task Benchmark for Korean Legal Language Understanding and Judgement Prediction (arXiv 2022)
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/bert-thumbnail.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/bert/bert-3/" rel="permalink">Part 3: BERT Language Model
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          1 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">BERT
+Bi-directional transformer로 이루어진 언어모델로, BERT 언어모델 위에 1개의 classification layer만 부착하여 다양한 NLP task를 수행한다.
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="mailto:hchoi256@wisc.edu" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+          <li><a href="https://github.com/hchoi256" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="/assets/포트폴리오.pdf" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Portfolio</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 쭌스🎄. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    
+
+  
+
+
+
+
+
+  </body>
+</html>

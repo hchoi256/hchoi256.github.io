@@ -1,8 +1,8 @@
 ---
 layout: single
 title: "CNN - Classification: fashionMNIST"
-categories: DL
-tag: [deep learning, cnn, classification]
+categories: SL
+tag: [CNN, Classification, FashionMNIST]
 toc: true
 toc_sticky: true
 toc_label: "GITHUB BLOG JJUNS"

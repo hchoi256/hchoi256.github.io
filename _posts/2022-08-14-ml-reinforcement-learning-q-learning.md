@@ -1,8 +1,8 @@
 ---
 layout: single
-title: "ML: Reinforcement Learning - Q-Learning 알고리즘"
-categories: ML
-tag: [machine learning, reinforcement learning, q-learning, python]
+title: "Reinforcement Learning - Q-Learning 알고리즘"
+categories: RL
+tag: [Reinforcement Learning, Q-learning]
 toc: true
 toc_sticky: true
 toc_label: "GITHUB BLOG JJUNS"

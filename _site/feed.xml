@@ -1,166 +1,37 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-08-15T08:22:10+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정리하여 내 것으로, AI</title><subtitle>Leveraging the state-of-the-art technology in AI</subtitle><author><name>Hojun Eric Choi</name><email>hchoi256@wisc.edu</email></author><entry><title type="html">DL: LeNet 신경망 - MiniPlaces 이미지 분류</title><link href="http://localhost:4000/dl/dl-miniplace-classification/" rel="alternate" type="text/html" title="DL: LeNet 신경망 - MiniPlaces 이미지 분류" /><published>2022-08-14T00:00:00+09:00</published><updated>2022-08-14T00:00:00+09:00</updated><id>http://localhost:4000/dl/dl-miniplace-classification</id><content type="html" xml:base="http://localhost:4000/dl/dl-miniplace-classification/"><![CDATA[<p>LeNet 신경망을 활용해서 MiniPlaces 데이터셋 이미지 분류 작업을 수행한다.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-08-19T00:39:44+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">정리하여 내 것으로, AI 📂</title><subtitle>Leveraging SOTA Technologies in AI</subtitle><author><name>쭌스🎄</name></author><entry><title type="html">NLP - Part 7: Name Entity Recognition (NER) 앱</title><link href="http://localhost:4000/nlp/nlp-NER/" rel="alternate" type="text/html" title="NLP - Part 7: Name Entity Recognition (NER) 앱" /><published>2022-08-16T00:00:00+09:00</published><updated>2022-08-16T00:00:00+09:00</updated><id>http://localhost:4000/nlp/nlp-NER</id><content type="html" xml:base="http://localhost:4000/nlp/nlp-NER/"><![CDATA[<h1 id="사전-설정">사전 설정</h1>
 
-<p>‘MiniPlaces’ 데이터셋은 캐글과 같은 온라인에서 손쉽게 구할 수 있다 <a href="https://www.kaggle.com/datasets/russchua/miniplaces">여기</a>.</p>
-
-<h1 id="code">Code</h1>
-<p class="notice--danger"><strong>[Notice]</strong> <a href="https://github.com/hchoi256/cs540-AI/tree/main/convolutional-neural-network">download here</a></p>
-
-<blockquote>
-  <p>CNN이나 LeNet 신경망에 대한 보다 자세한 내용은 <a href="https://github.com/hchoi256/ai-terms/blob/main/README.md">여기</a>를 참조하자.</p>
-</blockquote>
-
-<h1 id="라이브러리-불러오기">라이브러리 불러오기</h1>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># python imports
-</span><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
-
-<span class="c1"># torch imports
-</span><span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
-<span class="kn">import</span> <span class="nn">torch.optim</span> <span class="k">as</span> <span class="n">optim</span>
-<span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="n">F</span>
-
-<span class="c1"># helper functions for computer vision
-</span><span class="kn">import</span> <span class="nn">torchvision</span>
-<span class="kn">import</span> <span class="nn">torchvision.transforms</span> <span class="k">as</span> <span class="n">transforms</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">spacy</span> <span class="n">spacy_streamlit</span>
+<span class="o">%</span> <span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">spacy</span> <span class="n">download</span> <span class="n">en_core_web_trf</span>
 </code></pre></div></div>
 
-<h1 id="lenet-신경망-구축">LeNet 신경망 구축</h1>
+<p>1) 하나하나 직접 입력!
+   -&gt; 노동력이 필요
+   -&gt; 시간도 필요
+   -&gt; 실수가 있을 수 있다.
+   -&gt; 입력 도중에 값이 변할 수도 있다.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">LeNet</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">),</span> <span class="n">num_classes</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">LeNet</span><span class="p">,</span> <span class="bp">self</span><span class="p">).</span><span class="n">__init__</span><span class="p">()</span>
-        <span class="c1"># certain definitions
-</span>        <span class="bp">self</span><span class="p">.</span><span class="n">conv1</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
-        <span class="bp">self</span><span class="p">.</span><span class="n">conv2</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
-        <span class="bp">self</span><span class="p">.</span><span class="n">flatten</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Flatten</span><span class="p">()</span>
-        <span class="bp">self</span><span class="p">.</span><span class="n">linear1</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span><span class="mi">256</span><span class="p">)</span>
-        <span class="bp">self</span><span class="p">.</span><span class="n">linear2</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span><span class="mi">128</span><span class="p">)</span>
-        <span class="bp">self</span><span class="p">.</span><span class="n">linear3</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">)</span>
+<p>2) Copy &amp; Paste 로 할 때 총 1640번의 반복작업을 해야한다.
+    붙여넣기 하고 정리가 필요하다!</p>
 
-    <span class="c1"># 순전파
-</span>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-        <span class="n">shape_dict</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="c1"># certain operations
-</span>        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="n">max_pool2d</span><span class="p">(</span><span class="n">F</span><span class="p">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">conv1</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span> <span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
-        <span class="n">shape_dict</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">shape</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="n">max_pool2d</span><span class="p">(</span><span class="n">F</span><span class="p">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">conv2</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span> <span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
-        <span class="n">shape_dict</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">shape</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        <span class="n">shape_dict</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">shape</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">linear1</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-        <span class="n">shape_dict</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">shape</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">linear2</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-        <span class="n">shape_dict</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">shape</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">linear3</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        <span class="n">shape_dict</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">shape</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="n">x</span>
-        <span class="k">return</span> <span class="n">out</span><span class="p">,</span> <span class="n">shape_dict</span>
-</code></pre></div></div>
+<p>3) 최후의 수단 웹 크롤링(Web Crawling)을 하자!
+   -&gt; 반복을 내가 하기 싫다!
+   -&gt; 매일 정해진 시간에 하고 싶다
+   -&gt; 수집한 후에 데이터베이스든 엑셀파일이든 저장하고 싶다</p>
 
-<p>상기 LeNet 신경망에서 초기값 및 순전파 과정을 정의한다.</p>
+<p>웹 크롤링 (Web Crawling) :
+  =&gt; 내가 수집하고자 하는 데이터가 있는 서버에 접속해서 해당 웹페이지의 소스코드를 가져오는 행위
+  =&gt; 반복적인 일도 있고, 페이지 이동, 로그인 등등이 필요하다.
+  =&gt; 컴퓨터는 시킨 일에 대해서 빠르게 반복적으로 잘 한다.
+  =&gt; 해당 서버 모니터링 중 자주 빠르게 반복적으로 접근하는 IP를 차단</p>
 
-<p>PyTorch 특성상 이후 학습 단계에서 <strong>역전파</strong>를 정의할 예정이다.</p>
+<p>웹 스크래핑 (Web Scraping) :
+  =&gt; 원하는 데이터가 있는 웹페이지에서 원하는 데이터를 추출하는 행위</p>
 
-<blockquote>
-  <p><strong><em>‘Stride, Pooling, Padding’</em></strong> 혹은 순/역전파에 관한 보다 자세한 내용은 <a href="https://github.com/hchoi256/ai-terms/blob/main/README.md">여기</a>를 참조하자.</p>
-</blockquote>
+<p>각 웹사이트마다 
+https://www.[웹사이트 주소]/robots.txt</p>
 
-<h1 id="학습-가능-피라미터-개수optional">학습 가능 피라미터 개수(<em>Optional</em>)</h1>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">count_model_params</span><span class="p">():</span>
-    <span class="s">'''
-    return the number of trainable parameters of LeNet.
-    '''</span>
-    <span class="n">model</span> <span class="o">=</span> <span class="n">LeNet</span><span class="p">()</span>
-    <span class="n">model_params</span> <span class="o">=</span> <span class="mf">0.0</span>
-    <span class="n">model_params</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">numel</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">model</span><span class="p">.</span><span class="n">parameters</span><span class="p">()</span> <span class="k">if</span> <span class="n">p</span><span class="p">.</span><span class="n">requires_grad</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">model_params</span> <span class="o">/</span> <span class="mf">1e6</span>   
-</code></pre></div></div>
-
-<p>해당 과정은 학습에 필수는 아니지만, 교육 측면에서 도움이 될 수 있으니 만들어보았다.</p>
-
-<h1 id="모델-학습">모델 학습</h1>
-
-<p>하기 코드 옆에 주석을 자세히 달아놨으니 참조하며 읽어보길 바란다.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">train_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">train_loader</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">epoch</span><span class="p">):</span>
-    <span class="s">"""
-    model (torch.nn.module): The model created to train
-    train_loader (pytorch data loader): Training data loader
-    optimizer (optimizer.*): A instance of some sort of optimizer, usually SGD
-    criterion (nn.CrossEntropyLoss) : Loss function used to train the network
-    epoch (int): Current epoch number
-    """</span>
-    <span class="n">model</span><span class="p">.</span><span class="n">train</span><span class="p">()</span>
-    <span class="n">train_loss</span> <span class="o">=</span> <span class="mf">0.0</span>
-    <span class="k">for</span> <span class="nb">input</span><span class="p">,</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">train_loader</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">train_loader</span><span class="p">)):</span>
-        <span class="c1">###################################
-</span>        <span class="c1"># fill in the standard training loop of forward pass,
-</span>        <span class="c1"># backward pass, loss computation and optimizer step
-</span>        <span class="c1">###################################
-</span>
-        <span class="c1"># 1) zero the parameter gradients
-</span>        <span class="n">optimizer</span><span class="p">.</span><span class="n">zero_grad</span><span class="p">()</span>
-        <span class="c1"># 2) forward + backward + optimize
-</span>        <span class="n">output</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
-        <span class="n">loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
-        <span class="n">loss</span><span class="p">.</span><span class="n">backward</span><span class="p">()</span> <span class="c1"># 역전파 진행
-</span>        <span class="n">optimizer</span><span class="p">.</span><span class="n">step</span><span class="p">()</span>
-
-        <span class="c1"># Update the train_loss variable
-</span>        <span class="c1"># .item() detaches the node from the computational graph
-</span>        <span class="c1"># Uncomment the below line after you fill block 1 and 2
-</span>        <span class="n">train_loss</span> <span class="o">+=</span> <span class="n">loss</span><span class="p">.</span><span class="n">item</span><span class="p">()</span>
-
-    <span class="n">train_loss</span> <span class="o">/=</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_loader</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">'[Training set] Epoch: {:d}, Average loss: {:.4f}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">train_loss</span><span class="p">))</span>
-
-    <span class="k">return</span> <span class="n">train_loss</span>
-</code></pre></div></div>
-
-<p>‘<strong>tqdm</strong>‘는 progress bar를 생성해주고, 함수나 반복문의 TTC (Time To Completion) 를 예측하는 파이썬 패키지이다.</p>
-
-<p>모델 학습 과정을 실시간으로 확인하기 위해 불러온 패키지이다.</p>
-
-<p>주요 특징들을 살펴보자:</p>
-<ul>
-  <li><em>optimizer.zero_grad()</em>: 이전 step에서 각 layer 별로 계산된 gradient 값을 모두 0으로 초기화 시키는 작업으로, 0으로 초기화 하지 않으면 이전 step의 결과에 현재 step의 gradient가 누적으로 합해져서 계산된다.</li>
-  <li><em>criterion</em>: 손실함수 (이 프로젝트는 ‘<em>크로스 엔트로피</em>‘를 활용한다)</li>
-  <li><em>optimizer</em>: 최적화 방법 (i.e., Adam)</li>
-  <li><em>loss.backward()</em>: back-propagation을 통해 gradient를 계산한다.</li>
-  <li><em>optimizer.step()</em>: 각 layer의 gradient 값을 이용하여 파라미터를 업데이트.</li>
-  <li><em>train_loss += loss.item()</em>: 손실값 누적 계산</li>
-</ul>
-
-<blockquote>
-  <p><strong><em>크로스 엔트로피(Cross Entropy)</em></strong>에 관한 보다 자세한 내용은 <a href="https://github.com/hchoi256/ai-terms/blob/main/README.md">여기</a>를 참조하자.</p>
-</blockquote>
-
-<blockquote>
-  <p>보다 자세한 PyTorch 문법은 외부 사이트 <a href="https://gaussian37.github.io/dl-pytorch-snippets/">여기</a>를 참조하길 바란다.</p>
-</blockquote>
-
-<h1 id="모델-테스트">모델 테스트</h1>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">test_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">test_loader</span><span class="p">,</span> <span class="n">epoch</span><span class="p">):</span>
-    <span class="n">model</span><span class="p">.</span><span class="nb">eval</span><span class="p">()</span>
-    <span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="n">no_grad</span><span class="p">():</span>
-        <span class="k">for</span> <span class="nb">input</span><span class="p">,</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">test_loader</span><span class="p">:</span>
-            <span class="n">output</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
-            <span class="n">pred</span> <span class="o">=</span> <span class="n">output</span><span class="p">.</span><span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="bp">True</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-            <span class="n">correct</span> <span class="o">+=</span> <span class="n">pred</span><span class="p">.</span><span class="n">eq</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="n">view_as</span><span class="p">(</span><span class="n">pred</span><span class="p">)).</span><span class="nb">sum</span><span class="p">().</span><span class="n">item</span><span class="p">()</span>
-
-    <span class="n">test_acc</span> <span class="o">=</span> <span class="n">correct</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_loader</span><span class="p">.</span><span class="n">dataset</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">'[Test set] Epoch: {:d}, Accuracy: {:.2f}%</span><span class="se">\n</span><span class="s">'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span>
-        <span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mf">100.</span> <span class="o">*</span> <span class="n">test_acc</span><span class="p">))</span>
-
-    <span class="k">return</span> <span class="n">test_acc</span>
-</code></pre></div></div>
-
-<p>이제 개인적으로 각자 MiniPlaces 데이터셋을 활용해서 직접 PyTorch로 모델을 학습시켜보도록 하자.</p>]]></content><author><name>Hojun Eric Choi</name><email>hchoi256@wisc.edu</email></author><category term="DL" /><category term="deep learning" /><category term="classification" /><category term="MiniPlaces" /><category term="PyTorch" /><category term="python" /><summary type="html"><![CDATA[LeNet 신경망을 활용해서 MiniPlaces 데이터셋 이미지 분류 작업을 수행한다.]]></summary></entry><entry><title type="html">ML: Minimax 알고리즘 - Teeko Game</title><link href="http://localhost:4000/ml/ml-teeko-minimax/" rel="alternate" type="text/html" title="ML: Minimax 알고리즘 - Teeko Game" /><published>2022-08-14T00:00:00+09:00</published><updated>2022-08-14T00:00:00+09:00</updated><id>http://localhost:4000/ml/ml-teeko-minimax</id><content type="html" xml:base="http://localhost:4000/ml/ml-teeko-minimax/"><![CDATA[<p><strong>Minimax</strong> 알고리즘을 활용해서 <strong>Teeko</strong> 게임을 구현한다.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">beautifulsoup4</span>
+</code></pre></div></div>]]></content><author><name>쭌스🎄</name></author><category term="NLP" /><category term="NLP" /><category term="NER" /><summary type="html"><![CDATA[사전 설정]]></summary></entry><entry><title type="html">Minimax 알고리즘 - Teeko Game</title><link href="http://localhost:4000/others/ml-teeko-minimax/" rel="alternate" type="text/html" title="Minimax 알고리즘 - Teeko Game" /><published>2022-08-14T00:00:00+09:00</published><updated>2022-08-14T00:00:00+09:00</updated><id>http://localhost:4000/others/ml-teeko-minimax</id><content type="html" xml:base="http://localhost:4000/others/ml-teeko-minimax/"><![CDATA[<p><strong>Minimax</strong> 알고리즘을 활용해서 <strong>Teeko</strong> 게임을 구현한다.</p>
 
 <p>Teeko 게임은 한국인들에게는 익숙하지 않은 보드 게임일 수도 있다 (하기 설명 참조).</p>
 
@@ -733,7 +604,12 @@
 
 <p>내가 이상한 곳에 마커를 놓아서, AI가 가장 빠르게 성공 조건을 완성시킬 수 있는 대각선 방향으로 RED 마커를 놓고있다.</p>
 
-<p>각자 게임 진행을 해보면서 코드 또한 다시 한 번 숙지해보길 바란다.</p>]]></content><author><name>Hojun Eric Choi</name><email>hchoi256@wisc.edu</email></author><category term="ML" /><category term="machine learning" /><category term="teeko" /><category term="game" /><category term="minimax" /><category term="python" /><summary type="html"><![CDATA[Minimax 알고리즘을 활용해서 Teeko 게임을 구현한다.]]></summary></entry><entry><title type="html">ML: PCA - Image Compression(이미지 압축)</title><link href="http://localhost:4000/ml/ml-pca/" rel="alternate" type="text/html" title="ML: PCA - Image Compression(이미지 압축)" /><published>2022-08-14T00:00:00+09:00</published><updated>2022-08-14T00:00:00+09:00</updated><id>http://localhost:4000/ml/ml-pca</id><content type="html" xml:base="http://localhost:4000/ml/ml-pca/"><![CDATA[<p>PCA를 이용해서 이미지 압축을 진행해보자.</p>
+<p>각자 게임 진행을 해보면서 코드 또한 다시 한 번 숙지해보길 바란다.</p>]]></content><author><name>쭌스🎄</name></author><category term="Others" /><category term="Machine Learning" /><category term="Teeko Board Game" /><category term="Minimax" /><summary type="html"><![CDATA[Minimax 알고리즘을 활용해서 Teeko 게임을 구현한다.]]></summary></entry><entry><title type="html">Reinforcement Learning - Q-Learning 알고리즘</title><link href="http://localhost:4000/rl/ml-reinforcement-learning-q-learning/" rel="alternate" type="text/html" title="Reinforcement Learning - Q-Learning 알고리즘" /><published>2022-08-14T00:00:00+09:00</published><updated>2022-08-14T00:00:00+09:00</updated><id>http://localhost:4000/rl/ml-reinforcement-learning-q-learning</id><content type="html" xml:base="http://localhost:4000/rl/ml-reinforcement-learning-q-learning/"><![CDATA[<p><strong>Q-Learning 알고리즘</strong>을 활용한 예제이다.</p>
+
+<p>이 프로젝트는 Q-Learning 알고리즘을 이해하고 있다는 전제로 진행한다.</p>
+
+<h1 id="code">Code</h1>
+<p class="notice--danger"><strong>[Notice]</strong> <a href="https://github.com/hchoi256/cs540-AI/tree/main/reinforcement-learning-qlearning">download here</a></p>]]></content><author><name>쭌스🎄</name></author><category term="RL" /><category term="Reinforcement Learning" /><category term="Q-learning" /><summary type="html"><![CDATA[Q-Learning 알고리즘을 활용한 예제이다.]]></summary></entry><entry><title type="html">PCA - Image Compression(이미지 압축)</title><link href="http://localhost:4000/usl/ml-pca/" rel="alternate" type="text/html" title="PCA - Image Compression(이미지 압축)" /><published>2022-08-14T00:00:00+09:00</published><updated>2022-08-14T00:00:00+09:00</updated><id>http://localhost:4000/usl/ml-pca</id><content type="html" xml:base="http://localhost:4000/usl/ml-pca/"><![CDATA[<p>PCA를 이용해서 이미지 압축을 진행해보자.</p>
 
 <h1 id="code">Code</h1>
 <p class="notice--danger"><strong>[Notice]</strong> <a href="https://github.com/hchoi256/cs540-AI/tree/main/PCA">download here</a></p>
@@ -893,7 +769,7 @@
 
 <p>상기 코드를 통해 손쉽게 원본 이미지와 압축된 이미지를 비교해보자.</p>
 
-<p><img src="https://user-images.githubusercontent.com/39285147/184554368-15a426d7-fd5c-4838-97d6-2b13b820149c.png" alt="image" /></p>]]></content><author><name>Hojun Eric Choi</name><email>hchoi256@wisc.edu</email></author><category term="ML" /><category term="machine learning" /><category term="pca" /><category term="image compression" /><category term="python" /><summary type="html"><![CDATA[PCA를 이용해서 이미지 압축을 진행해보자.]]></summary></entry><entry><title type="html">ML: Hierarchical Agglomerate Clustering(HAC) - 포켓몬 군집화</title><link href="http://localhost:4000/ml/ml-hca/" rel="alternate" type="text/html" title="ML: Hierarchical Agglomerate Clustering(HAC) - 포켓몬 군집화" /><published>2022-08-14T00:00:00+09:00</published><updated>2022-08-14T00:00:00+09:00</updated><id>http://localhost:4000/ml/ml-hca</id><content type="html" xml:base="http://localhost:4000/ml/ml-hca/"><![CDATA[<p>Hierarchical Agglomerate Clustering(HAC) 이용해서 서로 다른 특성을 공유하는 Pokemon들을 군집으로 묶어보자.</p>
+<p><img src="https://user-images.githubusercontent.com/39285147/184554368-15a426d7-fd5c-4838-97d6-2b13b820149c.png" alt="image" /></p>]]></content><author><name>쭌스🎄</name></author><category term="USL" /><category term="PCA" /><category term="Image Compression" /><summary type="html"><![CDATA[PCA를 이용해서 이미지 압축을 진행해보자.]]></summary></entry><entry><title type="html">Hierarchical Agglomerate Clustering(HAC) - 포켓몬 군집화</title><link href="http://localhost:4000/usl/ml-hca/" rel="alternate" type="text/html" title="Hierarchical Agglomerate Clustering(HAC) - 포켓몬 군집화" /><published>2022-08-14T00:00:00+09:00</published><updated>2022-08-14T00:00:00+09:00</updated><id>http://localhost:4000/usl/ml-hca</id><content type="html" xml:base="http://localhost:4000/usl/ml-hca/"><![CDATA[<p>Hierarchical Agglomerate Clustering(HAC) 이용해서 서로 다른 특성을 공유하는 Pokemon들을 군집으로 묶어보자.</p>
 
 <p>‘Pokemon.csv’는 온라인에서 손쉽게 구할 수 있다.</p>
 
@@ -1158,7 +1034,7 @@
 
 <p>…</p>
 
-<p><img src="https://user-images.githubusercontent.com/39285147/184555117-ebd0bf14-f711-473b-b0ec-275833e32ad3.png" alt="image" /></p>]]></content><author><name>Hojun Eric Choi</name><email>hchoi256@wisc.edu</email></author><category term="ML" /><category term="machine learning" /><category term="hac" /><category term="clustering" /><category term="pokemon" /><category term="python" /><summary type="html"><![CDATA[Hierarchical Agglomerate Clustering(HAC) 이용해서 서로 다른 특성을 공유하는 Pokemon들을 군집으로 묶어보자.]]></summary></entry><entry><title type="html">ML: A* Search - 8-tile Puzzle Game</title><link href="http://localhost:4000/ml/ml-8-tile-puzzle-a-star-algorithm/" rel="alternate" type="text/html" title="ML: A* Search - 8-tile Puzzle Game" /><published>2022-08-14T00:00:00+09:00</published><updated>2022-08-14T00:00:00+09:00</updated><id>http://localhost:4000/ml/ml-8-tile-puzzle-a-star-algorithm</id><content type="html" xml:base="http://localhost:4000/ml/ml-8-tile-puzzle-a-star-algorithm/"><![CDATA[<p><strong>A-star 알고리즘</strong>을 활용해서 <strong>8-tile Puzzle</strong> 게임을 구현한다.</p>
+<p><img src="https://user-images.githubusercontent.com/39285147/184555117-ebd0bf14-f711-473b-b0ec-275833e32ad3.png" alt="image" /></p>]]></content><author><name>쭌스🎄</name></author><category term="USL" /><category term="HAC" /><category term="Clustering" /><category term="Pokemon" /><summary type="html"><![CDATA[Hierarchical Agglomerate Clustering(HAC) 이용해서 서로 다른 특성을 공유하는 Pokemon들을 군집으로 묶어보자.]]></summary></entry><entry><title type="html">A* Search - 8-tile Puzzle Game</title><link href="http://localhost:4000/others/ml-8-tile-puzzle-a-search/" rel="alternate" type="text/html" title="A* Search - 8-tile Puzzle Game" /><published>2022-08-14T00:00:00+09:00</published><updated>2022-08-14T00:00:00+09:00</updated><id>http://localhost:4000/others/ml-8-tile-puzzle-a-search</id><content type="html" xml:base="http://localhost:4000/others/ml-8-tile-puzzle-a-search/"><![CDATA[<p><strong>A-star 알고리즘</strong>을 활용해서 <strong>8-tile Puzzle</strong> 게임을 구현한다.</p>
 
 <blockquote>
   <p><a href="https://natejin.tistory.com/22"><strong><em>8-tile Puzzle</em></strong></a> 정보는 여기서 참고하자.</p>
@@ -1173,7 +1049,169 @@
 </blockquote>
 
 <h1 id="code">Code</h1>
-<p class="notice--danger"><strong>[Notice]</strong> <a href="https://github.com/hchoi256/cs540-AI/tree/main/A-star-8-tile-puzzle">download here</a></p>]]></content><author><name>Hojun Eric Choi</name><email>hchoi256@wisc.edu</email></author><category term="ML" /><category term="machine learning" /><category term="8-tile puzzle" /><category term="game" /><category term="A* Search" /><category term="python" /><summary type="html"><![CDATA[A-star 알고리즘을 활용해서 8-tile Puzzle 게임을 구현한다.]]></summary></entry><entry><title type="html">Python: PART 2: Web Application without Server</title><link href="http://localhost:4000/python/python-web-server-exercise/" rel="alternate" type="text/html" title="Python: PART 2: Web Application without Server" /><published>2022-08-13T00:00:00+09:00</published><updated>2022-08-13T00:00:00+09:00</updated><id>http://localhost:4000/python/python-web-server-exercise</id><content type="html" xml:base="http://localhost:4000/python/python-web-server-exercise/"><![CDATA[<hr />
+<p class="notice--danger"><strong>[Notice]</strong> <a href="https://github.com/hchoi256/cs540-AI/tree/main/A-star-8-tile-puzzle">download here</a></p>]]></content><author><name>쭌스🎄</name></author><category term="Others" /><category term="Machine Learning" /><category term="Game" /><category term="A* Search" /><summary type="html"><![CDATA[A-star 알고리즘을 활용해서 8-tile Puzzle 게임을 구현한다.]]></summary></entry><entry><title type="html">LeNet 신경망 - MiniPlaces 이미지 분류</title><link href="http://localhost:4000/sl/dl-miniplace-classification/" rel="alternate" type="text/html" title="LeNet 신경망 - MiniPlaces 이미지 분류" /><published>2022-08-14T00:00:00+09:00</published><updated>2022-08-14T00:00:00+09:00</updated><id>http://localhost:4000/sl/dl-miniplace-classification</id><content type="html" xml:base="http://localhost:4000/sl/dl-miniplace-classification/"><![CDATA[<p>LeNet 신경망을 활용해서 MiniPlaces 데이터셋 이미지 분류 작업을 수행한다.</p>
+
+<p>‘MiniPlaces’ 데이터셋은 캐글과 같은 온라인에서 손쉽게 구할 수 있다 <a href="https://www.kaggle.com/datasets/russchua/miniplaces">여기</a>.</p>
+
+<h1 id="code">Code</h1>
+<p class="notice--danger"><strong>[Notice]</strong> <a href="https://github.com/hchoi256/cs540-AI/tree/main/convolutional-neural-network">download here</a></p>
+
+<blockquote>
+  <p>CNN이나 LeNet 신경망에 대한 보다 자세한 내용은 <a href="https://github.com/hchoi256/ai-terms/blob/main/README.md">여기</a>를 참조하자.</p>
+</blockquote>
+
+<h1 id="라이브러리-불러오기">라이브러리 불러오기</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># python imports
+</span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+
+<span class="c1"># torch imports
+</span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
+<span class="kn">import</span> <span class="nn">torch.optim</span> <span class="k">as</span> <span class="n">optim</span>
+<span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="n">F</span>
+
+<span class="c1"># helper functions for computer vision
+</span><span class="kn">import</span> <span class="nn">torchvision</span>
+<span class="kn">import</span> <span class="nn">torchvision.transforms</span> <span class="k">as</span> <span class="n">transforms</span>
+</code></pre></div></div>
+
+<h1 id="lenet-신경망-구축">LeNet 신경망 구축</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">LeNet</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">),</span> <span class="n">num_classes</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">LeNet</span><span class="p">,</span> <span class="bp">self</span><span class="p">).</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="c1"># certain definitions
+</span>        <span class="bp">self</span><span class="p">.</span><span class="n">conv1</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">conv2</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">flatten</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Flatten</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">linear1</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span><span class="mi">256</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">linear2</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span><span class="mi">128</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">linear3</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">)</span>
+
+    <span class="c1"># 순전파
+</span>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">shape_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="c1"># certain operations
+</span>        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="n">max_pool2d</span><span class="p">(</span><span class="n">F</span><span class="p">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">conv1</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span> <span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">shape_dict</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">shape</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="n">max_pool2d</span><span class="p">(</span><span class="n">F</span><span class="p">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">conv2</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span> <span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">shape_dict</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">shape</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">shape_dict</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">shape</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">linear1</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="n">shape_dict</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">shape</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">linear2</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="n">shape_dict</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">shape</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">linear3</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">shape_dict</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">shape</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="k">return</span> <span class="n">out</span><span class="p">,</span> <span class="n">shape_dict</span>
+</code></pre></div></div>
+
+<p>상기 LeNet 신경망에서 초기값 및 순전파 과정을 정의한다.</p>
+
+<p>PyTorch 특성상 이후 학습 단계에서 <strong>역전파</strong>를 정의할 예정이다.</p>
+
+<blockquote>
+  <p><strong><em>‘Stride, Pooling, Padding’</em></strong> 혹은 순/역전파에 관한 보다 자세한 내용은 <a href="https://github.com/hchoi256/ai-terms/blob/main/README.md">여기</a>를 참조하자.</p>
+</blockquote>
+
+<h1 id="학습-가능-피라미터-개수optional">학습 가능 피라미터 개수(<em>Optional</em>)</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">count_model_params</span><span class="p">():</span>
+    <span class="s">'''
+    return the number of trainable parameters of LeNet.
+    '''</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">LeNet</span><span class="p">()</span>
+    <span class="n">model_params</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">model_params</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">numel</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">model</span><span class="p">.</span><span class="n">parameters</span><span class="p">()</span> <span class="k">if</span> <span class="n">p</span><span class="p">.</span><span class="n">requires_grad</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">model_params</span> <span class="o">/</span> <span class="mf">1e6</span>   
+</code></pre></div></div>
+
+<p>해당 과정은 학습에 필수는 아니지만, 교육 측면에서 도움이 될 수 있으니 만들어보았다.</p>
+
+<h1 id="모델-학습">모델 학습</h1>
+
+<p>하기 코드 옆에 주석을 자세히 달아놨으니 참조하며 읽어보길 바란다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">train_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">train_loader</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">epoch</span><span class="p">):</span>
+    <span class="s">"""
+    model (torch.nn.module): The model created to train
+    train_loader (pytorch data loader): Training data loader
+    optimizer (optimizer.*): A instance of some sort of optimizer, usually SGD
+    criterion (nn.CrossEntropyLoss) : Loss function used to train the network
+    epoch (int): Current epoch number
+    """</span>
+    <span class="n">model</span><span class="p">.</span><span class="n">train</span><span class="p">()</span>
+    <span class="n">train_loss</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">for</span> <span class="nb">input</span><span class="p">,</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">train_loader</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">train_loader</span><span class="p">)):</span>
+        <span class="c1">###################################
+</span>        <span class="c1"># fill in the standard training loop of forward pass,
+</span>        <span class="c1"># backward pass, loss computation and optimizer step
+</span>        <span class="c1">###################################
+</span>
+        <span class="c1"># 1) zero the parameter gradients
+</span>        <span class="n">optimizer</span><span class="p">.</span><span class="n">zero_grad</span><span class="p">()</span>
+        <span class="c1"># 2) forward + backward + optimize
+</span>        <span class="n">output</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+        <span class="n">loss</span><span class="p">.</span><span class="n">backward</span><span class="p">()</span> <span class="c1"># 역전파 진행
+</span>        <span class="n">optimizer</span><span class="p">.</span><span class="n">step</span><span class="p">()</span>
+
+        <span class="c1"># Update the train_loss variable
+</span>        <span class="c1"># .item() detaches the node from the computational graph
+</span>        <span class="c1"># Uncomment the below line after you fill block 1 and 2
+</span>        <span class="n">train_loss</span> <span class="o">+=</span> <span class="n">loss</span><span class="p">.</span><span class="n">item</span><span class="p">()</span>
+
+    <span class="n">train_loss</span> <span class="o">/=</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_loader</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'[Training set] Epoch: {:d}, Average loss: {:.4f}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">train_loss</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">train_loss</span>
+</code></pre></div></div>
+
+<p>‘<strong>tqdm</strong>‘는 progress bar를 생성해주고, 함수나 반복문의 TTC (Time To Completion) 를 예측하는 파이썬 패키지이다.</p>
+
+<p>모델 학습 과정을 실시간으로 확인하기 위해 불러온 패키지이다.</p>
+
+<p>주요 특징들을 살펴보자:</p>
+<ul>
+  <li><em>optimizer.zero_grad()</em>: 이전 step에서 각 layer 별로 계산된 gradient 값을 모두 0으로 초기화 시키는 작업으로, 0으로 초기화 하지 않으면 이전 step의 결과에 현재 step의 gradient가 누적으로 합해져서 계산된다.</li>
+  <li><em>criterion</em>: 손실함수 (이 프로젝트는 ‘<em>크로스 엔트로피</em>‘를 활용한다)</li>
+  <li><em>optimizer</em>: 최적화 방법 (i.e., Adam)</li>
+  <li><em>loss.backward()</em>: back-propagation을 통해 gradient를 계산한다.</li>
+  <li><em>optimizer.step()</em>: 각 layer의 gradient 값을 이용하여 파라미터를 업데이트.</li>
+  <li><em>train_loss += loss.item()</em>: 손실값 누적 계산</li>
+</ul>
+
+<blockquote>
+  <p><strong><em>크로스 엔트로피(Cross Entropy)</em></strong>에 관한 보다 자세한 내용은 <a href="https://github.com/hchoi256/ai-terms/blob/main/README.md">여기</a>를 참조하자.</p>
+</blockquote>
+
+<blockquote>
+  <p>보다 자세한 PyTorch 문법은 외부 사이트 <a href="https://gaussian37.github.io/dl-pytorch-snippets/">여기</a>를 참조하길 바란다.</p>
+</blockquote>
+
+<h1 id="모델-테스트">모델 테스트</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">test_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">test_loader</span><span class="p">,</span> <span class="n">epoch</span><span class="p">):</span>
+    <span class="n">model</span><span class="p">.</span><span class="nb">eval</span><span class="p">()</span>
+    <span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="n">no_grad</span><span class="p">():</span>
+        <span class="k">for</span> <span class="nb">input</span><span class="p">,</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">test_loader</span><span class="p">:</span>
+            <span class="n">output</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+            <span class="n">pred</span> <span class="o">=</span> <span class="n">output</span><span class="p">.</span><span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="bp">True</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">correct</span> <span class="o">+=</span> <span class="n">pred</span><span class="p">.</span><span class="n">eq</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="n">view_as</span><span class="p">(</span><span class="n">pred</span><span class="p">)).</span><span class="nb">sum</span><span class="p">().</span><span class="n">item</span><span class="p">()</span>
+
+    <span class="n">test_acc</span> <span class="o">=</span> <span class="n">correct</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_loader</span><span class="p">.</span><span class="n">dataset</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'[Test set] Epoch: {:d}, Accuracy: {:.2f}%</span><span class="se">\n</span><span class="s">'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span>
+        <span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mf">100.</span> <span class="o">*</span> <span class="n">test_acc</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">test_acc</span>
+</code></pre></div></div>
+
+<p>이제 개인적으로 각자 MiniPlaces 데이터셋을 활용해서 직접 PyTorch로 모델을 학습시켜보도록 하자.</p>]]></content><author><name>쭌스🎄</name></author><category term="SL" /><category term="LeNet" /><category term="Classification" /><category term="PyTorch" /><summary type="html"><![CDATA[LeNet 신경망을 활용해서 MiniPlaces 데이터셋 이미지 분류 작업을 수행한다.]]></summary></entry><entry><title type="html">Python: PART 2 - Web Application without Server</title><link href="http://localhost:4000/python/python-web-server-exercise/" rel="alternate" type="text/html" title="Python: PART 2 - Web Application without Server" /><published>2022-08-13T00:00:00+09:00</published><updated>2022-08-13T00:00:00+09:00</updated><id>http://localhost:4000/python/python-web-server-exercise</id><content type="html" xml:base="http://localhost:4000/python/python-web-server-exercise/"><![CDATA[<hr />
 <h1 id="강아지-품종-분류-ai-웹페이지">강아지 품종 분류 AI 웹페이지</h1>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">opencv</span><span class="o">-</span><span class="n">python</span>
@@ -1320,7 +1358,7 @@
     <span class="n">st</span><span class="p">.</span><span class="n">pyplot</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><img src="https://user-images.githubusercontent.com/39285147/184472175-c98abfb5-55c4-4af4-a688-521659032de1.png" alt="image" /></p>]]></content><author><name>Hojun Eric Choi</name><email>hchoi256@wisc.edu</email></author><category term="Python" /><category term="python" /><category term="webserver" /><category term="streamlit" /><category term="opencv" /><summary type="html"><![CDATA[강아지 품종 분류 AI 웹페이지]]></summary></entry><entry><title type="html">[논문 분석] A Multi-Task Benchmark for Korean Legal Language Understanding and Judgement Prediction (arXiv 2022)</title><link href="http://localhost:4000/ai/ai-paper-ko-legal-nlp/" rel="alternate" type="text/html" title="[논문 분석] A Multi-Task Benchmark for Korean Legal Language Understanding and Judgement Prediction (arXiv 2022)" /><published>2022-08-12T00:00:00+09:00</published><updated>2022-08-12T00:00:00+09:00</updated><id>http://localhost:4000/ai/ai-paper-ko-legal-nlp</id><content type="html" xml:base="http://localhost:4000/ai/ai-paper-ko-legal-nlp/"><![CDATA[<p><img src="https://user-images.githubusercontent.com/39285147/184294516-0dad2074-9c87-44f1-af52-6ea4c0b5f174.png" alt="image" /></p>
+<p><img src="https://user-images.githubusercontent.com/39285147/184472175-c98abfb5-55c4-4af4-a688-521659032de1.png" alt="image" /></p>]]></content><author><name>쭌스🎄</name></author><category term="Python" /><category term="Python Web App" /><category term="Streamlit" /><category term="Opencv" /><summary type="html"><![CDATA[강아지 품종 분류 AI 웹페이지]]></summary></entry><entry><title type="html">[논문 분석] A Multi-Task Benchmark for Korean Legal Language Understanding and Judgement Prediction (arXiv 2022)</title><link href="http://localhost:4000/aipapernlp/ai-paper-ko-legal-nlp/" rel="alternate" type="text/html" title="[논문 분석] A Multi-Task Benchmark for Korean Legal Language Understanding and Judgement Prediction (arXiv 2022)" /><published>2022-08-12T00:00:00+09:00</published><updated>2022-08-12T00:00:00+09:00</updated><id>http://localhost:4000/aipapernlp/ai-paper-ko-legal-nlp</id><content type="html" xml:base="http://localhost:4000/aipapernlp/ai-paper-ko-legal-nlp/"><![CDATA[<p><img src="https://user-images.githubusercontent.com/39285147/184294516-0dad2074-9c87-44f1-af52-6ea4c0b5f174.png" alt="image" /></p>
 
 <p><a href="https://arxiv.org/abs/2206.05224"><strong>논문</strong></a></p>
 
@@ -1461,7 +1499,7 @@
 
 <p>또한, 원고, 피고와 같은 요인들을 인풋으로 고려하지 않은 판결 예측 결과라고 가정하며, LBOX OPEN은 legal information retrieval task 등 여러 문제에 대한 사례 정보는 반영하지 않는다.</p>
 
-<p>상기 언급된 한계점들은 시스템적으로 구현이 매우 까다로우며, 도메인 지식이 풍부한 여러 전문가와의 협업이 필요시 될것이며, 이것이 곧 LBOX OPEN의 미래 과제일 것이다.</p>]]></content><author><name>Hojun Eric Choi</name><email>hchoi256@wisc.edu</email></author><category term="AI" /><category term="AI" /><category term="dissertation" /><category term="Research" /><category term="논문" /><category term="kaist" /><summary type="html"><![CDATA[]]></summary></entry><entry><title type="html">BERT Language Model - Part 3</title><link href="http://localhost:4000/nlp/bert-3/" rel="alternate" type="text/html" title="BERT Language Model - Part 3" /><published>2022-08-08T00:00:00+09:00</published><updated>2022-08-08T00:00:00+09:00</updated><id>http://localhost:4000/nlp/bert-3</id><content type="html" xml:base="http://localhost:4000/nlp/bert-3/"><![CDATA[<h1 id="bert">BERT</h1>
+<p>상기 언급된 한계점들은 시스템적으로 구현이 매우 까다로우며, 도메인 지식이 풍부한 여러 전문가와의 협업이 필요시 될것이며, 이것이 곧 LBOX OPEN의 미래 과제일 것이다.</p>]]></content><author><name>쭌스🎄</name></author><category term="AIPaperNLP" /><category term="AI Research Paper" /><category term="Kaist" /><summary type="html"><![CDATA[]]></summary></entry><entry><title type="html">Part 3: BERT Language Model</title><link href="http://localhost:4000/bert/bert-3/" rel="alternate" type="text/html" title="Part 3: BERT Language Model" /><published>2022-08-08T00:00:00+09:00</published><updated>2022-08-08T00:00:00+09:00</updated><id>http://localhost:4000/bert/bert-3</id><content type="html" xml:base="http://localhost:4000/bert/bert-3/"><![CDATA[<h1 id="bert">BERT</h1>
 <p>Bi-directional transformer로 이루어진 언어모델로, BERT 언어모델 위에 1개의 classification layer만 부착하여 다양한 NLP task를 수행한다.</p>
 
 <h1 id="wordpiece-tokenizing">WordPiece tokenizing</h1>
@@ -1546,233 +1584,4 @@
 <h1 id="references">References</h1>
 <p><a href="https://www.slideshare.net/qksksk657/korquad-v10"><em>KorQuAD</em></a></p>
 
-<p><a href="https://arxiv.org/abs/1810.04805"><em>BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding</em></a></p>]]></content><author><name>Hojun Eric Choi</name><email>hchoi256@wisc.edu</email></author><category term="NLP" /><category term="NLP" /><category term="python" /><category term="BERT" /><category term="Language Model" /><summary type="html"><![CDATA[BERT Bi-directional transformer로 이루어진 언어모델로, BERT 언어모델 위에 1개의 classification layer만 부착하여 다양한 NLP task를 수행한다.]]></summary></entry><entry><title type="html">BERT Language Model - Part 2</title><link href="http://localhost:4000/nlp/bert-2/" rel="alternate" type="text/html" title="BERT Language Model - Part 2" /><published>2022-08-08T00:00:00+09:00</published><updated>2022-08-08T00:00:00+09:00</updated><id>http://localhost:4000/nlp/bert-2</id><content type="html" xml:base="http://localhost:4000/nlp/bert-2/"><![CDATA[<h1 id="언어-모델-language-model-lm">언어 모델 (Language Model, LM)</h1>
-<p>‘자연어’의 법칙을 컴퓨터로 모사하는 모델로, 다음에 등장할 단어 예측을 수행한다(= ‘맥락’을 고려한다).</p>
-
-<h2 id="markov-확률-모델">Markov 확률 모델</h2>
-<p><img src="https://user-images.githubusercontent.com/39285147/183536291-32897298-797e-4fd8-aac9-4bcc9ef3459e.png" alt="image" /></p>
-
-<p>이전 단어의 형태를 통하여 확률적으로 다음에 나올 단어를 예측한다</p>
-
-<p>가령, ‘like’ 다음에 ‘rabbit’이라는 단어가 나타날 확률은 주어진 학습 데이터에 기반하여 <strong>33%</strong>로 나타난다.</p>
-
-<h2 id="rnn-recurrent-neural-network-모델">RNN (Recurrent Neural Network) 모델</h2>
-<p><img src="https://user-images.githubusercontent.com/39285147/183536890-b8d596a2-c3c0-4c90-8193-ac96f8b8cdb0.png" alt="image" /></p>
-
-<p>Markov 체인 모델을 <strong>딥러닝</strong>에 접목하여 확장한 모델이 바로 RNN이다.</p>
-
-<p>현재 state를 결정하기 위하여 이전 state의 hidden layer 정보를 인풋으로 받는다.</p>
-
-<p>이를 통해 <strong>앞선 문맥을 고려한</strong> 최종 출력 vector(Context vector)를 만든다.</p>
-
-<p>보다 자세한 내용은 <a href="https://github.com/hchoi256/ai-terms/blob/main/README.md">여기</a>를 참조하자.</p>
-
-<h3 id="seq2seq">Seq2Seq</h3>
-<p><img src="https://user-images.githubusercontent.com/39285147/183537292-5cfe7c3f-d380-4e0c-aa20-266341ae5d9a.png" alt="image" /></p>
-
-<p><strong>Encoder layer</strong>: Context vector 획득</p>
-
-<p><strong>Decoder layer</strong>: Context vecotr 해독/해석</p>
-
-<p><strong>번역</strong>에 자주 사용되어, 자연어를 인식(encoding)하고 알맞은 언어로 번역(decoding)하여 출력한다.</p>
-
-<p>하지만 sequence가 길어진다면, <strong>초기 단어에 대한 정보를 점차 소실</strong>되는 구조적 한계점과 <strong>중요하지 않은 token의 정보</strong> 또한 최종 출력에 영향을 주는 단점이 존재한다.</p>
-
-<h3 id="attention-모델">Attention 모델</h3>
-<p><img src="https://user-images.githubusercontent.com/39285147/183538147-9eb2a2cf-b06c-4994-9a3b-11a4013a6fc8.png" alt="image" /></p>
-
-<p>모든 token을 고려하는 Seq2Seq의 한계점을 보완한다.</p>
-
-<p>이를 위해서 <strong>특정 중요 단어에 대한 집중도</strong>를 부여한다.</p>
-
-<p><strong>RNN의 셀 각각이 도출하는 output을 모두 활용</strong>하여 denamic하게 context vector를 생성한다.</p>
-<ul>
-  <li>FCL(Fully connected layer)에서 RNN 셀들과 앞선 단어 문맥을 고려한 출력값에 대한 <strong>score를</strong> 계산한다</li>
-  <li>softmax 활성화 함수를 사용해서 <strong>attention weight</strong>를 도출한다</li>
-  <li>각 셀에 대한 결과값과 attention weight을 곱한 합계로 context vector를 구한다.</li>
-  <li>Context vector를 decoder에 넣는다.</li>
-  <li>최종 output의 분류 결과가 안 좋다면, FCL에서 score를 조정하여 <strong>decoder가 해석하기에 용이한 attention weight를 재계산한다</strong>.
-    <ul>
-      <li>Input과 output 사이의 연관성을 가늠해볼 수 있다.</li>
-    </ul>
-  </li>
-</ul>
-
-<blockquote>
-  <p>흔히, 딥러닝 모델이 내놓은 결과의 원인을 설명할 수 없는(<a href="https://github.com/hchoi256/ai-terms/blob/main/README.md">Blackbox</a>) 경우가 많음에도 불구하고, Attention 모델은 attention weight 덕분에 해당 설명이 가능하다.</p>
-</blockquote>
-
-<p>하지만, RNN 신경망 구조를 기반으로 하기 때문에 이전 state의 결과를 기다려야 한다는 점에서 <strong>연산 속도가 느리다</strong>는 단점이 존재한다.</p>
-
-<h2 id="self-attention-모델">Self-attention 모델</h2>
-<p>RNN의 시계열 학습에서 벗어나 attention 구조만으로 학습에 임한다.</p>
-
-<p>Decoder 해석에 용이한 방향으로 가중치 업데이트를 하는 것이 아닌 <strong>input 그 자체를 가장 잘 표현하기 위한 방향으로 학습하는 방식</strong>으로 동작한다.</p>
-
-<p><img src="https://user-images.githubusercontent.com/39285147/183540623-c662b029-b65d-493c-8501-6edbcf8139c8.png" alt="image" /></p>
-
-<ul>
-  <li><strong>Query</strong>: 단어에 대한 가중치</li>
-  <li><strong>Key</strong>: 단어가 Query와의 연관성을 나타내는 가중치</li>
-  <li><strong>Value</strong>: 의미에 대한 가중치 (집중할 단어)</li>
-</ul>
-
-<p><img src="https://user-images.githubusercontent.com/39285147/183540697-a5e884be-56b5-4c34-9b87-95f8f4eacf7f.png" alt="image" /></p>
-
-<p>최종적으로, softmax와 value를 곱한 값의 합계를 도출하여 해당 단어가 가진 전체적인 의미를 설명한다.</p>
-
-<p>이러한 과정을 단어마다 각각 수행한 것이 바로 self-attention 모델로, 하기 도표를 통해 직관적으로 이해해보자.</p>
-
-<p><img src="https://user-images.githubusercontent.com/39285147/183540713-da495ca0-9f6e-4584-a701-b6c402576c87.png" alt="image" /></p>
-
-<blockquote>
-  <p>RNN보다 더 복잡한 상기 과정을 <strong>병렬처리</strong>로 수행하여 <strong>빠른 속도</strong>를 끌어낸 것이 바로 <strong>multi-head attention</strong>이다.</p>
-</blockquote>
-
-<h2 id="transformer-모델">Transformer 모델</h2>
-<p>Multi-head attention으로 이루어진 encoder를 여러 층 쌓아서 encoding을 수행하며, 이것이 바로 BERT에 탑재된 기술이다.</p>
-
-<p>seq2seq의 구조인 ‘인코더-디코더’를 따르면서도, 어텐션(Attention)만으로 구현한 모델이기 때문에 RNN을 사용하지 않는다.</p>
-
-<p>또한, 인코더-디코더 구조를 설계하였음에도 번역 성능에서도 RNN보다 우수한 성능을 보여주었습니다.</p>
-
-<blockquote>
-  <p>self attention –&gt; multi-head attention –&gt; 하나의 encoder</p>
-</blockquote>
-
-<p>Transformer 개념을 숙지했으니, 이제 <a href="https://hchoi256.github.io/nlp/bert-3/"><strong>BERT 언어 모델</strong></a>에 대해 알아보자.</p>]]></content><author><name>Hojun Eric Choi</name><email>hchoi256@wisc.edu</email></author><category term="NLP" /><category term="NLP" /><category term="python" /><category term="BERT" /><category term="Language Model" /><summary type="html"><![CDATA[언어 모델 (Language Model, LM) ‘자연어’의 법칙을 컴퓨터로 모사하는 모델로, 다음에 등장할 단어 예측을 수행한다(= ‘맥락’을 고려한다).]]></summary></entry><entry><title type="html">BERT Language Model - Part 1</title><link href="http://localhost:4000/nlp/bert-1/" rel="alternate" type="text/html" title="BERT Language Model - Part 1" /><published>2022-08-08T00:00:00+09:00</published><updated>2022-08-08T00:00:00+09:00</updated><id>http://localhost:4000/nlp/bert-1</id><content type="html" xml:base="http://localhost:4000/nlp/bert-1/"><![CDATA[<h1 id="자연어-처리natural-language-processing-nlp">자연어 처리(Natural Language Processing, NLP)</h1>
-<h2 id="자연어란">자연어란?</h2>
-<p><img src="https://user-images.githubusercontent.com/39285147/183526289-0d7a43a8-f329-4ed1-9e0b-31259a32fe6f.png" alt="image" /></p>
-
-<ul>
-  <li>부호화(Encoding)</li>
-  <li>해독(Decoding)</li>
-</ul>
-
-<p>자연어 처리는 상기 도표에서 컴퓨터가 <strong>텍스트를 해독하는 과정</strong>을 의미한다.</p>
-
-<p>일상에서 사용하는 모든 인간의 언어로, 한국어, 영어와 같은 것들이 예시이다.</p>
-
-<blockquote>
-  <p>인공언어: 프로그래밍 언어, etc.</p>
-</blockquote>
-
-<h2 id="자연어-처리의-두-종류">자연어 처리의 두 종류</h2>
-<ol>
-  <li>
-    <p><strong>규칙 기반 접근법 (Symbolic approach)</strong></p>
-  </li>
-  <li>
-    <p><strong>확률 기반 접근법 (Statistical approach)</strong></p>
-    <ul>
-      <li><em>TF-IDF</em>
-        <ul>
-          <li>TF(Term frequency): 단어가 문서에 등장한 개수 (TF ↑, 중요단어확률 ↑)</li>
-          <li>DF(Document frequency): 해당 단어가 등장한 문서의 개수 (DF ↑, 중요단어확률 ↓)</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-</ol>
-
-<h2 id="자연어-처리의-단계">자연어 처리의 단계</h2>
-<p>① <strong>전처리</strong></p>
-
-<ul>
-  <li>개행문자, 특수문자, 공백, 중복 표현, 이메일 및 링크, 불용어, 조사 제거</li>
-  <li>띄어쓰기, 문장분리 보정</li>
-  <li>어간추출</li>
-</ul>
-
-<p>② <strong>Tokenizing</strong></p>
-
-<p><img src="https://user-images.githubusercontent.com/39285147/183527388-2369aaca-6791-42d0-821b-1e09460d713f.png" alt="image" /></p>
-
-<ul>
-  <li>어절 tokenizing</li>
-  <li>형태소 tokenizing</li>
-  <li>n-gram tokenizing</li>
-  <li><strong>WordPiece tokenizing</strong> (BERT)</li>
-</ul>
-
-<p>③ <strong>Lexical analysis</strong></p>
-
-<ul>
-  <li>어휘, 형태소 분석</li>
-  <li>개체명 인식</li>
-  <li>상호 참조</li>
-</ul>
-
-<p>④ <strong>Syntactic analysis</strong></p>
-
-<ul>
-  <li>구문 분석</li>
-</ul>
-
-<p>⑤ <strong>Semantic analysis</strong></p>
-
-<ul>
-  <li>의미 분석</li>
-</ul>
-
-<h2 id="nlp-활용-분야">NLP 활용 분야</h2>
-<ul>
-  <li>의미 분석 (i.e., 최초의 컴퓨터는 무엇 –&gt; ‘질문’)</li>
-  <li>구문 분석 (i.e., 문법 구문 분석)</li>
-  <li>감성 분석</li>
-  <li>형태소 분석</li>
-  <li>개체명 인식 (i.e., 네이버는 어떤 회사 –&gt; ‘기관’)</li>
-</ul>
-
-<h1 id="word-embedding">Word embedding</h1>
-<p>‘자연어’에서 특징을 추출하는 방법이다.</p>
-
-<p>텍스트를 컴퓨터가 이해하고, 효율적으로 처리하게 하기 위해서는 컴퓨터가 이해할 수 있도록 텍스트를 적절히 숫자로 변환하여 좌표평면 위에 표현할 필요가 있다.</p>
-
-<p>그러한 방법으로 가장 첫 번째로 제시된 것이 <strong>One-hot encoding</strong>이다.</p>
-
-<h2 id="1-one-hot-encoding-sparse-representation">1. <strong>One-hot encoding</strong> (sparse representation)</h2>
-<p><img src="https://user-images.githubusercontent.com/39285147/183528088-8343c972-2c27-4f45-812b-3259e39e2151.png" alt="image" /></p>
-
-<ul>
-  <li>각 단어가 가지는 <strong>의미 파악이 불가능하다</strong></li>
-  <li>단어 간 <strong>유사성 비교가 불가능하다</strong>.</li>
-  <li><a href="https://github.com/hchoi256/ai-terms"><strong>차원의 저주</strong></a>에 빠질 위험성 多</li>
-</ul>
-
-<h2 id="2-word2vec-dense-representation">2. Word2Vec (dense representation)</h2>
-<p><img src="https://user-images.githubusercontent.com/39285147/183535690-05358c7b-a9ba-4893-8959-53e36b521513.png" alt="image" /></p>
-
-<ul>
-  <li>자연어의 <strong>의미를 ‘벡터 공간’에 임베딩</strong>하여, one-hot encoding의 한계점을 해결한다.
-    <ul>
-      <li>i.e., <em>한국 - 서울 + 도쿄 = 일본</em></li>
-    </ul>
-  </li>
-  <li>한 단어의 <strong>주변 단어들을 통해</strong> 비지도학습으로 그 단어의 의미 파악이 가능하다 (유사성 有).</li>
-  <li><strong>한정된 자원</strong>으로 표현이 가능하다.</li>
-</ul>
-
-<p>One-hot 벡터들을 인풋으로 받고, 2개의 간단한 hidden layer를 가진 신경망으로 구성되있다.</p>
-
-<p>주변부 단어를 예측하는 방식으로 학습하여 인풋 단어를 올바르게 유츄해낸다.</p>
-
-<p>단어 벡터의 유사성과 semantic 혹은 syntactic analogy를 통하여 Word2Vec 성능을 검증한다.</p>
-
-<p>하지만, 단어의 <strong>subword information(i,e., 서울 vs 서울시)을 무시</strong>하고 <strong>학습에 사용될 충분한 vocabulary가 주어져야 한다</strong>는 한계가 존재한다.</p>
-
-<h2 id="3-fasttext">3. FastText</h2>
-<p><img src="https://user-images.githubusercontent.com/39285147/183534835-d42db067-905f-483d-a738-e437e4dc4e78.png" alt="image" /></p>
-
-<p>subword information을 무시하는 Word2Vec 한계를 <strong>n-gram 기법</strong>을 통해 subword를 직접 학습하면서 극복한다 (i.e., assumption에 2-gram을 적용하면 as, ss, su,..).</p>
-
-<p>FastText는 단어를 n-gram으로 분리한 후, 모든 n-gram vector를 합산한 평균을 통해 단어 벡터를 획득한다.</p>
-
-<p><strong>오탈자, OOV (Out of Vocabulary), 그리고 빈도수가 적은 단어</strong>에 대한 학습이 용이하다.</p>
-
-<h2 id="word-embedding-한계점">Word embedding 한계점</h2>
-<p><strong>동형어, 다의어</strong>(<em>account: 계좌, 차지하다, etc.</em>)와 같은 단어에 대한 embedding 성능이 좋지 않다.</p>
-
-<p><del>주변 단어를 예측하는 방식으로 학습하기 때문에 <strong>‘문맥’을 고려할 수 없다</strong>.</del></p>
-
-<p>이러한 한계점을 타파하는 <a href="https://hchoi256.github.io/nlp/bert-2/"><strong>언어 모델(Language Model)</strong></a>에 대해 다음 시간에 알아보자.</p>]]></content><author><name>Hojun Eric Choi</name><email>hchoi256@wisc.edu</email></author><category term="NLP" /><category term="NLP" /><category term="python" /><category term="BERT" /><category term="Language Model" /><summary type="html"><![CDATA[자연어 처리(Natural Language Processing, NLP) 자연어란?]]></summary></entry></feed>
+<p><a href="https://arxiv.org/abs/1810.04805"><em>BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding</em></a></p>]]></content><author><name>쭌스🎄</name></author><category term="BERT" /><category term="NLP" /><category term="BERT" /><category term="Language Model" /><summary type="html"><![CDATA[BERT Bi-directional transformer로 이루어진 언어모델로, BERT 언어모델 위에 1개의 classification layer만 부착하여 다양한 NLP task를 수행한다.]]></summary></entry></feed>

@@ -1,0 +1,1929 @@
+I"fs<h1 id="어간추출stemmer-vs-표제어추출lemmatizer">어간추출(Stemmer) vs. 표제어추출(Lemmatizer)</h1>
+<h2 id="stemmer">Stemmer</h2>
+<p>단어에서 일반적인 형태 및 굴절 어미를 제거하는 프로세스. <span style="color: blue">A process for removing the commoner morphological and inflexional endings from words.</span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk.stem.porter</span> <span class="kn">import</span> <span class="n">PorterStemmer</span> <span class="c1"># least strict
+</span><span class="kn">from</span> <span class="nn">nltk.stem.snowball</span> <span class="kn">import</span> <span class="n">SnowballStemmer</span> <span class="c1"># average (best)
+</span><span class="kn">from</span> <span class="nn">nltk.stem.lancaster</span> <span class="kn">import</span> <span class="n">LancasterStemmer</span> <span class="c1"># most strict 
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">input_words</span> <span class="o">=</span> <span class="p">[</span><span class="s">'writing'</span><span class="p">,</span> <span class="s">'calves'</span><span class="p">,</span> <span class="s">'be'</span><span class="p">,</span> <span class="s">'branded'</span><span class="p">,</span> <span class="s">'house'</span><span class="p">,</span> <span class="s">'randomize'</span><span class="p">,</span> <span class="s">'possibly'</span><span class="p">,</span> <span class="s">'extraction'</span><span class="p">,</span> <span class="s">'hospital'</span><span class="p">,</span> <span class="s">'kept'</span><span class="p">,</span> <span class="s">'scratchy'</span><span class="p">,</span> <span class="s">'code'</span><span class="p">]</span> <span class="c1"># sample
+</span>
+<span class="n">porter</span> <span class="o">=</span> <span class="n">PorterStemmer</span><span class="p">()</span>
+<span class="n">snowball</span> <span class="o">=</span> <span class="n">SnowballStemmer</span><span class="p">(</span><span class="s">"english"</span><span class="p">)</span>
+<span class="n">lancaster</span> <span class="o">=</span> <span class="n">LancasterStemmer</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">stemmers_names</span> <span class="o">=</span> <span class="p">[</span><span class="s">"PORTER"</span><span class="p">,</span> <span class="s">"SNOWBALL"</span><span class="p">,</span> <span class="s">"LANCASTER"</span><span class="p">]</span>
+<span class="n">formatted_text</span> <span class="o">=</span> <span class="s">"{:&gt;16}"</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">stemmers_names</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">formatted_text</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="s">"INPUT WORD"</span><span class="p">,</span> <span class="o">*</span><span class="n">stemmers_names</span><span class="p">),</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"="</span><span class="o">*</span><span class="mi">68</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">input_words</span><span class="p">:</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span><span class="p">,</span> <span class="n">porter</span><span class="p">.</span><span class="n">stem</span><span class="p">(</span><span class="n">word</span><span class="p">),</span> <span class="n">snowball</span><span class="p">.</span><span class="n">stem</span><span class="p">(</span><span class="n">word</span><span class="p">),</span> <span class="n">lancaster</span><span class="p">.</span><span class="n">stem</span><span class="p">(</span><span class="n">word</span><span class="p">)]</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">formatted_text</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="o">*</span><span class="n">output</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      INPUT WORD          PORTER        SNOWBALL       LANCASTER 
+====================================================================
+        writing           write           write            writ
+          calves            calv            calv            calv
+              be              be              be              be
+        branded           brand           brand           brand
+          house            hous            hous            hous
+      randomize          random          random          random
+        possibly         possibl         possibl            poss
+      extraction         extract         extract         extract
+        hospital          hospit          hospit          hospit
+            kept            kept            kept            kept
+        scratchy        scratchi        scratchi        scratchy
+            code            code            code             cod
+</code></pre></div></div>
+
+<h2 id="lemmatizer">Lemmatizer</h2>
+<p>‘단어의 원형’을 찾고자 하는 또 다른 형태, 표제어는 단어의 다양한 굴절 형태를 그룹화하여 단일 항목으로 분석할 수 있도록 하는 과정이다. <span style="color: blue">Lemmatization is the process of grouping together the different inflected forms of a word so they can be analyzed as a single item</span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk.stem</span> <span class="kn">import</span> <span class="n">WordNetLemmatizer</span>
+<span class="n">nltk</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="s">"wordnet"</span><span class="p">)</span>
+<span class="n">nltk</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="s">"omw-1.4"</span><span class="p">)</span>
+
+<span class="n">lemmatizer</span> <span class="o">=</span> <span class="n">WordNetLemmatizer</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">lemmatizer_names</span> <span class="o">=</span> <span class="p">[</span><span class="s">"NOUN LEMMATIZER"</span><span class="p">,</span> <span class="s">"VERB LEMMATIZER"</span><span class="p">]</span>
+<span class="n">formatted_text</span> <span class="o">=</span> <span class="s">"{:&gt;24}"</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lemmatizer_names</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">formatted_text</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="s">"INPUT WORD"</span><span class="p">,</span> <span class="o">*</span><span class="n">lemmatizer_names</span><span class="p">),</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"="</span><span class="o">*</span><span class="mi">75</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">input_words</span><span class="p">:</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span><span class="p">,</span> <span class="n">lemmatizer</span><span class="p">.</span><span class="n">lemmatize</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="s">"n"</span><span class="p">),</span> <span class="n">lemmatizer</span><span class="p">.</span><span class="n">lemmatize</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="s">"v"</span><span class="p">)]</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">formatted_text</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="o">*</span><span class="n">output</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>              INPUT WORD         NOUN LEMMATIZER         VERB LEMMATIZER 
+===========================================================================
+                writing                 writing                   write
+                  calves                    calf                   calve
+                      be                      be                      be
+                branded                 branded                   brand
+                  house                   house                   house
+              randomize               randomize               randomize
+                possibly                possibly                possibly
+              extraction              extraction              extraction
+                hospital                hospital                hospital
+                    kept                    kept                    keep
+                scratchy                scratchy                scratchy
+                    code                    code                    code
+</code></pre></div></div>
+
+<h1 id="chunking">Chunking</h1>
+<p>텍스트 데이터는 일반적으로 추가 분석을 위해 조각으로 나누어야 할 필요가 있다. <span style="color: blue">Text data usually needs to be broken into pieces for further analysis.</span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">brown</span>
+<span class="n">nltk</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="s">"brown"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">chunker</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">N</span><span class="p">):</span>
+    <span class="n">input_words</span> <span class="o">=</span> <span class="n">input_data</span><span class="p">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">cur_chunk</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">input_words</span><span class="p">:</span>
+        <span class="n">cur_chunk</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">count</span> <span class="o">==</span> <span class="n">N</span><span class="p">:</span>
+            <span class="n">output</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">" "</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">cur_chunk</span><span class="p">))</span>
+            <span class="c1"># print(cur_chunk)
+</span>            <span class="n">count</span><span class="p">,</span> <span class="n">cur_chunk</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="p">[]</span>
+        <span class="c1"># print(output)
+</span>
+    <span class="n">output</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">" "</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">cur_chunk</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">output</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">input_data</span> <span class="o">=</span> <span class="s">" "</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">brown</span><span class="p">.</span><span class="n">words</span><span class="p">()[:</span><span class="mi">14000</span><span class="p">])</span>
+<span class="n">chunk_size</span> <span class="o">=</span> <span class="mi">700</span>
+<span class="n">chunks</span> <span class="o">=</span> <span class="n">chunker</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">chunk_size</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>상기 코드는 brown 라이브러리 데이터의 14000 단어를 불러와 700개의 단어 단위로 chunk를 생성한다. <span style="color: blue">The above code fetches 14000 words of brown library data and creates chunks in units of 700 words.</span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">"Number of text chunks ="</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">chunks</span><span class="p">),</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">chunks</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Chunk"</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"==&gt;"</span> <span class="p">,</span><span class="n">chunk</span><span class="p">[:</span><span class="mi">50</span><span class="p">])</span> <span class="c1"># show 50 words out of 700
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Number of text chunks = 21 
+
+Chunk 1 ==&gt; The Fulton County Grand Jury said Friday an invest
+Chunk 2 ==&gt; '' . ( 2 ) Fulton legislators `` work with city of
+Chunk 3 ==&gt; . Construction bonds Meanwhile , it was learned th
+Chunk 4 ==&gt; , anonymous midnight phone calls and veiled threat
+Chunk 5 ==&gt; Harris , Bexar , Tarrant and El Paso would be $451
+Chunk 6 ==&gt; set it for public hearing on Feb. 22 . The proposa
+Chunk 7 ==&gt; College . He has served as a border patrolman and 
+Chunk 8 ==&gt; of his staff were doing on the address involved co
+Chunk 9 ==&gt; plan alone would boost the base to $5,000 a year a
+Chunk 10 ==&gt; nursing homes In the area of `` community health s
+Chunk 11 ==&gt; of its Angola policy prove harsh , there has been 
+Chunk 12 ==&gt; system which will prevent Laos from being used as 
+Chunk 13 ==&gt; reform in recipient nations . In Laos , the admini
+Chunk 14 ==&gt; . He is not interested in being named a full-time 
+Chunk 15 ==&gt; said , `` to obtain the views of the general publi
+Chunk 16 ==&gt; '' . Mr. Reama , far from really being retired , i
+Chunk 17 ==&gt; making enforcement of minor offenses more effectiv
+Chunk 18 ==&gt; to tell the people where he stands on the tax issu
+Chunk 19 ==&gt; '' . Trenton -- William J. Seidel , state fire war
+Chunk 20 ==&gt; not comment on tax reforms or other issues in whic
+Chunk 21 ==&gt; 
+</code></pre></div></div>
+
+<p>700(# words per chunk) * 20(# chunks) = 14000 (total words)</p>
+
+<h1 id="bag-of-words">Bag of Words</h1>
+<p>Bag of Words 모델을 사용해서 텍스트 분석을 하는 주요 목적 중에 하나는 텍스트를 기계학습에서 사용할 수 있도록 텍스트를 숫자 형식으로 변환하는 것이다. <span style="color: blue">One of the main purposes of text analysis using the Bag of Words model is to convert the text into a numeric form so that it can be used in machine learning.</span></p>
+
+<p>수백만 단어가 포함된 텍스트 문서를 분석하려고 한다. <span style="color: blue">You want to analyze a text document containing millions of words.</span></p>
+
+<p>그러기 위해선, 텍스트를 추출하고 숫자 표현 형식으로 변환해야 한다. <span style="color: blue">To do that, we need to extract the text and convert it to a numeric representation.</span></p>
+
+<p>기계 학습 알고리즘은 데이터를 분석하고 의미 있는 정보를 추출할 수 있도록 작업할 숫자 데이터가 필요하다. <span style="color: blue">Machine learning algorithms need numeric data to work with so that they can analyze the data and extract meaningful information.</span></p>
+
+<p>Bag of Words 모델은 문서의 모든 단어에서 어휘를 추출하고 문서-용어 행렬 (matrix)를 사용하여 모델을 구축한다. <span style="color: blue">The Bag of Words model extracts vocabulary from every word in a document and builds the model using a document-term matrix.</span></p>
+<ul>
+  <li>이 모델을 사용하면 모든 문서를 단어 모음으로 나타낼 수 있다. <span style="color: blue">This model allows any document to be represented as a collection of words.</span></li>
+  <li>단어 갯수, 문법적 세부 사항, 단어 순서를 무시한다. <span style="color: blue">Ignoring word count, grammatical details, and word order.</span></li>
+</ul>
+
+<p>문서-용어 행렬은 기본적으로 문서에서 발생하는 다양한 단어의 수를 제공하는 테이블이다. <span style="color: blue">The document-term matrix is ​​basically a table that gives the number of different words that occur in a document.</span></p>
+
+<p>텍스트 문서는 다양한 단어의 가중치 조항으로 표현되고, 임계값을 설정하고 더 의미 있는 단어를 선택할 수 있다. <span style="color: blue">Text documents are represented by weighted clauses of various words; more meaningful with thresholds words can be selected.</span></p>
+
+<p>feature vector로 사용될 문서의 모든 단어들의 히스토그램을 만들고, 이 feature vector는 텍스트 분류에 사용할 수 있다. <span style="color: blue">Creating a histogram of all words in the document to be used as a feature vector, and this feature vector can be used for text classification.</span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">input_data</span> <span class="o">=</span> <span class="s">" "</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">brown</span><span class="p">.</span><span class="n">words</span><span class="p">()[:</span><span class="mi">5500</span><span class="p">])</span>
+<span class="n">chunk_size</span> <span class="o">=</span> <span class="mi">800</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">chunker</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">chunk_size</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">chunks</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">count</span><span class="p">,</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s">"index"</span><span class="p">:</span> <span class="n">count</span><span class="p">,</span> <span class="s">"text"</span><span class="p">:</span> <span class="n">chunk</span><span class="p">}</span>
+    <span class="n">chunks</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">chunks</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>7
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">count_vectorizer</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">()</span>
+<span class="n">document_term_matrix</span> <span class="o">=</span> <span class="n">count_vectorizer</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">([</span><span class="n">chunk</span><span class="p">[</span><span class="s">"text"</span><span class="p">]</span> <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">chunks</span><span class="p">])</span>
+<span class="n">vocabulary</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">count_vectorizer</span><span class="p">.</span><span class="n">get_feature_names_out</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="n">vocabulary</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>['000' '10' '100' ... 'york' 'you' 'your']
+</code></pre></div></div>
+
+<blockquote>
+  <p><a href="#1-countvectorizer">CountVectorizer</a></p>
+</blockquote>
+
+<h1 id="vectorization">Vectorization</h1>
+
+<h2 id="why-we-need-vectorization">Why We Need Vectorization?</h2>
+<p>Machine (기계)는 문자와 단어를 이해할 수 없다. <span style="color: blue">Machines cannot understand sentences or words. </span></p>
+
+<p>0과 1로 이루어진 이진 형태의 데이터를 기계는 이해할 수 있다. <span style="color: blue">But they can understand binary data (i.e., 0101010)  </span></p>
+
+<p><strong>Computer Vision</strong>의 가장 기본은 이미지는 픽셀 (pixel)로 이루어져 있고, 픽셀에 대한 정보는 x, y와 같은 픽셀의 위치 그리고 해당 픽셀의 색상 정보 (보통 RGB)를 가지고 있다. 이런 정보들은 숫자로 쉽게 만들 수가 있다! <span style="color: blue"><strong>Computer Vision</strong> is a collection of pixels requiring information about the location of x, y, and RGB. We can easily produce such information with numbers.</span></p>
+
+<p><strong>NLP</strong>의 텍스트 데이터 역시 기계가 이해할 수 있도록 숫자로 표현해야 한다. <span style="color: blue">In NLP, text data must also be numbers.</span></p>
+
+<p><strong>CountVectorizer</strong> 텍스트를 숫자 데이터로 변환하는 방법으로, 텍스트를 수치 데이터로 변화하는데 사용하는 method! sklearn을 통해 사용 가능하다. <span style="color: blue"><strong>CountVectorizer</strong> is the method to convert text to numbers, which can be achieved with <em>sklearn</em>.</span></p>
+
+<h2 id="1-countvectorizer">1. CountVectorizer</h2>
+<p>텍스트 데이터에서 ‘횟수’를 기준으로 특징을 추출하는 방법이다. <span style="color: blue">Extracting features by ‘number’ from text data.</span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">scikit</span><span class="o">-</span><span class="n">learn</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span>
+
+<span class="n">text1</span> <span class="o">=</span><span class="s">'''Tracy loves writing about data science.'''</span>
+<span class="n">text2</span> <span class="o">=</span> <span class="s">'''Tracy loves writing for medium publications.'''</span>
+<span class="n">text3</span> <span class="o">=</span> <span class="s">'''Tracy loves studying Python programming.'''</span>
+<span class="n">text4</span> <span class="o">=</span> <span class="s">'''Tracy loves entering Kaggle competitions.'''</span>
+<span class="n">text5</span> <span class="o">=</span> <span class="s">'''Tracy loves making YouTube videos.'''</span>
+<span class="n">text6</span> <span class="o">=</span> <span class="s">'''Tracy loves getting new subscribers.'''</span>
+<span class="n">corpus</span> <span class="o">=</span> <span class="p">[</span><span class="n">text1</span><span class="p">,</span> <span class="n">text2</span><span class="p">,</span> <span class="n">text3</span><span class="p">,</span> <span class="n">text4</span><span class="p">,</span> <span class="n">text5</span><span class="p">,</span> <span class="n">text6</span><span class="p">]</span>
+<span class="n">count_vec</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">()</span>
+
+<span class="n">word_count_vec</span> <span class="o">=</span> <span class="n">count_vec</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+<span class="n">word_count_vec</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(6, 21)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">count_vec</span><span class="p">.</span><span class="n">get_feature_names_out</span><span class="p">())</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>['about' 'competitions' 'data' 'entering' 'for' 'getting' 'kaggle' 'loves'
+ 'making' 'medium' 'new' 'programming' 'publications' 'python' 'science'
+ 'studying' 'subscribers' 'tracy' 'videos' 'writing' 'youtube']
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">"Vocabulary: "</span><span class="p">,</span> <span class="n">count_vec</span><span class="p">.</span><span class="n">vocabulary_</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Vocabulary:  {'tracy': 17, 'loves': 7, 'writing': 19, 'about': 0, 'data': 2, 'science': 14, 'for': 4, 'medium': 9, 'publications': 12, 'studying': 15, 'python': 13, 'programming': 11, 'entering': 3, 'kaggle': 6, 'competitions': 1, 'making': 8, 'youtube': 20, 'videos': 18, 'getting': 5, 'new': 10, 'subscribers': 16}
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">"Encoded Document is: "</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">word_count_vec</span><span class="p">.</span><span class="n">toarray</span><span class="p">())</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Encoded Document is: 
+[[1 0 1 0 0 0 0 1 0 0 0 0 0 0 1 0 0 1 0 1 0]
+ [0 0 0 0 1 0 0 1 0 1 0 0 1 0 0 0 0 1 0 1 0]
+ [0 0 0 0 0 0 0 1 0 0 0 1 0 1 0 1 0 1 0 0 0]
+ [0 1 0 1 0 0 1 1 0 0 0 0 0 0 0 0 0 1 0 0 0]
+ [0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 1 1 0 1]
+ [0 0 0 0 0 1 0 1 0 0 1 0 0 0 0 0 1 1 0 0 0]]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">matrix</span> <span class="o">=</span> <span class="n">count_vec</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+<span class="n">pd</span><span class="p">.</span><span class="n">set_option</span><span class="p">(</span><span class="s">"display.max_columns"</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span> <span class="c1"># show table on one page
+</span><span class="n">counts</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">matrix</span><span class="p">.</span><span class="n">toarray</span><span class="p">(),</span> <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s">"doc1"</span><span class="p">,</span> <span class="s">"doc2"</span><span class="p">,</span> <span class="s">"doc3"</span><span class="p">,</span> <span class="s">"doc4"</span><span class="p">,</span> <span class="s">"doc5"</span><span class="p">,</span> <span class="s">"doc6"</span><span class="p">],</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">count_vec</span><span class="p">.</span><span class="n">get_feature_names</span><span class="p">())</span>
+<span class="n">counts</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="s">"Total"</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">counts</span><span class="p">.</span><span class="nb">sum</span><span class="p">()</span>
+<span class="n">counts</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>about</th>
+      <th>competitions</th>
+      <th>data</th>
+      <th>entering</th>
+      <th>for</th>
+      <th>getting</th>
+      <th>kaggle</th>
+      <th>loves</th>
+      <th>making</th>
+      <th>medium</th>
+      <th>new</th>
+      <th>programming</th>
+      <th>publications</th>
+      <th>python</th>
+      <th>science</th>
+      <th>studying</th>
+      <th>subscribers</th>
+      <th>tracy</th>
+      <th>videos</th>
+      <th>writing</th>
+      <th>youtube</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>doc1</th>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>doc2</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>doc3</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>doc4</th>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>doc5</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>doc6</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>Total</th>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>6.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>6.0</td>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h3 id="exercise">Exercise</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s">"Electronics_data.xlsx"</span><span class="p">)</span>
+<span class="n">data</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Unnamed: 0</th>
+      <th>sentiment</th>
+      <th>title</th>
+      <th>Reviews</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>2</td>
+      <td>Great CD</td>
+      <td>My lovely Pat has one of the GREAT voices of h...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>2</td>
+      <td>One of the best game music soundtracks - for a...</td>
+      <td>Despite the fact that I have only played a sma...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>1</td>
+      <td>Batteries died within a year ...</td>
+      <td>I bought this charger in Jul 2003 and it worke...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>2</td>
+      <td>works fine, but Maha Energy is better</td>
+      <td>Check out Maha Energy's website. Their Powerex...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>2</td>
+      <td>Great for the non-audiophile</td>
+      <td>Reviewed quite a bit of the combo players and ...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">data</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(50000, 4)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">data</span><span class="p">[</span><span class="s">"Full_text"</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">"title"</span><span class="p">].</span><span class="nb">str</span><span class="p">.</span><span class="n">cat</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">"Reviews"</span><span class="p">],</span> <span class="n">sep</span> <span class="o">=</span> <span class="s">" "</span><span class="p">)</span> <span class="c1"># title과 Reviews 합치기
+</span><span class="n">data</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Unnamed: 0</th>
+      <th>sentiment</th>
+      <th>title</th>
+      <th>Reviews</th>
+      <th>Full_text</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>2</td>
+      <td>Great CD</td>
+      <td>My lovely Pat has one of the GREAT voices of h...</td>
+      <td>Great CD My lovely Pat has one of the GREAT vo...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>2</td>
+      <td>One of the best game music soundtracks - for a...</td>
+      <td>Despite the fact that I have only played a sma...</td>
+      <td>One of the best game music soundtracks - for a...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>1</td>
+      <td>Batteries died within a year ...</td>
+      <td>I bought this charger in Jul 2003 and it worke...</td>
+      <td>Batteries died within a year ... I bought this...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>2</td>
+      <td>works fine, but Maha Energy is better</td>
+      <td>Check out Maha Energy's website. Their Powerex...</td>
+      <td>works fine, but Maha Energy is better Check ou...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>2</td>
+      <td>Great for the non-audiophile</td>
+      <td>Reviewed quite a bit of the combo players and ...</td>
+      <td>Great for the non-audiophile Reviewed quite a ...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">corpus</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s">'Full_text'</span><span class="p">].</span><span class="n">tolist</span><span class="p">()</span> <span class="c1"># Fulltext 리스트 형태로 corpus에 저장
+</span><span class="nb">len</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>500
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">nltk</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">stop_words</span> <span class="o">=</span> <span class="n">nltk</span><span class="p">.</span><span class="n">corpus</span><span class="p">.</span><span class="n">stopwords</span><span class="p">.</span><span class="n">words</span><span class="p">(</span><span class="s">"english"</span><span class="p">)</span>
+<span class="n">ps</span> <span class="o">=</span> <span class="n">nltk</span><span class="p">.</span><span class="n">porter</span><span class="p">.</span><span class="n">PorterStemmer</span><span class="p">()</span> <span class="c1"># 어간 추출 (i.e., dies/dead/died --&gt; die)
+</span>
+<span class="k">def</span> <span class="nf">normalize_document</span><span class="p">(</span><span class="n">doc</span><span class="p">):</span>
+    <span class="c1"># normalization
+</span>    <span class="n">doc</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s">'[^a-zA-Z\s]'</span><span class="p">,</span> <span class="s">""</span><span class="p">,</span> <span class="n">doc</span><span class="p">,</span> <span class="n">re</span><span class="p">.</span><span class="n">I</span><span class="o">|</span><span class="n">re</span><span class="p">.</span><span class="n">A</span><span class="p">)</span> <span class="c1"># 구두점 및 특수문자 제거 remove punctuation and speical characteristics
+</span>    <span class="n">doc</span> <span class="o">=</span> <span class="n">doc</span><span class="p">.</span><span class="n">lower</span><span class="p">()</span>   <span class="c1"># 소문자화 lowercase
+</span>    <span class="n">doc</span> <span class="o">=</span> <span class="n">doc</span><span class="p">.</span><span class="n">strip</span><span class="p">()</span>   <span class="c1"># 문자열의 앞 뒤에 있을 빈 칸 제거 strip string
+</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">nltk</span><span class="p">.</span><span class="n">word_tokenize</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span> <span class="c1"># tokenization
+</span>
+    <span class="n">filtered_tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">tokens</span> <span class="k">if</span> <span class="n">w</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stop_words</span><span class="p">]</span> <span class="c1"># remove stopwords
+</span>
+    <span class="c1"># doc = " ".join(filtered_tokens)
+</span>    <span class="n">doc</span> <span class="o">=</span> <span class="s">" "</span><span class="p">.</span><span class="n">join</span><span class="p">([</span> <span class="n">ps</span><span class="p">.</span><span class="n">stem</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">filtered_tokens</span> <span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">doc</span>  
+</code></pre></div></div>
+
+<blockquote>
+  <table>
+    <tbody>
+      <tr>
+        <td>re.I</td>
+        <td>re.A: re.sub의 flags (<a href="https://docs.python.org/ko/3/library/re.html">click</a>)</td>
+      </tr>
+    </tbody>
+  </table>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">normalize_corpus</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">vectorize</span><span class="p">(</span><span class="n">normalize_document</span><span class="p">)</span> <span class="c1"># vectorize the text
+</span><span class="n">norm_corpus</span> <span class="o">=</span> <span class="n">normalize_corpus</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span> <span class="c1"># noremarize the corpus
+</span><span class="n">norm_corpus</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array(['great cd love pat one great voic gener listen cd year still love im good mood make feel better bad mood evapor like sugar rain cd ooz life vocal jusat stuun lyric kill one life hidden gem desert isl cd book never made big beyond everytim play matter black white young old male femal everybodi say one thing sing',
+       'one best game music soundtrack game didnt realli play despit fact play small portion game music heard plu connect chrono trigger great well led purchas soundtrack remain one favorit album incred mix fun epic emot song sad beauti track especi like there mani kind song video game soundtrack must admit one song lifea distant promis brought tear eye mani occasionsmi one complaint soundtrack use guitar fret effect mani song find distract even werent includ would still consid collect worth',
+       'batteri die within year bought charger jul work ok design nice conveni howev year batteri would hold charg might well get alkalin dispos look elsewher charger come batteri better stay power',
+      ...])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span>
+
+<span class="n">cv</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">()</span>
+<span class="n">cv_matrix</span> <span class="o">=</span> <span class="n">cv</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">norm_corpus</span><span class="p">)</span> <span class="c1"># perform vectorization
+</span><span class="n">cv_matrix</span> <span class="o">=</span> <span class="n">cv_matrix</span><span class="p">.</span><span class="n">toarray</span><span class="p">()</span> <span class="c1"># pd.DataFrame 인자로 넣기위해 배열화 to be used for pd.DataFrame
+</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vocabulary</span> <span class="o">=</span> <span class="n">cv</span><span class="p">.</span><span class="n">get_feature_names</span><span class="p">()</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">vocabulary</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>4754
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">one_hot</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cv_matrix</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span> <span class="n">vocabulary</span><span class="p">)</span>
+<span class="n">one_hot</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(500, 4754)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">one_hot</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>aa</th>
+      <th>abbrevi</th>
+      <th>abduct</th>
+      <th>abil</th>
+      <th>abl</th>
+      <th>aboard</th>
+      <th>abor</th>
+      <th>abound</th>
+      <th>abridg</th>
+      <th>abroad</th>
+      <th>...</th>
+      <th>yr</th>
+      <th>yum</th>
+      <th>yuppi</th>
+      <th>zebra</th>
+      <th>zep</th>
+      <th>zero</th>
+      <th>zhivago</th>
+      <th>zillion</th>
+      <th>zr</th>
+      <th>zydeco</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>495</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>496</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>497</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>498</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>499</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>500 rows × 4754 columns</p>
+</div>
+
+<h2 id="2-tf-idf">2. TF-IDF</h2>
+<p>정보 검색과 텍스트 마이닝에서 이용하는 가중치로, 여러 문서로 이루어진 문서군이 있을 때 어떤 단어가 특정 문서 내에서 얼마나 중요한 것인지를 나타내는 통계적 수치이다. <span style="color: blue">a statistical measure that evaluates how relevant a word is to a document in a collection of documents</span></p>
+
+<p><em>TF</em>: 특정 단어가 하나의 데이터 안에서 등장하는 횟수 <span style="color: blue">how many times certain word appears in one data</span></p>
+
+<p><em>DF</em>: 문제 빈도 값으로, 특정 단어가 여러 데이터에 자주 등장하는지 알려주는 지표 <span style="color: blue">how many times certain word appears in other data</span></p>
+
+<p><em>IDF(Inverse)</em>: DF의 역수를 취해서 구하며, 특정 단어가 다른 데이터에 등장하지 않을 경우 값이 커진다 <span style="color: blue">As a word doesn’t appear in other data, IDF increases</span></p>
+
+<p>TF-IDF란 이 두 값을 곱해서 사용하므로 어떤 단어가 해당 문서에 자주 등장하지만 다른 문서에는 많이 없는 단어일수록 높은 값을 가진다. <span style="color: blue">TF-IDF is computed by the multiplication of TF and IDF.</span></p>
+
+<p>따라서, 조사나 지시대명사처럼 자주 등장하는 단어는 TF 값은 크지만 IDF 값은 작아지므로 CountVectorizer가 가진 문제점이 해결 가능하다.<span style="color: blue"> Thus, TF-IDF overcomes the limits of CountVectorizer.</span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">text1</span> <span class="o">=</span><span class="s">'''Tracy loves writing about data science.'''</span>
+<span class="n">text2</span> <span class="o">=</span> <span class="s">'''Tracy loves writing for medium publications.'''</span>
+<span class="n">text3</span> <span class="o">=</span> <span class="s">'''Tracy loves studying Python programming.'''</span>
+<span class="n">text4</span> <span class="o">=</span> <span class="s">'''Tracy loves entering Kaggle competitions.'''</span>
+<span class="n">text5</span> <span class="o">=</span> <span class="s">'''Tracy loves making YouTube videos.'''</span>
+<span class="n">text6</span> <span class="o">=</span> <span class="s">'''Tracy loves getting new subscribers.'''</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">corpus</span> <span class="o">=</span> <span class="p">[</span><span class="n">text1</span><span class="p">,</span> <span class="n">text2</span><span class="p">,</span> <span class="n">text3</span><span class="p">,</span> <span class="n">text4</span><span class="p">,</span> <span class="n">text5</span><span class="p">,</span> <span class="n">text6</span><span class="p">]</span>
+<span class="n">corpus</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>['Tracy loves writing about data science.',
+ 'Tracy loves writing for medium publications.',
+ 'Tracy loves studying Python programming.',
+ 'Tracy loves entering Kaggle competitions.',
+ 'Tracy loves making YouTube videos.',
+ 'Tracy loves getting new subscribers.']
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span> <span class="c1"># CountVectorizer
+</span><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfTransformer</span> <span class="c1"># TfidfTransformer
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">count_vec</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">matrix</span> <span class="o">=</span> <span class="n">count_vec</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+<span class="n">tf_transformer</span> <span class="o">=</span> <span class="n">TfidfTransformer</span><span class="p">().</span><span class="n">fit</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span> <span class="c1"># train TF-IDF
+</span><span class="n">word_count_vec_tf</span> <span class="o">=</span> <span class="n">tf_transformer</span><span class="p">.</span><span class="n">transform</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span> <span class="c1"># apply TF-IDF
+</span><span class="n">word_count_vec_tf</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(6, 21)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df0</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">word_count_vec_tf</span><span class="p">.</span><span class="n">toarray</span><span class="p">(),</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s">'doc1'</span><span class="p">,</span><span class="s">'doc2'</span><span class="p">,</span> <span class="s">'doc3'</span><span class="p">,</span> <span class="s">'doc4'</span><span class="p">,</span> <span class="s">'doc5'</span><span class="p">,</span> <span class="s">'doc6'</span><span class="p">],</span><span class="n">columns</span><span class="o">=</span><span class="n">count_vec</span><span class="p">.</span><span class="n">get_feature_names_out</span><span class="p">())</span>
+<span class="n">df0</span>
+</code></pre></div></div>
+
+<div>
+  <style scoped="">
+      .dataframe tbody tr th:only-of-type {
+          vertical-align: middle;
+      }
+
+      .dataframe tbody tr th {
+          vertical-align: top;
+      }
+
+      .dataframe thead th {
+          text-align: right;
+      }
+  </style>
+  <table border="1" class="dataframe">
+    <thead>
+      <tr style="text-align: right;">
+        <th></th>
+        <th>about</th>
+        <th>competitions</th>
+        <th>data</th>
+        <th>entering</th>
+        <th>for</th>
+        <th>getting</th>
+        <th>kaggle</th>
+        <th>loves</th>
+        <th>making</th>
+        <th>medium</th>
+        <th>...</th>
+        <th>programming</th>
+        <th>publications</th>
+        <th>python</th>
+        <th>science</th>
+        <th>studying</th>
+        <th>subscribers</th>
+        <th>tracy</th>
+        <th>videos</th>
+        <th>writing</th>
+        <th>youtube</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th>doc1</th>
+        <td>0.495894</td>
+        <td>0.000000</td>
+        <td>0.495894</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.220127</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>...</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.495894</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.220127</td>
+        <td>0.000000</td>
+        <td>0.40664</td>
+        <td>0.000000</td>
+      </tr>
+      <tr>
+        <th>doc2</th>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.495894</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.220127</td>
+        <td>0.000000</td>
+        <td>0.495894</td>
+        <td>...</td>
+        <td>0.000000</td>
+        <td>0.495894</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.220127</td>
+        <td>0.000000</td>
+        <td>0.40664</td>
+        <td>0.000000</td>
+      </tr>
+      <tr>
+        <th>doc3</th>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.240948</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>...</td>
+        <td>0.542798</td>
+        <td>0.000000</td>
+        <td>0.542798</td>
+        <td>0.000000</td>
+        <td>0.542798</td>
+        <td>0.000000</td>
+        <td>0.240948</td>
+        <td>0.000000</td>
+        <td>0.00000</td>
+        <td>0.000000</td>
+      </tr>
+      <tr>
+        <th>doc4</th>
+        <td>0.000000</td>
+        <td>0.542798</td>
+        <td>0.000000</td>
+        <td>0.542798</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.542798</td>
+        <td>0.240948</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>...</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.240948</td>
+        <td>0.000000</td>
+        <td>0.00000</td>
+        <td>0.000000</td>
+      </tr>
+      <tr>
+        <th>doc5</th>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.240948</td>
+        <td>0.542798</td>
+        <td>0.000000</td>
+        <td>...</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.240948</td>
+        <td>0.542798</td>
+        <td>0.00000</td>
+        <td>0.542798</td>
+      </tr>
+      <tr>
+        <th>doc6</th>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.542798</td>
+        <td>0.000000</td>
+        <td>0.240948</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>...</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.000000</td>
+        <td>0.542798</td>
+        <td>0.240948</td>
+        <td>0.000000</td>
+        <td>0.00000</td>
+        <td>0.000000</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>6 rows × 21 columns</p>
+</div>
+
+<p>‘doc1’에서 숫자 0을 가지는 열에 해당되는 단어들은 ‘doc1’ 문장에 포함되지 않은 단어들이다.<span style="color: blue">The words corresponding to the column with the number 0 in ‘doc1’ are words not included in the sentence ‘doc1’.</span></p>
+
+<p>TF-IDF 수치는 클수록 다른 문서에서 언급되지 않으면서 해당 문서에서 여러 번 사용되었다는 의미이다.<span style="color: blue">&lt;A higher TF-IDF number means that it has been used multiple times in that document without being mentioned in other documents./span&gt;</span></p>
+
+<p>따라서, ‘about’의 0.495894가 ‘loves’의 0.220127 보다 큰 것은 ‘about’이 다른 문서에서는 덜 사용됐으면서 해당 문서에서만 많이 사용되었기 때문으로 해석할 수 있다.<span style="color: blue">Therefore, the reason that 0.495894 of ‘about’ is greater than 0.220127 of ‘loves’ can be interpreted because ‘about’ is used less in other documents and is used a lot only in that document.</span></p>
+
+<h3 id="cosine-similarity">Cosine Similarity</h3>
+<p>TF-IDF 벡터로 표현된 결과들 끼리의 코사인 연관성을 비교한다.<span style="color: blue">Compare the cosine association between the results expressed as TF-IDF vectors.</span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.metrics.pairwise</span> <span class="kn">import</span> <span class="n">cosine_similarity</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cosine_similarity</span><span class="p">(</span><span class="n">df0</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">4</span><span class="p">],</span> <span class="n">df0</span><span class="p">)</span> <span class="c1"># 문서 4와 나머지 문서들과의 코사인 연관성을 비교 consine similarity between docu 4 and others
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[0.10607812, 0.10607812, 0.1161115 , 1.        , 0.1161115 ,
+        0.1161115 ]])
+</code></pre></div></div>
+
+<p>상기 결과는 문서4에 해당하는 인덱스 3 자리에 위치한 1이 자기 자신과의 유사도가 1로 완벽하다는 것을 의미한다.<span style="color: blue">The above result means that the 1 located at the 3rd position of the index corresponding to the document 4 has a perfect similarity of 1 to itself.</span></p>
+
+<p>문서1과 4의 연관성은 0.1061인 것으로 관찰된다.<span style="color: blue"></span></p>
+
+<h2 id="3-hashing-vectorizer">3. Hashing Vectorizer</h2>
+<p>문장들을 token의 빈도수(= 횟수)로 행렬을 만드는 방법으로, CountVectorizer와 동일한 방식이다.<span style="color: blue">This is a method of creating a matrix with the frequency (= number of times) of the tokens, in the same way as CountVectorizer.</span></p>
+
+<p>하지만, ‘CountVectorizer’과 다르게 텍스트를 처리할 때 ‘해시’를 이용하여 ‘실행시간을 줄인다’.<span style="color: blue">However, unlike ‘CountVectorizer’, when processing text, ‘hash’ is used to ‘reduce execution time’.</span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">HashingVectorizer</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vectorizer</span> <span class="o">=</span> <span class="n">HashingVectorizer</span><span class="p">(</span><span class="n">n_features</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">5</span><span class="p">)</span> <span class="c1"># 'n_features': 피쳐 개수 # features (default = 30,000) 
+</span></code></pre></div></div>
+
+<p>해쉬 함수를 사용하여 토큰 이름들을 맵핑된 32개의 피처를 제어한다. <span style="color: blue">take control of token names that have been mapped into 32 features using hash function</span></p>
+<ul>
+  <li>해쉬 함수를 통하여 32개의 피처 중 알맞은 피처의 인덱스를 가져온다.<span style="color: blue"> hash function helps find the index of appropriate feature</span></li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+<span class="n">X</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(6, 32)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">matrix</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X</span><span class="p">.</span><span class="n">toarray</span><span class="p">(),</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s">'doc1'</span><span class="p">,</span><span class="s">'doc2'</span><span class="p">,</span> <span class="s">'doc3'</span><span class="p">,</span> <span class="s">'doc4'</span><span class="p">,</span> <span class="s">'doc5'</span><span class="p">,</span> <span class="s">'doc6'</span><span class="p">])</span>
+<span class="n">matrix</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>...</th>
+      <th>22</th>
+      <th>23</th>
+      <th>24</th>
+      <th>25</th>
+      <th>26</th>
+      <th>27</th>
+      <th>28</th>
+      <th>29</th>
+      <th>30</th>
+      <th>31</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>doc1</th>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.500000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.500000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.500000</td>
+    </tr>
+    <tr>
+      <th>doc2</th>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.408248</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.408248</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.408248</td>
+    </tr>
+    <tr>
+      <th>doc3</th>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.447214</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.447214</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>doc4</th>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.447214</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.447214</td>
+      <td>0.447214</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>doc5</th>
+      <td>0.0</td>
+      <td>-0.447214</td>
+      <td>0.0</td>
+      <td>0.447214</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.447214</td>
+      <td>0.000000</td>
+      <td>0.447214</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>doc6</th>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.377964</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.755929</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.377964</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>-0.377964</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+    </tr>
+  </tbody>
+</table>
+<p>6 rows × 32 columns</p>
+</div>
+
+<h2 id="4-featurehasher">4. FeatureHasher</h2>
+<p>Feature Hashing이라는 방법을 이용하여 ‘약간 메모리를 사용하고’ 빠르게 벡터화 하는 방법이다.<span style="color: blue">This is a fast vectorization method using a method called Feature Hashing ‘using a little memory’.</span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.feature_extraction</span> <span class="kn">import</span> <span class="n">FeatureHasher</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">hasher</span> <span class="o">=</span> <span class="n">FeatureHasher</span><span class="p">(</span><span class="n">n_features</span> <span class="o">=</span> <span class="mi">21</span><span class="p">,</span> <span class="n">alternate_sign</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">input_type</span><span class="o">=</span><span class="s">"string"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vectors</span> <span class="o">=</span> <span class="n">hasher</span><span class="p">.</span><span class="n">transform</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+<span class="n">vectors</span><span class="p">.</span><span class="n">toarray</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[0., 0., 4., 0., 3., 0., 0., 1., 0., 0., 1., 5., 3., 1., 6., 4.,
+        6., 1., 3., 0., 1.],
+       [0., 2., 3., 0., 4., 0., 0., 1., 0., 0., 1., 4., 3., 1., 6., 4.,
+        7., 1., 5., 0., 2.],
+       [0., 2., 5., 0., 4., 0., 0., 1., 1., 0., 3., 3., 3., 0., 5., 5.,
+        5., 0., 2., 0., 1.],
+       [0., 1., 5., 0., 4., 0., 0., 1., 0., 0., 1., 4., 4., 0., 5., 5.,
+        7., 0., 3., 0., 1.],
+       [0., 1., 2., 0., 4., 0., 0., 2., 0., 0., 1., 3., 0., 0., 5., 4.,
+        6., 1., 2., 0., 3.],
+       [0., 0., 4., 0., 1., 0., 0., 1., 0., 0., 1., 2., 2., 1., 5., 6.,
+        8., 2., 2., 0., 1.]])
+</code></pre></div></div>
+
+<h2 id="5-dict-vectorizer">5. Dict Vectorizer</h2>
+<p>CountVectorizer과 동일한 방식으로 동작하지만, <strong>딕셔너리</strong> 데이터를 인풋으로 받는다는 점에서 차이가 있다. <span style="color: blue">Dic Vectorizer shares the same way to operate but receives dictionary input data.</span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.feature_extraction</span> <span class="kn">import</span> <span class="n">DictVectorizer</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># sample dict data
+</span><span class="nb">dict</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s">'name'</span><span class="p">:</span> <span class="s">'Tracy'</span><span class="p">,</span> <span class="s">'from'</span><span class="p">:</span> <span class="s">'Little Rock'</span><span class="p">,</span> <span class="s">'sex'</span><span class="p">:</span><span class="s">'female'</span><span class="p">,</span> <span class="s">'age'</span><span class="p">:</span> <span class="mi">60</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">'name'</span><span class="p">:</span> <span class="s">'Mike'</span><span class="p">,</span> <span class="s">'from'</span><span class="p">:</span> <span class="s">'Reading'</span><span class="p">,</span> <span class="s">'sex'</span><span class="p">:</span><span class="s">'male'</span><span class="p">,</span> <span class="s">'age'</span><span class="p">:</span> <span class="mi">54</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">'name'</span><span class="p">:</span> <span class="s">'Martina'</span><span class="p">,</span> <span class="s">'from'</span><span class="p">:</span> <span class="s">'Berlin'</span><span class="p">,</span> <span class="s">'sex'</span><span class="p">:</span><span class="s">'female'</span><span class="p">,</span> <span class="s">'age'</span><span class="p">:</span><span class="mi">62</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">'name'</span><span class="p">:</span> <span class="s">'Gerry'</span><span class="p">,</span> <span class="s">'from'</span><span class="p">:</span><span class="s">'Heerlen'</span><span class="p">,</span> <span class="s">'sex'</span><span class="p">:</span><span class="s">'female'</span><span class="p">,</span> <span class="s">'age'</span><span class="p">:</span> <span class="mi">80</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">'name'</span><span class="p">:</span> <span class="s">'Paz'</span><span class="p">,</span> <span class="s">'from'</span><span class="p">:</span> <span class="s">'Manila'</span><span class="p">,</span> <span class="s">'sex'</span><span class="p">:</span><span class="s">'female'</span><span class="p">,</span> <span class="s">'age'</span><span class="p">:</span> <span class="mi">61</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">'name'</span><span class="p">:</span> <span class="s">'Doug'</span><span class="p">,</span> <span class="s">'from'</span><span class="p">:</span> <span class="s">'Aberdeen'</span><span class="p">,</span> <span class="s">'sex'</span><span class="p">:</span><span class="s">'male'</span><span class="p">,</span> <span class="s">'age'</span><span class="p">:</span> <span class="mi">55</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">'name'</span><span class="p">:</span> <span class="s">'Jeff'</span><span class="p">,</span> <span class="s">'from'</span><span class="p">:</span> <span class="s">'Cardiff'</span><span class="p">,</span> <span class="s">'sex'</span><span class="p">:</span><span class="s">'male'</span><span class="p">,</span> <span class="s">'age'</span><span class="p">:</span> <span class="mi">57</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">'name'</span><span class="p">:</span> <span class="s">'Cindy'</span><span class="p">,</span> <span class="s">'from'</span><span class="p">:</span><span class="s">'Little Rock'</span><span class="p">,</span> <span class="s">'sex'</span><span class="p">:</span> <span class="s">'female'</span><span class="p">,</span> <span class="s">'age'</span><span class="p">:</span><span class="mi">60</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">'name'</span><span class="p">:</span> <span class="s">'Keith'</span><span class="p">,</span> <span class="s">'from'</span><span class="p">:</span> <span class="s">'Reading'</span><span class="p">,</span> <span class="s">'sex'</span><span class="p">:</span> <span class="s">'male'</span><span class="p">,</span> <span class="s">'age'</span><span class="p">:</span><span class="mi">57</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">'name'</span><span class="p">:</span> <span class="s">'Adrian'</span><span class="p">,</span> <span class="s">'from'</span><span class="p">:</span> <span class="s">'Tercera'</span><span class="p">,</span> <span class="s">'sex'</span><span class="p">:</span> <span class="s">'male'</span><span class="p">,</span> <span class="s">'age'</span><span class="p">:</span> <span class="mi">38</span><span class="p">},</span>
+    <span class="p">{</span><span class="s">'name'</span><span class="p">:</span> <span class="s">'Katherine'</span><span class="p">,</span> <span class="s">'from'</span><span class="p">:</span> <span class="s">'Fayeteville'</span><span class="p">,</span> <span class="s">'sex'</span><span class="p">:</span> <span class="s">'female'</span><span class="p">,</span> <span class="s">'age'</span><span class="p">:</span> <span class="mi">38</span><span class="p">}</span>
+<span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vec</span> <span class="o">=</span> <span class="n">DictVectorizer</span><span class="p">()</span>
+<span class="n">vectors</span> <span class="o">=</span> <span class="n">vec</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+<span class="n">vectors</span><span class="p">.</span><span class="n">toarray</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[60.,  0.,  0.,  0.,  0.,  0.,  1.,  0.,  0.,  0.,  0.,  0.,  0.,
+        0.,  0.,  0.,  0.,  0.,  0.,  0.,  1.,  1.,  0.],
+      [54.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  1.,  0.,  0.,  0.,  0.,
+        0.,  0.,  0.,  0.,  0.,  1.,  0.,  0.,  0.,  1.],
+      [62.,  0.,  1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,
+        0.,  0.,  0.,  0.,  1.,  0.,  0.,  0.,  1.,  0.],
+      [80.,  0.,  0.,  0.,  0.,  1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,
+        1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  1.,  0.],
+      [61.,  0.,  0.,  0.,  0.,  0.,  0.,  1.,  0.,  0.,  0.,  0.,  0.,
+        0.,  0.,  0.,  0.,  0.,  0.,  1.,  0.,  1.,  0.],
+      [55.,  1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  1.,
+        0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  1.],
+      [57.,  0.,  0.,  1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,
+        0.,  1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  1.],
+      [60.,  0.,  0.,  0.,  0.,  0.,  1.,  0.,  0.,  0.,  0.,  1.,  0.,
+        0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  1.,  0.],
+      [57.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  1.,  0.,  0.,  0.,  0.,
+        0.,  0.,  0.,  1.,  0.,  0.,  0.,  0.,  0.,  1.],
+      [38.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  1.,  1.,  0.,  0.,
+        0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  1.],
+      [38.,  0.,  0.,  0.,  1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,
+        0.,  0.,  1.,  0.,  0.,  0.,  0.,  0.,  1.,  0.]])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vec</span><span class="p">.</span><span class="n">get_feature_names_out</span><span class="p">(),</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">.</span><span class="n">get_feature_names_out</span><span class="p">())</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(array(['age', 'from=Aberdeen', 'from=Berlin', 'from=Cardiff',
+        'from=Fayeteville', 'from=Heerlen', 'from=Little Rock',
+        'from=Manila', 'from=Reading', 'from=Tercera', 'name=Adrian',
+        'name=Cindy', 'name=Doug', 'name=Gerry', 'name=Jeff',
+        'name=Katherine', 'name=Keith', 'name=Martina', 'name=Mike',
+        'name=Paz', 'name=Tracy', 'sex=female', 'sex=male'], dtype=object),
+23)
+</code></pre></div></div>
+
+<p>상기 과정에서 Dict Vectorizer를 통하여 딕셔너리 데이터를 수치에 기반하여 벡터화했다. <span style="color: blue">The result shows how vectorization has been done using Dict Vectorizer.</span></p>
+
+<p>이후, TF-IDF를 사용하여 횟수 기반 벡터화된 행렬을 변환하여 보다 유의미한 단어를 도출해보자.<span style="color: blue"> Now, let’s use TF-IDF to find informative words from the output. </span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfTransformer</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tf_transformer</span> <span class="o">=</span> <span class="n">TfidfTransformer</span><span class="p">().</span><span class="n">fit</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+<span class="n">word_count_vec_tf</span> <span class="o">=</span> <span class="n">tf_transformer</span><span class="p">.</span><span class="n">transform</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+<span class="n">word_count_vec_tf</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<p>(11, 23)</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df0</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">word_count_vec_tf</span><span class="p">.</span><span class="n">toarray</span><span class="p">())</span>
+<span class="n">df0</span>
+</code></pre></div></div>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>...</th>
+      <th>13</th>
+      <th>14</th>
+      <th>15</th>
+      <th>16</th>
+      <th>17</th>
+      <th>18</th>
+      <th>19</th>
+      <th>20</th>
+      <th>21</th>
+      <th>22</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.997805</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.00000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.039684</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.00000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.046427</td>
+      <td>0.025594</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.997207</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.00000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.044067</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.00000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.051555</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.031267</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.997673</td>
+      <td>0.000000</td>
+      <td>0.044924</td>
+      <td>0.00000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.00000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.044924</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.024765</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.998600</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.00000</td>
+      <td>0.000000</td>
+      <td>0.034848</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>0.034848</td>
+      <td>0.00000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.019211</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.997596</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.00000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.045657</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.00000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.045657</td>
+      <td>0.000000</td>
+      <td>0.025169</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.996964</td>
+      <td>0.050605</td>
+      <td>0.000000</td>
+      <td>0.00000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.00000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.030691</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.997172</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.04884</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.04884</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.029620</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.997805</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.00000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.039684</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.00000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.025594</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.997493</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.00000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.041760</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.00000</td>
+      <td>0.000000</td>
+      <td>0.048855</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.029630</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.993671</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.00000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.073002</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.00000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.044274</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>0.993840</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.00000</td>
+      <td>0.073015</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.00000</td>
+      <td>0.073015</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.040250</td>
+      <td>0.000000</td>
+    </tr>
+  </tbody>
+</table>
+<p>11 rows × 23 columns</p>
+</div>
+:ET

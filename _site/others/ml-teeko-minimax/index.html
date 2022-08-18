@@ -1,0 +1,2032 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <!--폰트 : "Nanum Gothic Coding", "Coming Soon"-->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Coming+Soon&family=Nanum+Gothic+Coding&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Coming+Soon&family=Nanum+Gothic+Coding&display=swap">
+    
+    <!--폰트 : "Iropke Batang"-->
+    <link rel="preload" as="style" href="https://cdn.jsdelivr.net/font-iropke-batang/1.2/font-iropke-batang.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/font-iropke-batang/1.2/font-iropke-batang.css">
+
+    <!--폰트 : "Cafe24Oneprettynight"-->
+    <link rel="preload" as="style" href="/assets/css/main.css">
+
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Minimax 알고리즘 - Teeko Game | 정리하여 내 것으로, AI 📂</title>
+<meta name="description" content="Minimax 알고리즘을 활용해서 Teeko 게임을 구현한다.">
+
+
+  <meta name="author" content="쭌스🎄">
+  
+  <meta property="article:author" content="쭌스🎄">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="정리하여 내 것으로, AI 📂">
+<meta property="og:title" content="Minimax 알고리즘 - Teeko Game">
+<meta property="og:url" content="http://localhost:4000/others/ml-teeko-minimax/">
+
+
+  <meta property="og:description" content="Minimax 알고리즘을 활용해서 Teeko 게임을 구현한다.">
+
+
+
+  <meta property="og:image" content="http://localhost:4000/assets/images/posts/teeko.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2022-08-14T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/others/ml-teeko-minimax/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "쭌스🎄",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+  <meta name="naver-site-verification" content="57d020c8f9b26bf56ed7846608b8d873481e9b84">
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정리하여 내 것으로, AI 📂 Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/logo.ico/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/logo.ico/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/logo.ico/favicon-16x16.png">
+<link rel="mask-icon" href="/assets/logo.ico/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+<!-- end custom head snippets -->
+
+    <!-- 스크롤바 커스터마이징 -->
+    <style> 
+      ::-webkit-scrollbar{width: 16px;}
+      ::-webkit-scrollbar-track {background-color:#4b4f52; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb {background-color:#5e6265; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb:hover {background: #ffd24c;}
+      ::-webkit-scrollbar-button:start:decrement,::-webkit-scrollbar-button:end:increment 
+      {
+          width:12px;height:12px;background:transparent;}
+      }  
+
+      
+    </style>
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          정리하여 내 것으로, AI 📂
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/search/">Search</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+  
+    
+
+
+
+<nav class="breadcrumbs">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    
+    
+      
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/" itemprop="item"><span itemprop="name">Home</span></a>
+
+          <meta itemprop="position" content="1" />
+        </li>
+        <span class="sep">/</span>
+      
+      
+        
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/categories/#others" itemprop="item"><span itemprop="name">Others</span></a>
+          <meta itemprop="position" content="2" />
+        </li>
+        <span class="sep">/</span>
+      
+    
+      
+      
+        <li class="current">Minimax 알고리즘 - Teeko Game</li>
+      
+    
+  </ol>
+</nav>
+
+  
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/echoi.jpg" alt="쭌스🎄" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">쭌스🎄</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>I am a senior-year B.S. student in Computer Science and Data Science at the University of Wisconsin, Madison.</p>
+
+<p>My research interests are <strong>hyper-scale AI</strong>, <strong>ML</strong>, <strong>deep NLP</strong>, and <strong>XAI in computer vision</strong>.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="mailto:hchoi256@wisc.edu" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/hchoi256" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="/assets/포트폴리오.pdf" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Portfolio</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items">
+    
+  </ul>
+</nav>
+
+    
+  
+
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">40</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
+      </li>
+      <li>
+        <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C#-->
+        <span class="nav__sub-title">Important</span>
+        <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+        <ul>
+            <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+            <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/categories/Star" class="">공지사항 (1)</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </ul>
+        <ul>
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/categories/Study" class="">AI 기본지식 (1)</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </ul>
+        <ul>
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/categories/Python" class="">Python (2)</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </ul>
+        <ul>
+            
+                
+                    <li><a href="/categories/Basic" class="">기타 (1)</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </ul>
+        <span class="nav__sub-title">ML/DL</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/SL" class="">지도학습 (14)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/USL" class="">비지도학습 (2)</a></li>
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/RL" class="">강화학습 (1)</a></li>
+                    
+                
+            </ul>
+        <span class="nav__sub-title">NLP</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                        <li><a href="/categories/NLP" class="">NLP (8)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/BERT" class="">BERT (3)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/GPT" class="">GPT (1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        <span class="nav__sub-title">AI Research Papers</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/AIPaperCV" class="">CV (1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/AIPaperNLP" class="">NLP (1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/AIPaperOthers" class="">기타 (1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>        
+      </li>
+  </ul>
+</nav>
+
+  
+
+  </div>
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Minimax 알고리즘 - Teeko Game">
+    <meta itemprop="description" content="Minimax 알고리즘을 활용해서 Teeko 게임을 구현한다.">
+    <meta itemprop="datePublished" content="2022-08-14T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="http://localhost:4000/others/ml-teeko-minimax/" class="u-url" itemprop="url">Minimax 알고리즘 - Teeko Game
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          14 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> GITHUB BLOG JJUNS</h4></header>
+              <ul class="toc__menu"><li><a href="#code">Code</a></li><li><a href="#teekoplayer-클래스">TeekoPlayer 클래스</a></li><li><a href="#teeko-게임-실행-함수">Teeko 게임 실행 함수</a></li><li><a href="#게임-실행">게임 실행</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p><strong>Minimax</strong> 알고리즘을 활용해서 <strong>Teeko</strong> 게임을 구현한다.</p>
+
+<p>Teeko 게임은 한국인들에게는 익숙하지 않은 보드 게임일 수도 있다 (하기 설명 참조).</p>
+
+<blockquote>
+  <p><strong><em>Teeko Game</em></strong>이란?</p>
+
+  <p>It is a game between two players on a 5x5 board. Each player has four markers of either red or black. Beginning with black, they take turns placing markers (the “drop phase”) until all markers are on the board, with the goal of getting <strong>four in a row horizontally, vertically, or diagonally, or in a 2x2 box as shown above</strong>. If after the drop phase neither player has won, they continue taking turns moving one marker at a time – to an adjacent space only! (this includes diagonals, not just left, right, up, and down one space.) – until one player wins. Note, the game has no “wrap-around” similar to other board games, so a player can not move off of the board or win using pieces on the other side of the board.</p>
+</blockquote>
+
+<p>상기 설명에 나온 것처럼 4개의 마커가 수직, 수평, 대각, 혹은 2x2 박스 형태로 존재하게 되면 승리한다.</p>
+
+<p>이 게임에서 당신은 AI 로봇과 Teeko 보드 게임을 펼치게 될 것이다.</p>
+
+<p>이 프로젝트는 Minimax 알고리즘을 이해하고 있다는 전제로 진행한다.</p>
+
+<blockquote>
+  <p><a href="https://github.com/hchoi256/ai-terms/blob/main/README.md">Minimax 알고리즘</a>이란?</p>
+</blockquote>
+
+<h1 id="code">Code</h1>
+<p class="notice--danger"><strong>[Notice]</strong> <a href="https://github.com/hchoi256/cs540-AI/tree/main/teeko-minimax-game">download here</a></p>
+
+<h1 id="teekoplayer-클래스">TeekoPlayer 클래스</h1>
+
+<p>Teeko 게임을 진행함에 있어서 각 플레이어 Object에 대해 제어하기 위해 클래스를 만들어보자.</p>
+
+<p>자세한 설명은 코드 주석으로써 적어놨으니 참고하자.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">TeekoPlayer</span><span class="p">:</span>
+    <span class="s">""" An object representation for an AI game player for the game Teeko.
+    """</span>
+    <span class="n">board</span> <span class="o">=</span> <span class="p">[[</span><span class="s">' '</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
+    <span class="n">pieces</span> <span class="o">=</span> <span class="p">[</span><span class="s">'b'</span><span class="p">,</span> <span class="s">'r'</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">""" Initializes a TeekoPlayer object by randomly selecting red or black as its
+        piece color.
+        """</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">my_piece</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="n">choice</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">pieces</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">opp</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">pieces</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">my_piece</span> <span class="o">==</span> <span class="bp">self</span><span class="p">.</span><span class="n">pieces</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">else</span> <span class="bp">self</span><span class="p">.</span><span class="n">pieces</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>    
+
+    <span class="k">def</span> <span class="nf">GetPiecePos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">r</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="s">'b'</span><span class="p">:</span>
+                    <span class="n">b</span><span class="p">.</span><span class="n">append</span><span class="p">((</span><span class="n">row</span><span class="p">,</span><span class="n">col</span><span class="p">))</span>
+                <span class="k">elif</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="s">'r'</span><span class="p">:</span>
+                    <span class="n">r</span><span class="p">.</span><span class="n">append</span><span class="p">((</span><span class="n">row</span><span class="p">,</span><span class="n">col</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">b</span><span class="p">,</span><span class="n">r</span>
+
+    <span class="c1"># check largest # pieces nearby
+</span>    <span class="k">def</span> <span class="nf">heuristic_gv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">piece</span><span class="p">):</span>
+        <span class="n">b</span><span class="p">,</span><span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">GetPiecePos</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">piece</span> <span class="o">==</span> <span class="s">'b'</span><span class="p">:</span>
+            <span class="n">mine</span> <span class="o">=</span> <span class="s">'b'</span>
+            <span class="n">oppo</span> <span class="o">=</span> <span class="s">'r'</span>
+        <span class="k">elif</span> <span class="n">piece</span> <span class="o">==</span> <span class="s">'r'</span><span class="p">:</span>
+            <span class="n">mine</span> <span class="o">=</span> <span class="s">'r'</span>
+            <span class="n">oppo</span> <span class="o">=</span> <span class="s">'b'</span>
+
+        <span class="c1"># horizontal
+</span>        <span class="n">mymax</span> <span class="o">=</span> <span class="n">oppmax</span> <span class="o">=</span> <span class="n">mycnt</span> <span class="o">=</span> <span class="n">oppcnt</span> <span class="o">=</span> <span class="mi">0</span>        
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">state</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">state</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="n">mine</span><span class="p">:</span>
+                    <span class="n">mycnt</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">mycnt</span> <span class="o">&gt;</span> <span class="n">mymax</span><span class="p">:</span>
+                <span class="n">mymax</span> <span class="o">=</span> <span class="n">mycnt</span>
+            <span class="n">mycnt</span> <span class="o">=</span> <span class="mi">0</span>
+        
+        <span class="n">i</span> <span class="o">=</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">state</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">state</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="n">oppo</span><span class="p">:</span>
+                    <span class="n">oppcnt</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">oppcnt</span> <span class="o">&gt;</span> <span class="n">oppmax</span><span class="p">:</span>
+                <span class="n">oppmax</span> <span class="o">=</span> <span class="n">oppcnt</span>
+            <span class="n">oppcnt</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c1"># vertical
+</span>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">state</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">state</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">mine</span><span class="p">:</span>
+                    <span class="n">mycnt</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">mycnt</span> <span class="o">&gt;</span> <span class="n">mymax</span><span class="p">:</span>
+                <span class="n">mymax</span> <span class="o">=</span> <span class="n">mycnt</span>
+            <span class="n">mycnt</span> <span class="o">=</span> <span class="mi">0</span>
+        
+        <span class="n">i</span> <span class="o">=</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">state</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">state</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">oppo</span><span class="p">:</span>
+                    <span class="n">oppcnt</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">oppcnt</span> <span class="o">&gt;</span> <span class="n">oppmax</span><span class="p">:</span>
+                <span class="n">oppmax</span> <span class="o">=</span> <span class="n">oppcnt</span>
+            <span class="n">oppcnt</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c1"># for / diagonal
+</span>        <span class="n">mycnt</span> <span class="o">=</span> <span class="n">oppcnt</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">mine</span> <span class="ow">or</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">mine</span> <span class="ow">or</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span> <span class="o">-</span> <span class="mi">2</span><span class="p">][</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="n">mine</span> <span class="ow">or</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span> <span class="o">-</span> <span class="mi">3</span><span class="p">][</span><span class="n">i</span> <span class="o">+</span> <span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="n">mine</span><span class="p">:</span>
+                    <span class="n">mycnt</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">mycnt</span> <span class="o">&gt;</span> <span class="n">mymax</span><span class="p">:</span>
+                    <span class="n">mymax</span> <span class="o">=</span> <span class="n">mycnt</span>
+                <span class="n">mycnt</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="n">row</span> <span class="o">=</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">oppo</span> <span class="ow">or</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">oppo</span> <span class="ow">or</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span> <span class="o">-</span> <span class="mi">2</span><span class="p">][</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="n">oppo</span> <span class="ow">or</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span> <span class="o">-</span> <span class="mi">3</span><span class="p">][</span><span class="n">i</span> <span class="o">+</span> <span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="n">oppo</span><span class="p">:</span>
+                    <span class="n">oppcnt</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">oppcnt</span> <span class="o">&gt;</span> <span class="n">oppmax</span><span class="p">:</span>
+                    <span class="n">oppmax</span> <span class="o">=</span> <span class="n">oppcnt</span>
+                <span class="n">oppcnt</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c1"># diagonal
+</span>        <span class="n">mycnt</span> <span class="o">=</span> <span class="n">oppcnt</span> <span class="o">=</span> <span class="n">row</span> <span class="o">=</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">mine</span> <span class="ow">or</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">mine</span> <span class="ow">or</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span> <span class="o">+</span> <span class="mi">2</span><span class="p">][</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="n">mine</span> <span class="ow">or</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span> <span class="o">+</span> <span class="mi">3</span><span class="p">][</span><span class="n">i</span> <span class="o">+</span> <span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="n">mine</span><span class="p">:</span>
+                    <span class="n">mycnt</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">mycnt</span> <span class="o">&gt;</span> <span class="n">mymax</span><span class="p">:</span>
+                    <span class="n">mymax</span> <span class="o">=</span> <span class="n">mycnt</span>
+                <span class="n">mycnt</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="n">row</span> <span class="o">=</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">oppo</span> <span class="ow">or</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">oppo</span> <span class="ow">or</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span> <span class="o">+</span> <span class="mi">2</span><span class="p">][</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="n">oppo</span> <span class="ow">or</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span> <span class="o">+</span> <span class="mi">3</span><span class="p">][</span><span class="n">i</span> <span class="o">+</span> <span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="n">oppo</span><span class="p">:</span>
+                    <span class="n">oppcnt</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">oppcnt</span> <span class="o">&gt;</span> <span class="n">oppmax</span><span class="p">:</span>
+                    <span class="n">oppmax</span> <span class="o">=</span> <span class="n">oppcnt</span>
+                <span class="n">oppcnt</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c1"># 2X2
+</span>        <span class="n">mycnt</span> <span class="o">=</span> <span class="n">oppcnt</span> <span class="o">=</span> <span class="n">row</span> <span class="o">=</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">mine</span> <span class="ow">or</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">mine</span> <span class="ow">or</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">mine</span> <span class="ow">or</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">==</span> <span class="n">mine</span><span class="p">:</span>
+                    <span class="n">mycnt</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">mycnt</span> <span class="o">&gt;</span> <span class="n">mymax</span><span class="p">:</span>
+                    <span class="n">mymax</span> <span class="o">=</span> <span class="n">mycnt</span>
+                <span class="n">mycnt</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="n">row</span> <span class="o">=</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">oppo</span> <span class="ow">or</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">oppo</span> <span class="ow">or</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">oppo</span> <span class="ow">or</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">==</span> <span class="n">oppo</span><span class="p">:</span>
+                    <span class="n">oppcnt</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">oppcnt</span> <span class="o">&gt;</span> <span class="n">oppmax</span><span class="p">:</span>
+                    <span class="n">oppmax</span> <span class="o">=</span> <span class="n">oppcnt</span>
+                <span class="n">oppcnt</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">if</span> <span class="n">mymax</span> <span class="o">==</span> <span class="n">oppmax</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="n">state</span>
+        <span class="k">elif</span> <span class="n">mymax</span> <span class="o">&gt;</span> <span class="n">oppmax</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">mymax</span><span class="o">/</span><span class="mi">6</span><span class="p">,</span> <span class="n">state</span> <span class="c1"># if mine is longer than opponent, return positive float
+</span>
+        <span class="k">return</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">oppmax</span><span class="o">/</span><span class="mi">6</span><span class="p">,</span> <span class="n">state</span> <span class="c1"># if opponent is longer than mine, return negative float
+</span>
+    <span class="k">def</span> <span class="nf">Max_Value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">depth</span><span class="p">):</span>
+        <span class="n">bstate</span> <span class="o">=</span> <span class="n">state</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">game_value</span><span class="p">(</span><span class="n">state</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">game_value</span><span class="p">(</span><span class="n">state</span><span class="p">),</span><span class="n">state</span>
+        <span class="k">if</span> <span class="n">depth</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">heuristic_gv</span><span class="p">(</span><span class="n">state</span><span class="p">,</span><span class="bp">self</span><span class="p">.</span><span class="n">my_piece</span><span class="p">)</span>
+                
+        <span class="n">a</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s">'-Inf'</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">.</span><span class="n">succ</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">my_piece</span><span class="p">):</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">Min_Value</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">depth</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">a</span><span class="p">:</span>
+                <span class="n">a</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">bstate</span> <span class="o">=</span> <span class="n">s</span>        
+        
+        <span class="k">return</span> <span class="n">a</span><span class="p">,</span> <span class="n">bstate</span>
+
+    <span class="k">def</span> <span class="nf">Min_Value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span><span class="n">depth</span><span class="p">):</span>
+        <span class="n">bstate</span> <span class="o">=</span> <span class="n">state</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">game_value</span><span class="p">(</span><span class="n">state</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">game_value</span><span class="p">(</span><span class="n">state</span><span class="p">),</span><span class="n">state</span>        
+        <span class="k">if</span> <span class="n">depth</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">heuristic_gv</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">opp</span><span class="p">)</span>
+    
+        <span class="n">b</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s">'Inf'</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">.</span><span class="n">succ</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">opp</span><span class="p">):</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">Max_Value</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">depth</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">:</span>
+                <span class="n">b</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">bstate</span> <span class="o">=</span> <span class="n">s</span>
+
+        <span class="k">return</span> <span class="n">b</span><span class="p">,</span> <span class="n">bstate</span>
+    
+    <span class="k">def</span> <span class="nf">make_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="s">""" Selects a (row, col) space for the next move. You may assume that whenever
+        this function is called, it is this player's turn to move.
+
+        Args:
+            state (list of lists): should be the current state of the game as saved in
+                this TeekoPlayer object. Note that this is NOT assumed to be a copy of
+                the game state and should NOT be modified within this method (use
+                place_piece() instead). Any modifications (e.g. to generate successors)
+                should be done on a deep copy of the state.
+
+                In the "drop phase", the state will contain less than 8 elements which
+                are not ' ' (a single space character).
+
+        Return:
+            move (list): a list of move tuples such that its format is
+                    [(row, col), (source_row, source_col)]
+                where the (row, col) tuple is the location to place a piece and the
+                optional (source_row, source_col) tuple contains the location of the
+                piece the AI plans to relocate (for moves after the drop phase). In
+                the drop phase, this list should contain ONLY THE FIRST tuple.
+
+        Note that without drop phase behavior, the AI will just keep placing new markers
+            and will eventually take over the board. This is not a valid strategy and
+            will earn you no points.
+        """</span>
+        <span class="n">drop_phase</span> <span class="o">=</span> <span class="bp">True</span>   <span class="c1"># TODO: detect drop phase        
+</span>        <span class="k">if</span> <span class="nb">sum</span><span class="p">((</span><span class="n">i</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="s">'b'</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">state</span><span class="p">))</span> <span class="o">&gt;=</span> <span class="mi">4</span> <span class="ow">and</span> <span class="nb">sum</span><span class="p">((</span><span class="n">i</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="s">'r'</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">state</span><span class="p">))</span> <span class="o">&gt;=</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="n">drop_phase</span> <span class="o">=</span> <span class="bp">False</span>                    
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">drop_phase</span><span class="p">:</span>
+            <span class="c1"># TODO: choose a piece to move and remove it from the board
+</span>            <span class="c1"># (You may move this condition anywhere, just be sure to handle it)
+</span>            <span class="c1">#
+</span>            <span class="c1"># Until this part is implemented and the move list is updated
+</span>            <span class="c1"># accordingly, the AI will not follow the rules after the drop phase!
+</span>            <span class="n">move</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">value</span><span class="p">,</span> <span class="n">bstate</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">Max_Value</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>            
+            <span class="n">arr1</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">state</span><span class="p">)</span> <span class="o">==</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">bstate</span><span class="p">)</span>
+            <span class="n">arr2</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">where</span><span class="p">(</span><span class="n">arr1</span> <span class="o">==</span> <span class="bp">False</span><span class="p">)</span> <span class="c1"># check difference between succ and curr state
+</span>            <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="n">arr2</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]][</span><span class="n">arr2</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span> <span class="o">==</span> <span class="s">' '</span><span class="p">:</span> <span class="c1"># find original to define move
+</span>                <span class="p">(</span><span class="n">origrow</span><span class="p">,</span> <span class="n">origcol</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">arr2</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">].</span><span class="n">item</span><span class="p">(),</span><span class="n">arr2</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">].</span><span class="n">item</span><span class="p">())</span>
+                <span class="p">(</span><span class="n">row</span><span class="p">,</span><span class="n">col</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">arr2</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="n">item</span><span class="p">(),</span> <span class="n">arr2</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="n">item</span><span class="p">())</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="p">(</span><span class="n">origrow</span><span class="p">,</span> <span class="n">origcol</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">arr2</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="n">item</span><span class="p">(),</span> <span class="n">arr2</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="n">item</span><span class="p">())</span>
+                <span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">arr2</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">].</span><span class="n">item</span><span class="p">(),</span> <span class="n">arr2</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">].</span><span class="n">item</span><span class="p">())</span>
+            <span class="n">move</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">))</span>
+            <span class="n">move</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">origrow</span><span class="p">,</span> <span class="n">origcol</span><span class="p">))</span>  <span class="c1"># move for after drop phase
+</span>            <span class="k">return</span> <span class="n">move</span>
+
+        <span class="c1"># select an unoccupied space randomly
+</span>        <span class="c1"># TODO: implement a minimax algorithm to play better       
+</span>        <span class="n">move</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">value</span><span class="p">,</span> <span class="n">bstate</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">Max_Value</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">arr1</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">state</span><span class="p">)</span> <span class="o">==</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">bstate</span><span class="p">)</span>
+        <span class="n">arr2</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">where</span><span class="p">(</span><span class="n">arr1</span> <span class="o">==</span> <span class="bp">False</span><span class="p">)</span> <span class="c1"># diff between succ and curr state        
+</span>        <span class="p">(</span><span class="n">row</span><span class="p">,</span><span class="n">col</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">arr2</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="n">item</span><span class="p">(),</span> <span class="n">arr2</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="n">item</span><span class="p">())</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="s">' '</span><span class="p">:</span> <span class="c1"># find original to define move
+</span>            <span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">arr2</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="n">item</span><span class="p">(),</span> <span class="n">arr2</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="n">item</span><span class="p">())</span>
+
+        <span class="c1"># ensure the destination (row,col) tuple is at the beginning of the move list
+</span>        <span class="n">move</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">))</span>              
+        <span class="k">return</span> <span class="n">move</span>
+
+    <span class="k">def</span> <span class="nf">succ</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">piece</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">game_value</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>        
+        <span class="n">succ</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">drop_phase</span> <span class="o">=</span> <span class="bp">True</span>  <span class="c1"># TODO: detect drop phase
+</span>
+        <span class="k">if</span> <span class="nb">sum</span><span class="p">((</span><span class="n">i</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="s">'b'</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">state</span><span class="p">))</span> <span class="o">&gt;=</span> <span class="mi">4</span> <span class="ow">and</span> <span class="nb">sum</span><span class="p">((</span><span class="n">i</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="s">'r'</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">state</span><span class="p">))</span> <span class="o">&gt;=</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="n">drop_phase</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">drop_phase</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">state</span><span class="p">)):</span>
+                <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">state</span><span class="p">)):</span>
+                    <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="n">piece</span><span class="p">:</span>
+                        <span class="n">succ</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">up</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">))</span>
+                        <span class="n">succ</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">down</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">))</span>
+                        <span class="n">succ</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">left</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">))</span>
+                        <span class="n">succ</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">right</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">))</span>
+                        <span class="n">succ</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">upleft</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">))</span>
+                        <span class="n">succ</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">upright</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">))</span>
+                        <span class="n">succ</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">downleft</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">))</span>
+                        <span class="n">succ</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">downright</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">))</span>
+            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">succ</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">state</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">state</span><span class="p">)):</span>
+                <span class="n">new</span> <span class="o">=</span> <span class="n">copy</span><span class="p">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">new</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="s">' '</span><span class="p">:</span>
+                    <span class="n">new</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">piece</span>
+                    <span class="n">succ</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">new</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">succ</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">copy</span><span class="p">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="s">' '</span><span class="p">:</span>
+            <span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">state</span>
+
+    <span class="k">def</span> <span class="nf">down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">copy</span><span class="p">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">state</span><span class="p">)</span> <span class="ow">and</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="s">' '</span><span class="p">:</span>
+            <span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">state</span>
+
+    <span class="k">def</span> <span class="nf">left</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">copy</span><span class="p">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">j</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s">' '</span><span class="p">:</span>
+            <span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">state</span>
+
+    <span class="k">def</span> <span class="nf">right</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">copy</span><span class="p">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">state</span><span class="p">)</span> <span class="ow">and</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s">' '</span><span class="p">:</span>
+            <span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">state</span>
+
+    <span class="k">def</span> <span class="nf">upleft</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">copy</span><span class="p">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s">' '</span><span class="p">:</span>
+            <span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">state</span>
+
+    <span class="k">def</span> <span class="nf">upright</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">copy</span><span class="p">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">state</span><span class="p">)</span> <span class="ow">and</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s">' '</span><span class="p">:</span>
+            <span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">state</span>
+
+    <span class="k">def</span> <span class="nf">downleft</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">copy</span><span class="p">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">state</span><span class="p">)</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s">' '</span><span class="p">:</span>
+            <span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">state</span>
+
+    <span class="k">def</span> <span class="nf">downright</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">copy</span><span class="p">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">state</span><span class="p">)</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">state</span><span class="p">)</span> <span class="ow">and</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s">' '</span><span class="p">:</span>
+            <span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">state</span>
+        
+    <span class="k">def</span> <span class="nf">opponent_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">move</span><span class="p">):</span>
+        <span class="s">""" Validates the opponent's next move against the internal board representation.
+        You don't need to touch this code.
+
+        Args:
+            move (list): a list of move tuples such that its format is
+                    [(row, col), (source_row, source_col)]
+                where the (row, col) tuple is the location to place a piece and the
+                optional (source_row, source_col) tuple contains the location of the
+                piece the AI plans to relocate (for moves after the drop phase). In
+                the drop phase, this list should contain ONLY THE FIRST tuple.
+        """</span>
+        <span class="c1"># validate input
+</span>        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">move</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">source_row</span> <span class="o">=</span> <span class="n">move</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">source_col</span> <span class="o">=</span> <span class="n">move</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">source_row</span> <span class="o">!=</span> <span class="bp">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="p">.</span><span class="n">board</span><span class="p">[</span><span class="n">source_row</span><span class="p">][</span><span class="n">source_col</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">self</span><span class="p">.</span><span class="n">opp</span><span class="p">:</span>
+                <span class="bp">self</span><span class="p">.</span><span class="n">print_board</span><span class="p">()</span>
+                <span class="k">print</span><span class="p">(</span><span class="n">move</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="nb">Exception</span><span class="p">(</span><span class="s">"You don't have a piece there!"</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">source_row</span> <span class="o">-</span> <span class="n">move</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="nb">abs</span><span class="p">(</span><span class="n">source_col</span> <span class="o">-</span> <span class="n">move</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="bp">self</span><span class="p">.</span><span class="n">print_board</span><span class="p">()</span>
+                <span class="k">print</span><span class="p">(</span><span class="n">move</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="nb">Exception</span><span class="p">(</span><span class="s">'Illegal move: Can only move to an adjacent space'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">board</span><span class="p">[</span><span class="n">move</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]][</span><span class="n">move</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]]</span> <span class="o">!=</span> <span class="s">' '</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="nb">Exception</span><span class="p">(</span><span class="s">"Illegal move detected"</span><span class="p">)</span>
+        <span class="c1"># make move
+</span>        <span class="bp">self</span><span class="p">.</span><span class="n">place_piece</span><span class="p">(</span><span class="n">move</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">opp</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">place_piece</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">move</span><span class="p">,</span> <span class="n">piece</span><span class="p">):</span>
+        <span class="s">""" Modifies the board representation using the specified move and piece
+
+        Args:
+            move (list): a list of move tuples such that its format is
+                    [(row, col), (source_row, source_col)]
+                where the (row, col) tuple is the location to place a piece and the
+                optional (source_row, source_col) tuple contains the location of the
+                piece the AI plans to relocate (for moves after the drop phase). In
+                the drop phase, this list should contain ONLY THE FIRST tuple.
+
+                This argument is assumed to have been validated before this method
+                is called.
+            piece (str): the piece ('b' or 'r') to place on the board
+        """</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">move</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">board</span><span class="p">[</span><span class="n">move</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]][</span><span class="n">move</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="s">' '</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">board</span><span class="p">[</span><span class="n">move</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]][</span><span class="n">move</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">piece</span>
+
+    <span class="k">def</span> <span class="nf">print_board</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">""" Formatted printing for the board """</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">board</span><span class="p">)):</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">)</span><span class="o">+</span><span class="s">": "</span>
+            <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">]:</span>
+                <span class="n">line</span> <span class="o">+=</span> <span class="n">cell</span> <span class="o">+</span> <span class="s">" "</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"   A B C D E"</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">game_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="s">""" Checks the current board status for a win condition
+
+        Args:
+        state (list of lists): either the current state of the game as saved in
+            this TeekoPlayer object, or a generated successor state.
+
+        Returns:
+            int: 1 if this TeekoPlayer wins, -1 if the opponent wins, 0 if no winner
+
+        TODO: complete checks for diagonal and box wins
+        """</span>
+        <span class="c1"># check horizontal wins        
+</span>        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">state</span><span class="p">:</span>            
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>                
+                <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="s">' '</span> <span class="ow">and</span> <span class="n">row</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">row</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">row</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="n">row</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">3</span><span class="p">]:</span>
+                    <span class="k">return</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="bp">self</span><span class="p">.</span><span class="n">my_piece</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span>
+
+        <span class="c1"># check vertical wins
+</span>        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">!=</span> <span class="s">' '</span> <span class="ow">and</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">3</span><span class="p">][</span><span class="n">col</span><span class="p">]:</span>
+                    <span class="k">return</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">col</span><span class="p">]</span><span class="o">==</span><span class="bp">self</span><span class="p">.</span><span class="n">my_piece</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span>
+
+        <span class="c1"># TODO: check \ diagonal wins
+</span>        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="s">' '</span> <span class="ow">and</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span> <span class="o">+</span> <span class="mi">2</span><span class="p">][</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span> <span class="o">+</span> <span class="mi">3</span><span class="p">][</span><span class="n">i</span> <span class="o">+</span> <span class="mi">3</span><span class="p">]:</span>                    
+                    <span class="k">return</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="p">.</span><span class="n">my_piece</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span>
+
+        <span class="c1"># TODO: check / diagonal wins
+</span>        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="s">' '</span> <span class="ow">and</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span> <span class="o">-</span> <span class="mi">2</span><span class="p">][</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span> <span class="o">-</span> <span class="mi">3</span><span class="p">][</span><span class="n">i</span> <span class="o">+</span> <span class="mi">3</span><span class="p">]:</span>                    
+                    <span class="k">return</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="p">.</span><span class="n">my_piece</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span>
+
+        <span class="c1"># TODO: check 2x2 box wins
+</span>        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="s">' '</span> <span class="ow">and</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]:</span>                    
+                    <span class="k">return</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="p">.</span><span class="n">my_piece</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span>    
+        <span class="k">return</span> <span class="mi">0</span> <span class="c1"># no winner yet
+</span>
+</code></pre></div></div>
+
+<p>클래스 함수 설명:</p>
+<ul>
+  <li><em><strong>init</strong></em>: 랜덤으로 Red or Black 마커 결정</li>
+  <li><em>GetPiecePos</em>: 5x5 보드판에서 각 마커의 위치를 리스트로 가져온다.</li>
+  <li><em>heuristic_gv</em>: 게임 성공 조건 만족시 종료, otherwise Minimax 트리에서 현 노드 값과 현 state 리턴</li>
+  <li><em>Max_Value</em>: Minimax 알고리즘에서 Max 값을 도출한다.</li>
+  <li><em>Min_Value</em>: Minimax 알고리즘에서 Min 값을 도출한다.</li>
+  <li><em>make_move</em>: 자신의 마커가 다음으로 움직일 지점의 row, col 값을 가져온다.</li>
+  <li><em>succ</em>: 다음 움직일 경우들의 집합
+    <ul>
+      <li>궁극적으로, 최선의 다음 움직임 선택을 하기 위함.</li>
+    </ul>
+  </li>
+  <li><em>up, down, …, downright</em>: 해당 방향으로 마커 움직임</li>
+  <li><em>opponent_move</em>: 상대방(AI)의 마커가 다음으로 움직일 지점의 row col 값을 가져온다.</li>
+  <li><em>place_piece</em>: 해당 지점으로 주어진 마커를 실제로 이동시킨다.</li>
+  <li><em>print_board</em>: 보드판 현황 출력</li>
+  <li><em>game_value</em>: 게임 성공 조건 만족 여부 판단</li>
+</ul>
+
+<h1 id="teeko-게임-실행-함수">Teeko 게임 실행 함수</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'Hello, this is Samaritan'</span><span class="p">)</span>
+    <span class="n">ai</span> <span class="o">=</span> <span class="n">TeekoPlayer</span><span class="p">()</span>
+    <span class="n">piece_count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">turn</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># drop phase
+</span>    <span class="k">while</span> <span class="n">piece_count</span> <span class="o">&lt;</span> <span class="mi">8</span> <span class="ow">and</span> <span class="n">ai</span><span class="p">.</span><span class="n">game_value</span><span class="p">(</span><span class="n">ai</span><span class="p">.</span><span class="n">board</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+
+        <span class="c1"># get the player or AI's move
+</span>        <span class="k">if</span> <span class="n">ai</span><span class="p">.</span><span class="n">my_piece</span> <span class="o">==</span> <span class="n">ai</span><span class="p">.</span><span class="n">pieces</span><span class="p">[</span><span class="n">turn</span><span class="p">]:</span> <span class="c1"># ai 턴일 경우
+</span>            <span class="n">ai</span><span class="p">.</span><span class="n">print_board</span><span class="p">()</span> <span class="c1"># 현 보드판 현황
+</span>            <span class="n">move</span> <span class="o">=</span> <span class="n">ai</span><span class="p">.</span><span class="n">make_move</span><span class="p">(</span><span class="n">ai</span><span class="p">.</span><span class="n">board</span><span class="p">)</span> <span class="c1"># ai 현 보드 위치에서 다음 위치 얻기
+</span>            <span class="n">ai</span><span class="p">.</span><span class="n">place_piece</span><span class="p">(</span><span class="n">move</span><span class="p">,</span> <span class="n">ai</span><span class="p">.</span><span class="n">my_piece</span><span class="p">)</span> <span class="c1"># 다음 위치로 이동하기
+</span>            <span class="k">print</span><span class="p">(</span><span class="n">ai</span><span class="p">.</span><span class="n">my_piece</span><span class="o">+</span><span class="s">" moved at "</span><span class="o">+</span><span class="nb">chr</span><span class="p">(</span><span class="n">move</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="nb">ord</span><span class="p">(</span><span class="s">"A"</span><span class="p">))</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">move</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">move_made</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="n">ai</span><span class="p">.</span><span class="n">print_board</span><span class="p">()</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">ai</span><span class="p">.</span><span class="n">opp</span><span class="o">+</span><span class="s">"'s turn"</span><span class="p">)</span>
+            <span class="k">while</span> <span class="ow">not</span> <span class="n">move_made</span><span class="p">:</span> <span class="c1"># 플레이어 턴
+</span>                <span class="n">player_move</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s">"Move (e.g. B3): "</span><span class="p">)</span>
+                <span class="k">while</span> <span class="n">player_move</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="s">"ABCDE"</span> <span class="ow">or</span> <span class="n">player_move</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="s">"01234"</span><span class="p">:</span>
+                    <span class="n">player_move</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s">"Move (e.g. B3): "</span><span class="p">)</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">ai</span><span class="p">.</span><span class="n">opponent_move</span><span class="p">([(</span><span class="nb">int</span><span class="p">(</span><span class="n">player_move</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="nb">ord</span><span class="p">(</span><span class="n">player_move</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">-</span><span class="nb">ord</span><span class="p">(</span><span class="s">"A"</span><span class="p">))])</span> <span class="c1"># ai의 opponent는 플레이어이므로, 플레이어 마커를 움직인다.
+</span>                    <span class="n">move_made</span> <span class="o">=</span> <span class="bp">True</span>
+                <span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="k">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+        <span class="c1"># update the game variables
+</span>        <span class="n">piece_count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">turn</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">turn</span> <span class="o">%=</span> <span class="mi">2</span>
+
+    <span class="c1"># move phase - can't have a winner until all 8 pieces are on the board
+</span>    <span class="k">while</span> <span class="n">ai</span><span class="p">.</span><span class="n">game_value</span><span class="p">(</span><span class="n">ai</span><span class="p">.</span><span class="n">board</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+
+        <span class="c1"># get the player or AI's move
+</span>        <span class="k">if</span> <span class="n">ai</span><span class="p">.</span><span class="n">my_piece</span> <span class="o">==</span> <span class="n">ai</span><span class="p">.</span><span class="n">pieces</span><span class="p">[</span><span class="n">turn</span><span class="p">]:</span>
+            <span class="n">ai</span><span class="p">.</span><span class="n">print_board</span><span class="p">()</span>
+            <span class="n">move</span> <span class="o">=</span> <span class="n">ai</span><span class="p">.</span><span class="n">make_move</span><span class="p">(</span><span class="n">ai</span><span class="p">.</span><span class="n">board</span><span class="p">)</span>
+            <span class="n">ai</span><span class="p">.</span><span class="n">place_piece</span><span class="p">(</span><span class="n">move</span><span class="p">,</span> <span class="n">ai</span><span class="p">.</span><span class="n">my_piece</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">ai</span><span class="p">.</span><span class="n">my_piece</span><span class="o">+</span><span class="s">" moved from "</span><span class="o">+</span><span class="nb">chr</span><span class="p">(</span><span class="n">move</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="nb">ord</span><span class="p">(</span><span class="s">"A"</span><span class="p">))</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">move</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]))</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">"  to "</span><span class="o">+</span><span class="nb">chr</span><span class="p">(</span><span class="n">move</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="nb">ord</span><span class="p">(</span><span class="s">"A"</span><span class="p">))</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">move</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">move_made</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="n">ai</span><span class="p">.</span><span class="n">print_board</span><span class="p">()</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">ai</span><span class="p">.</span><span class="n">opp</span><span class="o">+</span><span class="s">"'s turn"</span><span class="p">)</span>
+            <span class="k">while</span> <span class="ow">not</span> <span class="n">move_made</span><span class="p">:</span>
+                <span class="n">move_from</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s">"Move from (e.g. B3): "</span><span class="p">)</span>
+                <span class="k">while</span> <span class="n">move_from</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="s">"ABCDE"</span> <span class="ow">or</span> <span class="n">move_from</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="s">"01234"</span><span class="p">:</span>
+                    <span class="n">move_from</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s">"Move from (e.g. B3): "</span><span class="p">)</span>
+                <span class="n">move_to</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s">"Move to (e.g. B3): "</span><span class="p">)</span>
+                <span class="k">while</span> <span class="n">move_to</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="s">"ABCDE"</span> <span class="ow">or</span> <span class="n">move_to</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="s">"01234"</span><span class="p">:</span>
+                    <span class="n">move_to</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s">"Move to (e.g. B3): "</span><span class="p">)</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">ai</span><span class="p">.</span><span class="n">opponent_move</span><span class="p">([(</span><span class="nb">int</span><span class="p">(</span><span class="n">move_to</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="nb">ord</span><span class="p">(</span><span class="n">move_to</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">-</span><span class="nb">ord</span><span class="p">(</span><span class="s">"A"</span><span class="p">)),</span>
+                                    <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">move_from</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="nb">ord</span><span class="p">(</span><span class="n">move_from</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">-</span><span class="nb">ord</span><span class="p">(</span><span class="s">"A"</span><span class="p">))])</span>
+                    <span class="n">move_made</span> <span class="o">=</span> <span class="bp">True</span>
+                <span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="k">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+        <span class="c1"># update the game variables
+</span>        <span class="n">turn</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">turn</span> <span class="o">%=</span> <span class="mi">2</span>
+
+    <span class="n">ai</span><span class="p">.</span><span class="n">print_board</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">ai</span><span class="p">.</span><span class="n">game_value</span><span class="p">(</span><span class="n">ai</span><span class="p">.</span><span class="n">board</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"AI wins! Game over."</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"You win! Game over."</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>상기 코드 역시 주석으로 설명을 추가했지만 주요 부분만 뜯어내서 살펴보자.</p>
+
+<p>‘while piece_count &lt; 8 and ai.game_value(ai.board) == 0:’</p>
+<ul>
+  <li>보드판에 놓인 마커 개수가 8개 이상이거나 누군가 성공 조건을 달성했다면 종료한다.</li>
+</ul>
+
+<p>‘while ai.game_value(ai.board) == 0:’</p>
+<ul>
+  <li>만약, 보드판에 8개 이상의 마커가 놓였는데도 승자 조건이 만족된 측이 없을 경우 실행되는 부분이다.</li>
+</ul>
+
+<h1 id="게임-실행">게임 실행</h1>
+
+<p>하기 코드를 통해 간단히 게임 실행이 가능하다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">main</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/184557144-b8d13395-4364-43d4-a312-6a4982288b0c.png" alt="image" /></p>
+
+<p>게임 실행 시 콘솔 환경에서 입력값을 입력하며 게임 진행이 가능하다.</p>
+
+<p>입력값으로 ABCDE 열 중에서 하나를 택하고 row index를 숫자로 조합해서 적어주면 된다 (i.e., ‘B3’ B열의 4번 째 row에 마커를 놓는다).</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>하기 사진처럼 B3을 입력하면 보드판이 갱신된다 (***RED: AI</td>
+      <td>BLACK: 플레이어***)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/184557947-90aad7de-ffb6-413f-8e40-bf2fdca30b35.png" alt="image" /></p>
+
+<p>몇 초가 지나면 AI가 자동적으로 최적의 선택을 하면서 마커를 놓는다 (하기 사진 참조).</p>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/184558029-c985a2b0-cd15-40f0-abaf-4a67492290aa.png" alt="image" /></p>
+
+<p>내가 이상한 곳에 마커를 놓아서, AI가 가장 빠르게 성공 조건을 완성시킬 수 있는 대각선 방향으로 RED 마커를 놓고있다.</p>
+
+<p>각자 게임 진행을 해보면서 코드 또한 다시 한 번 숙지해보길 바란다.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#machine-learning" class="page__taxonomy-item p-category" rel="tag">Machine Learning</a><span class="sep">, </span>
+    
+      <a href="/tags/#minimax" class="page__taxonomy-item p-category" rel="tag">Minimax</a><span class="sep">, </span>
+    
+      <a href="/tags/#teeko-board-game" class="page__taxonomy-item p-category" rel="tag">Teeko Board Game</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#others" class="page__taxonomy-item p-category" rel="tag">Others</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-08-14T00:00:00+09:00">2022-08-14</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Minimax+%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98+-+Teeko+Game%20http%3A%2F%2Flocalhost%3A4000%2Fothers%2Fml-teeko-minimax%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fothers%2Fml-teeko-minimax%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fothers%2Fml-teeko-minimax%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/rl/ml-reinforcement-learning-q-learning/" class="pagination--pager" title="Reinforcement Learning - Q-Learning 알고리즘
+">이전</a>
+    
+    
+      <a href="/nlp/nlp-NER/" class="pagination--pager" title="NLP - Part 7: Name Entity Recognition (NER) 앱
+">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">참고</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/nlp-thumbnail.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/nlp/nlp-NER/" rel="permalink">NLP - Part 7: Name Entity Recognition (NER) 앱
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          최대 1 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">사전 설정
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/q-learning.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/rl/ml-reinforcement-learning-q-learning/" rel="permalink">Reinforcement Learning - Q-Learning 알고리즘
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          최대 1 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Q-Learning 알고리즘을 활용한 예제이다.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/pca-image-compression.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/usl/ml-pca/" rel="permalink">PCA - Image Compression(이미지 압축)
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">PCA를 이용해서 이미지 압축을 진행해보자.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/hac.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/usl/ml-hca/" rel="permalink">Hierarchical Agglomerate Clustering(HAC) - 포켓몬 군집화
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Hierarchical Agglomerate Clustering(HAC) 이용해서 서로 다른 특성을 공유하는 Pokemon들을 군집으로 묶어보자.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/8-tile-puzzle.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/others/ml-8-tile-puzzle-a-search/" rel="permalink">A* Search - 8-tile Puzzle Game
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          최대 1 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">A-star 알고리즘을 활용해서 8-tile Puzzle 게임을 구현한다.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/lenet.JPG" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/sl/dl-miniplace-classification/" rel="permalink">LeNet 신경망 - MiniPlaces 이미지 분류
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">LeNet 신경망을 활용해서 MiniPlaces 데이터셋 이미지 분류 작업을 수행한다.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/streamlit-thumbnail.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/python/python-web-server-exercise/" rel="permalink">Python: PART 2 - Web Application without Server
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+강아지 품종 분류 AI 웹페이지
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/ai-thumbnail.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/aipapernlp/ai-paper-ko-legal-nlp/" rel="permalink">[논문 분석] A Multi-Task Benchmark for Korean Legal Language Understanding and Judgement Prediction (arXiv 2022)
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/bert-thumbnail.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/bert/bert-3/" rel="permalink">Part 3: BERT Language Model
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          1 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">BERT
+Bi-directional transformer로 이루어진 언어모델로, BERT 언어모델 위에 1개의 classification layer만 부착하여 다양한 NLP task를 수행한다.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/bert-thumbnail.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/bert/bert-2/" rel="permalink">Part 2: BERT Language Model
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          1 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">언어 모델 (Language Model, LM)
+‘자연어’의 법칙을 컴퓨터로 모사하는 모델로, 다음에 등장할 단어 예측을 수행한다(= ‘맥락’을 고려한다).
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="mailto:hchoi256@wisc.edu" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+          <li><a href="https://github.com/hchoi256" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="/assets/포트폴리오.pdf" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Portfolio</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 쭌스🎄. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    
+
+  
+
+
+
+
+
+  </body>
+</html>

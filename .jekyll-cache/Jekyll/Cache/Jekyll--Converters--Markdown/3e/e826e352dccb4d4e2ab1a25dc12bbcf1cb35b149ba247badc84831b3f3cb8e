@@ -1,0 +1,241 @@
+I"?S<h1 id="learning-goals">Learning Goals</h1>
+<p>ANN을 이용한 당뇨병 예측 모델 구축 <span style="color: blue">Diabetes prediction model using ANN </span></p>
+
+<h1 id="loading-the-dataset">Loading the dataset</h1>
+
+<p class="notice--danger"><strong>[Notice]</strong> <a href="https://www.kaggle.com/datasets/shivachandel/kc-house-data">Download Dataset (Kaggle)</a></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="n">tf</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="n">sns</span>
+
+<span class="n">diabetes</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">"diabetes.csv"</span><span class="p">)</span>
+<span class="n">diabetes</span><span class="p">.</span><span class="n">info</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    &lt;class 'pandas.core.frame.DataFrame'&gt;
+    RangeIndex: 768 entries, 0 to 767
+    Data columns (total 9 columns):
+    #   Column                    Non-Null Count  Dtype  
+    ---  ------                    --------------  -----  
+    0   Pregnancies               768 non-null    int64  
+    1   Glucose                   768 non-null    int64  
+    2   BloodPressure             768 non-null    int64  
+    3   SkinThickness             768 non-null    int64  
+    4   Insulin                   768 non-null    int64  
+    5   BMI                       768 non-null    float64
+    6   DiabetesPedigreeFunction  768 non-null    float64
+    7   Age                       768 non-null    int64  
+    8   Outcome                   768 non-null    int64  
+    dtypes: float64(2), int64(7)
+    memory usage: 54.1 KB
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">diabetes</span><span class="p">.</span><span class="n">columns</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    Index(['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin',
+        'BMI', 'DiabetesPedigreeFunction', 'Age', 'Outcome'],
+        dtype='object')
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sns</span><span class="p">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s">"Outcome"</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">diabetes</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182371347-15c6e961-32c5-4f5d-8778-014a78aefeab.png" alt="image" /></p>
+
+<p>당뇨가 있다면 1, 없으면 0이다. <span style="color: blue">1 if diabetes is present, 0 otherwise. </span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sns</span><span class="p">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">diabetes</span><span class="p">.</span><span class="n">corr</span><span class="p">(),</span> <span class="n">annot</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182371518-7c5cd6b4-45a3-48f3-b046-097f88ef301f.png" alt="image" /></p>
+
+<p>한 눈에 보기 좋게 변수들 간 상관관계를 히트맵으로 표시했다. <span style="color: blue">At a glance, correlations between variables are displayed in a heat map. </span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X</span> <span class="o">=</span> <span class="n">diabetes</span><span class="p">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">].</span><span class="n">values</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">diabetes</span><span class="p">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">].</span><span class="n">values</span>
+
+<span class="n">X</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    (768, 8) (768,)
+</code></pre></div></div>
+
+<p>독립변수는 8개, 종속 변수는 output 한 개만 존재한다. <span style="color: blue"> # independent variables: 8, # dependent variables: 1  </span></p>
+
+<h1 id="feature-scaling">Feature Scaling</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="n">sc</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">sc</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>종속 변수는 당뇨병 유무로 0 or 1이기 때문에, scaling이 필요없다. <span style="color: blue"> Since the dependent variable determines whether a patient has diabetes or not (0 or 1), it doesn’t require scaling. </span></p>
+
+<h1 id="splitting-the-dataset-into-the-training-set-and-test-set">Splitting the dataset into the Training set and Test set</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h1 id="building-the-model">Building the model</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">classifier</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">Sequential</span><span class="p">()</span>
+<span class="n">classifier</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">layers</span><span class="p">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="p">)))</span>
+<span class="n">classifier</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">layers</span><span class="p">.</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.2</span><span class="p">))</span>
+
+<span class="n">classifier</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">layers</span><span class="p">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">))</span>
+<span class="n">classifier</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">layers</span><span class="p">.</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.2</span><span class="p">))</span>
+
+<span class="n">classifier</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">layers</span><span class="p">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'sigmoid'</span><span class="p">))</span>
+
+<span class="n">classifier</span><span class="p">.</span><span class="n">summary</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    Model: "sequential"
+    _________________________________________________________________
+    Layer (type)                Output Shape              Param #   
+    =================================================================
+    dense (Dense)               (None, 400)               3600      
+                                                                    
+    dropout (Dropout)           (None, 400)               0         
+                                                                    
+    dense_1 (Dense)             (None, 400)               160400    
+                                                                    
+    dropout_1 (Dropout)         (None, 400)               0         
+                                                                    
+    dense_2 (Dense)             (None, 1)                 401       
+                                                                    
+    =================================================================
+    Total params: 164,401
+    Trainable params: 164,401
+    Non-trainable params: 0
+    _________________________________________________________________
+</code></pre></div></div>
+
+<p>뉴런 개수는 임의로 설정한 값이므로 수동으로 바꿔가며 최적값을 찾을 필요가 있다. <span style="color: blue"> Since the number of neurons is an arbitrarily set value, it is necessary to find the optimal value by manually changing it. </span></p>
+
+<blockquote>
+  <p><a href="https://github.com/hchoi256/ai-terms">Why Sigmoid over Softmas (or other functions)</a></p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">classifier</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s">'Adam'</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s">'binary_crossentropy'</span><span class="p">,</span> <span class="n">metrics</span> <span class="o">=</span> <span class="p">[</span><span class="s">'accuracy'</span><span class="p">])</span>
+<span class="n">epochs_hist</span> <span class="o">=</span> <span class="n">classifier</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">epochs</span> <span class="o">=</span> <span class="mi">200</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    Epoch 1/200
+    20/20 [==============================] - 0s 4ms/step - loss: 0.1085 - accuracy: 0.9658
+    Epoch 2/200
+    20/20 [==============================] - 0s 4ms/step - loss: 0.1234 - accuracy: 0.9446
+    Epoch 3/200
+    20/20 [==============================] - 0s 4ms/step - loss: 0.1201 - accuracy: 0.9577
+    ...
+    Epoch 199/200
+    20/20 [==============================] - 0s 5ms/step - loss: 0.0146 - accuracy: 0.9951
+    Epoch 200/200
+    20/20 [==============================] - 0s 5ms/step - loss: 0.0135 - accuracy: 0.9967
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">y_pred</span> <span class="o">=</span> <span class="n">classifier</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">y_pred</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    array([[1.91377112e-05],
+        [3.52401704e-01],
+        [7.71102607e-01],
+        [8.95466566e-01],
+        [9.94010568e-01],
+        [2.07010522e-01],
+    ...
+        [1.37080904e-02],
+        [1.79921073e-04],
+        [3.26797456e-01],
+        [8.01205460e-05],
+        [4.79539931e-02]], dtype=float32)
+</code></pre></div></div>
+
+<p>상기 수치들은 각각의 시행에 대하여 당뇨병이 존재할 확률을 의미한다. <span style="color: blue"> The above figures represent the probability of the presence of diabetes for each trial. </span></p>
+
+<p>만약, 그 확률이 절반 이상일 경우 당뇨가 있다고 가정해보자. <span style="color: blue"> If the probability is more than half, let’s assume that you have diabetes. </span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">y_pred</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_pred</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="n">y_pred</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    array([[False],
+        [False],
+        [ True],
+        [ True],
+        [ True],
+        [False],
+        [ True],
+    ...
+        [False],
+        [False],
+        [False],
+        [False],
+        [False]])
+</code></pre></div></div>
+
+<h1 id="evaluating-the-model">Evaluating the model</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">epochs_hist</span><span class="p">.</span><span class="n">history</span><span class="p">.</span><span class="n">keys</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    dict_keys(['loss', 'accuracy'])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epochs_hist</span><span class="p">.</span><span class="n">history</span><span class="p">[</span><span class="s">'loss'</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'Model Loss Progress During Training'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'Epoch'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'Training and Validation Loss'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">([</span><span class="s">'Training Loss'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182373972-618963de-f8f6-4c00-8d92-af0cc7abee9e.png" alt="image" /></p>
+
+<p>손실 분포의 분산을 낮추려면, batch 혹은 뉴런 개수를 늘리면 된다. <span style="color: blue"> To lower the variance of the loss distribution, you can increase the number of batches or neurons. </span></p>
+
+<p>하지만 이렇게 할 경우, 학습 속도가 느려진다. <span style="color: blue"> However, doing so slows down learning. </span></p>
+
+<p>대신, 모델 정확도가 올라가서 학습 데이터의 오분류 개수가 줄어들 수 있다. <span style="color: blue"> Instead, the number of misclassifications in the training data may be reduced by increasing the model accuracy. </span></p>
+
+<p>하지만, 과적합 가능성 또한 증가한다. <span style="color: blue"> However, the possibility of overfitting also increases. </span></p>
+
+<p>모델 학습에는 이러한 <a href="https://github.com/hchoi256/lg-ai-auto-driving-radar-sensor/blob/main/supervised-learning/sl-foundation.md">trade-off</a> 관계가 존재한다. <span style="color: blue"> This trade-off relationship exists in model training. </span></p>
+
+<p>보다 자세한 내용은 <a href="https://github.com/hchoi256/lg-ai-auto-driving-radar-sensor/blob/main/supervised-learning/gradient-discent.md">SGD vs. Mini-Batch vs. BGD</a>를 참조하자. <span style="color: blue"> For more information, see <a href="https://github.com/hchoi256/lg-ai-auto-driving-radar-sensor/blob/main/supervised-learning/gradient-discent.md">SGD vs. Mini-Batch vs. BGD</a>. </span></p>
+
+<h2 id="confusion-matrix">Confusion Matrix</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">confusion_matrix</span>
+
+<span class="n">y_train_pred</span> <span class="o">=</span> <span class="n">classifier</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">y_train_pred</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_train_pred</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="n">cm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">y_train_pred</span><span class="p">)</span>
+<span class="n">sns</span><span class="p">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182373954-65745b56-8e8a-47fb-a6fe-cc4c5a781158.png" alt="image" /></p>
+
+<h2 id="classification-report">Classification Report</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>                precision    recall  f1-score   support
+
+            0       0.78      0.74      0.76       102
+            1       0.53      0.60      0.56        52
+
+        accuracy                           0.69       154
+    macro avg       0.66      0.67      0.66       154
+    weighted avg       0.70      0.69      0.69       154
+</code></pre></div></div>
+
+:ET

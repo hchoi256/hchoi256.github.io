@@ -1,0 +1,41 @@
+I"�
+<div class="list__item">
+    <article class="archive-item">
+        <div>
+            <span>
+              <a href="/aipaperothers/ai-paper-dl-behicle-detection-by-sensor/">[논문 분석] Deep Learning-Based Vehicle Anomaly Detection by Combining Vehicle Sensor Data (KAIS 2021)</a>
+            </span>
+            <small> 
+              <i class="fas fa-fw fa-calendar-alt" aria-hidden="true"> </i> 2022.08.08
+              <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#aipaperothers" class="page__taxonomy-item-category" rel="tag">AIPaperOthers</a>
+                    
+                    
+                    <a href="/tags/#ai" class="page__taxonomy-item-tag" rel="tag">AI</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#dissertation" class="page__taxonomy-item-tag" rel="tag">dissertation</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#research" class="page__taxonomy-item-tag" rel="tag">Research</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#self-driving" class="page__taxonomy-item-tag" rel="tag">self-driving</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#%EB%85%BC%EB%AC%B8" class="page__taxonomy-item-tag" rel="tag">논문</a>
+                
+            </span>
+        </span>
+            </small>
+        </div>
+      </article>
+</div>
+:ET

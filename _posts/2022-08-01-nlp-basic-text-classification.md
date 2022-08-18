@@ -1,8 +1,8 @@
 ---
 layout: single
-title: "NLP - Part 0: Data Preprocessing"
+title: "NLP: Data Preprocessing"
 categories: NLP
-tag: [NLP, python, data preprocessing]
+tag: [NLP, Data Preprocessing]
 toc: true
 toc_sticky: true
 toc_label: "GITHUB BLOG JJUNS"

@@ -1,0 +1,1799 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <!--폰트 : "Nanum Gothic Coding", "Coming Soon"-->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Coming+Soon&family=Nanum+Gothic+Coding&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Coming+Soon&family=Nanum+Gothic+Coding&display=swap">
+    
+    <!--폰트 : "Iropke Batang"-->
+    <link rel="preload" as="style" href="https://cdn.jsdelivr.net/font-iropke-batang/1.2/font-iropke-batang.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/font-iropke-batang/1.2/font-iropke-batang.css">
+
+    <!--폰트 : "Cafe24Oneprettynight"-->
+    <link rel="preload" as="style" href="/assets/css/main.css">
+
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Transfer Learning #2 - Classification | 정리하여 내 것으로, AI 📂</title>
+<meta name="description" content="Learning Goals">
+
+
+  <meta name="author" content="쭌스🎄">
+  
+  <meta property="article:author" content="쭌스🎄">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="정리하여 내 것으로, AI 📂">
+<meta property="og:title" content="Transfer Learning #2 - Classification">
+<meta property="og:url" content="http://localhost:4000/sl/dl-cnn-transfer-learning2/">
+
+
+  <meta property="og:description" content="Learning Goals">
+
+
+
+  <meta property="og:image" content="http://localhost:4000/assets/images/posts/dl-thumbnail.jpg">
+
+
+
+
+
+  <meta property="article:published_time" content="2022-08-04T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/sl/dl-cnn-transfer-learning2/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "쭌스🎄",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+  <meta name="naver-site-verification" content="57d020c8f9b26bf56ed7846608b8d873481e9b84">
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정리하여 내 것으로, AI 📂 Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/logo.ico/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/logo.ico/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/logo.ico/favicon-16x16.png">
+<link rel="mask-icon" href="/assets/logo.ico/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+<!-- end custom head snippets -->
+
+    <!-- 스크롤바 커스터마이징 -->
+    <style> 
+      ::-webkit-scrollbar{width: 16px;}
+      ::-webkit-scrollbar-track {background-color:#4b4f52; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb {background-color:#5e6265; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb:hover {background: #ffd24c;}
+      ::-webkit-scrollbar-button:start:decrement,::-webkit-scrollbar-button:end:increment 
+      {
+          width:12px;height:12px;background:transparent;}
+      }  
+
+      
+    </style>
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          정리하여 내 것으로, AI 📂
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/search/">Search</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+  
+    
+
+
+
+<nav class="breadcrumbs">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    
+    
+      
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/" itemprop="item"><span itemprop="name">Home</span></a>
+
+          <meta itemprop="position" content="1" />
+        </li>
+        <span class="sep">/</span>
+      
+      
+        
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/categories/#sl" itemprop="item"><span itemprop="name">Sl</span></a>
+          <meta itemprop="position" content="2" />
+        </li>
+        <span class="sep">/</span>
+      
+    
+      
+      
+        <li class="current">Transfer Learning #2 - Classification</li>
+      
+    
+  </ol>
+</nav>
+
+  
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/echoi.jpg" alt="쭌스🎄" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">쭌스🎄</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>I am a senior-year B.S. student in Computer Science and Data Science at the University of Wisconsin, Madison.</p>
+
+<p>My research interests are <strong>hyper-scale AI</strong>, <strong>ML</strong>, <strong>deep NLP</strong>, and <strong>XAI in computer vision</strong>.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="mailto:hchoi256@wisc.edu" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/hchoi256" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="/assets/포트폴리오.pdf" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Portfolio</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items">
+    
+  </ul>
+</nav>
+
+    
+  
+
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">40</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
+      </li>
+      <li>
+        <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C#-->
+        <span class="nav__sub-title">Important</span>
+        <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+        <ul>
+            <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+            <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/categories/Star" class="">공지사항 (1)</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </ul>
+        <ul>
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/categories/Study" class="">AI 기본지식 (1)</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </ul>
+        <ul>
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/categories/Python" class="">Python (2)</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </ul>
+        <ul>
+            
+                
+                    <li><a href="/categories/Basic" class="">기타 (1)</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </ul>
+        <span class="nav__sub-title">ML/DL</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/SL" class="">지도학습 (14)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/USL" class="">비지도학습 (2)</a></li>
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/RL" class="">강화학습 (1)</a></li>
+                    
+                
+            </ul>
+        <span class="nav__sub-title">NLP</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                        <li><a href="/categories/NLP" class="">NLP (8)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/BERT" class="">BERT (3)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/GPT" class="">GPT (1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        <span class="nav__sub-title">AI Research Papers</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/AIPaperCV" class="">CV (1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/AIPaperNLP" class="">NLP (1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/AIPaperOthers" class="">기타 (1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>        
+      </li>
+  </ul>
+</nav>
+
+  
+
+  </div>
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Transfer Learning #2 - Classification">
+    <meta itemprop="description" content="Learning Goals">
+    <meta itemprop="datePublished" content="2022-08-04T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="http://localhost:4000/sl/dl-cnn-transfer-learning2/" class="u-url" itemprop="url">Transfer Learning #2 - Classification
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> GITHUB BLOG JJUNS</h4></header>
+              <ul class="toc__menu"><li><a href="#learning-goals">Learning Goals</a></li><li><a href="#example-1-identifying-watch">Example 1: Identifying ‘Watch’</a></li><li><a href="#example-2-classifying-flower">Example 2: Classifying ‘Flower’</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <h1 id="learning-goals">Learning Goals</h1>
+
+<p>전이학습을 어떻게 우리의 task에 맞게 이용할 수 있는지 알아본다. <span style="color: blue">Let’s see how transfer learning can be used for our tasks. </span></p>
+
+<p>가령, 우리는 수많은 사람의 얼굴 데이터를 학습한 모델을 전이학습으로 불러올 수 있다. <span style="color: blue"> For example, we can load a model that learned face data from a large number of people (transfer learning). </span></p>
+
+<p>이후, 우리 회사 부서 사람 몇명을 그 모델의 output layer에 클래스로써 할당하면, 예측 결과로 주어진 부서 사람들 얼굴 중 가장 비슷한 사람 얼굴을 결과로써 배출할 것이다. <span style="color: blue"> After that, if we set a few people from our company’s department as classes to the output layer of the model, the most similar person’s face will be the prediction result. </span></p>
+
+<p>그렇다면, 내가 수행하려는 task에 맞는 사전학습 모델은 어떻게 찾아올까 (가령, 사람 얼굴 학습한 모델)? <span style="color: blue"> Then, how can we download the pre-trained model suitable for our task (i.e., a model that learned face data)?  </span></p>
+
+<p>‘<strong><em>TensorFlow Hub</em></strong>‘라는 사이트는 다양한 사전학습 모델을 제공한다. <span style="color: blue"> ‘TensorFlow Hub’ provides diverse pre-trained models. </span></p>
+
+<p>가령, 모바일 데이터를 학습하고자 이와 관련된 사전 모델인 ‘<em>MobileNet</em>‘을 전이학습해보자. <span style="color: blue"> Let’s load a pre-trained model ‘<em>MobileNet</em>’ that trained miscellaneous mobile data. </span></p>
+
+<h1 id="example-1-identifying-watch">Example 1: Identifying ‘Watch’</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Loading the pre-trained model
+</span><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">tensorflow_hub</span>
+<span class="kn">import</span> <span class="nn">tensorflow_hub</span> <span class="k">as</span> <span class="n">hub</span>
+
+<span class="n">Trained_MobileNet_url</span> <span class="o">=</span> <span class="s">"https://tfhub.dev/google/tf2-preview/mobilenet_v2/classification/4"</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Building the model
+</span><span class="n">Trained_MobileNet</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">Sequential</span><span class="p">([</span>
+    <span class="n">hub</span><span class="p">.</span><span class="n">KerasLayer</span><span class="p">(</span><span class="n">Trained_MobileNet_url</span><span class="p">,</span> <span class="n">input_shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="p">])</span>
+
+<span class="n">Trained_MobileNet</span><span class="p">.</span><span class="n">summary</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    Model: "sequential"
+    _________________________________________________________________
+    Layer (type)                Output Shape              Param #   
+    =================================================================
+    keras_layer (KerasLayer)    (None, 1001)              3540265   
+                                                                    
+    =================================================================
+    Total params: 3,540,265
+    Trainable params: 0
+    Non-trainable params: 3,540,265
+    _________________________________________________________________
+</code></pre></div></div>
+
+<p>MobileNet 모델을 가져와 우리의 목적에 맞게 마지막 레이어만 하나 추가했다. <span style="color: blue"> We took the MobileNet model and added just one last layer for our purposes. </span></p>
+
+<p>이제 이 모델에 이미지를 넣어 예측을 수행해보자.  <span style="color: blue"> Now let’s put an image into this model. </span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Predicting the image
+</span><span class="n">Sample_Image</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">preprocessing</span><span class="p">.</span><span class="n">image</span><span class="p">.</span><span class="n">load_img</span><span class="p">(</span><span class="s">"watch.jpg"</span><span class="p">,</span> <span class="n">target_size</span><span class="o">=</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182831989-d3678292-8342-4652-adf4-251ec039a67a.png" alt="image" /></p>
+
+<p>TensorFlow에서 제공하는 이미지 데이터 하나를 끌고왔다. <span style="color: blue"> We are using one image data provided by TensorFlow. </span></p>
+
+<p>신경망 학습을 위해 알맞은 형태로 이미지 데이터를 변환시켜주자. <span style="color: blue"> Let’s transform the image data into an appropriate form for neural network training. </span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Sample_Image</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">Sample_Image</span><span class="p">)</span> <span class="c1"># to ndarray
+</span><span class="n">Sample_Image</span> <span class="o">=</span> <span class="n">Sample_Image</span> <span class="o">/</span> <span class="mf">255.0</span> <span class="c1"># normalization
+</span><span class="n">Sample_Image</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">Sample_Image</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="c1"># (224, 224, 3) --&gt; (1, 224, 224, 3)
+</span><span class="n">Sample_Image</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    (1, 224, 224, 3)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">predicted_class</span> <span class="o">=</span> <span class="n">Trained_MobileNet</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">Sample_Image</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">predicted_class</span><span class="p">)</span>
+<span class="n">predicted_class</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    array([[ 0.31899276,  0.69766045, -0.4810167 , ...,  0.22585514,
+    -1.4412354 , -0.02521752]], dtype=float32)
+
+    (1, 1001)
+</code></pre></div></div>
+
+<p>ImageNet은 서로 다른 클래스 1001개에 대한 이미지 데이터를 학습한 모델이다. <span style="color: blue"> ImageNet is a model trained on image data for 1001 different classes. </span></p>
+
+<blockquote>
+  <p>ImageNet dataset has ‘1001’ classes</p>
+</blockquote>
+
+<p>이제, 이 1001개의 클래스 중 모델이 예측한 가장 높은 확률의 연관성을 가지는 클래스 이름을 가져와보자. <span style="color: blue"> Now, let’s get the class name with the highest probability of association among these 1001 classes predicted by the model. </span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">predicted_class</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">predicted_class</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    827
+</code></pre></div></div>
+
+<p>우리 모델은 클래스 인덱스 827번을 차지하는 것이 인풋 사진의 클래스라고 예측했다. <span style="color: blue"> Our model predicted that the class occupying class index 827 is the class of the input picture.</span></p>
+
+<p>여기서 MobileNet 사이트에 들어가보면, 이 모델은 ImageNet 데이터셋에 기반해서 학습을 수행했다.  <span style="color: blue"> If you go to the MobileNet site, the model was trained based on the ImageNet dataset. </span></p>
+
+<p>따라서, 우리는 ImageNet 데이터셋의 클래스 인덱스 827을 확인해야 한다. <span style="color: blue"> Therefore, we need to check the class index 827 of the ImageNet dataset. </span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">labels_path</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">utils</span><span class="p">.</span><span class="n">get_file</span><span class="p">(</span><span class="s">"ImageNetLabels.txt"</span><span class="p">,</span> <span class="s">"https://storage.googleapis.com/download.tensorflow.org/data/ImageNetLabels.txt"</span><span class="p">)</span> <span class="c1"># loading the dataset from the website
+</span>
+<span class="n">imagenet_labels</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span> <span class="nb">open</span><span class="p">(</span><span class="n">labels_path</span><span class="p">).</span><span class="n">read</span><span class="p">().</span><span class="n">splitlines</span><span class="p">()</span> <span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">imagenet_labels</span><span class="p">)</span>
+<span class="n">imagenet_labels</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    array(['background', 'tench', 'goldfish', ..., 'bolete', 'ear',
+   'toilet tissue'], dtype='&lt;U30')
+
+   (1001,)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">predicted_class_name</span> <span class="o">=</span> <span class="n">imagenet_labels</span><span class="p">[</span><span class="n">predicted_class</span><span class="p">]</span>
+<span class="n">predicted_class_name</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    'watch'
+</code></pre></div></div>
+
+<p>모델이 맞게 예측한 모습이다. <span style="color: blue"> Our model got the correct answer. </span></p>
+
+<p>하지만, 시계는 사실 ImageNet dataset 안에 포함된 학습 클래스 중 하나로, 전이학습으로 불러온 모델은 이미 시계에 대한 분류를 잘한다.  <span style="color: blue"> However, ‘clock’ is actually one of the classes included in the ImageNet dataset, and the model imported by transfer learning is already good at classifying clocks. </span></p>
+
+<p>만약, 그 모델이 한 번도 분류해보지 못한 클래스로 분류해야 하는 새로운 이미지가 주어진다면 주어진 클래스 풀 안에서 그나마 비슷한 이상한 답을 도출할 것이다.  <span style="color: blue"> If given a new image that the model should classify into a class that it has never classified before, it will derive a similar but strange answer within the given class pool. </span></p>
+
+<h1 id="example-2-classifying-flower">Example 2: Classifying ‘Flower’</h1>
+
+<p>이번에는 이 모델에게 TensorFlow 라이브러리에서 완전히 새로운 꽃 사진 하나를 가져와서 기존 모델에 예측시켜보자. <span style="color: blue"> This time, let’s get this model an entirely new picture of a flower from the TensorFlow library and make predictions on the old model. </span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Loading the dataset of flowers
+</span><span class="n">flowers_data_url</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">utils</span><span class="p">.</span><span class="n">get_file</span><span class="p">(</span><span class="s">"flower_photos"</span><span class="p">,</span> <span class="s">"https://storage.googleapis.com/download.tensorflow.org/example_images/flower_photos.tgz"</span><span class="p">,</span> <span class="n">untar</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span> <span class="c1"># auto-untar when loading
+</span>
+<span class="c1"># adjusting the image
+</span><span class="n">image_generator</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">preprocessing</span><span class="p">.</span><span class="n">image</span><span class="p">.</span><span class="n">ImageDataGenerator</span><span class="p">(</span><span class="n">rescale</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">255</span><span class="p">)</span> <span class="c1"># scale to fit 255 pixels
+</span>
+<span class="n">flowers_data</span> <span class="o">=</span> <span class="n">image_generator</span><span class="p">.</span><span class="n">flow_from_directory</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">flowers_data_url</span><span class="p">),</span> <span class="n">target_size</span><span class="o">=</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">),</span> <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">64</span><span class="p">,</span> <span class="n">shuffle</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>‘image_generator.flow_from_directory’를 활용하여 한 batch(묶음)에 64개의 224x224 사이즈 이미지가 포함된 집합을 만들었다. <span style="color: blue"> Making a batch with 64 images of 224x224 using ‘image_generator.flow_from_directory’. </span></p>
+
+<p>여기서 <em>shuffle</em>은 매번 이미지를 섞어서 모델이 같은 순서로 같은 이미지를 매번 학습하는 불상사를 피하기 위함이다. <span style="color: blue"> We set <em>shuffle</em> to True so that our model won’t train the images in the same order. </span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">flowers_data_input_batch</span><span class="p">,</span> <span class="n">flower_data_label_batch</span> <span class="ow">in</span> <span class="n">flowers_data</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Image batch shape"</span><span class="p">,</span> <span class="n">flowers_data_input_batch</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Label batch shape"</span><span class="p">,</span> <span class="n">flower_data_label_batch</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">break</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    Image batch shape (64, 224, 224, 3)
+    Label batch shape (64, 5)
+</code></pre></div></div>
+
+<p>64개의 꽃 이미지 사진이 주어졌고, 그들은 5개의 클래스로 각각 분류되어야 한다. <span style="color: blue"> 64 flower image pictures were given, and they should each be classified into 5 classes. </span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Predicing the image
+</span><span class="n">predictions_batch</span> <span class="o">=</span> <span class="n">Trained_MobileNet</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">flowers_data_input_batch</span><span class="p">)</span>
+<span class="n">predictions_batch</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    2/2 [==============================] - 2s 2s/step
+
+    (64, 1001)
+</code></pre></div></div>
+
+<p>앞서 전이학습을 통해 불러온 MobileNet 모델을 활용해서 꽃 이미지를 분류해보자. <span style="color: blue"> Let’s classify flower images using the MobileNet model loaded through transfer learning. </span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">predicted_class_name</span> <span class="o">=</span> <span class="n">imagenet_labels</span><span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">predictions_batch</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
+</code></pre></div></div>
+
+<p>여기서 ‘axis=-1’ 은 64개의 행(=이미지 개수) 각각에 대한 열(데이터)들 중에서 가장 큰 값의 인덱스를 가져오라는 말이다. <span style="color: blue"> Here, ‘axis=-1 ‘means to get the index of the largest value among the columns (data) belonging to 64 rows (= number of images). </span></p>
+
+<p>무슨 말인지 헷갈린다면 아래 예시를 보자. <span style="color: blue"> If you are still confused, don’t worry and look at the following example. </span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">12</span><span class="p">).</span><span class="n">reshape</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="mi">10</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"Max elements"</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Max elements"</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    [[10 11 12]
+    [13 14 15]
+    [16 17 18]
+    [19 20 21]]
+    Max elements [3 3 3]
+    Max elements [2 2 2 2]
+</code></pre></div></div>
+
+<p>이 예시는 4개의 행을 가지고 있고, 각 행에서 가장 큰 데이터의 인덱스를 가져온다. <span style="color: blue"> This example has 4 rows, and in each row we get the index of the biggest data. </span></p>
+
+<p>‘axis=0’이라면, <strong>세로</strong>를 기준으로 가령 ‘10 13 16 19’ 중에서 가장 큰 값의 인덱스인 3을 가져온다. <span style="color: blue"> If ‘axis=0’, for example, 3, the index of the largest value among ‘10 13 16 19’, is taken based on the vertical. </span></p>
+
+<p>반대로 ‘axis=-1’이라면, <strong>가로</strong>를 기준으로 가령 ‘10 11 12’ 중에서 가장 큰 값의 인덱스인 2을 가져온다. <span style="color: blue"> If ‘axis=-1’, for example, 2, the index of the largest value among ‘10 11 12’, is taken based on the horizontal. </span></p>
+
+<blockquote>
+  <p>‘axis=1’ is same as ‘axis=-1’ in this example.</p>
+</blockquote>
+
+<p>자, 이제 원래 문제로 돌아와서 예측 클래스 이름을 확인해보자. <span style="color: blue"> Now, back to the original problem, let’s check the prediction class name. </span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">predicted_class_name</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    array(['daisy', 'rapeseed', 'feather boa', 'tray', 'daisy', 'bonnet',
+        'daisy', 'daisy', 'barrow', 'picket fence', 'buckeye', 'orange',
+        'daisy', 'jackfruit', 'bonnet', 'sea urchin', 'picket fence',
+        'daisy', 'sea urchin', 'daisy', 'chainlink fence', 'daisy',
+        'daisy', 'picket fence', 'picket fence', 'head cabbage', 'daisy',
+        'daisy', 'bakery', 'red-backed sandpiper', 'vase', 'sea urchin',
+        'daisy', 'teddy', 'cardoon', 'vase', 'daisy', 'daisy', 'daisy',
+        'bee', 'daisy', 'strawberry', 'rapeseed', 'cauliflower', 'bakery',
+        'quill', 'oxcart', 'vine snake', 'artichoke', 'pot', 'monarch',
+        'daisy', 'spindle', 'chime', 'volcano', 'velvet', 'quill', 'daisy',
+        'picket fence', 'cardoon', 'daisy', 'daisy', 'picket fence', 'hip'],
+        dtype='&lt;U30')
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">64</span><span class="p">):</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">flowers_data_input_batch</span><span class="p">[</span><span class="n">n</span><span class="p">])</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="n">predicted_class_name</span><span class="p">[</span><span class="n">n</span><span class="p">])</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">axis</span><span class="p">(</span><span class="s">"off"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182841799-08d3230c-52b2-40ef-a6c3-4732921e8642.png" alt="image" /></p>
+
+<p>64개의 꽃 이미지들에 대한 모델의 예측 결과를 시각화했다. <span style="color: blue"> The prediction results of the model for 64 flower images were visualized. </span></p>
+
+<p>가장 첫 번째 이미지 분류만 봐도 결과가 이상하다. <span style="color: blue"> Just looking at the first image classification, the result is strange. </span></p>
+
+<p>‘해바라기’ 사진에 대하여 ‘데이지’라는 잘못된 분류 결과가 나타났다. <span style="color: blue"> Misclassified ‘Sunflower’ as ‘Daisy’ </span></p>
+
+<p>아마, ImageNet dataset에서 학습한 몇몇의 꽃 관련 사진들은 ‘해바라기’ 클래스가 없어서 ‘데이지’라는 꽃으로 분류된 것 같다. <span style="color: blue"> Perhaps, some flower-related pictures learned from the ImageNet dataset are classified as a flower called ‘daisy’ because there was no class ‘sunflower’. </span></p>
+
+<p>우리는 ‘데이지’가 아닌 ‘해바라기’로 해당 이미지의 예측 결과를 보고싶다. <span style="color: blue"> We would like to see the predictions for that image as sunflowers, not daisies. </span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">MobileNet_feature_extractor_url</span> <span class="o">=</span> <span class="s">"https://tfhub.dev/google/tf2-preview/mobilenet_v2/feature_vector/4"</span> <span class="c1"># base model
+</span>
+<span class="n">MobileNet_feature_extractor_layer</span> <span class="o">=</span> <span class="n">hub</span><span class="p">.</span><span class="n">KerasLayer</span><span class="p">(</span><span class="n">MobileNet_feature_extractor_url</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span> <span class="c1"># convert images to a form of 224x224x3
+</span>
+<span class="n">feature_batch</span> <span class="o">=</span> <span class="n">MobileNet_feature_extractor_layer</span><span class="p">(</span><span class="n">flowers_data_input_batch</span><span class="p">)</span> <span class="c1"># apply the flower images we want to predict
+</span>
+<span class="n">feature_batch</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    TensorShape([64, 1280])
+</code></pre></div></div>
+
+<p>아까와 같은 64개의 꽃 사진들을 1280개의 클래스로 구분하는 base model이다. <span style="color: blue"> This is a base model that identifies the previous 64 flower photos into 1280 classes. </span></p>
+
+<p>‘MobileNet_feature_extractor_layer’에 base model의 신경망을 저장하고, 차후에 output layer만 추가하여 우리가 원하는 5개 클래스 내로 예측 결과를 볼 수 있게 만들자. <span style="color: blue"> Let’s save the neural network of the base model in ‘MobileNet_feature_extractor_layer’ and add only an output layer later so that we can see the prediction results in the 5 classes we want. </span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">MobileNet_feature_extractor_layer</span><span class="p">.</span><span class="n">trainable</span> <span class="o">=</span> <span class="bp">False</span> <span class="c1"># not modifying base model's parameters
+</span>
+<span class="k">print</span><span class="p">(</span><span class="n">flowers_data</span><span class="p">.</span><span class="n">num_classes</span><span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">Sequential</span><span class="p">([</span>
+    <span class="n">MobileNet_feature_extractor_layer</span><span class="p">,</span>
+    <span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">layers</span><span class="p">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">flowers_data</span><span class="p">.</span><span class="n">num_classes</span><span class="p">,</span> <span class="n">activation</span> <span class="o">=</span> <span class="s">"softmax"</span><span class="p">)</span>
+<span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    5
+
+
+    Model: "sequential_1"
+    _________________________________________________________________
+    Layer (type)                Output Shape              Param #   
+    =================================================================
+    keras_layer_1 (KerasLayer)  (None, 1280)              2257984   
+                                                                    
+    dense (Dense)               (None, 5)                 6405      
+                                                                    
+    =================================================================
+    Total params: 2,264,389
+    Trainable params: 6,405
+    Non-trainable params: 2,257,984
+    _________________________________________________________________
+</code></pre></div></div>
+
+<p>base model가 학습하여 얻은 가중치와 편향은 그대로 가져가고, 마지막에 output layer만 수정하여 우리가 원하는 분류 결과를 보여주도록 한다. <span style="color: blue"> We don’t want to change the weights and biases obtained from the base model and only the output layer to be modified. </span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s">"Adam"</span><span class="p">,</span> <span class="n">loss</span> <span class="o">=</span> <span class="s">"categorical_crossentropy"</span><span class="p">,</span> <span class="n">metrics</span> <span class="o">=</span> <span class="p">[</span><span class="s">"accuracy"</span><span class="p">])</span>
+<span class="n">history</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">flowers_data</span><span class="p">,</span> <span class="n">epochs</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">flowers_data</span><span class="p">.</span><span class="n">class_indices</span><span class="p">.</span><span class="n">items</span><span class="p">())</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    Epoch 1/20
+    58/58 [==============================] - 183s 3s/step - loss: 0.8617 - accuracy: 0.6768
+    Epoch 2/20
+    58/58 [==============================] - 136s 2s/step - loss: 0.4060 - accuracy: 0.8608
+    Epoch 3/20
+    58/58 [==============================] - 132s 2s/step - loss: 0.3253 - accuracy: 0.8894
+    ...
+    Epoch 19/20
+    58/58 [==============================] - 145s 2s/step - loss: 0.0857 - accuracy: 0.9826
+    Epoch 20/20
+    58/58 [==============================] - 137s 2s/step - loss: 0.0812 - accuracy: 0.9845
+
+
+    dict_items([('daisy', 0), ('dandelion', 1), ('roses', 2), ('sunflowers', 3), ('tulips', 4)])
+</code></pre></div></div>
+
+<p>상기 결과처럼 모델은 총 다섯 개의 꽃 클래스로 인풋 이미지들을 분류하는 학습을 수행한다.  <span style="color: blue"> As shown above, the model classifies input images into a total of five flower classes. </span></p>
+
+<p>이제 아까 ‘해바라기’를 ‘데이지’라 잘못 분류했던 예측이 어떻게 바뀔지 확인해보자.  <span style="color: blue"> Now let’s see how the prediction that our model had previously misclassified sunflowers as daisies would change. </span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">predicted_batch</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">flowers_data_input_batch</span><span class="p">)</span> <span class="c1"># predicing the images
+</span><span class="n">predicted_id</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">predicted_batch</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># find the index of the most proabable class
+</span>
+<span class="c1"># get the class names (must be 5 in total)
+</span><span class="n">class_names</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">flowers_data</span><span class="p">.</span><span class="n">class_indices</span><span class="p">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">pair</span><span class="p">:</span><span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">class_names</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span> <span class="p">[</span> <span class="n">key</span><span class="p">.</span><span class="n">title</span><span class="p">()</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">class_names</span> <span class="p">]</span> <span class="p">)</span>
+
+<span class="n">predicted_label_batch</span> <span class="o">=</span> <span class="n">class_names</span><span class="p">[</span><span class="n">predicted_id</span><span class="p">]</span> <span class="c1"># get the name of the class
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">class_names</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">flowers_data</span><span class="p">.</span><span class="n">class_indices</span><span class="p">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">pair</span><span class="p">:</span><span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">class_names</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span> <span class="p">[</span> <span class="n">key</span><span class="p">.</span><span class="n">title</span><span class="p">()</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">class_names</span> <span class="p">]</span> <span class="p">)</span>
+<span class="n">class_names</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    array(['Daisy', 'Dandelion', 'Roses', 'Sunflowers', 'Tulips'],
+        dtype='&lt;U10')
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">))</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">64</span><span class="p">):</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">flowers_data_input_batch</span><span class="p">[</span><span class="n">n</span><span class="p">])</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="n">predicted_label_batch</span><span class="p">[</span><span class="n">n</span><span class="p">].</span><span class="n">title</span><span class="p">())</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">axis</span><span class="p">(</span><span class="s">"off"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182860851-4d9bcd69-e7a3-44b2-950d-783d282b1069.png" alt="image" /></p>
+
+<p>이제서야 ‘해바라기’를 맞게 예측하는 모습이다. <span style="color: blue"> Now, our model does the trick in prediction tasks! </span></p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#classification" class="page__taxonomy-item p-category" rel="tag">Classification</a><span class="sep">, </span>
+    
+      <a href="/tags/#cnn" class="page__taxonomy-item p-category" rel="tag">CNN</a><span class="sep">, </span>
+    
+      <a href="/tags/#transfer-learning" class="page__taxonomy-item p-category" rel="tag">Transfer Learning</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#sl" class="page__taxonomy-item p-category" rel="tag">SL</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-08-04T00:00:00+09:00">2022-08-04</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Transfer+Learning+%232+-+Classification%20http%3A%2F%2Flocalhost%3A4000%2Fsl%2Fdl-cnn-transfer-learning2%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fsl%2Fdl-cnn-transfer-learning2%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fsl%2Fdl-cnn-transfer-learning2%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/sl/dl-cnn-transfer-learning/" class="pagination--pager" title="Transfer Learning #1 - Classification
+">이전</a>
+    
+    
+      <a href="/study/ai-data-preprocessing/" class="pagination--pager" title="Data Preprocessing Techniques
+">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">참고</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/nlp-thumbnail.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/nlp/nlp-NER/" rel="permalink">NLP - Part 7: Name Entity Recognition (NER) 앱
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          최대 1 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">사전 설정
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/teeko.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/others/ml-teeko-minimax/" rel="permalink">Minimax 알고리즘 - Teeko Game
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          12 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Minimax 알고리즘을 활용해서 Teeko 게임을 구현한다.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/q-learning.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/rl/ml-reinforcement-learning-q-learning/" rel="permalink">Reinforcement Learning - Q-Learning 알고리즘
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          최대 1 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Q-Learning 알고리즘을 활용한 예제이다.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/pca-image-compression.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/usl/ml-pca/" rel="permalink">PCA - Image Compression(이미지 압축)
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">PCA를 이용해서 이미지 압축을 진행해보자.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/hac.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/usl/ml-hca/" rel="permalink">Hierarchical Agglomerate Clustering(HAC) - 포켓몬 군집화
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Hierarchical Agglomerate Clustering(HAC) 이용해서 서로 다른 특성을 공유하는 Pokemon들을 군집으로 묶어보자.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/8-tile-puzzle.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/others/ml-8-tile-puzzle-a-search/" rel="permalink">A* Search - 8-tile Puzzle Game
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          최대 1 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">A-star 알고리즘을 활용해서 8-tile Puzzle 게임을 구현한다.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/lenet.JPG" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/sl/dl-miniplace-classification/" rel="permalink">LeNet 신경망 - MiniPlaces 이미지 분류
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">LeNet 신경망을 활용해서 MiniPlaces 데이터셋 이미지 분류 작업을 수행한다.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/streamlit-thumbnail.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/python/python-web-server-exercise/" rel="permalink">Python: PART 2 - Web Application without Server
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+강아지 품종 분류 AI 웹페이지
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/ai-thumbnail.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/aipapernlp/ai-paper-ko-legal-nlp/" rel="permalink">[논문 분석] A Multi-Task Benchmark for Korean Legal Language Understanding and Judgement Prediction (arXiv 2022)
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/bert-thumbnail.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/bert/bert-3/" rel="permalink">Part 3: BERT Language Model
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          1 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">BERT
+Bi-directional transformer로 이루어진 언어모델로, BERT 언어모델 위에 1개의 classification layer만 부착하여 다양한 NLP task를 수행한다.
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="mailto:hchoi256@wisc.edu" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+          <li><a href="https://github.com/hchoi256" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="/assets/포트폴리오.pdf" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Portfolio</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 쭌스🎄. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    
+
+  
+
+
+
+
+
+  </body>
+</html>

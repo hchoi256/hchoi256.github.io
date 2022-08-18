@@ -1,0 +1,87 @@
+I"0<h1 id="bert">BERT</h1>
+<p>Bi-directional transformer로 이루어진 언어모델로, BERT 언어모델 위에 1개의 classification layer만 부착하여 다양한 NLP task를 수행한다.</p>
+
+<h1 id="wordpiece-tokenizing">WordPiece tokenizing</h1>
+<p>입력 문장을 toeknizing하고, 그 token들로 ‘token sequence’를 만들어 학습에 사용한다.</p>
+
+<p>BPE와는 다르게 WordPiece는 <strong>우도</strong>로 병합을 진행하여, 두 문자가 같이 오는 문자 단위를 중요시한다.</p>
+
+<blockquote>
+  <p><em>우도</em>: 전체 글자 중 각 단어가 따로 등장한 것을 ‘분모’로, 같이 등장한 빈도수를 ‘분자’로 삼는다.</p>
+</blockquote>
+
+<h1 id="bpe-byte-pair-encoding">BPE (Byte Pair Encoding)</h1>
+<p><img src="https://user-images.githubusercontent.com/39285147/183617390-94429c10-1868-4967-a534-f56199dfeba3.png" alt="image" /></p>
+
+<p>이러한 작업을 위해 빈도수에 기반하여 토큰을 병합하는 <strong>BPE (Byte Pair Encoding)</strong> 알고리즘을 이용한다.</p>
+
+<p>BPE는 언어 집합의 크기는 억제하면서 시퀀스의 길이를 압축하는 알고리즘이다 (<em>시퀀스 압축</em>: ‘l, o, w’ –&gt; ‘low’).</p>
+
+<p>Word2Vec으로 어절 단위로 1차 tokenizing을 진핸한 후, iteration을 통해 나타난 token sequence 빈도수에 기반하여 <strong>의미 있는 패턴(subword)</strong>으로 잘라서 tokenizing한다.</p>
+
+<p>가령, BERT 모델은 ‘고양경찰서’와 ‘종로경찰서’에서 ‘##경찰서’라는 token sequence를 형성한다.</p>
+
+<h1 id="etri-korbert">ETRI KorBERT</h1>
+<p>한국어는 영어와 다르게 <strong>조사의 쓰임에 따라 형태소가 변하는 문법적 특성</strong>나 <strong>교착어</strong> 등 NLP 처리에 까다로운 tasks를 수반하는 언어 중 하나이다.</p>
+
+<p>영어 BERT 모델과 다르게, 형태소 단위로 corpus를 분절하고(= <em>Mecab tokenzier</em>) Word2Vec으로 1차 tokenizing 이전에 형태소 태그를 단어마다 붙여놓는 <strong>labeling 작업</strong>이 수반된다.</p>
+
+<p>이 작업은 텍스트가 더 쪼개질 수 있도록 도와준다</p>
+<ul>
+  <li>가령, ‘이’라는 단어가 어떤 것을 가르키는 이것의 의미인지 숫자 2의 의미인지 구분해준다.</li>
+</ul>
+
+<p><strong>KorBERT Morphology</strong>와 <strong>KorBERT WordPiece</strong> 두 가지 세부 모델이 존재한다.</p>
+
+<h2 id="korbert-성능에-영향을-미치는-요인">KorBERT 성능에 영향을 미치는 요인</h2>
+<ul>
+  <li>Corpus 사이즈</li>
+  <li>Corpus 도메인</li>
+  <li>Corpus tokenizing (어절, BPE, 형태소)</li>
+  <li>Vocab 사이즈 小</li>
+  <li><strong>데이터 전처리</strong></li>
+</ul>
+
+<h1 id="korbert-실습-과정">KorBERT 실습 과정</h1>
+<ol>
+  <li>
+    <p>원하는 <strong>corpus</strong> 텍스트(가령, 위키 기사) 불러오기</p>
+  </li>
+  <li>
+    <p><strong>SentenceTokenizer</strong>/WordTokenizer 1차 분절</p>
+  </li>
+  <li>‘Mecab’ tokenizer 기반 <strong>형태소 단위 분절</strong>
+    <ul>
+      <li>‘Mecab’이 가장 성능이 좋다.</li>
+    </ul>
+  </li>
+  <li><strong>교착어 방지 token sequences 형성</strong> (‘<em>BertWordPieceTokenizer</em>’)
+    <ul>
+      <li>GPT 모델은 ‘<em>ByteLevelBPETokenizer</em>‘를 사용한다/</li>
+    </ul>
+  </li>
+  <li>
+    <p>데이터 전처리 (i.e., 불용어 등 제거)</p>
+  </li>
+  <li>
+    <p>BERT 학습</p>
+  </li>
+  <li><em>*KorQuAD</em> 데이터셋으로 학습된 BERT 모델 평가
+    <ul>
+      <li><em>KorQuAD</em>: 자연어 이해(NLU, Natural Language Understanding) 학습용 한국어 질의응답 표준 데이터셋이다.</li>
+    </ul>
+  </li>
+  <li>
+    <p><a href="https://github.com/e9t/nsmc"><em>BERT 네이버 영화 리뷰 데이터 감성분석</em></a></p>
+  </li>
+  <li>
+    <p><a href="https://github.com/machinereading/kor-re-gold"><em>BERT 관계 추출</em></a></p>
+  </li>
+  <li><strong>유튜브 댓글 데이터 감성 분석</strong> (데이터 수집: ‘<em>썸트랜드</em>’)</li>
+</ol>
+
+<h1 id="references">References</h1>
+<p><a href="https://www.slideshare.net/qksksk657/korquad-v10"><em>KorQuAD</em></a></p>
+
+<p><a href="https://arxiv.org/abs/1810.04805"><em>BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding</em></a></p>
+:ET

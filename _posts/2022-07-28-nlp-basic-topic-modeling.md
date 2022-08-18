@@ -2,7 +2,7 @@
 layout: single
 title: "NLP - Part 5: Topic Modeling"
 categories: NLP
-tag: [NLP, python]
+tag: [NLP, Topic Modeling]
 toc: true
 toc_sticky: true
 toc_label: "GITHUB BLOG JJUNS"

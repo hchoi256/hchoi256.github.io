@@ -1,8 +1,8 @@
 ---
 layout: single
 title: "ANN - Classification: Diabetes Prediction"
-categories: DL
-tag: [deep learning, ann, classification]
+categories: SL
+tag: [ANN, Classification]
 toc: true
 toc_sticky: true
 toc_label: "GITHUB BLOG JJUNS"

@@ -1,8 +1,8 @@
 ---
 layout: single
 title: "[논문 분석] Learning loss for active learning (CVPR 2019)"
-categories: AI
-tag: [AI, dissertation, Research, 논문]
+categories: AIPaperCV
+tag: [AI Research Papers, CV, NLP]
 toc: true
 toc_sticky: true
 toc_label: "GITHUB BLOG JJUNS"

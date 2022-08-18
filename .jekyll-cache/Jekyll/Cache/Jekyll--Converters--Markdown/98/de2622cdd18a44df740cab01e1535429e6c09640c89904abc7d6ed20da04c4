@@ -1,0 +1,29 @@
+I"�
+<div class="list__item">
+    <article class="archive-item">
+        <div>
+            <span>
+              <a href="/aipaperothers/ai-paper-dl-behicle-detection-by-sensor/">[논문 분석] Deep Learning-Based Vehicle Anomaly Detection by Combining Vehicle Sensor Data (KAIS 2021)</a>
+            </span>
+            <small> 
+              <i class="fas fa-fw fa-calendar-alt" aria-hidden="true"> </i> 2022.08.08
+              <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#aipaperothers" class="page__taxonomy-item-category" rel="tag">AIPaperOthers</a>
+                    
+                    
+                    <a href="/tags/#ai-research-paper" class="page__taxonomy-item-tag" rel="tag">AI Research Paper</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#self-driving" class="page__taxonomy-item-tag" rel="tag">Self-driving</a>
+                
+            </span>
+        </span>
+            </small>
+        </div>
+      </article>
+</div>
+:ET

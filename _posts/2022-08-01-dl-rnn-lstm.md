@@ -1,8 +1,8 @@
 ---
 layout: single
 title: "RNN - Time Series: LSTM"
-categories: DL
-tag: [deep learning, rnn, lstm, python]
+categories: SL
+tag: [RNN, LSTM, Time Series]
 toc: true
 toc_sticky: true
 toc_label: "GITHUB BLOG JJUNS"

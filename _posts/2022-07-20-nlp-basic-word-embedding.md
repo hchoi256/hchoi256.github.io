@@ -2,7 +2,7 @@
 layout: single
 title: "NLP - Part 2: Word Embedding"
 categories: NLP
-tag: [NLP, python]
+tag: [NLP, Word Embedding]
 toc: true
 toc_sticky: true
 toc_label: "GITHUB BLOG JJUNS"

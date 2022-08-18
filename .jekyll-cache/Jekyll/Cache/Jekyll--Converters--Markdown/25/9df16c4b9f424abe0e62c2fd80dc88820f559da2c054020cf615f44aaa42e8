@@ -1,0 +1,267 @@
+I"�<p>Hierarchical Agglomerate Clustering(HAC) 이용해서 서로 다른 특성을 공유하는 Pokemon들을 군집으로 묶어보자.</p>
+
+<p>‘Pokemon.csv’는 온라인에서 손쉽게 구할 수 있다.</p>
+
+<p>이 프로젝트는 <strong>군집화(Clustering)</strong>의 개념을 숙지하고 있다는 전제로 수행한다.</p>
+
+<h1 id="code">Code</h1>
+<p class="notice--danger"><strong>[Notice]</strong> <a href="https://github.com/hchoi256/cs540-AI/tree/main/hierarchical-clustering-pokemon">download here</a></p>
+
+<h1 id="데이터셋-관찰">데이터셋 관찰</h1>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/184554603-837ebc40-75b2-4c96-b87e-385eec2b63bd.png" alt="image" /></p>
+
+<ul>
+  <li>Columns: <em>Attack, Sp. Atk, Speed, Defense, Sp. Def, and HP</em></li>
+</ul>
+
+<h1 id="라이브러리-불러오기">라이브러리 불러오기</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">scipy.cluster.hierarchy</span> <span class="kn">import</span> <span class="n">dendrogram</span><span class="p">,</span> <span class="n">linkage</span>
+<span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">numpy.linalg</span> <span class="k">as</span> <span class="n">LA</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+</code></pre></div></div>
+
+<h1 id="데이터-불러오기">데이터 불러오기</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+    <span class="n">pokemons</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">"utf-8"</span><span class="p">)</span> <span class="k">as</span> <span class="n">csvfile</span><span class="p">:</span>
+        <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="p">.</span><span class="n">DictReader</span><span class="p">(</span><span class="n">csvfile</span><span class="p">)</span> <span class="c1"># 사전 형태로 csv 데이터를 가져온다
+</span>        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+            <span class="n">dic</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+            <span class="n">dic</span><span class="p">[</span><span class="s">"#"</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s">'#'</span><span class="p">]</span>
+            <span class="n">dic</span><span class="p">[</span><span class="s">"Name"</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s">'Name'</span><span class="p">]</span>
+            <span class="n">dic</span><span class="p">[</span><span class="s">"Type 1"</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s">'Type 1'</span><span class="p">]</span>
+            <span class="n">dic</span><span class="p">[</span><span class="s">"Type 2"</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s">'Type 2'</span><span class="p">]</span>
+            <span class="n">dic</span><span class="p">[</span><span class="s">"Total"</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s">'Total'</span><span class="p">]</span>
+            <span class="n">dic</span><span class="p">[</span><span class="s">"HP"</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s">'HP'</span><span class="p">]</span>
+            <span class="n">dic</span><span class="p">[</span><span class="s">"Attack"</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s">'Attack'</span><span class="p">]</span>
+            <span class="n">dic</span><span class="p">[</span><span class="s">"Defense"</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s">'Defense'</span><span class="p">]</span>
+            <span class="n">dic</span><span class="p">[</span><span class="s">"Sp. Atk"</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s">'Sp. Atk'</span><span class="p">]</span>
+            <span class="n">dic</span><span class="p">[</span><span class="s">"Sp. Def"</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s">'Sp. Def'</span><span class="p">]</span>
+            <span class="n">dic</span><span class="p">[</span><span class="s">"Speed"</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s">'Speed'</span><span class="p">]</span>
+            <span class="n">dic</span><span class="p">[</span><span class="s">"Generation"</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s">'Generation'</span><span class="p">]</span>
+            <span class="n">dic</span><span class="p">[</span><span class="s">"Legendary"</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s">'Legendary'</span><span class="p">]</span>
+            <span class="n">pokemons</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">dic</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pokemons</span> <span class="c1"># 리스트 형태로 반환
+</span></code></pre></div></div>
+
+<h1 id="데이터-전처리">데이터 전처리</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">calc_features</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>    
+    <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s">"Attack"</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s">"Sp. Atk"</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s">"Speed"</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s">"Defense"</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s">"Sp. Def"</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s">"HP"</span><span class="p">])],</span> <span class="n">dtype</span><span class="o">=</span><span class="s">'int64'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>포켓몬 데이터셋에는 범주형 데이터가 존재한다.</p>
+
+<p>따라서, 수치형과 범주형 데이터 type을 지정하고, 손쉬운 연산을 위해 최종 출력을 numpy 배열의 형태로 반환하자.</p>
+
+<h1 id="거리-계산-함수">거리 계산 함수</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">get_min_distance</span><span class="p">(</span><span class="nb">min</span><span class="p">,</span> <span class="n">tmp</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">min</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">tmp</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="nb">min</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="n">tmp</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
+            <span class="c1"># equal first index ith
+</span>            <span class="k">if</span> <span class="nb">min</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="nb">min</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+                    <span class="c1"># equal second index jth
+</span>                    <span class="k">if</span> <span class="nb">min</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                        <span class="c1"># share same pokemon stat
+</span>                        <span class="nb">min</span> <span class="o">=</span> <span class="n">tmp</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="nb">min</span> <span class="o">=</span> <span class="n">tmp</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">min</span> <span class="o">=</span> <span class="n">tmp</span>
+    <span class="k">return</span> <span class="nb">min</span>
+</code></pre></div></div>
+
+<p>유클리드 거리를 사용해서 ‘<strong>Complete-linkage(완전 연결)</strong>’ 기법으로 군집간 거리를 계산한다.</p>
+
+<p>Complete-linkage(완전 연결) 이외에도 Average linkage 등 여러 방법으로 군집간 거리를 계산할 수 있다.</p>
+
+<blockquote>
+  <p>보다 자세한 내용은 <a href="https://github.com/hchoi256/ai-terms/blob/main/README.md">여기</a>를 참조하자.</p>
+</blockquote>
+
+<h1 id="군집-합치기merge">군집 합치기(Merge)</h1>
+
+<p>HAC는 군집들을 합쳐가면서 계층적 군집화를 진행한다.</p>
+
+<p>하기 코드는 군집을 합치기 위한 함수이다.</p>
+
+<p>보다 자세한 이해는 각 코드 옆 주석을 참고하자.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">merge_distance</span><span class="p">(</span><span class="n">cluster_dict</span><span class="p">):</span>
+    <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">cluster_dict</span><span class="p">)</span>
+    <span class="nb">min</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">inf</span><span class="p">]</span>  <span class="c1"># default to inf for replacement
+</span>    <span class="c1"># iterate through cluster list (i.e., [1 2 3] --&gt; (1, 2), (1, 3), (2, 3))
+</span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">cluster_dict</span><span class="p">[</span><span class="n">i</span><span class="p">])).</span><span class="n">find</span><span class="p">(</span><span class="s">'int'</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">continue</span>    <span class="c1"># already clustered
+</span>        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">length</span> <span class="o">-</span> <span class="n">i</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">cluster_dict</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">])).</span><span class="n">find</span><span class="p">(</span><span class="s">'int'</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="k">continue</span>    <span class="c1"># already clusterd
+</span>            <span class="n">tfst</span> <span class="o">=</span> <span class="s">'tuple'</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">cluster_dict</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+            <span class="n">tsnd</span> <span class="o">=</span> <span class="s">'tuple'</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">cluster_dict</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="n">j</span><span class="p">]))</span>
+            <span class="c1"># check if multiple pokemons in cluster or not
+</span>            <span class="k">if</span> <span class="n">tfst</span> <span class="ow">and</span> <span class="n">tsnd</span><span class="p">:</span>
+                <span class="c1"># multiple pokemons in both
+</span>                <span class="n">distances</span> <span class="o">=</span> <span class="n">max_dist</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">cluster_list1</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">cluster_dict</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                <span class="n">cluster_list2</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">cluster_dict</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">])</span>
+                <span class="c1"># complete-linkage
+</span>                <span class="k">for</span> <span class="n">c1</span> <span class="ow">in</span> <span class="n">cluster_list1</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">c2</span> <span class="ow">in</span> <span class="n">cluster_list2</span><span class="p">:</span>
+                        <span class="n">tmp</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">,</span> <span class="n">LA</span><span class="p">.</span><span class="n">norm</span><span class="p">(</span><span class="n">c1</span> <span class="o">-</span> <span class="n">c2</span><span class="p">)]</span>
+                        <span class="n">distances</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
+                        <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">distances</span><span class="p">).</span><span class="n">T</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>  <span class="c1"># get distances only
+</span>                        <span class="c1"># get index of max distance
+</span>                        <span class="n">max_idx</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span> <span class="c1"># complete-linkage
+</span>                        <span class="n">max_dist</span> <span class="o">=</span> <span class="n">distances</span><span class="p">[</span><span class="n">max_idx</span><span class="p">]</span>
+                <span class="nb">min</span> <span class="o">=</span> <span class="n">get_min_distance</span><span class="p">(</span><span class="nb">min</span><span class="p">,</span> <span class="n">max_dist</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">tfst</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">tsnd</span><span class="p">:</span>
+                <span class="c1"># multiple pokemons in first cluster
+</span>                <span class="n">distances</span> <span class="o">=</span> <span class="n">max_dist</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">cluster_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">cluster_dict</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                <span class="c1"># complete-linkage
+</span>                <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cluster_list</span><span class="p">:</span>
+                    <span class="n">tmp</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">,</span> <span class="n">LA</span><span class="p">.</span><span class="n">norm</span><span class="p">(</span><span class="n">c</span> <span class="o">-</span> <span class="n">cluster_dict</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">])]</span>
+                    <span class="n">distances</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
+                    <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">distances</span><span class="p">).</span><span class="n">T</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>  <span class="c1"># get distances only
+</span>                    <span class="n">max_idx</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>       <span class="c1"># get index of max distance
+</span>                    <span class="n">max_dist</span> <span class="o">=</span> <span class="n">distances</span><span class="p">[</span><span class="n">max_idx</span><span class="p">]</span>
+                <span class="nb">min</span> <span class="o">=</span> <span class="n">get_min_distance</span><span class="p">(</span><span class="nb">min</span><span class="p">,</span> <span class="n">max_dist</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="ow">not</span> <span class="n">tfst</span> <span class="ow">and</span> <span class="n">tsnd</span><span class="p">:</span>
+                <span class="c1"># multiple pokemons in second cluster
+</span>                <span class="n">distances</span> <span class="o">=</span> <span class="n">max_dist</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">cluster_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">cluster_dict</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">])</span>
+                <span class="c1"># complete-linkage
+</span>                <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cluster_list</span><span class="p">:</span>
+                    <span class="n">tmp</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">,</span> <span class="n">LA</span><span class="p">.</span><span class="n">norm</span><span class="p">(</span><span class="n">cluster_dict</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">c</span><span class="p">)]</span>
+                    <span class="n">distances</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
+                    <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">distances</span><span class="p">).</span><span class="n">T</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>  <span class="c1"># get distances only
+</span>                    <span class="n">max_idx</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>       <span class="c1"># get index of max distance
+</span>                    <span class="n">max_dist</span> <span class="o">=</span> <span class="n">distances</span><span class="p">[</span><span class="n">max_idx</span><span class="p">]</span>
+                <span class="nb">min</span> <span class="o">=</span> <span class="n">get_min_distance</span><span class="p">(</span><span class="nb">min</span><span class="p">,</span> <span class="n">max_dist</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># single pokemon in both
+</span>                <span class="n">tmp</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="n">i</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">,</span> <span class="n">LA</span><span class="p">.</span><span class="n">norm</span><span class="p">(</span><span class="n">cluster_dict</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">cluster_dict</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">])]</span>
+                <span class="nb">min</span> <span class="o">=</span> <span class="n">get_min_distance</span><span class="p">(</span><span class="nb">min</span><span class="p">,</span> <span class="n">tmp</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">min</span>
+</code></pre></div></div>
+
+<p>상기 코드는 존재하는 군집 리스트 중에서 가장 가까운 거리의 군집 두 개를 찾는다.</p>
+
+<p>여기서 군집 간 거리는 ‘complete-linkage’ 방법에 근거한다.</p>
+
+<p>이러한 맥락에서, 주목할 점은 ‘<strong>max_idx = np.argmax(dist)</strong>’ 여기이다.</p>
+
+<p>우리는 완전 연결 방법에 기반해서 군집 간 거리를 구하고 서로 가장 가까이 위치한 군집들을 하나의 군집으로 통합한다.</p>
+
+<p>완전 연결은 서로 다른 군집에 포함된 데이터들의 거리가 가장 먼 값을 군집의 거리로 채택한다.</p>
+
+<p>이를 위해, ‘np.argmax’를 사용해서 군집 간 거리를 도출하고, ‘get_min_distance(min, max_dist)’를 통해서 가장 가까운 거리에 위치한 군집을 찾아 해당 군집과 하나로 합쳐진다.</p>
+
+<p>이 외 코드는 천천히 읽어보면 충분히 이해 가능한 부분들이다.</p>
+
+<h1 id="hac">HAC</h1>
+
+<p>이제 HAC 계산에 필요한 모든 함수들을 만들었으니, HAC를 구축해보자!</p>
+
+<p>이 단계에서는 가장 가까운 거리의 군집 두 개를 찾아서 하나의 군집으로 통합하는 과정이 진핸된다.</p>
+
+<p>각 코드 옆에 주석을 달았으니 참조하며 읽어보자.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">hac</span><span class="p">(</span><span class="n">features</span><span class="p">):</span>
+    <span class="n">flen</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+    <span class="c1"># (n-1) x 4 array
+</span>    <span class="n">res</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">flen</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="c1"># track clusters
+</span>    <span class="n">cluster_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">flen</span><span class="p">):</span>
+        <span class="n">cluster_dict</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">features</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+    <span class="c1"># compute complete-linkage
+</span>    <span class="n">count</span> <span class="o">=</span> <span class="n">flen</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">flen</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="c1"># get minimum distance indices
+</span>        <span class="n">indices</span> <span class="o">=</span> <span class="n">merge_distance</span><span class="p">(</span><span class="n">cluster_dict</span><span class="p">)</span>
+        <span class="c1"># clusters to be merged
+</span>        <span class="n">c1</span> <span class="o">=</span> <span class="n">cluster_dict</span><span class="p">[</span><span class="n">indices</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="n">c2</span> <span class="o">=</span> <span class="n">cluster_dict</span><span class="p">[</span><span class="n">indices</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+        <span class="c1"># check if multiple pokemons in cluster or not
+</span>        <span class="c1"># if tuple, then multiple pokemons, otherwise single pokemon
+</span>        <span class="n">tfst</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">c1</span><span class="p">)).</span><span class="n">find</span><span class="p">(</span><span class="s">'tuple'</span><span class="p">)</span>
+        <span class="n">tsnd</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">c2</span><span class="p">)).</span><span class="n">find</span><span class="p">(</span><span class="s">'tuple'</span><span class="p">)</span>
+        <span class="n">l1</span> <span class="o">=</span> <span class="n">l2</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">tfst</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">tsnd</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="c1"># single pokemon
+</span>            <span class="n">l1</span> <span class="o">=</span> <span class="p">[</span><span class="n">c1</span><span class="p">]</span>
+            <span class="n">l2</span> <span class="o">=</span> <span class="p">[</span><span class="n">c2</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># multiple pokemons
+</span>            <span class="k">if</span> <span class="n">tfst</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">l1</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">c1</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">l1</span> <span class="o">=</span> <span class="p">[</span><span class="n">c1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">tsnd</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">l2</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">c2</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">l2</span> <span class="o">=</span> <span class="p">[</span><span class="n">c2</span><span class="p">]</span>
+        <span class="c1"># merge clusters
+</span>        <span class="n">ncluster</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">l1</span><span class="p">,</span> <span class="n">l2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+        <span class="n">fst_idx</span> <span class="o">=</span> <span class="n">indices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">snd_idx</span> <span class="o">=</span> <span class="n">indices</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="c1"># update output
+</span>        <span class="n">res</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">fst_idx</span>         <span class="c1"># index of first cluster
+</span>        <span class="n">res</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">snd_idx</span>         <span class="c1"># index of seoncd cluster
+</span>        <span class="n">res</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">indices</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>      <span class="c1"># distance
+</span>        <span class="n">res</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ncluster</span><span class="p">)</span>   <span class="c1"># num of elements in cluster
+</span>        <span class="c1"># add into cluster list
+</span>        <span class="n">cluster_dict</span><span class="p">[</span><span class="n">count</span><span class="p">]</span> <span class="o">=</span> <span class="n">ncluster</span>
+        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="c1"># remove from cluster list
+</span>        <span class="n">cluster_dict</span><span class="p">[</span><span class="n">fst_idx</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">cluster_dict</span><span class="p">[</span><span class="n">snd_idx</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    
+    <span class="k">return</span> <span class="n">res</span>
+</code></pre></div></div>
+
+<h1 id="결과-확인">결과 확인</h1>
+
+<p>HAC를 시각화 하는 방법으로 ‘<strong><em>dendrogram</em></strong>‘이라는 함수를 자주 사용한다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">imshow_hac</span><span class="p">(</span><span class="n">Z</span><span class="p">):</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">dn</span> <span class="o">=</span> <span class="n">dendrogram</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">21</span><span class="p">):</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">hac</span><span class="p">([</span><span class="n">calc_features</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span> <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">load_data</span><span class="p">(</span><span class="s">'Pokemon.csv'</span><span class="p">)][:</span><span class="n">n</span><span class="p">])</span>
+    <span class="n">imshow_hac</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>군집 몇 개를 합칠 것인지 그 숫자를 인풋으로 부여한다.</p>
+
+<p><em>[군집 2개]</em></p>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/184555068-caa7859d-9651-41c8-b3fe-41b6032fcce5.png" alt="image" /></p>
+
+<p><em>[군집 3개]</em></p>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/184555089-1434d5be-0e8f-442f-b981-fdf65a12379f.png" alt="image" /></p>
+
+<p><em>[군집 4개]</em></p>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/184555094-fe695724-17ee-47df-9ea8-070ea24c774b.png" alt="image" /></p>
+
+<p>…</p>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/184555117-ebd0bf14-f711-473b-b0ec-275833e32ad3.png" alt="image" /></p>
+:ET

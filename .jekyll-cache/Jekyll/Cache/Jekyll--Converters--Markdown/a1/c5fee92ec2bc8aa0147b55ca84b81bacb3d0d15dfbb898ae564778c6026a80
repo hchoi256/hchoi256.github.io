@@ -1,0 +1,192 @@
+I"_S<h1 id="part-1-gender-identifier">PART 1: Gender Identifier</h1>
+<p>Corpus의 영어 이름에서 마지막 ‘몇 글자’를 보고 남자 혹은 여자 이름인지 확인하여 분류한다. <span style="color: blue"> Identifying sex through the last ‘few letters’ of the corpus</span></p>
+
+<p>Naive Bayes Classifier</p>
+<ol>
+  <li>모든 고유한 단어가 텍스트에서 추출 <span style="color: blue"> extracting words from texts</span></li>
+  <li>라벨 확인 <span style="color: blue"> checking labels</span></li>
+  <li>분류 <span style="color: blue"> classification </span></li>
+</ol>
+
+<blockquote>
+  <p><a href="https://github.com/hchoi256/ai-boot-camp/blob/main/ai/machine-learning/supervised-learning/classification/naive-bayes.md">Naive Beyas</a></p>
+</blockquote>
+
+<h2 id="loading-the-libraries-and-dataset">Loading the libraries and dataset</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">nltk</span> <span class="kn">import</span> <span class="n">NaiveBayesClassifier</span>
+<span class="kn">from</span> <span class="nn">nltk.classify</span> <span class="kn">import</span> <span class="n">accuracy</span> <span class="k">as</span> <span class="n">nltk_accuracy</span>
+<span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">names</span>
+<span class="kn">import</span> <span class="nn">nltk</span>
+<span class="n">nltk</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="s">"names"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">male_list</span> <span class="o">=</span> <span class="p">[(</span><span class="n">name</span><span class="p">,</span> <span class="s">"male"</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span><span class="p">.</span><span class="n">words</span><span class="p">(</span><span class="s">"male.txt"</span><span class="p">)]</span>
+<span class="n">female_list</span> <span class="o">=</span> <span class="p">[(</span><span class="n">name</span><span class="p">,</span> <span class="s">"female"</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span><span class="p">.</span><span class="n">words</span><span class="p">(</span><span class="s">"female.txt"</span><span class="p">)]</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="n">male_list</span> <span class="o">+</span> <span class="n">female_list</span><span class="p">)</span> <span class="c1"># corpus
+</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">male_list</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">female_list</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    2943
+    5001
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">data</span><span class="p">[:</span><span class="mi">30</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    [('Aamir', 'male'),
+    ('Aaron', 'male'),
+    ('Abbey', 'male'),
+    ('Abbie', 'male'),
+    ('Abbot', 'male'),
+    ('Abbott', 'male'),
+    ('Abby', 'male'),
+    ...
+    ('Adnan', 'male'),
+    ('Adolf', 'male'),
+    ('Adolfo', 'male'),
+    ('Adolph', 'male'),
+    ('Adolphe', 'male')]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># loading the last few words
+</span><span class="k">def</span> <span class="nf">extract_features</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="n">last_n_letters</span> <span class="o">=</span> <span class="n">worda</span><span class="p">[</span><span class="o">-</span><span class="n">N</span><span class="p">:]</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s">"feature:"</span><span class="p">:</span><span class="n">last_n_letters</span><span class="p">.</span><span class="n">lower</span><span class="p">()}</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">random</span><span class="p">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">random</span><span class="p">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="c1"># avoid overfitting
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">input_names</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Alexander"</span><span class="p">,</span> <span class="s">"Daniellle"</span><span class="p">,</span> <span class="s">"David"</span><span class="p">,</span> <span class="s">"Cheryl"</span><span class="p">]</span>  <span class="c1"># sample
+</span><span class="n">num_train</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.8</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span> <span class="c1"># train/test ratio
+</span></code></pre></div></div>
+
+<h2 id="training-the-model">Training the model</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Number of end letters: "</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+    <span class="n">features</span> <span class="o">=</span> <span class="p">[(</span><span class="n">extract_features</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="p">),</span> <span class="n">gender</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">gender</span><span class="p">)</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
+    <span class="n">train_data</span><span class="p">,</span> <span class="n">test_data</span> <span class="o">=</span> <span class="n">features</span><span class="p">[:</span><span class="n">num_train</span><span class="p">],</span> <span class="n">features</span><span class="p">[</span><span class="n">num_train</span><span class="p">:]</span>
+    <span class="n">classifier</span> <span class="o">=</span> <span class="n">NaiveBayesClassifier</span><span class="p">.</span><span class="n">train</span><span class="p">(</span><span class="n">train_data</span><span class="p">)</span>
+    <span class="n">accuracy</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">nltk_accuracy</span><span class="p">(</span><span class="n">classifier</span><span class="p">,</span> <span class="n">test_data</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Accuracy = "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">accuracy</span><span class="p">)</span> <span class="o">+</span> <span class="s">'%'</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">input_names</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s">"===&gt;"</span><span class="p">,</span> <span class="n">classifier</span><span class="p">.</span><span class="n">classify</span><span class="p">(</span><span class="n">extract_features</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">i</span><span class="p">)))</span>
+    
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    Number of end letters:  1
+    Accuracy = 74.7%
+    Alexander ===&gt; male
+    Daniellle ===&gt; female
+    David ===&gt; male
+    Cheryl ===&gt; male
+    Number of end letters:  2
+    Accuracy = 78.79%
+    Alexander ===&gt; male
+    Daniellle ===&gt; female
+    David ===&gt; male
+    Cheryl ===&gt; female
+    ...
+</code></pre></div></div>
+
+<p>상기 결과는 단어의 마지막 문자 1, 2개를 기준으로 성별을 분류했을 때 정확도이다. <span style="color: blue"> The result represents the accuracy of the classifier that identifies sex based on the last one and two words respectively.</span></p>
+
+<p>나머지 마지막 문자 3개 이상을 기준으로한 결과값은 편의상 생략하였다. <span style="color: blue"> The other outcomes are omitted for convenience.</span></p>
+
+<h1 id="part-2-sentimental-analysis">PART 2: Sentimental Analysis</h1>
+<p>감성분석(Sentiment Analysis): 텍스트 일부로 감정을 결정하는 과정이다 (좋아, 나뻐). <span style="color: blue"> Sentiment Analysis studies how to determine sentiment through part of texts (good, poor).</span></p>
+
+<p>남자 이름인지 여자 이름인지… / 영화 리뷰가 긍정인지… 부정인지… <span style="color: blue"> Man/Woman, Positive/Negative</span></p>
+
+<p>제품이 좋은지 나쁜지… 여론조사 등등 확장이 가능 <span style="color: blue"> Good/Poor, etc.</span></p>
+
+<h2 id="loading-the-libraries">Loading the libraries</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">nltk</span> <span class="kn">import</span> <span class="n">NaiveBayesClassifier</span>
+<span class="kn">from</span> <span class="nn">nltk.classify</span> <span class="kn">import</span> <span class="n">accuracy</span> <span class="k">as</span> <span class="n">nltk_accuracy</span>
+<span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">movie_reviews</span>
+<span class="kn">import</span> <span class="nn">nltk</span>
+<span class="n">nltk</span><span class="p">.</span><span class="n">download</span><span class="p">(</span><span class="s">"movie_reviews"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fileids_pos</span> <span class="o">=</span> <span class="n">movie_reviews</span><span class="p">.</span><span class="n">fileids</span><span class="p">(</span><span class="s">"pos"</span><span class="p">)</span>
+<span class="n">fileids_neg</span> <span class="o">=</span> <span class="n">movie_reviews</span><span class="p">.</span><span class="n">fileids</span><span class="p">(</span><span class="s">"neg"</span><span class="p">)</span>
+<span class="n">fileids_pos</span><span class="p">[:</span><span class="mi">1</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    ['pos/cv000_29590.txt']
+</code></pre></div></div>
+
+<p>상기 라이브러리의 ‘pos’ 디렉토리의 해당 텍스트에 긍정 단어들이 포함되어 있다. <span style="color: blue"> The directory above incldues positive words.</span></p>
+
+<p>어떤 단어들이 속해있는지 지금 바로 확인해보자. <span style="color: blue"> Let’s go check those words now.</span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">movie_reviews</span><span class="p">.</span><span class="n">words</span><span class="p">(</span><span class="n">fileids</span><span class="o">=</span><span class="p">[</span><span class="s">'pos/cv000_29590.txt'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    ['films', 'adapted', 'from', 'comic', 'books', 'have', ...]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">extract_features</span><span class="p">(</span><span class="n">words</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">([</span> <span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">features_pos</span><span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="n">extract_features</span><span class="p">(</span><span class="n">movie_reviews</span><span class="p">.</span><span class="n">words</span><span class="p">(</span><span class="n">fileids</span><span class="o">=</span><span class="p">[</span><span class="n">f</span><span class="p">])),</span> <span class="s">"Positive"</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fileids_pos</span> <span class="p">]</span>
+<span class="n">features_neg</span><span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="n">extract_features</span><span class="p">(</span><span class="n">movie_reviews</span><span class="p">.</span><span class="n">words</span><span class="p">(</span><span class="n">fileids</span><span class="o">=</span><span class="p">[</span><span class="n">f</span><span class="p">])),</span> <span class="s">"Negative"</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fileids_neg</span> <span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.8</span> <span class="c1"># train/test set ratio
+</span><span class="n">num_pos</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">threshold</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">features_pos</span><span class="p">))</span>
+<span class="n">num_neg</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">threshold</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">features_neg</span><span class="p">))</span>
+
+<span class="n">features_train</span> <span class="o">=</span> <span class="n">features_pos</span><span class="p">[:</span><span class="n">num_pos</span><span class="p">]</span> <span class="o">+</span> <span class="n">features_neg</span><span class="p">[:</span><span class="n">num_neg</span><span class="p">]</span>
+<span class="n">features_test</span> <span class="o">=</span> <span class="n">features_pos</span><span class="p">[</span><span class="n">num_pos</span><span class="p">:]</span> <span class="o">+</span> <span class="n">features_neg</span><span class="p">[</span><span class="n">num_neg</span><span class="p">:]</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Train Dataset : "</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">features_train</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Test Dataset : "</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">features_test</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    Train Dataset :  1600
+    Test Dataset :  400
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">classifier</span> <span class="o">=</span> <span class="n">NaiveBayesClassifier</span><span class="p">.</span><span class="n">train</span><span class="p">(</span><span class="n">features_train</span><span class="p">)</span> <span class="c1"># training the model
+</span><span class="n">accuracy</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">nltk_accuracy</span><span class="p">(</span><span class="n">classifier</span><span class="p">,</span> <span class="n">features_test</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span> <span class="c1"># prediction
+</span><span class="n">accuracy</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    73.5
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># test sample
+</span><span class="n">input_reviews</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">'The costumes in this movie were great'</span><span class="p">,</span> 
+    <span class="s">'I think the story was terrible and the characters were very weak'</span><span class="p">,</span>
+    <span class="s">'People say that the director of the movie is amazing'</span><span class="p">,</span> 
+    <span class="s">'This is such an idiotic movie. I will not recommend it to anyone.'</span> 
+<span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk</span> <span class="kn">import</span> <span class="n">probability</span>
+
+<span class="n">probabilities</span> <span class="o">=</span> <span class="n">classifier</span><span class="p">.</span><span class="n">prob_classify</span><span class="p">(</span><span class="n">extract_features</span><span class="p">(</span><span class="n">review</span><span class="p">.</span><span class="n">split</span><span class="p">()))</span>
+<span class="n">predicted_sentiment</span> <span class="o">=</span> <span class="n">probabilities</span><span class="p">.</span><span class="nb">max</span><span class="p">()</span> <span class="c1"># 긍부정 우위 선택 pos vs. neg
+</span><span class="k">print</span><span class="p">(</span><span class="s">"Predicted sentiment :"</span><span class="p">,</span> <span class="n">predicted_sentiment</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Probabilities : "</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">probabilities</span><span class="p">.</span><span class="n">prob</span><span class="p">(</span><span class="n">predicted_sentiment</span><span class="p">),</span> <span class="mi">2</span><span class="p">))</span>
+
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    Predicted sentiment : Negative
+    Probabilities :  0.8
+</code></pre></div></div>
+
+<p>긍부정 단어 개수를 계산하여 빈도수가 더 많이 등장한 선택지로 결론내린다. <span style="color: blue"> By counting the number of positive and negative words, we conclude with the option that appears more frequently.</span></p>
+
+<p>결과는 Negative로 부정 단어가 더 많이 포함된 문장이었고, 그 빈도수는 0.8이며 긍정은 0.2이다. <span style="color: blue"> The result was a sentence containing more negative words as negative, and the frequency was 0.8 and positive was 0.2.</span></p>
+
+:ET

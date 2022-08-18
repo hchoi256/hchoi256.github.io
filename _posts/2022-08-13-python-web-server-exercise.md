@@ -1,8 +1,8 @@
 ---
 layout: single
-title: "Python: PART 2: Web Application without Server"
+title: "Python: PART 2 - Web Application without Server"
 categories: Python
-tag: [python, webserver, streamlit, opencv]
+tag: [Python Web App, Streamlit, Opencv]
 toc: true
 toc_sticky: true
 toc_label: "GITHUB BLOG JJUNS"

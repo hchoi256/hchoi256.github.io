@@ -1,0 +1,123 @@
+I"<h1 id="learning-loss-for-active-learning">Learning loss for active learning</h1>
+<p><img src="https://user-images.githubusercontent.com/39285147/178131203-306385b4-13e0-4f23-b109-d041767b2cb7.png" alt="image" /></p>
+
+<p><a href="https://openaccess.thecvf.com/content_CVPR_2019/papers/Yoo_Learning_Loss_for_Active_Learning_CVPR_2019_paper.pdf"><strong>논문</strong></a></p>
+
+<h1 id="background">Background</h1>
+<p>We need <u>big dataset</u> to train a deep learning model</p>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/178131277-d19251a9-5054-4165-9dcc-af68d5358798.png" alt="image" /></p>
+
+<ul>
+  <li><strong>Low cost</strong>: image collection (<em>unlabeled dataset</em>)</li>
+  <li><strong>High cost</strong>: image annotation (<em>labeled dataset</em>)</li>
+</ul>
+
+<h2 id="semi-supervised-learning-vs-active-learning">Semi-Supervised Learning vs. Active Learning</h2>
+<ul>
+  <li>Semi-Supervised Learning
+    <ul>
+      <li>How to train <em>unlabeled dataset</em> based on labeled data</li>
+    </ul>
+  </li>
+  <li>Active Learning
+    <ul>
+      <li>What data to be labeled for better performance</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="passive-learning">Passive Learning</h2>
+<p><img src="https://user-images.githubusercontent.com/39285147/178131377-71c2414e-7582-4c7a-8b65-669ce7650224.png" alt="image" /></p>
+
+<hr />
+<h1 id="related-researches">Related Researches</h1>
+<h2 id="-least-confident-sampling">① Least Confident Sampling</h2>
+<p><img src="https://user-images.githubusercontent.com/39285147/178131566-821935b5-d41b-47e3-a6aa-1642982be95e.png" alt="image" /></p>
+
+<h2 id="-margin-sampling">② Margin Sampling</h2>
+<p><img src="https://user-images.githubusercontent.com/39285147/178131577-52945ac3-de4d-4b6c-bbb1-858fa8dcf28d.png" alt="image" /></p>
+
+<h2 id="-entropy-sampling">③ Entropy Sampling</h2>
+<p><img src="https://user-images.githubusercontent.com/39285147/178131582-4170e264-fad4-461b-9e1c-94e06e90cd2a.png" alt="image" /></p>
+
+<hr />
+<h1 id="active-learning">Active Learning</h1>
+<p><img src="https://user-images.githubusercontent.com/39285147/178131383-7055e839-530a-4fed-9f66-882a19fa2f56.png" alt="image" /></p>
+<ul>
+  <li>Using the <em>Welsh corgi</em> image for better performance in training model</li>
+</ul>
+
+<h2 id="active-learning-process">Active Learning Process</h2>
+<p><img src="https://user-images.githubusercontent.com/39285147/178131445-137e6839-25eb-45c4-8f5b-9643aa331946.png" alt="image" />
+<img src="https://user-images.githubusercontent.com/39285147/178131462-893920d8-546e-4370-9231-96830b151e26.png" alt="image" /></p>
+<ul>
+  <li><strong>Random Sampling</strong>
+    <ul>
+      <li>No observable changes in decision boundary after adding labeled data</li>
+    </ul>
+  </li>
+  <li><strong>Active Learning</strong>
+    <ul>
+      <li>Training model much faster by selecting unnecessary data near decision boundary</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="loss-prediction-module">Loss Prediction Module</h2>
+<p><img src="https://user-images.githubusercontent.com/39285147/178131741-1602b16d-7592-49fd-bf87-01eec060b739.png" alt="image" /></p>
+
+<ul>
+  <li>Loss prediction for a single unlabeled data</li>
+  <li>Smaller network than target model; can be trained under the target model</li>
+  <li>No need to define uncertainty through computation</li>
+  <li>i.e., Classification, Regression, Object Detection</li>
+</ul>
+
+<h3 id="loss-prediction-how-to-work">Loss Prediction: How to Work?</h3>
+<p><img src="https://user-images.githubusercontent.com/39285147/178131754-1622dd12-5d8d-4924-8355-6bfcd4aa3485.png" alt="image" /></p>
+
+<h3 id="loss-prediction-architecture">Loss Prediction: Architecture</h3>
+<p><img src="https://user-images.githubusercontent.com/39285147/178131774-d34b90fc-fb80-4f8d-993a-58df059409a7.png" alt="image" /></p>
+<ul>
+  <li><strong>GAP</strong>: Global Avg. Pooling</li>
+  <li>FC: Fully Connected Layers</li>
+  <li>ReLU</li>
+</ul>
+
+<h3 id="method-to-learn-the-loss">Method to Learn the Loss</h3>
+<p><img src="https://user-images.githubusercontent.com/39285147/178131782-be74272b-2f5f-4776-9539-743d4d46d18d.png" alt="image" /></p>
+<ul>
+  <li><strong>MSE Loss Function</strong> Limitation
+    <ul>
+      <li>Since target loss decreases, predicted loss is just adapting the change in target loss’s size</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="margin-loss">Margin Loss</h3>
+<p><img src="https://user-images.githubusercontent.com/39285147/178131827-718cfb0c-ce0f-4232-88c2-625051c325ba.png" alt="image" />
+<img src="https://user-images.githubusercontent.com/39285147/178131831-05dd7565-e456-43d5-a802-b500ddd20a32.png" alt="image" /></p>
+
+<h3 id="loss-prediction-evaluation">Loss Prediction: Evaluation</h3>
+<p><img src="https://user-images.githubusercontent.com/39285147/178131902-2a585e0e-160d-4fdc-91b6-bbce8edbaec7.png" alt="image" /></p>
+
+<h4 id="image-classification">Image Classification</h4>
+<p><img src="https://user-images.githubusercontent.com/39285147/178131907-76742e5f-0340-498f-9078-e51b70776ee4.png" alt="image" />
+<img src="https://user-images.githubusercontent.com/39285147/178131910-b89aaabd-8ac3-40fd-ad9f-9bd1b9c9b41f.png" alt="image" /></p>
+
+<h4 id="object-detection">Object Detection</h4>
+<p><img src="https://user-images.githubusercontent.com/39285147/178131912-a61636f4-8366-472f-bfa9-ae888b853085.png" alt="image" /></p>
+
+<h4 id="human-pose-estimation">Human Pose Estimation</h4>
+<p><img src="https://user-images.githubusercontent.com/39285147/178131914-f08af03e-bc94-44fe-a068-5706927dc939.png" alt="image" />
+<img src="https://user-images.githubusercontent.com/39285147/178131917-4cc6d0bf-7a4e-463b-8b81-18eb2451aafb.png" alt="image" /></p>
+
+<hr />
+<h1 id="limitation">Limitation</h1>
+<p><img src="https://user-images.githubusercontent.com/39285147/178131923-923b0b5c-fa4d-400e-ae86-5f5480fe2e29.png" alt="image" /></p>
+
+<h1 id="note">Note</h1>
+<p>referenced by 나동빈</p>
+
+:ET

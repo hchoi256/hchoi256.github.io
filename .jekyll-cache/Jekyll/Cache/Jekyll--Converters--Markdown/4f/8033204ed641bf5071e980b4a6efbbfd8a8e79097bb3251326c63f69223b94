@@ -1,0 +1,36 @@
+I"�<h1 id="사전-설정">사전 설정</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">spacy</span> <span class="n">spacy_streamlit</span>
+<span class="o">%</span> <span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">spacy</span> <span class="n">download</span> <span class="n">en_core_web_trf</span>
+</code></pre></div></div>
+
+<p>1) 하나하나 직접 입력!
+   -&gt; 노동력이 필요
+   -&gt; 시간도 필요
+   -&gt; 실수가 있을 수 있다.
+   -&gt; 입력 도중에 값이 변할 수도 있다.</p>
+
+<p>2) Copy &amp; Paste 로 할 때 총 1640번의 반복작업을 해야한다.
+    붙여넣기 하고 정리가 필요하다!</p>
+
+<p>3) 최후의 수단 웹 크롤링(Web Crawling)을 하자!
+   -&gt; 반복을 내가 하기 싫다!
+   -&gt; 매일 정해진 시간에 하고 싶다
+   -&gt; 수집한 후에 데이터베이스든 엑셀파일이든 저장하고 싶다</p>
+
+<p>웹 크롤링 (Web Crawling) :
+  =&gt; 내가 수집하고자 하는 데이터가 있는 서버에 접속해서 해당 웹페이지의 소스코드를 가져오는 행위
+  =&gt; 반복적인 일도 있고, 페이지 이동, 로그인 등등이 필요하다.
+  =&gt; 컴퓨터는 시킨 일에 대해서 빠르게 반복적으로 잘 한다.
+  =&gt; 해당 서버 모니터링 중 자주 빠르게 반복적으로 접근하는 IP를 차단</p>
+
+<p>웹 스크래핑 (Web Scraping) :
+  =&gt; 원하는 데이터가 있는 웹페이지에서 원하는 데이터를 추출하는 행위</p>
+
+<p>각 웹사이트마다 
+https://www.[웹사이트 주소]/robots.txt</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">beautifulsoup4</span>
+</code></pre></div></div>
+
+:ET

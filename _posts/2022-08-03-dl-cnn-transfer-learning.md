@@ -1,8 +1,8 @@
 ---
 layout: single
 title: "Transfer Learning #1 - Classification"
-categories: DL
-tag: [deep learning, cnn, transfer learning, classification]
+categories: SL
+tag: [CNN, Transfer Learning, Classification]
 toc: true
 toc_sticky: true
 toc_label: "GITHUB BLOG JJUNS"

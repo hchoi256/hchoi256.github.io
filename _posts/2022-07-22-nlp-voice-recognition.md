@@ -2,7 +2,7 @@
 layout: single
 title: "NLP - Part 3: Voice Recognition"
 categories: NLP
-tag: [NLP, python]
+tag: [NLP, Voice Recognition, STT, TTS]
 toc: true
 toc_sticky: true
 toc_label: "GITHUB BLOG JJUNS"

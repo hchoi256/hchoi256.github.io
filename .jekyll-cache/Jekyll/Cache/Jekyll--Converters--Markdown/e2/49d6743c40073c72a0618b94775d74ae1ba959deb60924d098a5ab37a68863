@@ -1,0 +1,295 @@
+I"Á<h1 id="background">Background</h1>
+<p>ANN을 이용한 자전거 대여량 예측 <span style="color: blue">Prediction of bicycle rental volume using ANN </span></p>
+
+<h1 id="loading-the-dataset">Loading the dataset</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="n">tf</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="n">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bike</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">"bike-sharing-daily.csv"</span><span class="p">)</span>
+
+<span class="n">bike</span><span class="p">.</span><span class="n">isnull</span><span class="p">().</span><span class="nb">sum</span><span class="p">()</span> <span class="c1"># 결측치 확인 missing values
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    instant       0
+    dteday        0
+    season        0
+    yr            0
+    mnth          0
+    holiday       0
+    weekday       0
+    workingday    0
+    weathersit    0
+    temp          0
+    hum           0
+    windspeed     0
+    casual        0
+    registered    0
+    cnt           0
+    dtype: int64
+</code></pre></div></div>
+
+<p>상기 결과는 결측치가 없음을 보여준다. <span style="color: blue">The results show that there are no missing values. </span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 불필요한 열 제거 Removing unnecessary columns
+</span><span class="n">bike</span><span class="p">.</span><span class="n">drop</span><span class="p">(</span><span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s">"instant"</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="c1"># inplace: apply changes to 'bike'
+</span>
+<span class="c1"># 시계열 time series
+</span><span class="n">bike</span><span class="p">.</span><span class="n">dteday</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">bike</span><span class="p">.</span><span class="n">dteday</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s">"%m/%d/%Y"</span><span class="p">)</span> <span class="c1"># formatting datetime
+</span><span class="n">bike</span><span class="p">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DatetimeIndex</span><span class="p">(</span><span class="n">bike</span><span class="p">.</span><span class="n">dteday</span><span class="p">)</span> <span class="c1"># indexing the datetime
+</span><span class="n">bike</span><span class="p">.</span><span class="n">drop</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s">"dteday"</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="c1"># removing the duplicate 'dteday' column
+</span></code></pre></div></div>
+
+<h1 id="visualizing-the-dataset">Visualizing the dataset</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bike</span><span class="p">[</span><span class="s">"cnt"</span><span class="p">].</span><span class="n">asfreq</span><span class="p">(</span><span class="s">"W"</span><span class="p">).</span><span class="n">plot</span><span class="p">(</span><span class="n">linewidth</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span> <span class="c1"># by week
+</span><span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">"Bike Usage Per Week"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">"Week"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">"Bike Rental"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182334062-7da5e907-cfbb-459f-952e-175ee471dbaa.png" alt="image" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bike</span><span class="p">[</span><span class="s">"cnt"</span><span class="p">].</span><span class="n">asfreq</span><span class="p">(</span><span class="s">"M"</span><span class="p">).</span><span class="n">plot</span><span class="p">(</span><span class="n">linewidth</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span> <span class="c1"># by month
+</span><span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">"Bike Usage Per Month"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">"Month"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">"Bike Rental"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182334125-6875404b-a15c-4272-8ca8-303bef79478a.png" alt="image" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bike</span><span class="p">[</span><span class="s">"cnt"</span><span class="p">].</span><span class="n">asfreq</span><span class="p">(</span><span class="s">"Q"</span><span class="p">).</span><span class="n">plot</span><span class="p">(</span><span class="n">linewidth</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span> <span class="c1"># by quarter
+</span><span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">"Bike Usage Per Quarter"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">"Quarter"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">"Bike Rental"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182334180-d63a71ea-861c-45de-9ad1-002937fbc639.png" alt="image" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 한 눈에 여러 시각화 확인 Using the visualization tool
+</span><span class="n">sns</span><span class="p">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">bike</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182334415-553ca6bb-35bb-4412-92db-b88a60130547.png" alt="image" /></p>
+
+<h1 id="building-the-ann">Building the ANN</h1>
+
+<h2 id="eda">EDA</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X_numerical</span> <span class="o">=</span> <span class="n">bike</span><span class="p">[</span> <span class="p">[</span><span class="s">"temp"</span><span class="p">,</span> <span class="s">"hum"</span><span class="p">,</span> <span class="s">"windspeed"</span><span class="p">,</span> <span class="s">"cnt"</span><span class="p">]</span> <span class="p">]</span>
+<span class="n">X_numerical</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182334541-957387c3-1bb5-496b-a702-201249a31694.png" alt="image" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sns</span><span class="p">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">X_numerical</span><span class="p">)</span> <span class="c1"># correlation between independent variables
+</span></code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182334687-6d9a0ca1-3b4c-49d0-8e2e-645effddf397.png" alt="image" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X_numerical</span><span class="p">.</span><span class="n">corr</span><span class="p">()</span> <span class="c1"># correlation analysis
+</span></code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182334770-7d4ae794-a646-4ab3-9a5b-aec76cd6fca2.png" alt="image" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sns</span><span class="p">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">X_numerical</span><span class="p">.</span><span class="n">corr</span><span class="p">(),</span> <span class="n">annot</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span> <span class="c1"># confusion matrix
+</span></code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182334975-f15f4f95-6213-45f3-b5b6-7dbaed6466f5.png" alt="image" /></p>
+
+<p><em>annot</em>: 수치 표시 <span style="color: blue"> showing numerical values </span></p>
+
+<h2 id="preprocessing">Preprocessing</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X_cat</span> <span class="o">=</span> <span class="n">bike</span><span class="p">[</span> <span class="p">[</span><span class="s">"season"</span><span class="p">,</span> <span class="s">"yr"</span><span class="p">,</span> <span class="s">"mnth"</span><span class="p">,</span> <span class="s">"holiday"</span><span class="p">,</span> <span class="s">"weekday"</span><span class="p">,</span> <span class="s">"workingday"</span><span class="p">,</span> <span class="s">"weathersit"</span><span class="p">]</span> <span class="p">]</span>
+<span class="n">X_cat</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182335361-63b27c61-e7f3-4eb8-8b1b-366bb93fef9a.png" alt="image" /></p>
+
+<p>상기 언급된 독립변수를 신경망 학습에 사용한다. <span style="color: blue"> We are going to train an ANN with the independent variables listed above.</span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># converting categorical data
+</span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span>
+<span class="n">onehotencoder</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">()</span>
+<span class="n">X_cat</span> <span class="o">=</span> <span class="n">onehotencoder</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_cat</span><span class="p">).</span><span class="n">toarray</span><span class="p">()</span>
+<span class="n">X_cat</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    (731, 32)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X_cat</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X_cat</span><span class="p">)</span> <span class="c1"># 테이블 형태로 데이터 확인 converting to dataframe for visualization
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X_cat</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182336299-c0b2915a-a373-4a06-84b2-7234b4941cf1.png" alt="image" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X_numerical</span> <span class="o">=</span> <span class="n">X_numerical</span><span class="p">.</span><span class="n">reset_index</span><span class="p">()</span> <span class="c1"># 이전에 datetime이 인덱스로 지정되있었음 previously datetime set to index
+</span><span class="n">X_numerical</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182336665-6388c298-eb8c-4721-bbc3-b6d58af4680a.png" alt="image" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># integrating all the X candidates
+</span><span class="n">X_all</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">concat</span><span class="p">(</span> <span class="p">[</span><span class="n">X_cat</span><span class="p">,</span> <span class="n">X_numerical</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># removing unnecessary variables
+</span><span class="n">X_all</span><span class="p">.</span><span class="n">drop</span><span class="p">(</span><span class="s">"dteday"</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X</span> <span class="o">=</span> <span class="n">X_all</span><span class="p">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">].</span><span class="n">values</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">X_all</span><span class="p">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">:].</span><span class="n">values</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">X</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    ((731, 35), numpy.ndarray)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">y</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    ((731, 1), numpy.ndarray)        
+</code></pre></div></div>
+
+<h2 id="feature-scaling">Feature Scaling</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">scaler</span><span class="p">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="splitting-the-dataset-into-training-set-and-test-set">Splitting the dataset into Training set and Test set</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="designing-the-model">Designing the model</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">models</span><span class="p">.</span><span class="n">Sequential</span><span class="p">()</span>
+<span class="n">model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">layers</span><span class="p">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">activation</span> <span class="o">=</span> <span class="s">"relu"</span><span class="p">,</span> <span class="n">input_shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">35</span><span class="p">,</span> <span class="p">)))</span>
+<span class="n">model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">layers</span><span class="p">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">activation</span> <span class="o">=</span> <span class="s">"relu"</span><span class="p">))</span>
+<span class="n">model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">layers</span><span class="p">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">activation</span> <span class="o">=</span> <span class="s">"relu"</span><span class="p">))</span>
+<span class="n">model</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">keras</span><span class="p">.</span><span class="n">layers</span><span class="p">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">"linear"</span><span class="p">))</span>
+
+<span class="n">model</span><span class="p">.</span><span class="n">summary</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    Model: "sequential_1"
+    _________________________________________________________________
+    Layer (type)                Output Shape              Param #   
+    =================================================================
+    dense_2 (Dense)             (None, 100)               3600      
+                                                                    
+    dense_3 (Dense)             (None, 100)               10100     
+                                                                    
+    dense_4 (Dense)             (None, 100)               10100     
+                                                                    
+    dense_5 (Dense)             (None, 1)                 101       
+                                                                    
+    =================================================================
+    Total params: 23,901
+    Trainable params: 23,901
+    Non-trainable params: 0
+    _________________________________________________________________
+</code></pre></div></div>
+
+<h2 id="training-the-model">Training the model</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s">"Adam"</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s">"mean_squared_error"</span><span class="p">)</span>
+<span class="n">epochs_hist</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">validation_split</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    Output exceeds the size limit. Open the full output data in a text editor
+    Epoch 1/50
+    10/10 [==============================] - 1s 43ms/step - loss: 0.1554 - val_loss: 0.0687
+    Epoch 2/50
+    10/10 [==============================] - 0s 13ms/step - loss: 0.0343 - val_loss: 0.0355
+    Epoch 3/50
+    10/10 [==============================] - 0s 13ms/step - loss: 0.0188 - val_loss: 0.0208
+    Epoch 4/50
+    ...
+    Epoch 49/50
+    10/10 [==============================] - 0s 21ms/step - loss: 0.0019 - val_loss: 0.0129
+    Epoch 50/50
+    10/10 [==============================] - 0s 19ms/step - loss: 0.0025 - val_loss: 0.0115
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">epochs_hist</span><span class="p">.</span><span class="n">history</span><span class="p">.</span><span class="n">keys</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    dict_keys(['loss', 'val_loss'])
+</code></pre></div></div>
+
+<p>모델 성능 평가 피라미터로 ‘loss’와 ‘val_loss’가 있다. <span style="color: blue">We have two evaluating parameters, ‘loss’ and ‘val_loss’. </span></p>
+
+<p>‘loss’는 테스트셋을 대상으로 학습한 손실값, ‘val_loss’는 학습 데이터의 검증셋으로 도출한 손실값 분포이다.  <span style="color: blue"> ‘loss’ is based on the test set, and ‘val_loss’ is based on the validation set that is part of the training set. </span></p>
+
+<h2 id="visualizing-the-training-and-test-results">Visualizing the training and test results</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epochs_hist</span><span class="p">.</span><span class="n">history</span><span class="p">[</span><span class="s">"loss"</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epochs_hist</span><span class="p">.</span><span class="n">history</span><span class="p">[</span><span class="s">"val_loss"</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">"Model Loss Progress During Traning"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">"Epoch"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">"Traning Loss and Validation Loss"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">([</span><span class="s">"Traning Loss"</span><span class="p">,</span> <span class="s">"Validation Loss"</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182337724-49a1d046-4d1e-42d5-9737-09d950947a16.png" alt="image" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">y_predict</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_predict</span><span class="p">,</span> <span class="s">"^"</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s">"r"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">"Model Predictions"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">"True Values"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182338196-2dc8b1c6-41b5-4b98-93f8-812ab3abb882.png" alt="image" /></p>
+
+<p>상기 분포의 단위가 정규화된 것을 볼 수 있다. <span style="color: blue"> It can be seen that the units of the distribution are normalized. </span></p>
+
+<p>따라서, 원래 단위로 다시 변환해주도록 하자. <span style="color: blue"> So, let’s convert it back to the original unit. </span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">y_predict_org</span> <span class="o">=</span> <span class="n">scaler</span><span class="p">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">y_predict</span><span class="p">)</span>
+<span class="n">y_test_org</span> <span class="o">=</span> <span class="n">scaler</span><span class="p">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/182338615-e41b09a8-0200-4e32-8995-c82dfbe1b79e.png" alt="image" /></p>
+
+<h2 id="evaluating-the-model">Evaluating the model</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span><span class="p">,</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">mean_absolute_error</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">RMSE</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">format</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test_org</span><span class="p">,</span> <span class="n">y_predict_org</span><span class="p">)),</span> <span class="s">".3f"</span><span class="p">))</span>
+<span class="n">MSE</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test_org</span><span class="p">,</span> <span class="n">y_predict_org</span><span class="p">)</span>
+<span class="n">MAE</span> <span class="o">=</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">y_test_org</span><span class="p">,</span> <span class="n">y_predict_org</span><span class="p">)</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y_test_org</span><span class="p">,</span> <span class="n">y_predict_org</span><span class="p">)</span>
+<span class="n">adj_r2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">r2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">147</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>모델의 성능을 검증하기 위한 손실/비용 함수의 종류에는 여러 가지가 존재한다. <span style="color: blue"> There are several types of loss/cost functions for verifying the performance of the model. </span></p>
+
+<p>각 손실함수 사용에 따른 모델 성능을 확인해보자. <span style="color: blue"> Let’s check the model performance according to the use of each loss function. </span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"RMSE = </span><span class="si">{</span><span class="n">RMSE</span><span class="si">}</span><span class="s">, MSE = </span><span class="si">{</span><span class="n">MSE</span><span class="si">}</span><span class="s">, MAE = </span><span class="si">{</span><span class="n">MAE</span><span class="si">}</span><span class="s">, R2 = </span><span class="si">{</span><span class="n">r2</span><span class="si">}</span><span class="s">, Adjusted R2 = </span><span class="si">{</span><span class="n">adj_r2</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    RMSE = 1070.871, 
+    MSE = 1146764.4761727168, 
+    MAE = 807.9534366633617, 
+    R2 = 0.7237822988637166, 
+    Adjusted R2 = 41.32778436589738
+</code></pre></div></div>
+
+<p>공통적으로 모두 수치가 낮을수록 모델의 좋은 성능을 의미한다. <span style="color: blue">In general, the lower the number, the better the model’s performance. </span></p>
+
+<p>각각에 대한 보다 자세한 설명은 생략한다. <span style="color: blue"> A more detailed description of each will be omitted. </span></p>
+:ET

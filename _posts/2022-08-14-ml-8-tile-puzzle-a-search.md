@@ -1,8 +1,8 @@
 ---
 layout: single
-title: "ML: A* Search - 8-tile Puzzle Game"
-categories: ML
-tag: [machine learning, 8-tile puzzle, game, A* Search, python]
+title: "A* Search - 8-tile Puzzle Game"
+categories: Others
+tag: [Machine Learning, Game, A* Search]
 toc: true
 toc_sticky: true
 toc_label: "GITHUB BLOG JJUNS"

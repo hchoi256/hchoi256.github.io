@@ -1,8 +1,8 @@
 ---
 layout: single
 title: "ANN - Regression: Bike Rental Prediction"
-categories: DL
-tag: [deep learning, ann, regression]
+categories: SL
+tag: [ANN, Regression]
 toc: true
 toc_sticky: true
 toc_label: "GITHUB BLOG JJUNS"

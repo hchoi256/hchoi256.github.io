@@ -1,8 +1,8 @@
 ---
 layout: single
 title: "Data Preprocessing Techniques"
-categories: star
-tag: [AI, data preprocessing]
+categories: Study
+tag: [AI, Data Preprocessing]
 toc: false
 toc_sticky: false
 toc_label: "GITHUB BLOG JJUNS"

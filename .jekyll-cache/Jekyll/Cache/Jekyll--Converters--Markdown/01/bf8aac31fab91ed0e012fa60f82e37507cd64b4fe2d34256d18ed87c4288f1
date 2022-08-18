@@ -1,0 +1,18 @@
+I"<p><strong>A-star 알고리즘</strong>을 활용해서 <strong>8-tile Puzzle</strong> 게임을 구현한다.</p>
+
+<blockquote>
+  <p><a href="https://natejin.tistory.com/22"><strong><em>8-tile Puzzle</em></strong></a> 정보는 여기서 참고하자.</p>
+</blockquote>
+
+<p>이 게임에서 당신은 AI 로봇과 Teeko 보드 게임을 펼치게 될 것이다.</p>
+
+<p>이 프로젝트는 A* 탐색 알고리즘을 이해하고 있다는 전제로 진행한다.</p>
+
+<blockquote>
+  <p><a href="https://github.com/hchoi256/ai-terms/blob/main/README.md">A* 탐색 알고리즘</a>이란?</p>
+</blockquote>
+
+<h1 id="code">Code</h1>
+<p class="notice--danger"><strong>[Notice]</strong> <a href="https://github.com/hchoi256/cs540-AI/tree/main/A-star-8-tile-puzzle">download here</a></p>
+
+:ET

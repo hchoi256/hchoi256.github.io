@@ -7,26 +7,39 @@
 -->
 <html lang="ko" class="no-js">
   <head>
+    <!--폰트 : "Nanum Gothic Coding", "Coming Soon"-->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Coming+Soon&family=Nanum+Gothic+Coding&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Coming+Soon&family=Nanum+Gothic+Coding&display=swap">
+    
+    <!--폰트 : "Iropke Batang"-->
+    <link rel="preload" as="style" href="https://cdn.jsdelivr.net/font-iropke-batang/1.2/font-iropke-batang.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/font-iropke-batang/1.2/font-iropke-batang.css">
+
+    <!--폰트 : "Cafe24Oneprettynight"-->
+    <link rel="preload" as="style" href="/assets/css/main.css">
+
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>정리하여 내 것으로, AI &#124; 페이지 4</title>
-<meta name="description" content="Leveraging the state-of-the-art technology in AI">
+<!-- begin _includes/seo.html --><title>정리하여 내 것으로, AI 📂 &#124; 페이지 4</title>
+<meta name="description" content="Leveraging SOTA Technologies in AI">
 
 
-  <meta name="author" content="Hojun Eric Choi">
+  <meta name="author" content="쭌스🎄">
   
 
 
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:site_name" content="정리하여 내 것으로, AI">
-<meta property="og:title" content="정리하여 내 것으로, AI">
+<meta property="og:site_name" content="정리하여 내 것으로, AI 📂">
+<meta property="og:title" content="정리하여 내 것으로, AI 📂">
 <meta property="og:url" content="http://localhost:4000/page4/">
 
 
-  <meta property="og:description" content="Leveraging the state-of-the-art technology in AI">
+  <meta property="og:description" content="Leveraging SOTA Technologies in AI">
 
 
+
+  <meta property="og:image" content="http://localhost:4000/assets/images/echoi.jpg">
 
 
 
@@ -55,7 +68,7 @@
     "@context": "https://schema.org",
     
       "@type": "Person",
-      "name": "Hojun Eric Choi",
+      "name": "쭌스🎄",
       "url": "http://localhost:4000/"
     
   }
@@ -73,7 +86,7 @@
 
 
 
-  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정리하여 내 것으로, AI Feed">
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정리하여 내 것으로, AI 📂 Feed">
 
 
 <!-- https://t.co/dKP3o1e -->
@@ -102,6 +115,19 @@
 
 <!-- end custom head snippets -->
 
+    <!-- 스크롤바 커스터마이징 -->
+    <style> 
+      ::-webkit-scrollbar{width: 16px;}
+      ::-webkit-scrollbar-track {background-color:#4b4f52; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb {background-color:#5e6265; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb:hover {background: #ffd24c;}
+      ::-webkit-scrollbar-button:start:decrement,::-webkit-scrollbar-button:end:increment 
+      {
+          width:12px;height:12px;background:transparent;}
+      }  
+
+      
+    </style>
   </head>
 
   <body class="layout--home">
@@ -121,13 +147,11 @@
       <nav id="site-nav" class="greedy-nav">
         
         <a class="site-title" href="/">
-          정리하여 내 것으로, AI
-          <span class="site-subtitle">with jjuns</span>
+          정리하여 내 것으로, AI 📂
+          
         </a>
         <ul class="visible-links"><li class="masthead__menu-item">
               <a href="/categories/">Category</a>
-            </li><li class="masthead__menu-item">
-              <a href="/tags/">Tag</a>
             </li><li class="masthead__menu-item">
               <a href="/search/">Search</a>
             </li></ul>
@@ -161,20 +185,20 @@
   
     <div class="author__avatar">
       <a href="http://localhost:4000/">
-        <img src="/assets/images/echoi.jpg" alt="Hojun Eric Choi" itemprop="image" class="u-photo">
+        <img src="/assets/images/echoi.jpg" alt="쭌스🎄" itemprop="image" class="u-photo">
       </a>
     </div>
   
 
   <div class="author__content">
     <h3 class="author__name p-name" itemprop="name">
-      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Hojun Eric Choi</a>
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">쭌스🎄</a>
     </h3>
     
       <div class="author__bio p-note" itemprop="description">
         <p>I am a senior-year B.S. student in Computer Science and Data Science at the University of Wisconsin, Madison.</p>
 
-<p>My research interests are <strong>ML</strong>, <strong>deep NLP</strong>, and <strong>computer vision</strong> for emerging application domains.</p>
+<p>My research interests are <strong>hyper-scale AI</strong>, <strong>ML</strong>, <strong>deep NLP</strong>, and <strong>XAI in computer vision</strong>.</p>
 
       </div>
     
@@ -184,15 +208,11 @@
     <button class="btn btn--inverse">팔로우</button>
     <ul class="author__urls social-icons">
       
-        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
-          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Madison</span>
-        </li>
-      
 
       
         
           
-            <li><a href="https://www.linkedin.com/in/hojun-choi-2b10b11a0/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+            <li><a href="mailto:hchoi256@wisc.edu" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
           
         
           
@@ -200,20 +220,13 @@
           
         
           
-            <li><a href="/assets/CV.pdf" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">CV</span></a></li>
+            <li><a href="/assets/포트폴리오.pdf" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Portfolio</span></a></li>
           
         
       
 
       
 
-      
-        <li>
-          <a href="mailto:hchoi256@wisc.edu" rel="me" class="u-email">
-            <meta itemprop="email" content="hchoi256@wisc.edu" />
-            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">이메일</span>
-          </a>
-        </li>
       
 
       
@@ -272,8 +285,476 @@
 </div>
 
   
-  </div>
 
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">40</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
+      </li>
+      <li>
+        <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C#-->
+        <span class="nav__sub-title">Important</span>
+        <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+        <ul>
+            <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+            <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/categories/Star" class="">공지사항 (1)</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </ul>
+        <ul>
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/categories/Study" class="">AI 기본지식 (1)</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </ul>
+        <ul>
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/categories/Python" class="">Python (2)</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </ul>
+        <ul>
+            
+                
+                    <li><a href="/categories/Basic" class="">기타 (1)</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </ul>
+        <span class="nav__sub-title">ML/DL</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/SL" class="">지도학습 (14)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/USL" class="">비지도학습 (2)</a></li>
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/RL" class="">강화학습 (1)</a></li>
+                    
+                
+            </ul>
+        <span class="nav__sub-title">NLP</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                        <li><a href="/categories/NLP" class="">NLP (8)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/BERT" class="">BERT (3)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/GPT" class="">GPT (1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        <span class="nav__sub-title">AI Research Papers</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/AIPaperCV" class="">CV (1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/AIPaperNLP" class="">NLP (1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/AIPaperOthers" class="">기타 (1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>        
+      </li>
+  </ul>
+</nav>
+
+  
+
+  </div>
 
   <div class="archive">
     
@@ -297,7 +778,7 @@
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
       
-        <a href="/dl/dl-cnn-classification-fashionMNIST/" rel="permalink">CNN - Classification: fashionMNIST
+        <a href="/sl/dl-cnn-transfer-learning2/" rel="permalink">Transfer Learning #2 - Classification
 </a>
       
     </h2>
@@ -305,15 +786,89 @@
 
   <p class="page__meta">
     
-      
-      <span class="page__meta-date">
-        <i class="far fa-calendar-alt" aria-hidden="true"></i>
-        
-        <time datetime="2022-08-02T00:00:00+09:00">2022-08-02</time>
-      </span>
+
     
 
-    <span class="page__meta-sep"></span>
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Learning Goals
+</p>
+  </article>
+</div>
+
+  
+    
+
+
+
+<div class="list__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/sl/dl-cnn-transfer-learning/" rel="permalink">Transfer Learning #1 - Classification
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Learning Goals
+Transfer Learning 활용 이미지 분류  Image classification using Transfer Learning 
+</p>
+  </article>
+</div>
+
+  
+    
+
+
+
+<div class="list__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/sl/dl-cnn-classification-fashionMNIST/" rel="permalink">CNN - Classification: fashionMNIST
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
 
     
       
@@ -344,7 +899,7 @@
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
       
-        <a href="/dl/dl-ann-house-sales-prediction/" rel="permalink">ANN - Regression: House Sales Prediction
+        <a href="/sl/dl-ann-house-sales-prediction/" rel="permalink">ANN - Regression: House Sales Prediction
 </a>
       
     </h2>
@@ -352,15 +907,8 @@
 
   <p class="page__meta">
     
-      
-      <span class="page__meta-date">
-        <i class="far fa-calendar-alt" aria-hidden="true"></i>
-        
-        <time datetime="2022-08-02T00:00:00+09:00">2022-08-02</time>
-      </span>
-    
 
-    <span class="page__meta-sep"></span>
+    
 
     
       
@@ -392,7 +940,7 @@ ANN을 이용한 주택 가격 예측 House Price Prediction Using ANN
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
       
-        <a href="/dl/dl-ann-classification-diabetes/" rel="permalink">ANN - Classification: Diabetes Prediction
+        <a href="/sl/dl-ann-classification-diabetes/" rel="permalink">ANN - Classification: Diabetes Prediction
 </a>
       
     </h2>
@@ -400,15 +948,8 @@ ANN을 이용한 주택 가격 예측 House Price Prediction Using ANN
 
   <p class="page__meta">
     
-      
-      <span class="page__meta-date">
-        <i class="far fa-calendar-alt" aria-hidden="true"></i>
-        
-        <time datetime="2022-08-02T00:00:00+09:00">2022-08-02</time>
-      </span>
-    
 
-    <span class="page__meta-sep"></span>
+    
 
     
       
@@ -426,100 +967,6 @@ ANN을 이용한 주택 가격 예측 House Price Prediction Using ANN
 
     <p class="archive__item-excerpt" itemprop="description">Learning Goals
 ANN을 이용한 당뇨병 예측 모델 구축 Diabetes prediction model using ANN 
-</p>
-  </article>
-</div>
-
-  
-    
-
-
-
-<div class="list__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/nlp/nlp-basic-text-classification/" rel="permalink">NLP - Part 0: Data Preprocessing
-</a>
-      
-    </h2>
-    
-
-  <p class="page__meta">
-    
-      
-      <span class="page__meta-date">
-        <i class="far fa-calendar-alt" aria-hidden="true"></i>
-        
-        <time datetime="2022-08-01T00:00:00+09:00">2022-08-01</time>
-      </span>
-    
-
-    <span class="page__meta-sep"></span>
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          1 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">Loading the libraries and dataset
-</p>
-  </article>
-</div>
-
-  
-    
-
-
-
-<div class="list__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/dl/dl-rnn-lstm/" rel="permalink">RNN - Time Series: LSTM
-</a>
-      
-    </h2>
-    
-
-  <p class="page__meta">
-    
-      
-      <span class="page__meta-date">
-        <i class="far fa-calendar-alt" aria-hidden="true"></i>
-        
-        <time datetime="2022-08-01T00:00:00+09:00">2022-08-01</time>
-      </span>
-    
-
-    <span class="page__meta-sep"></span>
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          4 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">[Notice] Reference
 </p>
   </article>
 </div>
@@ -633,15 +1080,11 @@ ANN을 이용한 당뇨병 예측 모델 구축 Diabetes prediction model using 
         
       
         
-          <li><a href="https://www.linkedin.com/in/hojun-choi-2b10b11a0/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
-        
-      
-        
           <li><a href="https://github.com/hchoi256" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
         
       
         
-          <li><a href="/assets/CV.pdf" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> CV</a></li>
+          <li><a href="/assets/포트폴리오.pdf" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Portfolio</a></li>
         
       
     
@@ -652,11 +1095,10 @@ ANN을 이용한 당뇨병 예측 모델 구축 Diabetes prediction model using 
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2022 Hojun Eric Choi. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">&copy; 2022 쭌스🎄. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
       </footer>
     </div>
-
     
   <script src="/assets/js/main.min.js"></script>
 

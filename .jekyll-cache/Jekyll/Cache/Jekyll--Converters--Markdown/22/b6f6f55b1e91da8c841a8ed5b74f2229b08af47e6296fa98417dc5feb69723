@@ -1,0 +1,483 @@
+I";�<p>파이썬으로 웹 서버 구동없이 웹 어플리케이션을 만들기 위해 ‘<strong>streamlit</strong>’ 라이브러리가 활용된다. <span style="color: blue"> To create a web application without a server, we use the ‘<strong>streamlit</strong>’ library. </span></p>
+
+<hr />
+<h1 id="loading-the-library-for-web-server">Loading the library for web server</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">streamlit</span> <span class="k">as</span> <span class="n">st</span>
+</code></pre></div></div>
+
+<hr />
+<h1 id="texts">Texts</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">st</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">"Hello, World!"</span><span class="p">)</span> <span class="c1"># print out the message to the web page
+</span>
+<span class="n">st</span><span class="p">.</span><span class="n">markdown</span><span class="p">(</span><span class="s">"""This is an H1============="""</span><span class="p">)</span> <span class="c1"># markdown
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">st</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">"title"</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="s">"title"</span><span class="p">)</span>
+<span class="n">st</span><span class="p">.</span><span class="n">header</span><span class="p">(</span><span class="s">"Header 1"</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="s">"header"</span><span class="p">)</span>
+<span class="n">st</span><span class="p">.</span><span class="n">subheader</span><span class="p">(</span><span class="s">"Subheader 1-1"</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="s">"subheader"</span><span class="p">)</span>
+<span class="n">st</span><span class="p">.</span><span class="n">caption</span><span class="p">(</span><span class="s">"caption"</span><span class="p">)</span>
+
+<span class="n">st</span><span class="p">.</span><span class="n">code</span><span class="p">(</span><span class="s">"""def myFunction()
+    print("Hello, World!")
+"""</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s">"python"</span><span class="p">)</span>
+
+<span class="n">st</span><span class="p">.</span><span class="n">latex</span><span class="p">(</span><span class="sa">r</span><span class="s">"""a + ar + a r^2 + a r^3 + \cdots +  a r^{n-1} = \sum_{k=0}^{n-1} ar^k = a \left(\frac{1-r^{n}}{1-r}\right)"""</span><span class="p">)</span>
+</code></pre></div></div>
+
+<hr />
+<h1 id="image-audio-video-camera">Image, Audio, Video, Camera</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># load an image
+</span><span class="n">st</span><span class="p">.</span><span class="n">image</span><span class="p">(</span>
+    <span class="s">"office_view.jpg"</span><span class="p">,</span>
+    <span class="n">caption</span> <span class="o">=</span> <span class="s">"선유도 어떤 사무실에서"</span>
+    <span class="p">)</span>
+
+<span class="c1"># load an audio
+</span><span class="n">st</span><span class="p">.</span><span class="n">audio</span><span class="p">(</span><span class="s">"demo.wav"</span><span class="p">,</span> <span class="n">start_time</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s">"audio/wav"</span><span class="p">)</span>
+
+<span class="c1"># load a video
+</span><span class="n">st</span><span class="p">.</span><span class="n">video</span><span class="p">(</span><span class="s">"office_view.mp4"</span><span class="p">,</span> <span class="n">start_time</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">st</span><span class="p">.</span><span class="n">video</span><span class="p">(</span><span class="s">"https://www.youtube.com/watch?v=myhDXSXetWU"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 이미지 업로드
+</span>
+<span class="n">uploaded_file</span> <span class="o">=</span> <span class="n">st</span><span class="p">.</span><span class="n">file_uploader</span><span class="p">(</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="s">"원하는 이미지를 업로드 해주세요"</span><span class="p">,</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="p">[</span><span class="s">"csv"</span><span class="p">],</span>
+    <span class="n">accept_multiple_files</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="n">uploaded_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">uploaded_file</span><span class="p">)</span>
+    <span class="n">st</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">df</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">st</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+<span class="n">st</span><span class="p">.</span><span class="n">camera_input</span><span class="p">(</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="s">"카메라 입력"</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 색상 선택
+</span><span class="n">st</span><span class="p">.</span><span class="n">write</span><span class="p">(</span>
+    <span class="n">st</span><span class="p">.</span><span class="n">color_picker</span><span class="p">(</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="s">"원하는 색상을 자세히 선택하세요"</span><span class="p">,</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="s">"#00FFAA"</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<hr />
+<h1 id="table">Table</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># csv to table
+</span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">"pokemon_40.csv"</span><span class="p">)</span>
+
+<span class="n">st</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># dataframe to table
+</span><span class="n">st</span><span class="p">.</span><span class="n">dataframe</span><span class="p">(</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">,</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="mi">250</span><span class="p">,</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="p">)</span>
+
+<span class="n">st</span><span class="p">.</span><span class="n">metric</span><span class="p">(</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="s">"강우량"</span><span class="p">,</span> 
+    <span class="n">value</span> <span class="o">=</span> <span class="s">"100 mm"</span><span class="p">,</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="s">"-80mm"</span><span class="p">,</span>
+    <span class="n">help</span> <span class="o">=</span> <span class="s">"상황해제"</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># json to table
+</span><span class="n">data_json2</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">"컬럼 A"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s">"컬럼 B"</span><span class="p">:</span> <span class="p">[{</span>
+        <span class="s">"A"</span> <span class="p">:</span> <span class="s">"11"</span><span class="p">,</span>
+        <span class="s">"B"</span> <span class="p">:</span> <span class="s">"22"</span><span class="p">,</span>
+        <span class="s">"C"</span> <span class="p">:</span> <span class="s">"33"</span>
+    <span class="p">},</span> <span class="p">{</span>
+        <span class="s">"D"</span> <span class="p">:</span> <span class="s">"44"</span><span class="p">,</span>
+        <span class="s">"E"</span> <span class="p">:</span> <span class="s">"55"</span><span class="p">,</span>
+        <span class="s">"F"</span> <span class="p">:</span> <span class="s">"66"</span>
+    <span class="p">}],</span>
+    <span class="s">"컬럼 C"</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="s">"컬럼 D"</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">st</span><span class="p">.</span><span class="n">json</span><span class="p">(</span><span class="n">data_json2</span><span class="p">,</span> <span class="n">expanded</span> <span class="o">=</span> <span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<hr />
+<h1 id="button-checkbox-radio-selectbox-slider-sidebar">Button, Checkbox, Radio, Selectbox, Slider, Sidebar</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 일반
+</span><span class="k">if</span> <span class="n">st</span><span class="p">.</span><span class="n">button</span><span class="p">(</span>
+    <span class="s">"첫 버튼"</span><span class="p">,</span> 
+    <span class="n">help</span><span class="o">=</span><span class="s">"내용을 확인"</span><span class="p">,</span>
+    <span class="n">on_click</span> <span class="o">=</span> <span class="k">lambda</span> <span class="p">:</span> <span class="n">st</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">"축하합니다"</span><span class="p">)</span>
+<span class="p">):</span>
+    <span class="n">st</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">"버튼이 눌림"</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">st</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">"대기중"</span><span class="p">)</span>
+
+<span class="n">st</span><span class="p">.</span><span class="n">button</span><span class="p">(</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="s">"미사용"</span><span class="p">,</span>     
+    <span class="n">disabled</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 다운로드 버튼
+</span><span class="n">st</span><span class="p">.</span><span class="n">download_button</span><span class="p">(</span>
+    <span class="n">label</span><span class="o">=</span><span class="s">"현재 DataFrame 저장"</span><span class="p">,</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="bp">False</span><span class="p">).</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">),</span>
+    <span class="n">file_name</span> <span class="o">=</span> <span class="s">"export_df.csv"</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Checkbox
+</span><span class="n">st</span><span class="p">.</span><span class="n">write</span><span class="p">(</span>
+    <span class="n">st</span><span class="p">.</span><span class="n">checkbox</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="s">"승인 여부를 선택해주세요"</span><span class="p">,</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+        <span class="n">help</span> <span class="o">=</span> <span class="s">"실제 실행할지 확인"</span><span class="p">,</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="s">"isConfirmed"</span><span class="p">,</span>
+        <span class="n">on_change</span> <span class="o">=</span> <span class="k">lambda</span> <span class="p">:</span> <span class="n">st</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">"실행 가능합니다!"</span><span class="p">),</span>
+        <span class="n">disabled</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># radio
+</span><span class="n">st</span><span class="p">.</span><span class="n">radio</span><span class="p">(</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="s">"색상을 골라주세요"</span><span class="p">,</span>
+    <span class="n">options</span> <span class="o">=</span> <span class="p">[</span><span class="s">"빨"</span><span class="p">,</span> <span class="s">"주"</span><span class="p">,</span> <span class="s">"노"</span><span class="p">,</span> <span class="s">"초"</span><span class="p">,</span> <span class="s">"파"</span><span class="p">,</span> <span class="s">"남"</span><span class="p">,</span> <span class="s">"보"</span><span class="p">],</span>
+    <span class="n">help</span> <span class="o">=</span> <span class="s">"원하는 색을 골라주세요"</span><span class="p">,</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="n">horizontal</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+    <span class="n">on_change</span> <span class="o">=</span> <span class="k">lambda</span> <span class="p">:</span> <span class="n">st</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">"색이 이쁘네요!"</span><span class="p">),</span>
+    <span class="n">disabled</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 일반 selectbox
+</span><span class="n">st</span><span class="p">.</span><span class="n">selectbox</span><span class="p">(</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="s">"색상을 골라주세요"</span><span class="p">,</span>
+    <span class="n">options</span> <span class="o">=</span> <span class="p">[</span><span class="s">"빨"</span><span class="p">,</span> <span class="s">"주"</span><span class="p">,</span> <span class="s">"노"</span><span class="p">,</span> <span class="s">"초"</span><span class="p">,</span> <span class="s">"파"</span><span class="p">,</span> <span class="s">"남"</span><span class="p">,</span> <span class="s">"보"</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span>
+    <span class="n">help</span> <span class="o">=</span> <span class="s">"원하는 색을 골라주세요"</span><span class="p">,</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="n">on_change</span> <span class="o">=</span> <span class="k">lambda</span> <span class="p">:</span> <span class="n">st</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">"색을 잘 선택했습니다!"</span><span class="p">),</span>
+    <span class="n">disabled</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="p">)</span>
+
+<span class="c1"># 다중 selectbox
+</span><span class="n">st</span><span class="p">.</span><span class="n">multiselect</span><span class="p">(</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="s">"색상을 골라주세요"</span><span class="p">,</span>
+    <span class="n">options</span> <span class="o">=</span> <span class="p">[</span><span class="s">"빨"</span><span class="p">,</span> <span class="s">"주"</span><span class="p">,</span> <span class="s">"노"</span><span class="p">,</span> <span class="s">"초"</span><span class="p">,</span> <span class="s">"파"</span><span class="p">,</span> <span class="s">"남"</span><span class="p">,</span> <span class="s">"보"</span><span class="p">],</span>
+    <span class="n">help</span> <span class="o">=</span> <span class="s">"원하는 색을 골라주세요"</span><span class="p">,</span>
+    <span class="n">on_change</span> <span class="o">=</span> <span class="k">lambda</span> <span class="p">:</span> <span class="n">st</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">"여러개 고르는 중!"</span><span class="p">),</span>
+    <span class="n">disabled</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p><strong>on_click</strong>와 <strong>on_change</strong>는 하는 기능이 똑같다.</p>
+
+<p>widget의 기능에 따라서 on_click과 on_change 각각 적용된다.</p>
+
+<p>‘버튼’의 경우 click이 중요하기 때문에 on_click.</p>
+
+<p>‘radio’, ‘slider’나 ‘selectslider’의 경우 변경이 중요하기 때문에 on_change.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># slider
+</span><span class="n">st</span><span class="p">.</span><span class="n">slider</span><span class="p">(</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="s">"나이를 입력해주세요"</span><span class="p">,</span> 
+    <span class="n">help</span> <span class="o">=</span> <span class="s">"입장가능한 나이를 확인 중"</span><span class="p">,</span>
+    <span class="n">min_value</span> <span class="o">=</span> <span class="mf">18.</span><span class="p">,</span>
+    <span class="n">max_value</span> <span class="o">=</span> <span class="mf">65.</span><span class="p">,</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="mf">30.</span><span class="p">,</span>
+    <span class="n">step</span> <span class="o">=</span> <span class="p">.</span><span class="mi">5</span>
+<span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">change_range</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">args</span> <span class="o">==</span> <span class="mi">6</span><span class="p">:</span>
+        <span class="n">st</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">"확인"</span><span class="p">)</span>
+
+<span class="n">my_select_slide</span> <span class="o">=</span> <span class="n">st</span><span class="p">.</span><span class="n">select_slider</span><span class="p">(</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="s">"나이를 입력해주세요"</span><span class="p">,</span> 
+    <span class="n">help</span> <span class="o">=</span> <span class="s">"입장가능한 나이를 확인 중"</span><span class="p">,</span>
+    <span class="n">options</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="s">"check_range"</span><span class="p">,</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">"num"</span><span class="p">:</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)],</span>
+    <span class="s">"square"</span><span class="p">:</span> <span class="p">[</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)],</span>
+    <span class="s">"twice"</span><span class="p">:</span> <span class="p">[</span><span class="n">x</span><span class="o">*</span><span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)],</span>
+    <span class="s">"thrice"</span><span class="p">:</span> <span class="p">[</span><span class="n">x</span><span class="o">*</span><span class="mi">3</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)],</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Sidebar
+</span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">)</span>
+
+<span class="n">sidebar_radio</span> <span class="o">=</span> <span class="n">st</span><span class="p">.</span><span class="n">sidebar</span><span class="p">.</span><span class="n">radio</span><span class="p">(</span><span class="s">"네비게이션"</span><span class="p">,</span> <span class="p">[</span><span class="s">"그래프"</span><span class="p">,</span> <span class="s">"About"</span><span class="p">])</span>
+
+<span class="k">if</span> <span class="n">sidebar_radio</span> <span class="o">==</span> <span class="s">"그래프"</span><span class="p">:</span>
+    <span class="n">selected_column</span> <span class="o">=</span> <span class="n">st</span><span class="p">.</span><span class="n">sidebar</span><span class="p">.</span><span class="n">selectbox</span><span class="p">(</span><span class="s">"컬럼을 선택해주세요"</span><span class="p">,</span> <span class="n">df</span><span class="p">.</span><span class="n">columns</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">"num"</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="n">selected_column</span><span class="p">])</span>
+    <span class="n">st</span><span class="p">.</span><span class="n">pyplot</span><span class="p">()</span> <span class="c1"># matplotlib로 그린 그래프를 출력해라!
+</span>
+    <span class="n">selected_columns</span> <span class="o">=</span> <span class="n">st</span><span class="p">.</span><span class="n">sidebar</span><span class="p">.</span><span class="n">multiselect</span><span class="p">(</span>
+        <span class="s">"컬럼들을 선택해주세요"</span><span class="p">,</span>
+        <span class="n">df</span><span class="p">.</span><span class="n">columns</span>
+    <span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">"num"</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="n">selected_columns</span><span class="p">])</span>
+    <span class="n">st</span><span class="p">.</span><span class="n">pyplot</span><span class="p">()</span> <span class="c1"># matplotlib로 그린 그래프를 출력해라!
+</span><span class="k">elif</span> <span class="n">sidebar_radio</span> <span class="o">==</span> <span class="s">"About"</span><span class="p">:</span>
+    <span class="n">st</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">"사이트를 소개합니다."</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/184470922-8c248f56-6266-4b4f-8954-7f0739b00cd3.png" alt="image" /></p>
+
+<hr />
+<h1 id="text-edit">Text Edit</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 문자 입력받기
+</span><span class="n">st</span><span class="p">.</span><span class="n">text_input</span><span class="p">(</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="s">"이름 입력"</span><span class="p">,</span>
+    <span class="c1"># value = "name", # text_input의 초기값
+</span>    <span class="n">max_chars</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span>
+    <span class="n">help</span> <span class="o">=</span> <span class="s">"이름은 최대 3글자만 입력해 주세요"</span><span class="p">,</span>
+    <span class="n">placeholder</span><span class="o">=</span><span class="s">"최대 3글자까지 입력해주세요"</span> <span class="c1"># 처음에 입력 설명
+</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 텍스트 박스 생성
+</span><span class="n">inputvalue_addres</span> <span class="o">=</span> <span class="n">st</span><span class="p">.</span><span class="n">text_area</span><span class="p">(</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="s">"주소 입력"</span><span class="p">,</span>
+    <span class="c1"># value = "name", # text_input의 초기값
+</span>    <span class="n">max_chars</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="mi">200</span><span class="p">,</span>
+    <span class="n">help</span> <span class="o">=</span> <span class="s">"주소를 자세히 입력해 주세요"</span><span class="p">,</span>
+    <span class="n">placeholder</span><span class="o">=</span><span class="s">"주소를 자세히 입력해 주세요"</span> <span class="c1"># 처음에 입력 설명
+</span><span class="p">)</span>
+
+<span class="n">st</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">"입력받은 주소 : "</span><span class="p">,</span> <span class="n">inputvalue_addres</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 숫자 인풋 받기
+</span><span class="n">st</span><span class="p">.</span><span class="n">number_input</span><span class="p">(</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="s">"원하는 숫자를 입력해주세요"</span><span class="p">,</span>
+    <span class="n">min_value</span> <span class="o">=</span> <span class="mf">0.</span><span class="p">,</span>
+    <span class="n">max_value</span> <span class="o">=</span> <span class="mf">10.</span><span class="p">,</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="mf">5.</span><span class="p">,</span>
+    <span class="n">step</span> <span class="o">=</span> <span class="mf">2.</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="c1"># 날짜 입력
+</span><span class="n">st</span><span class="p">.</span><span class="n">date_input</span><span class="p">(</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="s">"원하는 날짜를 입력해주세요"</span><span class="p">,</span>
+    <span class="n">help</span> <span class="o">=</span> <span class="s">"특정일자를 정확히 입력해주세요"</span><span class="p">,</span>
+    <span class="n">min_value</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="n">date</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="n">max_value</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="n">date</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">31</span><span class="p">),</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="n">date</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># 시간 입력
+</span><span class="n">st</span><span class="p">.</span><span class="n">time_input</span><span class="p">(</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="s">"시간을 입력해주세요"</span><span class="p">,</span>
+    <span class="c1"># value = datetime.time(8, 45)
+</span><span class="p">)</span>
+</code></pre></div></div>
+
+<hr />
+<h1 id="dashboard-생성하기">Dashboard 생성하기</h1>
+<p><img src="https://user-images.githubusercontent.com/39285147/184014561-a79a7f04-db1e-4adc-9568-aebfe8f677ed.png" alt="image" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="c1"># 레이아웃 열
+</span> 
+<span class="n">col1</span><span class="p">,</span> <span class="n">col2</span><span class="p">,</span> <span class="n">col3</span> <span class="o">=</span> <span class="n">st</span><span class="p">.</span><span class="n">columns</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">col1</span><span class="p">:</span>
+    <span class="n">st</span><span class="p">.</span><span class="n">metric</span><span class="p">(</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="s">"강수량"</span><span class="p">,</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="s">"200mm"</span><span class="p">,</span>
+        <span class="n">delta</span><span class="o">=</span><span class="s">"50mm"</span>
+    <span class="p">)</span>
+
+<span class="k">with</span> <span class="n">col2</span><span class="p">:</span>
+    <span class="n">st</span><span class="p">.</span><span class="n">metric</span><span class="p">(</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="s">"온도"</span><span class="p">,</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="s">"28도"</span><span class="p">,</span>
+        <span class="n">delta</span><span class="o">=</span><span class="s">"3도"</span>
+    <span class="p">)</span>
+
+<span class="k">with</span> <span class="n">col3</span><span class="p">:</span>
+    <span class="n">st</span><span class="p">.</span><span class="n">metric</span><span class="p">(</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="s">"습도"</span><span class="p">,</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="s">"40%"</span><span class="p">,</span>
+        <span class="n">delta</span><span class="o">=</span><span class="s">"-3%"</span>
+    <span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 레이아웃 탭
+</span>
+<span class="n">tab1</span><span class="p">,</span> <span class="n">tab2</span><span class="p">,</span> <span class="n">tab3</span> <span class="o">=</span> <span class="n">st</span><span class="p">.</span><span class="n">tabs</span><span class="p">([</span><span class="s">"이미지"</span><span class="p">,</span> <span class="s">"오디오"</span><span class="p">,</span> <span class="s">"비디오"</span><span class="p">])</span>
+
+<span class="k">with</span> <span class="n">tab1</span><span class="p">:</span>
+    <span class="n">st</span><span class="p">.</span><span class="n">image</span><span class="p">(</span>
+        <span class="s">"office_view.jpg"</span><span class="p">,</span>
+        <span class="n">caption</span> <span class="o">=</span> <span class="s">"선유도 어떤 사무실에서"</span>
+    <span class="p">)</span>
+
+<span class="k">with</span> <span class="n">tab2</span><span class="p">:</span>
+    <span class="n">st</span><span class="p">.</span><span class="n">audio</span><span class="p">(</span><span class="s">"demo.wav"</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">tab3</span><span class="p">:</span>
+    <span class="n">st</span><span class="p">.</span><span class="n">video</span><span class="p">(</span><span class="s">"office_view.mp4"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 누르면 확장되서 내용 보임
+</span><span class="k">with</span> <span class="n">st</span><span class="p">.</span><span class="n">expander</span><span class="p">(</span><span class="s">"어떤 설명"</span><span class="p">):</span>
+    <span class="n">st</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">"""뭔가 자세히 설명하고 싶지만,
+
+    지면 관계상 자세히 넣을 수는 없다.
+
+    streamlit은 그래도 강력하고 사용하기 쉬워서
+    쉽게 대시보드를 만들 수가 있다.
+    """</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 컴포넌트 포함하는 container 생성 (마치 html의 div와 같은 역할)
+</span>
+<span class="k">with</span> <span class="n">st</span><span class="p">.</span><span class="n">container</span><span class="p">():</span>
+    <span class="n">st</span><span class="p">.</span><span class="n">radio</span><span class="p">(</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="s">"값을 선택해주세요"</span><span class="p">,</span>
+        <span class="n">options</span> <span class="o">=</span> <span class="p">[</span><span class="s">"R"</span><span class="p">,</span> <span class="s">"G"</span><span class="p">,</span> <span class="s">"B"</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="n">st</span><span class="p">.</span><span class="n">text_input</span><span class="p">(</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="s">"이름을 입력해 주세요"</span>  
+    <span class="p">)</span>
+</code></pre></div></div>
+
+<hr />
+<h1 id="pandas-profiling-간단한-eda">Pandas Profiling (간단한 EDA)</h1>
+<p>좋은 머신 러닝 결과를 얻기 위하여 데이터의 성격을 파악하는 과정이다.</p>
+
+<p>방대한 양의 데이터를 가진 데이터프레임에 대한 <strong>EDA</strong> 과정을 <strong><em>profile_report()</em></strong>라는 단 한 줄의 명령으로 수행한다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">U</span> <span class="n">pandas</span><span class="o">-</span><span class="n">profiling</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">pandas_profiling</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pr</span><span class="o">=</span><span class="n">data</span><span class="p">.</span><span class="n">profile_report</span><span class="p">()</span> <span class="c1"># 프로파일링 결과 리포트를 pr에 저장
+</span><span class="n">data</span><span class="p">.</span><span class="n">profile_report</span><span class="p">()</span> <span class="c1"># 바로 결과 보기
+</span><span class="n">pr</span><span class="p">.</span><span class="n">to_file</span><span class="p">(</span><span class="s">'./pr_report.html'</span><span class="p">)</span> <span class="c1"># pr_report.html 파일로 저장
+</span></code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/184286215-42eb44fd-6c32-4174-a31c-3ffa40fed888.png" alt="image" /></p>
+
+<p>상기와 같은 형태로 리포트로 간단히 EDA 과정을 수행한다</p>
+
+<hr />
+<h1 id="cropper-이미지-자르기">Cropper (이미지 자르기)</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pip</span> <span class="n">install</span> <span class="n">streamlit</span><span class="o">-</span><span class="n">cropper</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">streamlit</span> <span class="k">as</span> <span class="n">st</span>
+<span class="kn">from</span> <span class="nn">streamlit_cropper</span> <span class="kn">import</span> <span class="n">st_cropper</span>
+<span class="n">st</span><span class="p">.</span><span class="n">set_option</span><span class="p">(</span><span class="s">'deprecation.showfileUploaderEncoding'</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Get a cropped image from the frontend
+</span><span class="n">cropped_img</span> <span class="o">=</span> <span class="n">st_cropper</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">realtime_update</span><span class="o">=</span><span class="n">realtime_update</span><span class="p">,</span> <span class="n">box_color</span><span class="o">=</span><span class="n">box_color</span><span class="p">,</span>
+<span class="n">aspect_ratio</span><span class="o">=</span><span class="n">aspect_ratio</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/184286457-bf489b8f-c617-4030-b89b-c515b78c6e0e.png" alt="image" /></p>
+
+<hr />
+<h1 id="webrtc-실시간-웹캠">Webrtc (실시간 웹캠)</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">U</span> <span class="n">streamlit</span><span class="o">-</span><span class="n">webrtc</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">streamlit_webrtc</span> <span class="kn">import</span> <span class="n">webrtc_streamer</span>
+
+<span class="n">webrtc_streamer</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s">"sample"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    $ streamlit run app.py
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/184286726-72c7308d-3e9f-4067-9c5e-ae359cd11e53.png" alt="image" /></p>
+
+<p>보다 자세한 내용은 <a href="https://github.com/whitphx/streamlit-webrtc">여기</a>를 참조하자.</p>
+
+<hr />
+<h1 id="folium-지도맵">folium (지도맵)</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">streamlit</span> <span class="k">as</span> <span class="n">st</span>
+<span class="kn">from</span> <span class="nn">streamlit_folium</span> <span class="kn">import</span> <span class="n">st_folium</span>
+<span class="kn">import</span> <span class="nn">folium</span>
+</code></pre></div></div>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 지도맵 생성
+</span><span class="n">m</span> <span class="o">=</span> <span class="n">folium</span><span class="p">.</span><span class="n">Map</span><span class="p">(</span>
+    <span class="n">location</span> <span class="o">=</span> <span class="p">[</span><span class="mf">37.541602</span><span class="p">,</span> <span class="mf">126.948721</span><span class="p">],</span>
+    <span class="n">zoom_start</span> <span class="o">=</span> <span class="mi">16</span> <span class="c1"># 1 ~ 18
+</span><span class="p">)</span>
+</code></pre></div></div>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 마커 생성
+</span><span class="n">folium</span><span class="p">.</span><span class="n">Marker</span><span class="p">(</span>
+    <span class="n">location</span> <span class="o">=</span> <span class="p">[</span><span class="mf">37.543668</span><span class="p">,</span> <span class="mf">126.951639</span><span class="p">],</span>
+    <span class="n">popup</span> <span class="o">=</span> <span class="s">"공덕역"</span><span class="p">,</span>
+    <span class="n">tooltip</span> <span class="o">=</span> <span class="s">"강의장이 있는 곳"</span>
+<span class="p">).</span><span class="n">add_to</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">st_data</span> <span class="o">=</span> <span class="n">st_folium</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="c1"># 실제 반영
+</span></code></pre></div></div>
+
+<hr />
+<h1 id="translator">Translator</h1>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">googletrans</span><span class="o">==</span><span class="mf">3.1</span><span class="p">.</span><span class="mi">0</span><span class="n">a0</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">streamlit</span> <span class="k">as</span> <span class="n">st</span>
+<span class="kn">from</span> <span class="nn">googletrans</span> <span class="kn">import</span> <span class="n">Translator</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">translator</span> <span class="o">=</span> <span class="n">Translator</span><span class="p">()</span>
+
+<span class="n">col1</span><span class="p">,</span> <span class="n">col2</span> <span class="o">=</span> <span class="n">st</span><span class="p">.</span><span class="n">columns</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">col1</span><span class="p">:</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">st</span><span class="p">.</span><span class="n">text_input</span><span class="p">(</span><span class="s">"번역할 문장을 넣어주세요"</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">col2</span><span class="p">:</span>
+    <span class="n">st</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">translator</span><span class="p">.</span><span class="n">translate</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">"de"</span><span class="p">).</span><span class="n">text</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/184471095-3e5421eb-3860-4352-aecf-1528c0dba382.png" alt="image" /></p>
+
+<hr />
+
+<p>다음 시간에는 배운 내용들을 토대로 파이썬 웹 환경에서 <a href="">실습 프로젝트</a>를 진행해보자.</p>
+:ET

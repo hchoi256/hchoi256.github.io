@@ -1,0 +1,137 @@
+I"f<h1 id="자연어-처리natural-language-processing-nlp">자연어 처리(Natural Language Processing, NLP)</h1>
+<h2 id="자연어란">자연어란?</h2>
+<p><img src="https://user-images.githubusercontent.com/39285147/183526289-0d7a43a8-f329-4ed1-9e0b-31259a32fe6f.png" alt="image" /></p>
+
+<ul>
+  <li>부호화(Encoding)</li>
+  <li>해독(Decoding)</li>
+</ul>
+
+<p>자연어 처리는 상기 도표에서 컴퓨터가 <strong>텍스트를 해독하는 과정</strong>을 의미한다.</p>
+
+<p>일상에서 사용하는 모든 인간의 언어로, 한국어, 영어와 같은 것들이 예시이다.</p>
+
+<blockquote>
+  <p>인공언어: 프로그래밍 언어, etc.</p>
+</blockquote>
+
+<h2 id="자연어-처리의-두-종류">자연어 처리의 두 종류</h2>
+<ol>
+  <li>
+    <p><strong>규칙 기반 접근법 (Symbolic approach)</strong></p>
+  </li>
+  <li>
+    <p><strong>확률 기반 접근법 (Statistical approach)</strong></p>
+    <ul>
+      <li><em>TF-IDF</em>
+        <ul>
+          <li>TF(Term frequency): 단어가 문서에 등장한 개수 (TF ↑, 중요단어확률 ↑)</li>
+          <li>DF(Document frequency): 해당 단어가 등장한 문서의 개수 (DF ↑, 중요단어확률 ↓)</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="자연어-처리의-단계">자연어 처리의 단계</h2>
+<p>① <strong>전처리</strong></p>
+
+<ul>
+  <li>개행문자, 특수문자, 공백, 중복 표현, 이메일 및 링크, 불용어, 조사 제거</li>
+  <li>띄어쓰기, 문장분리 보정</li>
+  <li>어간추출</li>
+</ul>
+
+<p>② <strong>Tokenizing</strong></p>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/183527388-2369aaca-6791-42d0-821b-1e09460d713f.png" alt="image" /></p>
+
+<ul>
+  <li>어절 tokenizing</li>
+  <li>형태소 tokenizing</li>
+  <li>n-gram tokenizing</li>
+  <li><strong>WordPiece tokenizing</strong> (BERT)</li>
+</ul>
+
+<p>③ <strong>Lexical analysis</strong></p>
+
+<ul>
+  <li>어휘, 형태소 분석</li>
+  <li>개체명 인식</li>
+  <li>상호 참조</li>
+</ul>
+
+<p>④ <strong>Syntactic analysis</strong></p>
+
+<ul>
+  <li>구문 분석</li>
+</ul>
+
+<p>⑤ <strong>Semantic analysis</strong></p>
+
+<ul>
+  <li>의미 분석</li>
+</ul>
+
+<h2 id="nlp-활용-분야">NLP 활용 분야</h2>
+<ul>
+  <li>의미 분석 (i.e., 최초의 컴퓨터는 무엇 –&gt; ‘질문’)</li>
+  <li>구문 분석 (i.e., 문법 구문 분석)</li>
+  <li>감성 분석</li>
+  <li>형태소 분석</li>
+  <li>개체명 인식 (i.e., 네이버는 어떤 회사 –&gt; ‘기관’)</li>
+</ul>
+
+<h1 id="word-embedding">Word embedding</h1>
+<p>‘자연어’에서 특징을 추출하는 방법이다.</p>
+
+<p>텍스트를 컴퓨터가 이해하고, 효율적으로 처리하게 하기 위해서는 컴퓨터가 이해할 수 있도록 텍스트를 적절히 숫자로 변환하여 좌표평면 위에 표현할 필요가 있다.</p>
+
+<p>그러한 방법으로 가장 첫 번째로 제시된 것이 <strong>One-hot encoding</strong>이다.</p>
+
+<h2 id="1-one-hot-encoding-sparse-representation">1. <strong>One-hot encoding</strong> (sparse representation)</h2>
+<p><img src="https://user-images.githubusercontent.com/39285147/183528088-8343c972-2c27-4f45-812b-3259e39e2151.png" alt="image" /></p>
+
+<ul>
+  <li>각 단어가 가지는 <strong>의미 파악이 불가능하다</strong></li>
+  <li>단어 간 <strong>유사성 비교가 불가능하다</strong>.</li>
+  <li><a href="https://github.com/hchoi256/ai-terms"><strong>차원의 저주</strong></a>에 빠질 위험성 多</li>
+</ul>
+
+<h2 id="2-word2vec-dense-representation">2. Word2Vec (dense representation)</h2>
+<p><img src="https://user-images.githubusercontent.com/39285147/183535690-05358c7b-a9ba-4893-8959-53e36b521513.png" alt="image" /></p>
+
+<ul>
+  <li>자연어의 <strong>의미를 ‘벡터 공간’에 임베딩</strong>하여, one-hot encoding의 한계점을 해결한다.
+    <ul>
+      <li>i.e., <em>한국 - 서울 + 도쿄 = 일본</em></li>
+    </ul>
+  </li>
+  <li>한 단어의 <strong>주변 단어들을 통해</strong> 비지도학습으로 그 단어의 의미 파악이 가능하다 (유사성 有).</li>
+  <li><strong>한정된 자원</strong>으로 표현이 가능하다.</li>
+</ul>
+
+<p>One-hot 벡터들을 인풋으로 받고, 2개의 간단한 hidden layer를 가진 신경망으로 구성되있다.</p>
+
+<p>주변부 단어를 예측하는 방식으로 학습하여 인풋 단어를 올바르게 유츄해낸다.</p>
+
+<p>단어 벡터의 유사성과 semantic 혹은 syntactic analogy를 통하여 Word2Vec 성능을 검증한다.</p>
+
+<p>하지만, 단어의 <strong>subword information(i,e., 서울 vs 서울시)을 무시</strong>하고 <strong>학습에 사용될 충분한 vocabulary가 주어져야 한다</strong>는 한계가 존재한다.</p>
+
+<h2 id="3-fasttext">3. FastText</h2>
+<p><img src="https://user-images.githubusercontent.com/39285147/183534835-d42db067-905f-483d-a738-e437e4dc4e78.png" alt="image" /></p>
+
+<p>subword information을 무시하는 Word2Vec 한계를 <strong>n-gram 기법</strong>을 통해 subword를 직접 학습하면서 극복한다 (i.e., assumption에 2-gram을 적용하면 as, ss, su,..).</p>
+
+<p>FastText는 단어를 n-gram으로 분리한 후, 모든 n-gram vector를 합산한 평균을 통해 단어 벡터를 획득한다.</p>
+
+<p><strong>오탈자, OOV (Out of Vocabulary), 그리고 빈도수가 적은 단어</strong>에 대한 학습이 용이하다.</p>
+
+<h2 id="word-embedding-한계점">Word embedding 한계점</h2>
+<p><strong>동형어, 다의어</strong>(<em>account: 계좌, 차지하다, etc.</em>)와 같은 단어에 대한 embedding 성능이 좋지 않다.</p>
+
+<p><del>주변 단어를 예측하는 방식으로 학습하기 때문에 <strong>‘문맥’을 고려할 수 없다</strong>.</del></p>
+
+<p>이러한 한계점을 타파하는 <a href="https://hchoi256.github.io/nlp/bert-2/"><strong>언어 모델(Language Model)</strong></a>에 대해 다음 시간에 알아보자.</p>
+:ET
