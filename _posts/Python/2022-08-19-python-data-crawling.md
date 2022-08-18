@@ -8,7 +8,7 @@ toc_sticky: true
 toc_label: "GITHUB BLOG JJUNS"
 # author_profile: false
 header:
-    teaser: /assets/images/posts/streamlit-thumbnail.png
+    teaser: /assets/images/posts/data-thumbnail.jpg
 sidebar:
     nav: "docs"
 ---
@@ -247,12 +247,3 @@ engine = create_engine("sqlite:///crawling.db", echo=True, future=True)
 ```python
 df.to_sql("singsingfood2", con = engine) # 'crawling.db' 복사하여 새로운 DB 생성 
 ```
-
-## *TBD*
-
-.
-
-.
-
-.
-

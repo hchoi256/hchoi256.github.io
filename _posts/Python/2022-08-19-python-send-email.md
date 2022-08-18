@@ -8,7 +8,7 @@ toc_sticky: true
 toc_label: "GITHUB BLOG JJUNS"
 # author_profile: false
 header:
-    teaser: /assets/images/posts/streamlit-thumbnail.png
+    teaser: /assets/images/posts/email.png
 sidebar:
     nav: "docs"
 ---
