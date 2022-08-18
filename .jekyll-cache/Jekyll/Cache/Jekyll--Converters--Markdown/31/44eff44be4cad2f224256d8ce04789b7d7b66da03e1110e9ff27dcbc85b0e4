@@ -1,3 +1,0 @@
-I"�<h1 id="bert">BERT</h1>
-<p>Bi-directional transformer로 이루어진 언어모델로, BERT 언어모델 위에 1개의 classification layer만 부착하여 다양한 NLP task를 수행한다.</p>
-:ET
