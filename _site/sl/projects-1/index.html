@@ -104,6 +104,8 @@
 
 
     <!-- start custom head snippets -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1250314621726093"
+     crossorigin="anonymous"></script>
 
 <!-- insert favicons. use https://realfavicongenerator.net/ -->
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/logo.ico/apple-touch-icon.png">
@@ -558,9 +560,9 @@
                     
                 
                     
-                        <li><a href="/categories/USL" class="">비지도학습 (2)</a></li>
-                    
                 
+                    
+                        <li><a href="/categories/USL" class="">비지도학습 (2)</a></li>
                     
                 
             </ul>
@@ -591,9 +593,9 @@
                     
                 
                     
-                
-                    
                         <li><a href="/categories/RL" class="">강화학습 (1)</a></li>
+                    
+                
                     
                 
             </ul>
@@ -865,14 +867,14 @@
 <p class="notice--danger"><strong>[Notice]</strong> <a href="https://github.com/hchoi256/machine-learning-development">download here</a></p>
 
 <h1 id="learning-goals">Learning Goals</h1>
-<p>Artificial Neural Network (ANN)을 이용한 회귀 작업 처리를 이해한다. <span style="color: blue">Understanding of how ANN solves regression tasks.</span></p>
+<p>Artificial Neural Network (ANN)을 이용한 회귀 작업 처리를 이해한다. <span style="color: yellow">Understanding of how ANN solves regression tasks.</span></p>
 
-<p>순방향/역전파를 동반하는 가중치 학습의 과정에 대해 보다 나은 이해를 도모한다. <span style="color: blue">Better understanding of deep learning through forward/backward propagation</span></p>
+<p>순방향/역전파를 동반하는 가중치 학습의 과정에 대해 보다 나은 이해를 도모한다. <span style="color: yellow">Better understanding of deep learning through forward/backward propagation</span></p>
 
 <h1 id="description">Description</h1>
-<p>여러분이 자동차 딜러 혹은 차량 판매원이라 가정해보자. <span style="color: blue">Now, you are a car seller.</span></p>
+<p>여러분이 자동차 딜러 혹은 차량 판매원이라 가정해보자. <span style="color: yellow">Now, you are a car seller.</span></p>
 
-<p>상기 고객들의 특정 데이터(나이, 연봉, etc.)를 참고하여 고객들이 차량 구매에 사용할 금액을 예측하여 특정 집단에 대한 타깃 마케팅을 이루고자 한다. <span style="color: blue">Your job is to analyze the customer dataset, then predict how much money a new customer would like to spend.</span></p>
+<p>상기 고객들의 특정 데이터(나이, 연봉, etc.)를 참고하여 고객들이 차량 구매에 사용할 금액을 예측하여 특정 집단에 대한 타깃 마케팅을 이루고자 한다. <span style="color: yellow">Your job is to analyze the customer dataset, then predict how much money a new customer would like to spend.</span></p>
 
 <h2 id="dataset">Dataset</h2>
 <table border="0" cellpadding="0" cellspacing="0" id="sheet0" class="sheet0 gridlines">
@@ -991,9 +993,9 @@
 
 <p><img src="https://user-images.githubusercontent.com/39285147/180380848-d3772ba0-a21b-416b-8139-534c7a3aa721.JPG" alt="screensht" /></p>
 
-<p>데이터 분포에서 맨 아래 위치한 행은 ‘Car Purchase Amount’이고, 각 열은 순서대로 Gender, Age, Annual Salary, Credit Car Debt, Net Worth, Car Purchase Amount이다.<span style="color: blue">The bottom row in the data distribution is ‘Car Purchase Amount’, and each column is Gender, Age, Annual Salary, Credit Car Debt, Net Worth, and Car Purchase Amount in order.</span></p>
+<p>데이터 분포에서 맨 아래 위치한 행은 ‘Car Purchase Amount’이고, 각 열은 순서대로 Gender, Age, Annual Salary, Credit Car Debt, Net Worth, Car Purchase Amount이다.<span style="color: yellow">The bottom row in the data distribution is ‘Car Purchase Amount’, and each column is Gender, Age, Annual Salary, Credit Car Debt, Net Worth, and Car Purchase Amount in order.</span></p>
 
-<p>따라서, 나이가 증가함에 따라 차량 구매 예상 금액이 증가하는 선형적 형태의 데이터 분포를 보여주고, 반대로 Credit Card Debt은 종속변수와 뚜렷한 상관관계를 나타내지 않는 것으로 관찰된다.<span style="color: blue">Therefore, it is observed that the data distribution in a linear form shows that the expected amount of vehicle purchase increases with age, and on the contrary, Credit Card Debt does not show a clear correlation with the dependent variable.</span></p>
+<p>따라서, 나이가 증가함에 따라 차량 구매 예상 금액이 증가하는 선형적 형태의 데이터 분포를 보여주고, 반대로 Credit Card Debt은 종속변수와 뚜렷한 상관관계를 나타내지 않는 것으로 관찰된다.<span style="color: yellow">Therefore, it is observed that the data distribution in a linear form shows that the expected amount of vehicle purchase increases with age, and on the contrary, Credit Card Debt does not show a clear correlation with the dependent variable.</span></p>
 
 <h1 id="data-preprocessing">Data Preprocessing</h1>
 <h1 id="remove-unnecessary-variables">Remove Unnecessary Variables</h1>
@@ -1005,11 +1007,11 @@
 <p><img src="https://user-images.githubusercontent.com/39285147/180381916-2051d577-51ec-4ff8-be80-0685754f456b.png" alt="image" /></p>
 
 <h2 id="data-scaling">Data Scaling</h2>
-<p>나이와 연봉과 같은 입력피처의 수치가 차이가 커서, 특정 피처에 과중화된 결과가 나올 수 있으므로 [0, 1] 값으로 정규화하는 스케일링(Scailing)을 적용해야 한다. <span style="color: blue">Since there is a gap between age and salary (maybe overfitting), we should apply scaling that normalizes data into the range [0, 1]</span></p>
+<p>나이와 연봉과 같은 입력피처의 수치가 차이가 커서, 특정 피처에 과중화된 결과가 나올 수 있으므로 [0, 1] 값으로 정규화하는 스케일링(Scailing)을 적용해야 한다. <span style="color: yellow">Since there is a gap between age and salary (maybe overfitting), we should apply scaling that normalizes data into the range [0, 1]</span></p>
 
-<p>이번 프로젝트에서, 우리는 <strong>MinMaxScaler</strong>를 사용한다. <span style="color: blue">We are using <strong>MinMaxScaler</strong></span></p>
+<p>이번 프로젝트에서, 우리는 <strong>MinMaxScaler</strong>를 사용한다. <span style="color: yellow">We are using <strong>MinMaxScaler</strong></span></p>
 
-<p>기존 StandardScaler와 MinMaxScaler의 차이점은 데이터가 <strong>정규분포를 따르는지 혹은 따라야 하는지</strong>에 달려있다. <span style="color: blue">The main difference between MinMaxScaler and StandardScaler relies on normal distribution.</span></p>
+<p>기존 StandardScaler와 MinMaxScaler의 차이점은 데이터가 <strong>정규분포를 따르는지 혹은 따라야 하는지</strong>에 달려있다. <span style="color: yellow">The main difference between MinMaxScaler and StandardScaler relies on normal distribution.</span></p>
 
 <p><a href="https://velog.io/@ljs7463/%ED%94%BC%EC%B2%98-%EC%8A%A4%EC%BC%80%EC%9D%BC%EB%A7%81StandardScalerMinMaxScaler">reference</a></p>
 
@@ -1024,9 +1026,9 @@
 
 <p><strong>Dense</strong></p>
 <ul>
-  <li><em>첫번째 인자</em> : 출력 뉴런의 수를 설정합니다. <span style="color: blue"># output neurons</span></li>
-  <li><em>input_dim</em> : 입력 뉴런의 수를 설정합니다.<span style="color: blue"> # input neurons</span></li>
-  <li><em>init</em> : 가중치 초기화 방법 설정합니다. <span style="color: blue">method to init weights</span>
+  <li><em>첫번째 인자</em> : 출력 뉴런의 수를 설정합니다. <span style="color: yellow"># output neurons</span></li>
+  <li><em>input_dim</em> : 입력 뉴런의 수를 설정합니다.<span style="color: yellow"> # input neurons</span></li>
+  <li><em>init</em> : 가중치 초기화 방법 설정합니다. <span style="color: yellow">method to init weights</span>
     <ul>
       <li>‘uniform’ : 균일 분포</li>
       <li>‘normal’ : 가우시안 분포</li>
@@ -1034,10 +1036,10 @@
   </li>
   <li><em>activation</em> : 활성화 함수 설정합니다.
     <ul>
-      <li>‘linear’ : 디폴트 값, 입력뉴런과 가중치로 계산된 결과값이 그대로 출력으로 나옵니다.<span style="color: blue"> default setting</span></li>
-      <li>‘relu’ : rectifier 함수, 은닉층에 주로 쓰입니다. <span style="color: blue">used in hidden layers</span></li>
-      <li>‘sigmoid’ : 시그모이드 함수, 이진 분류 문제에서 출력층에 주로 쓰입니다. <span style="color: blue">used to solve binary classification tasks</span></li>
-      <li>‘softmax’ : 소프트맥스 함수, 다중 클래스 분류 문제에서 출력층에 주로 쓰입니다. <span style="color: blue">used in output layers to solve multinomial classification tasks</span></li>
+      <li>‘linear’ : 디폴트 값, 입력뉴런과 가중치로 계산된 결과값이 그대로 출력으로 나옵니다.<span style="color: yellow"> default setting</span></li>
+      <li>‘relu’ : rectifier 함수, 은닉층에 주로 쓰입니다. <span style="color: yellow">used in hidden layers</span></li>
+      <li>‘sigmoid’ : 시그모이드 함수, 이진 분류 문제에서 출력층에 주로 쓰입니다. <span style="color: yellow">used to solve binary classification tasks</span></li>
+      <li>‘softmax’ : 소프트맥스 함수, 다중 클래스 분류 문제에서 출력층에 주로 쓰입니다. <span style="color: yellow">used in output layers to solve multinomial classification tasks</span></li>
     </ul>
   </li>
 </ul>
@@ -1064,19 +1066,19 @@
 <p><strong>뉴런 개수(# neurons</strong>: 25</p>
 
 <blockquote>
-  <p>뉴런 개수가 적을수록 손실이 크게 발생한다 (에포크 수를 늘림으로써 보완 가능하다). <span style="color: blue">As # neurons decreases, loss increases (can be alleviated by increasing # epoches)</span></p>
+  <p>뉴런 개수가 적을수록 손실이 크게 발생한다 (에포크 수를 늘림으로써 보완 가능하다). <span style="color: yellow">As # neurons decreases, loss increases (can be alleviated by increasing # epoches)</span></p>
 </blockquote>
 
-<p><strong>bias</strong>: 은닉층 뉴런 개수에 맞게 할당된다 (i.e., 은닉층 뉴런 개수 25개 –&gt; bias 역시 25개가 존재한다). <span style="color: blue">has the same number of neurons of the previous hidden layer</span></p>
+<p><strong>bias</strong>: 은닉층 뉴런 개수에 맞게 할당된다 (i.e., 은닉층 뉴런 개수 25개 –&gt; bias 역시 25개가 존재한다). <span style="color: yellow">has the same number of neurons of the previous hidden layer</span></p>
 
-<p><strong>훈련 가능한 파라미터(learnable parameters)</strong>: 딥러닝 모델 학습의 역전파 과정에서 피라미터 업데이트의 대상이 되는 가중치와 bias를 말한다. <span style="color: blue">i.e., weights and bias</span></p>
+<p><strong>훈련 가능한 파라미터(learnable parameters)</strong>: 딥러닝 모델 학습의 역전파 과정에서 피라미터 업데이트의 대상이 되는 가중치와 bias를 말한다. <span style="color: yellow">i.e., weights and bias</span></p>
 
 <ol>
   <li>
-    <p>초기 입력값에서 첫 번째 은닉층까지(<span style="color: blue">from initial input to first hidden layer</span>), <em>*# learnable parameters</em> = 5(# input) * 25(# neurons of first hidden layer) + 25(bias) = 150</p>
+    <p>초기 입력값에서 첫 번째 은닉층까지(<span style="color: yellow">from initial input to first hidden layer</span>), <em>*# learnable parameters</em> = 5(# input) * 25(# neurons of first hidden layer) + 25(bias) = 150</p>
   </li>
   <li>
-    <p>초기 입력값에서 두 번째 은닉층까지(<span style="color: blue">from initial input to second hidden layer</span>), <em>*# learnable parameters</em> =  25(# neurons of first hidden layer) * 25(# neurons of second hidden layer) + 25(bias) = 650</p>
+    <p>초기 입력값에서 두 번째 은닉층까지(<span style="color: yellow">from initial input to second hidden layer</span>), <em>*# learnable parameters</em> =  25(# neurons of first hidden layer) * 25(# neurons of second hidden layer) + 25(bias) = 650</p>
   </li>
   <li>
     <p>Ouput, <em>*# learnable parameters</em> = 25(neurons of second hidden layer) * 1(output) + 1(bias) = 150</p>
@@ -1086,7 +1088,7 @@
 <blockquote>
   <p>Tot. params: 826</p>
   <blockquote>
-    <p>입출력 값에 대한 최선의 상관관계 도출을 위해 훈련되거나 조정되는 피라미터 총 개수이다. <span style="color: blue"># parameters that have been adjusted for drawing better correlation between input and output</span></p>
+    <p>입출력 값에 대한 최선의 상관관계 도출을 위해 훈련되거나 조정되는 피라미터 총 개수이다. <span style="color: yellow"># parameters that have been adjusted for drawing better correlation between input and output</span></p>
   </blockquote>
 </blockquote>
 
@@ -1098,7 +1100,7 @@
 <blockquote>
   <p>Optimizer</p>
   <blockquote>
-    <p>모델이 학습과정에서 어떻게 가중치 최적화를 이뤄내는지에 대한 방법을 제시한다. <span style="color: blue">presenting how to achieve weight optimization in the process of training model</span></p>
+    <p>모델이 학습과정에서 어떻게 가중치 최적화를 이뤄내는지에 대한 방법을 제시한다. <span style="color: yellow">presenting how to achieve weight optimization in the process of training model</span></p>
 
     <p><a href="https://github.com/hchoi256/lg-ai-auto-driving-radar-sensor/blob/main/supervised-learning/gradient-discent.md">adam</a></p>
   </blockquote>
@@ -1107,13 +1109,13 @@
 <blockquote>
   <p>loss (손실함수)</p>
   <blockquote>
-    <p>모델의 정확도를 판단하는데 사용되는 방법론이다. <span style="color: blue">method to determine model’s accuracy</span></p>
+    <p>모델의 정확도를 판단하는데 사용되는 방법론이다. <span style="color: yellow">method to determine model’s accuracy</span></p>
 
     <p>mean_squared_error (평균제곱오차)</p>
     <blockquote>
       <blockquote>
 
-        <p>예측값과 실제값의 차이를 나타내는 정도로, 그 값이 작을수록 실제값과 유사하여 정확한 예측을 해냈다고 볼 수 있다. <span style="color: blue">difference between estimate and actual value (if low value, then better precdiction)</span></p>
+        <p>예측값과 실제값의 차이를 나타내는 정도로, 그 값이 작을수록 실제값과 유사하여 정확한 예측을 해냈다고 볼 수 있다. <span style="color: yellow">difference between estimate and actual value (if low value, then better precdiction)</span></p>
       </blockquote>
     </blockquote>
   </blockquote>
@@ -1124,12 +1126,12 @@
 
 <p><img src="https://user-images.githubusercontent.com/39285147/180390662-b659a0d9-6f49-46cd-bb01-acd9cf2bd4b5.png" alt="image" /></p>
 
-<p>모델이 학습하면서 epoch를 거듭함에 따라 loss(여기서는 평균제곱오차 방법을 사용)의 값이 줄어드는 것을 볼 수 있다. <span style="color: blue">Loss is getting smaller as epoches go by.</span></p>
+<p>모델이 학습하면서 epoch를 거듭함에 따라 loss(여기서는 평균제곱오차 방법을 사용)의 값이 줄어드는 것을 볼 수 있다. <span style="color: yellow">Loss is getting smaller as epoches go by.</span></p>
 
 <ul>
-  <li>epoch: 배치 사이즈만큼의 하나의 학습을 몇번 시행할지 결정한다. 그 크기가 모델 성능을 향상시키는 최대 임계치에 가까워 질수록 더 정확한 예측을 해낼 수 있다. <span style="color: blue">Train the batch size of data in one epoch</span></li>
-  <li>batch_size: 한 번에 학습할 훈련 데이터 개수 <span style="color: blue"># training data at one epoch</span></li>
-  <li>verbose: 디폴트 0. 1로 지정하면 Epoch의 상황과, loss의 값이 output에 보여준다. <span style="color: blue">1: show epoch and loss in the output</span></li>
+  <li>epoch: 배치 사이즈만큼의 하나의 학습을 몇번 시행할지 결정한다. 그 크기가 모델 성능을 향상시키는 최대 임계치에 가까워 질수록 더 정확한 예측을 해낼 수 있다. <span style="color: yellow">Train the batch size of data in one epoch</span></li>
+  <li>batch_size: 한 번에 학습할 훈련 데이터 개수 <span style="color: yellow"># training data at one epoch</span></li>
+  <li>verbose: 디폴트 0. 1로 지정하면 Epoch의 상황과, loss의 값이 output에 보여준다. <span style="color: yellow">1: show epoch and loss in the output</span></li>
   <li><a href="https://github.com/hchoi256/ai-terms/blob/main/README.md">validation_split</a></li>
 </ul>
 
@@ -1147,9 +1149,9 @@
 
 <p><img src="https://user-images.githubusercontent.com/39285147/180432355-41591eba-81ac-4625-a7a9-52b8dcba0c7a.png" alt="image" /></p>
 
-<p>위 그래프에서 손실함수의 분포의 에포크가 [0, 4] 사이의 어느 임계치에서부터 크게 줄어들지 않는 것을 볼 수 있다. <span style="color: blue">In the graph above, you can see epoch at around 3 has stopped plummeting.</span></p>
+<p>위 그래프에서 손실함수의 분포의 에포크가 [0, 4] 사이의 어느 임계치에서부터 크게 줄어들지 않는 것을 볼 수 있다. <span style="color: yellow">In the graph above, you can see epoch at around 3 has stopped plummeting.</span></p>
 
-<p>이를 통하여 우리는 적당한 에포크 개수를 도출할 수 있을 것이다. <span style="color: blue">This gives us information about the best number of epoch to train the model. </span></p>
+<p>이를 통하여 우리는 적당한 에포크 개수를 도출할 수 있을 것이다. <span style="color: yellow">This gives us information about the best number of epoch to train the model. </span></p>
 
 <h1 id="model-prediction">Model Prediction</h1>
 
@@ -1253,126 +1255,32 @@
         <img src="/assets/images/posts/nlp-thumbnail.jpg" alt="">
       </div>
     
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <h2 class="archive__item-title" itemprop="headline">
       
-        <a href="/nlp/nlp-NER/" rel="permalink">NLP - Part 7: Name Entity Recognition (NER) 앱
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.16</p>
+      
+      
+        <a href="/nlp/nlp-NER/" rel="permalink">NLP - Part 6: Name Entity Recognition (NER) 앱
 </a>
       
     </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
         
-          최대 1 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">사전 설정
-</p>
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#nlp" class="page__taxonomy-item-category" rel="tag">NLP</a>
+                    
+                    
+                    <a href="/tags/#ner" class="page__taxonomy-item-tag" rel="tag">NER</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#nlp" class="page__taxonomy-item-tag" rel="tag">NLP</a>
+                
+            </span>
+        </span>
   </article>
 </div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/assets/images/posts/teeko.png" alt="">
-      </div>
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/others/ml-teeko-minimax/" rel="permalink">Minimax 알고리즘 - Teeko Game
-</a>
-      
-    </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          12 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">Minimax 알고리즘을 활용해서 Teeko 게임을 구현한다.
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/assets/images/posts/q-learning.png" alt="">
-      </div>
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/rl/ml-reinforcement-learning-q-learning/" rel="permalink">Reinforcement Learning - Q-Learning 알고리즘
-</a>
-      
-    </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          최대 1 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">Q-Learning 알고리즘을 활용한 예제이다.
-</p>
-  </article>
-</div>
-
         
           
 
@@ -1385,38 +1293,32 @@
         <img src="/assets/images/posts/pca-image-compression.png" alt="">
       </div>
     
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.14</p>
+      
       
         <a href="/usl/ml-pca/" rel="permalink">PCA - Image Compression(이미지 압축)
 </a>
       
     </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
         
-          2 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">PCA를 이용해서 이미지 압축을 진행해보자.
-</p>
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#usl" class="page__taxonomy-item-category" rel="tag">USL</a>
+                    
+                    
+                    <a href="/tags/#image-compression" class="page__taxonomy-item-tag" rel="tag">Image Compression</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#pca" class="page__taxonomy-item-tag" rel="tag">PCA</a>
+                
+            </span>
+        </span>
   </article>
 </div>
-
         
           
 
@@ -1429,82 +1331,36 @@
         <img src="/assets/images/posts/hac.png" alt="">
       </div>
     
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.14</p>
+      
       
         <a href="/usl/ml-hca/" rel="permalink">Hierarchical Agglomerate Clustering(HAC) - 포켓몬 군집화
 </a>
       
     </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
         
-          4 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">Hierarchical Agglomerate Clustering(HAC) 이용해서 서로 다른 특성을 공유하는 Pokemon들을 군집으로 묶어보자.
-</p>
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#usl" class="page__taxonomy-item-category" rel="tag">USL</a>
+                    
+                    
+                    <a href="/tags/#clustering" class="page__taxonomy-item-tag" rel="tag">Clustering</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#hac" class="page__taxonomy-item-tag" rel="tag">HAC</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#pokemon" class="page__taxonomy-item-tag" rel="tag">Pokemon</a>
+                
+            </span>
+        </span>
   </article>
 </div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/assets/images/posts/8-tile-puzzle.png" alt="">
-      </div>
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/others/ml-8-tile-puzzle-a-search/" rel="permalink">A* Search - 8-tile Puzzle Game
-</a>
-      
-    </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          최대 1 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">A-star 알고리즘을 활용해서 8-tile Puzzle 게임을 구현한다.
-</p>
-  </article>
-</div>
-
         
           
 
@@ -1517,38 +1373,158 @@
         <img src="/assets/images/posts/lenet.JPG" alt="">
       </div>
     
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.14</p>
+      
       
         <a href="/sl/dl-miniplace-classification/" rel="permalink">LeNet 신경망 - MiniPlaces 이미지 분류
 </a>
       
     </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
         
-          2 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">LeNet 신경망을 활용해서 MiniPlaces 데이터셋 이미지 분류 작업을 수행한다.
-</p>
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#sl" class="page__taxonomy-item-category" rel="tag">SL</a>
+                    
+                    
+                    <a href="/tags/#classification" class="page__taxonomy-item-tag" rel="tag">Classification</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#lenet" class="page__taxonomy-item-tag" rel="tag">LeNet</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#pytorch" class="page__taxonomy-item-tag" rel="tag">PyTorch</a>
+                
+            </span>
+        </span>
   </article>
 </div>
+        
+          
 
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/q-learning.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.14</p>
+      
+      
+        <a href="/rl/ml-reinforcement-learning-q-learning/" rel="permalink">Reinforcement Learning - Q-Learning 알고리즘
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#rl" class="page__taxonomy-item-category" rel="tag">RL</a>
+                    
+                    
+                    <a href="/tags/#q-learning" class="page__taxonomy-item-tag" rel="tag">Q-learning</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#reinforcement-learning" class="page__taxonomy-item-tag" rel="tag">Reinforcement Learning</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/teeko.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.14</p>
+      
+      
+        <a href="/others/ml-teeko-minimax/" rel="permalink">Minimax 알고리즘 - Teeko Game
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#others" class="page__taxonomy-item-category" rel="tag">Others</a>
+                    
+                    
+                    <a href="/tags/#machine-learning" class="page__taxonomy-item-tag" rel="tag">Machine Learning</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#minimax" class="page__taxonomy-item-tag" rel="tag">Minimax</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#teeko-board-game" class="page__taxonomy-item-tag" rel="tag">Teeko Board Game</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/8-tile-puzzle.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.14</p>
+      
+      
+        <a href="/others/ml-8-tile-puzzle-a-search/" rel="permalink">A* Search - 8-tile Puzzle Game
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#others" class="page__taxonomy-item-category" rel="tag">Others</a>
+                    
+                    
+                    <a href="/tags/#a-search" class="page__taxonomy-item-tag" rel="tag">A* Search</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#game" class="page__taxonomy-item-tag" rel="tag">Game</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#machine-learning" class="page__taxonomy-item-tag" rel="tag">Machine Learning</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
         
           
 
@@ -1561,40 +1537,36 @@
         <img src="/assets/images/posts/streamlit-thumbnail.png" alt="">
       </div>
     
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.13</p>
+      
       
         <a href="/python/python-web-server-exercise/" rel="permalink">Python: PART 2 - Web Application without Server
 </a>
       
     </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
         
-          2 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">
-
-강아지 품종 분류 AI 웹페이지
-</p>
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#python" class="page__taxonomy-item-category" rel="tag">Python</a>
+                    
+                    
+                    <a href="/tags/#opencv" class="page__taxonomy-item-tag" rel="tag">Opencv</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#python-web-app" class="page__taxonomy-item-tag" rel="tag">Python Web App</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#streamlit" class="page__taxonomy-item-tag" rel="tag">Streamlit</a>
+                
+            </span>
+        </span>
   </article>
 </div>
-
         
           
 
@@ -1607,38 +1579,32 @@
         <img src="/assets/images/posts/ai-thumbnail.jpg" alt="">
       </div>
     
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.12</p>
+      
       
         <a href="/aipapernlp/ai-paper-ko-legal-nlp/" rel="permalink">[논문 분석] A Multi-Task Benchmark for Korean Legal Language Understanding and Judgement Prediction (arXiv 2022)
 </a>
       
     </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
         
-          4 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">
-</p>
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#aipapernlp" class="page__taxonomy-item-category" rel="tag">AIPaperNLP</a>
+                    
+                    
+                    <a href="/tags/#ai-research-paper" class="page__taxonomy-item-tag" rel="tag">AI Research Paper</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#kaist" class="page__taxonomy-item-tag" rel="tag">Kaist</a>
+                
+            </span>
+        </span>
   </article>
 </div>
-
         
           
 
@@ -1651,39 +1617,36 @@
         <img src="/assets/images/posts/bert-thumbnail.png" alt="">
       </div>
     
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.08</p>
+      
       
         <a href="/bert/bert-3/" rel="permalink">Part 3: BERT Language Model
 </a>
       
     </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
         
-          1 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">BERT
-Bi-directional transformer로 이루어진 언어모델로, BERT 언어모델 위에 1개의 classification layer만 부착하여 다양한 NLP task를 수행한다.
-</p>
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#bert" class="page__taxonomy-item-category" rel="tag">BERT</a>
+                    
+                    
+                    <a href="/tags/#bert" class="page__taxonomy-item-tag" rel="tag">BERT</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#language-model" class="page__taxonomy-item-tag" rel="tag">Language Model</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#nlp" class="page__taxonomy-item-tag" rel="tag">NLP</a>
+                
+            </span>
+        </span>
   </article>
 </div>
-
         
       </div>
     </div>
@@ -1742,6 +1705,20 @@ Bi-directional transformer로 이루어진 언어모델로, BERT 언어모델 �
 
 
     
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/sl/projects-1/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/sl/projects-1"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://jjunes.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
 
   
 

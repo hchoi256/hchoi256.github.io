@@ -104,6 +104,8 @@
 
 
     <!-- start custom head snippets -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1250314621726093"
+     crossorigin="anonymous"></script>
 
 <!-- insert favicons. use https://realfavicongenerator.net/ -->
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/logo.ico/apple-touch-icon.png">
@@ -558,9 +560,9 @@
                     
                 
                     
-                        <li><a href="/categories/USL" class="">비지도학습 (2)</a></li>
-                    
                 
+                    
+                        <li><a href="/categories/USL" class="">비지도학습 (2)</a></li>
                     
                 
             </ul>
@@ -591,9 +593,9 @@
                     
                 
                     
-                
-                    
                         <li><a href="/categories/RL" class="">강화학습 (1)</a></li>
+                    
+                
                     
                 
             </ul>
@@ -864,11 +866,11 @@
         <p class="notice--danger"><strong>[Notice]</strong> <a href="https://github.com/Dataweekends/zero_to_deep_learning_udemy">Reference</a></p>
 
 <h1 id="rnn">RNN</h1>
-<p>다른 딥러닝 모델처럼 은닉층 (Hidden Layer)을 제공할 뿐만 아니라, 자체적으로 지원하는 임시적인 루프가 존재한다; 시간이라는 차원이 추가된다. <span style="color: blue"> Not only does it provide a hidden layer like other deep learning models, but it also has its own ad hoc loops; <strong>A dimension of time</strong> is added. </span></p>
+<p>다른 딥러닝 모델처럼 은닉층 (Hidden Layer)을 제공할 뿐만 아니라, 자체적으로 지원하는 임시적인 루프가 존재한다; 시간이라는 차원이 추가된다. <span style="color: yellow"> Not only does it provide a hidden layer like other deep learning models, but it also has its own ad hoc loops; <strong>A dimension of time</strong> is added. </span></p>
 
-<p>따라서, RNN은 이전에서 발생한 일을 기억할 수 있다! <span style="color: blue"> Thus, RNNs can remember what happened in the past! </span></p>
+<p>따라서, RNN은 이전에서 발생한 일을 기억할 수 있다! <span style="color: yellow"> Thus, RNNs can remember what happened in the past! </span></p>
 
-<p>텍스트 시퀀스와 잘 잘동한다.<span style="color: blue"> Works well with text sequences. </span></p>
+<p>텍스트 시퀀스와 잘 잘동한다.<span style="color: yellow"> Works well with text sequences. </span></p>
 
 <h1 id="loading-the-dataset">Loading the dataset</h1>
 
@@ -884,7 +886,7 @@
 
 <p><img src="https://user-images.githubusercontent.com/39285147/182352758-1db7300d-249f-4ec2-b7f4-2b1f4e942a6f.png" alt="image" /></p>
 
-<p>상기 디렉토리에 <em>참조</em> 사이트에서 파일을 다운받자. <span style="color: blue"> Download the file from the <em>reference</em> site, then save it into the above directory. </span></p>
+<p>상기 디렉토리에 <em>참조</em> 사이트에서 파일을 다운받자. <span style="color: yellow"> Download the file from the <em>reference</em> site, then save it into the above directory. </span></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">describe</span><span class="p">()</span>
 </code></pre></div></div>
@@ -907,15 +909,15 @@
 
 <p><img src="https://user-images.githubusercontent.com/39285147/182361578-93cd0623-48b6-4191-8ddf-cf72e3c11e16.png" alt="image" /></p>
 
-<p>씨본 라이브러리를 활용하여 한 눈에 변수들 간 상관관계를 시각화했다. <span style="color: blue"> The correlation between variables was visualized at a glance using the Seabone library. </span></p>
+<p>씨본 라이브러리를 활용하여 한 눈에 변수들 간 상관관계를 시각화했다. <span style="color: yellow"> The correlation between variables was visualized at a glance using the Seabone library. </span></p>
 
-<p>‘Unadjusted’와 ‘Seasonally adjusted’는 서로 <strong>선형적인</strong> 상관관계가 있음을 발견할 수 있다. <span style="color: blue"> It can be found that ‘Unadjusted’ and ‘Seasonally adjusted’ have a <strong>linear</strong> correlation with each other. </span></p>
+<p>‘Unadjusted’와 ‘Seasonally adjusted’는 서로 <strong>선형적인</strong> 상관관계가 있음을 발견할 수 있다. <span style="color: yellow"> It can be found that ‘Unadjusted’ and ‘Seasonally adjusted’ have a <strong>linear</strong> correlation with each other. </span></p>
 
-<p>그렇다면, 이제 시간의 흐름에 따른 두 변수의 변화를 확인해보자. <span style="color: blue"> Now, let’s check the change of the two variables with the passage of time. </span></p>
+<p>그렇다면, 이제 시간의 흐름에 따른 두 변수의 변화를 확인해보자. <span style="color: yellow"> Now, let’s check the change of the two variables with the passage of time. </span></p>
 
 <h1 id="preprocessing">Preprocessing</h1>
 
-<p>시계열 데이터를 학습하기 위해서는 시간과 관련된 변수를 인덱스로 삼는 전처리 작업이 필수다. <span style="color: blue"> In order to address time series data, we should go through the process to have time-related variables as indexes. </span></p>
+<p>시계열 데이터를 학습하기 위해서는 시간과 관련된 변수를 인덱스로 삼는 전처리 작업이 필수다. <span style="color: yellow"> In order to address time series data, we should go through the process to have time-related variables as indexes. </span></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pandas.tseries.offsets</span> <span class="kn">import</span> <span class="n">MonthEnd</span>
 
@@ -950,11 +952,11 @@
 
 <p><img src="https://user-images.githubusercontent.com/39285147/182354623-4dd81c45-f931-4d14-96b0-0b3d2a96d1b6.png" alt="image" /></p>
 
-<p><strong>Training set</strong>: 2012년 까지의 데이터 <span style="color: blue"> Data before 2012 </span></p>
+<p><strong>Training set</strong>: 2012년 까지의 데이터 <span style="color: yellow"> Data before 2012 </span></p>
 
-<p><strong>Test set</strong>: 2012년 이후 데이터 <span style="color: blue"> Data after 2012 </span></p>
+<p><strong>Test set</strong>: 2012년 이후 데이터 <span style="color: yellow"> Data after 2012 </span></p>
 
-<p>파란 선은 ‘train’, 주황색은 ‘test’를 나타낸다. <span style="color: blue"> blue: train, orange: test</span></p>
+<p>파란 선은 ‘train’, 주황색은 ‘test’를 나타낸다. <span style="color: yellow"> blue: train, orange: test</span></p>
 
 <h1 id="feature-scaling">Feature Scaling</h1>
 
@@ -985,9 +987,9 @@
   <p><a href="https://github.com/hchoi256/ai-terms">MinMaxScaler</a></p>
 </blockquote>
 
-<p>신경망 학습에 이용하기 전 테이블 형태로써 데이터를 확인하기 위해 dataframe 형태로 변형하자. <span style="color: blue"> Before using it for neural network training, let’s transform it into a dataframe format to check the data in a table format.</span></p>
+<p>신경망 학습에 이용하기 전 테이블 형태로써 데이터를 확인하기 위해 dataframe 형태로 변형하자. <span style="color: yellow"> Before using it for neural network training, let’s transform it into a dataframe format to check the data in a table format.</span></p>
 
-<p>직관적으로 확인해보기 위해 12달의 시계열 분석을 위한 테이블을 형성해보자. <span style="color: blue"> For intuition, let’s form a table for time series analysis of 13 months.</span></p>
+<p>직관적으로 확인해보기 위해 12달의 시계열 분석을 위한 테이블을 형성해보자. <span style="color: yellow"> For intuition, let’s form a table for time series analysis of 13 months.</span></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train_sc_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">train_sc</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s">'Scaled'</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">train</span><span class="p">.</span><span class="n">index</span><span class="p">)</span>
 <span class="n">test_sc_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">test_sc</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s">'Scaled'</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">test</span><span class="p">.</span><span class="n">index</span><span class="p">)</span>
@@ -1000,7 +1002,7 @@
 
 <p><img src="https://user-images.githubusercontent.com/39285147/182356292-733ab690-76e4-47a3-94f2-e43a66de6855.png" alt="image" /></p>
 
-<p>테이블에서 시간의 흐름에 따라 시계열 값들 또한 누적됨을 확인해볼 수 있다. <span style="color: blue"> In the table, it can be seen that the time series values ​​are accumulated over time.</span></p>
+<p>테이블에서 시간의 흐름에 따라 시계열 값들 또한 누적됨을 확인해볼 수 있다. <span style="color: yellow"> In the table, it can be seen that the time series values ​​are accumulated over time.</span></p>
 
 <h1 id="splitting-the-dataset-into-the-training-set-and-test-set">Splitting the dataset into the Training set and Test set</h1>
 
@@ -1011,7 +1013,7 @@
 <span class="n">y_test</span> <span class="o">=</span> <span class="n">test_sc_df</span><span class="p">.</span><span class="n">dropna</span><span class="p">()[[</span><span class="s">'Scaled'</span><span class="p">]]</span>
 </code></pre></div></div>
 
-<p>결측치가 존재하는 행을 제외한 후, 신경망 학습에 불필요한 ‘Scaled’를 제거한다. <span style="color: blue"> After excluding rows with missing values, ‘Scaled’ unnecessary for neural network training is removed. </span></p>
+<p>결측치가 존재하는 행을 제외한 후, 신경망 학습에 불필요한 ‘Scaled’를 제거한다. <span style="color: yellow"> After excluding rows with missing values, ‘Scaled’ unnecessary for neural network training is removed. </span></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Converting to ndarray
 </span><span class="n">X_train</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">.</span><span class="n">values</span>
@@ -1021,19 +1023,19 @@
 <span class="n">y_test</span> <span class="o">=</span> <span class="n">y_test</span><span class="p">.</span><span class="n">values</span>
 </code></pre></div></div>
 
-<p>시각화 목적을 달성한 dataframe 형태를 다시 ndarray로 바꿔준다. <span style="color: blue"> Changing the dataframe type that has achieved the purpose of visualization back to ndarray. </span></p>
+<p>시각화 목적을 달성한 dataframe 형태를 다시 ndarray로 바꿔준다. <span style="color: yellow"> Changing the dataframe type that has achieved the purpose of visualization back to ndarray. </span></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># reshape(size, timestep, feature)
 </span><span class="n">X_train_t</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">X_train</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">X_test_t</span> <span class="o">=</span> <span class="n">X_test</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">X_test</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>기존 신경망 학습에 사용되는 X는 2차원 배열 형태여야 하지만, RNN은 ‘시간’이라는   새로운 차원이 존재한다.<span style="color: blue"> Neural network training usually requires 2-dimensional input data, but RNNs have a new dimension called ‘time’. </span></p>
+<p>기존 신경망 학습에 사용되는 X는 2차원 배열 형태여야 하지만, RNN은 ‘시간’이라는   새로운 차원이 존재한다.<span style="color: yellow"> Neural network training usually requires 2-dimensional input data, but RNNs have a new dimension called ‘time’. </span></p>
 
-<p>따라서, 2차원이 아닌 3차원 배열 형태로 바꿔줘야 한다. <span style="color: blue"> Therefore, the input must be converted to a 3D array rather than a 2D. </span></p>
+<p>따라서, 2차원이 아닌 3차원 배열 형태로 바꿔줘야 한다. <span style="color: yellow"> Therefore, the input must be converted to a 3D array rather than a 2D. </span></p>
 
 <h1 id="building-the-model-lstm">Building the model: LSTM</h1>
-<p>LSTM은 RNN이 가진 임시적인 루프를 좀더 장기적으로 유지할 수 있도록 설계되었다. <span style="color: blue"> LSTM is designed to maintain the temporary loop of RNN for a longer period of time. </span></p>
+<p>LSTM은 RNN이 가진 임시적인 루프를 좀더 장기적으로 유지할 수 있도록 설계되었다. <span style="color: yellow"> LSTM is designed to maintain the temporary loop of RNN for a longer period of time. </span></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># LSTM
 </span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="n">tf</span>
@@ -1062,9 +1064,9 @@
     _________________________________________________________________
 </code></pre></div></div>
 
-<p>LSTM 모델의 입력층 차원으로 (12, 1)을 넣어줬다. <span style="color: blue"> We put (12, 1) as the dimension of the input layer of the LSTM model. </span></p>
+<p>LSTM 모델의 입력층 차원으로 (12, 1)을 넣어줬다. <span style="color: yellow"> We put (12, 1) as the dimension of the input layer of the LSTM model. </span></p>
 
-<p>여기서, 12는 시간 차원으로 12달을 의미한다. <span style="color: blue"> Here, 12 means 12 months in the time dimension.</span></p>
+<p>여기서, 12는 시간 차원으로 12달을 의미한다. <span style="color: yellow"> Here, 12 means 12 months in the time dimension.</span></p>
 
 <h1 id="training-the-model">Training the model</h1>
 
@@ -1091,9 +1093,9 @@
     Epoch 7: early stopping
 </code></pre></div></div>
 
-<p>EarlyStopping을 활용해서 손실함수 변화가 1번 이상 없다면 학습을 중지하게 설계했다.<span style="color: blue"> By using EarlyStopping, it is designed to stop learning if there is no change in the loss function more than once.</span></p>
+<p>EarlyStopping을 활용해서 손실함수 변화가 1번 이상 없다면 학습을 중지하게 설계했다.<span style="color: yellow"> By using EarlyStopping, it is designed to stop learning if there is no change in the loss function more than once.</span></p>
 
-<p>뉴런 개수와 같은 요소들은 <strong>자율적으로</strong> 설정한다.<span style="color: blue"> Factors such as the number of neurons are set <strong>autonomously</strong>.</span></p>
+<p>뉴런 개수와 같은 요소들은 <strong>자율적으로</strong> 설정한다.<span style="color: yellow"> Factors such as the number of neurons are set <strong>autonomously</strong>.</span></p>
 
 <h1 id="predicting-the-test-set">Predicting the Test set</h1>
 
@@ -1223,7 +1225,7 @@
 ">이전</a>
     
     
-      <a href="/nlp/nlp-basic-text-classification/" class="pagination--pager" title="NLP: Data Preprocessing
+      <a href="/sl/dl-ann-classification-diabetes/" class="pagination--pager" title="ANN - Classification: Diabetes Prediction
 ">다음</a>
     
   </nav>
@@ -1250,126 +1252,32 @@
         <img src="/assets/images/posts/nlp-thumbnail.jpg" alt="">
       </div>
     
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <h2 class="archive__item-title" itemprop="headline">
       
-        <a href="/nlp/nlp-NER/" rel="permalink">NLP - Part 7: Name Entity Recognition (NER) 앱
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.16</p>
+      
+      
+        <a href="/nlp/nlp-NER/" rel="permalink">NLP - Part 6: Name Entity Recognition (NER) 앱
 </a>
       
     </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
         
-          최대 1 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">사전 설정
-</p>
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#nlp" class="page__taxonomy-item-category" rel="tag">NLP</a>
+                    
+                    
+                    <a href="/tags/#ner" class="page__taxonomy-item-tag" rel="tag">NER</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#nlp" class="page__taxonomy-item-tag" rel="tag">NLP</a>
+                
+            </span>
+        </span>
   </article>
 </div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/assets/images/posts/teeko.png" alt="">
-      </div>
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/others/ml-teeko-minimax/" rel="permalink">Minimax 알고리즘 - Teeko Game
-</a>
-      
-    </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          12 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">Minimax 알고리즘을 활용해서 Teeko 게임을 구현한다.
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/assets/images/posts/q-learning.png" alt="">
-      </div>
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/rl/ml-reinforcement-learning-q-learning/" rel="permalink">Reinforcement Learning - Q-Learning 알고리즘
-</a>
-      
-    </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          최대 1 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">Q-Learning 알고리즘을 활용한 예제이다.
-</p>
-  </article>
-</div>
-
         
           
 
@@ -1382,38 +1290,32 @@
         <img src="/assets/images/posts/pca-image-compression.png" alt="">
       </div>
     
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.14</p>
+      
       
         <a href="/usl/ml-pca/" rel="permalink">PCA - Image Compression(이미지 압축)
 </a>
       
     </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
         
-          2 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">PCA를 이용해서 이미지 압축을 진행해보자.
-</p>
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#usl" class="page__taxonomy-item-category" rel="tag">USL</a>
+                    
+                    
+                    <a href="/tags/#image-compression" class="page__taxonomy-item-tag" rel="tag">Image Compression</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#pca" class="page__taxonomy-item-tag" rel="tag">PCA</a>
+                
+            </span>
+        </span>
   </article>
 </div>
-
         
           
 
@@ -1426,82 +1328,36 @@
         <img src="/assets/images/posts/hac.png" alt="">
       </div>
     
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.14</p>
+      
       
         <a href="/usl/ml-hca/" rel="permalink">Hierarchical Agglomerate Clustering(HAC) - 포켓몬 군집화
 </a>
       
     </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
         
-          4 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">Hierarchical Agglomerate Clustering(HAC) 이용해서 서로 다른 특성을 공유하는 Pokemon들을 군집으로 묶어보자.
-</p>
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#usl" class="page__taxonomy-item-category" rel="tag">USL</a>
+                    
+                    
+                    <a href="/tags/#clustering" class="page__taxonomy-item-tag" rel="tag">Clustering</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#hac" class="page__taxonomy-item-tag" rel="tag">HAC</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#pokemon" class="page__taxonomy-item-tag" rel="tag">Pokemon</a>
+                
+            </span>
+        </span>
   </article>
 </div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/assets/images/posts/8-tile-puzzle.png" alt="">
-      </div>
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/others/ml-8-tile-puzzle-a-search/" rel="permalink">A* Search - 8-tile Puzzle Game
-</a>
-      
-    </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          최대 1 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">A-star 알고리즘을 활용해서 8-tile Puzzle 게임을 구현한다.
-</p>
-  </article>
-</div>
-
         
           
 
@@ -1514,38 +1370,158 @@
         <img src="/assets/images/posts/lenet.JPG" alt="">
       </div>
     
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.14</p>
+      
       
         <a href="/sl/dl-miniplace-classification/" rel="permalink">LeNet 신경망 - MiniPlaces 이미지 분류
 </a>
       
     </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
         
-          2 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">LeNet 신경망을 활용해서 MiniPlaces 데이터셋 이미지 분류 작업을 수행한다.
-</p>
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#sl" class="page__taxonomy-item-category" rel="tag">SL</a>
+                    
+                    
+                    <a href="/tags/#classification" class="page__taxonomy-item-tag" rel="tag">Classification</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#lenet" class="page__taxonomy-item-tag" rel="tag">LeNet</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#pytorch" class="page__taxonomy-item-tag" rel="tag">PyTorch</a>
+                
+            </span>
+        </span>
   </article>
 </div>
+        
+          
 
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/q-learning.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.14</p>
+      
+      
+        <a href="/rl/ml-reinforcement-learning-q-learning/" rel="permalink">Reinforcement Learning - Q-Learning 알고리즘
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#rl" class="page__taxonomy-item-category" rel="tag">RL</a>
+                    
+                    
+                    <a href="/tags/#q-learning" class="page__taxonomy-item-tag" rel="tag">Q-learning</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#reinforcement-learning" class="page__taxonomy-item-tag" rel="tag">Reinforcement Learning</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/teeko.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.14</p>
+      
+      
+        <a href="/others/ml-teeko-minimax/" rel="permalink">Minimax 알고리즘 - Teeko Game
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#others" class="page__taxonomy-item-category" rel="tag">Others</a>
+                    
+                    
+                    <a href="/tags/#machine-learning" class="page__taxonomy-item-tag" rel="tag">Machine Learning</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#minimax" class="page__taxonomy-item-tag" rel="tag">Minimax</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#teeko-board-game" class="page__taxonomy-item-tag" rel="tag">Teeko Board Game</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/8-tile-puzzle.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.14</p>
+      
+      
+        <a href="/others/ml-8-tile-puzzle-a-search/" rel="permalink">A* Search - 8-tile Puzzle Game
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#others" class="page__taxonomy-item-category" rel="tag">Others</a>
+                    
+                    
+                    <a href="/tags/#a-search" class="page__taxonomy-item-tag" rel="tag">A* Search</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#game" class="page__taxonomy-item-tag" rel="tag">Game</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#machine-learning" class="page__taxonomy-item-tag" rel="tag">Machine Learning</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
         
           
 
@@ -1558,40 +1534,36 @@
         <img src="/assets/images/posts/streamlit-thumbnail.png" alt="">
       </div>
     
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.13</p>
+      
       
         <a href="/python/python-web-server-exercise/" rel="permalink">Python: PART 2 - Web Application without Server
 </a>
       
     </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
         
-          2 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">
-
-강아지 품종 분류 AI 웹페이지
-</p>
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#python" class="page__taxonomy-item-category" rel="tag">Python</a>
+                    
+                    
+                    <a href="/tags/#opencv" class="page__taxonomy-item-tag" rel="tag">Opencv</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#python-web-app" class="page__taxonomy-item-tag" rel="tag">Python Web App</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#streamlit" class="page__taxonomy-item-tag" rel="tag">Streamlit</a>
+                
+            </span>
+        </span>
   </article>
 </div>
-
         
           
 
@@ -1604,38 +1576,32 @@
         <img src="/assets/images/posts/ai-thumbnail.jpg" alt="">
       </div>
     
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.12</p>
+      
       
         <a href="/aipapernlp/ai-paper-ko-legal-nlp/" rel="permalink">[논문 분석] A Multi-Task Benchmark for Korean Legal Language Understanding and Judgement Prediction (arXiv 2022)
 </a>
       
     </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
         
-          4 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">
-</p>
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#aipapernlp" class="page__taxonomy-item-category" rel="tag">AIPaperNLP</a>
+                    
+                    
+                    <a href="/tags/#ai-research-paper" class="page__taxonomy-item-tag" rel="tag">AI Research Paper</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#kaist" class="page__taxonomy-item-tag" rel="tag">Kaist</a>
+                
+            </span>
+        </span>
   </article>
 </div>
-
         
           
 
@@ -1648,39 +1614,36 @@
         <img src="/assets/images/posts/bert-thumbnail.png" alt="">
       </div>
     
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.08</p>
+      
       
         <a href="/bert/bert-3/" rel="permalink">Part 3: BERT Language Model
 </a>
       
     </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
         
-          1 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">BERT
-Bi-directional transformer로 이루어진 언어모델로, BERT 언어모델 위에 1개의 classification layer만 부착하여 다양한 NLP task를 수행한다.
-</p>
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#bert" class="page__taxonomy-item-category" rel="tag">BERT</a>
+                    
+                    
+                    <a href="/tags/#bert" class="page__taxonomy-item-tag" rel="tag">BERT</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#language-model" class="page__taxonomy-item-tag" rel="tag">Language Model</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#nlp" class="page__taxonomy-item-tag" rel="tag">NLP</a>
+                
+            </span>
+        </span>
   </article>
 </div>
-
         
       </div>
     </div>
@@ -1739,6 +1702,20 @@ Bi-directional transformer로 이루어진 언어모델로, BERT 언어모델 �
 
 
     
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/sl/dl-rnn-lstm/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/sl/dl-rnn-lstm"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://jjunes.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
 
   
 

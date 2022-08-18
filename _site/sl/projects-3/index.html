@@ -104,6 +104,8 @@
 
 
     <!-- start custom head snippets -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1250314621726093"
+     crossorigin="anonymous"></script>
 
 <!-- insert favicons. use https://realfavicongenerator.net/ -->
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/logo.ico/apple-touch-icon.png">
@@ -558,9 +560,9 @@
                     
                 
                     
-                        <li><a href="/categories/USL" class="">비지도학습 (2)</a></li>
-                    
                 
+                    
+                        <li><a href="/categories/USL" class="">비지도학습 (2)</a></li>
                     
                 
             </ul>
@@ -591,9 +593,9 @@
                     
                 
                     
-                
-                    
                         <li><a href="/categories/RL" class="">강화학습 (1)</a></li>
+                    
+                
                     
                 
             </ul>
@@ -865,13 +867,13 @@
 <p class="notice--danger"><strong>[Notice]</strong> <a href="https://github.com/hchoi256/machine-learning-development">download here</a></p>
 
 <h1 id="learning-goals">Learning Goals</h1>
-<p><strong>시계열 예측</strong>을 위한 <strong>페이스북 Propjet</strong> 이해 <span style="color: blue"> Understanding <strong>Facebook Propjet</strong> for <strong>Time Series Prediction</strong> </span></p>
+<p><strong>시계열 예측</strong>을 위한 <strong>페이스북 Propjet</strong> 이해 <span style="color: yellow"> Understanding <strong>Facebook Propjet</strong> for <strong>Time Series Prediction</strong> </span></p>
 
 <h1 id="part-1-chicago-crime-rate">PART 1: Chicago Crime Rate</h1>
 <p><img src="https://user-images.githubusercontent.com/39285147/180627186-59e3e369-89c7-4607-b533-0f62794fcde8.png" alt="image" /></p>
 
 <h2 id="description">Description</h2>
-<p>절도범이 어느 시간대에 가장 잘 잡히는지, 범죄율이 올라가는 가장 높은 시간대는 언제인지 등을 관찰해보고 Prophet 활용하여 미래 ‘Crime’ 결과도 예측해본다. <span style="color: blue"> Observing when thieves are best caught and when the crime rate rises the most, and predict future ‘Crime’ results using Prophet. </span></p>
+<p>절도범이 어느 시간대에 가장 잘 잡히는지, 범죄율이 올라가는 가장 높은 시간대는 언제인지 등을 관찰해보고 Prophet 활용하여 미래 ‘Crime’ 결과도 예측해본다. <span style="color: yellow"> Observing when thieves are best caught and when the crime rate rises the most, and predict future ‘Crime’ results using Prophet. </span></p>
 
 <h2 id="observing-the-dataset">Observing the dataset</h2>
 <p><strong>Dataset contains the following columns</strong>:</p>
@@ -930,12 +932,12 @@
 </code></pre></div></div>
 
 <blockquote>
-  <p><em>inplace</em>: 메모리에서 실제열(= 불필요한열)을 삭제한다 <span style="color: blue"> Delete real rows (= unnecessary rows) from memory</span></p>
+  <p><em>inplace</em>: 메모리에서 실제열(= 불필요한열)을 삭제한다 <span style="color: yellow"> Delete real rows (= unnecessary rows) from memory</span></p>
 
-  <p><em>axis=1</em>: 전체 열을 탈락시킨다<span style="color: blue"> dissipating all heat</span></p>
+  <p><em>axis=1</em>: 전체 열을 탈락시킨다<span style="color: yellow"> dissipating all heat</span></p>
 </blockquote>
 
-<p>하기 코드는 이 프로젝트의 시계열 처리에 수반되는 전처리 과정이다.<span style="color: blue"> The following code is the preprocessing process involved in the time series processing of this project. </span></p>
+<p>하기 코드는 이 프로젝트의 시계열 처리에 수반되는 전처리 과정이다.<span style="color: yellow"> The following code is the preprocessing process involved in the time series processing of this project. </span></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Date 형식 수정 Modifying Date Format
 </span><span class="n">chicago_df</span><span class="p">.</span><span class="n">Date</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">chicago_df</span><span class="p">.</span><span class="n">Date</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s">'%m/%d/%Y %I:%M:%S %p'</span><span class="p">)</span>
@@ -946,7 +948,7 @@
 </code></pre></div></div>
 
 <blockquote>
-  <p><em>DatetimeIndex</em>: 특정한 순간에 기록된 타임스탬프(timestamp) 형식의 시계열 자료를 다루기 위한 인덱스 <span style="color: blue"> Index for handling time series data in timestamp format recorded at a specific moment</span></p>
+  <p><em>DatetimeIndex</em>: 특정한 순간에 기록된 타임스탬프(timestamp) 형식의 시계열 자료를 다루기 위한 인덱스 <span style="color: yellow"> Index for handling time series data in timestamp format recorded at a specific moment</span></p>
 </blockquote>
 
 <h2 id="data-visualization">Data Visualization</h2>
@@ -964,7 +966,7 @@
 
 <p><img src="https://user-images.githubusercontent.com/39285147/180626028-84e51093-bcb4-40a8-99ea-575d68f0a53f.png" alt="image" /></p>
 
-<p>‘MOTOR VEHICLE THEFT’ 대략 20만 여개의 차량이 도난됐다. <span style="color: blue">‘MOTOR VEHICLE THEFT’ About 200,000 vehicles were stolen. </span></p>
+<p>‘MOTOR VEHICLE THEFT’ 대략 20만 여개의 차량이 도난됐다. <span style="color: yellow">‘MOTOR VEHICLE THEFT’ About 200,000 vehicles were stolen. </span></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 어느 지역에서 가장 폭력이 많이 발생했는가 Which region has the most violence?
 </span><span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
@@ -973,7 +975,7 @@
 
 <p><img src="https://user-images.githubusercontent.com/39285147/182013808-c0f8a601-7e9e-4599-9b2e-75098fdc4cb9.png" alt="image" /></p>
 
-<p>‘거리’에서 발생한 폭력이 가장 많은 것을 확인해볼 수 있다. <span style="color: blue"> It can be seen that the most violence occurred on the ‘street’.</span></p>
+<p>‘거리’에서 발생한 폭력이 가장 많은 것을 확인해볼 수 있다. <span style="color: yellow"> It can be seen that the most violence occurred on the ‘street’.</span></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 특정 연도에 범죄가 얼마나 발생했나 How many crimes occurred in a particular year
 </span><span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">chicago_df</span><span class="p">.</span><span class="n">resample</span><span class="p">(</span><span class="s">'Y'</span><span class="p">).</span><span class="n">size</span><span class="p">())</span> <span class="c1"># 연도(Y) 기준으로 resample하여 특정 연도에 발생한 샘플 개수(사건 수)를 도출 Resampling based on year (Y) to derive # samples (# events) that occurred in a specific year
@@ -2228,7 +2230,7 @@
 
 <p><img src="https://user-images.githubusercontent.com/39285147/180626434-50c9ad80-89f1-41b7-8f09-0b81df037201.png" alt="image" /></p>
 
-<p>시각화 자료에서 볼 수 있듯이 데이터에 포함된 2017년 이후의 연도 또한 Prophet을 통하여 표현이 가능하다. <span style="color: blue"> As can be seen from the visualization data, the years after 2017 included in the data can also be expressed through Prophet. </span></p>
+<p>시각화 자료에서 볼 수 있듯이 데이터에 포함된 2017년 이후의 연도 또한 Prophet을 통하여 표현이 가능하다. <span style="color: yellow"> As can be seen from the visualization data, the years after 2017 included in the data can also be expressed through Prophet. </span></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 예측된 추세가 어떤 모양일지 도출 Determining what the predicted trend will look like
 </span><span class="n">figure3</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="n">plot_components</span><span class="p">(</span><span class="n">forecast</span><span class="p">)</span>
@@ -2236,13 +2238,13 @@
 
 <p><img src="https://user-images.githubusercontent.com/39285147/180626451-4193c24f-4667-483b-867e-934386363c79.png" alt="image" /></p>
 
-<p>시카고와 같은 경우 그래프에서 7월달(여름)까지 범죄율이 상승하다가, 그 이후로 겨울을 맞아 날씨가 추워지면서 범죄율이 하락하는 현상을 관찰해볼 수 있다. <span style="color: blue"> In the case of Chicago, the graph shows that the crime rate rises until July (summer), and then the crime rate decreases as the weather gets colder in winter. </span></p>
+<p>시카고와 같은 경우 그래프에서 7월달(여름)까지 범죄율이 상승하다가, 그 이후로 겨울을 맞아 날씨가 추워지면서 범죄율이 하락하는 현상을 관찰해볼 수 있다. <span style="color: yellow"> In the case of Chicago, the graph shows that the crime rate rises until July (summer), and then the crime rate decreases as the weather gets colder in winter. </span></p>
 
 <h1 id="part-2-avocado-market">PART 2: Avocado Market</h1>
 <p><img src="https://user-images.githubusercontent.com/39285147/180627180-230065b5-cac5-4905-9275-9a3b8c9c0201.png" alt="image" /></p>
 
 <h2 id="description-1">Description</h2>
-<p>페이스북 Prophet을 사용해 미래 물가를 예측한다. <span style="color: blue"></span></p>
+<p>페이스북 Prophet을 사용해 미래 물가를 예측한다. <span style="color: yellow"></span></p>
 
 <h2 id="observing-the-dataset-1">Observing the dataset</h2>
 <p><strong>Some relevant columns in the dataset</strong>:</p>
@@ -2396,7 +2398,7 @@
 ">이전</a>
     
     
-      <a href="/sl/projects-4/" class="pagination--pager" title="LeNet - Traffic Signs Classification
+      <a href="/nlp/projects-5/" class="pagination--pager" title="NLP Basic
 ">다음</a>
     
   </nav>
@@ -2423,126 +2425,32 @@
         <img src="/assets/images/posts/nlp-thumbnail.jpg" alt="">
       </div>
     
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <h2 class="archive__item-title" itemprop="headline">
       
-        <a href="/nlp/nlp-NER/" rel="permalink">NLP - Part 7: Name Entity Recognition (NER) 앱
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.16</p>
+      
+      
+        <a href="/nlp/nlp-NER/" rel="permalink">NLP - Part 6: Name Entity Recognition (NER) 앱
 </a>
       
     </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
         
-          최대 1 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">사전 설정
-</p>
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#nlp" class="page__taxonomy-item-category" rel="tag">NLP</a>
+                    
+                    
+                    <a href="/tags/#ner" class="page__taxonomy-item-tag" rel="tag">NER</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#nlp" class="page__taxonomy-item-tag" rel="tag">NLP</a>
+                
+            </span>
+        </span>
   </article>
 </div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/assets/images/posts/teeko.png" alt="">
-      </div>
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/others/ml-teeko-minimax/" rel="permalink">Minimax 알고리즘 - Teeko Game
-</a>
-      
-    </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          12 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">Minimax 알고리즘을 활용해서 Teeko 게임을 구현한다.
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/assets/images/posts/q-learning.png" alt="">
-      </div>
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/rl/ml-reinforcement-learning-q-learning/" rel="permalink">Reinforcement Learning - Q-Learning 알고리즘
-</a>
-      
-    </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          최대 1 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">Q-Learning 알고리즘을 활용한 예제이다.
-</p>
-  </article>
-</div>
-
         
           
 
@@ -2555,38 +2463,32 @@
         <img src="/assets/images/posts/pca-image-compression.png" alt="">
       </div>
     
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.14</p>
+      
       
         <a href="/usl/ml-pca/" rel="permalink">PCA - Image Compression(이미지 압축)
 </a>
       
     </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
         
-          2 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">PCA를 이용해서 이미지 압축을 진행해보자.
-</p>
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#usl" class="page__taxonomy-item-category" rel="tag">USL</a>
+                    
+                    
+                    <a href="/tags/#image-compression" class="page__taxonomy-item-tag" rel="tag">Image Compression</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#pca" class="page__taxonomy-item-tag" rel="tag">PCA</a>
+                
+            </span>
+        </span>
   </article>
 </div>
-
         
           
 
@@ -2599,82 +2501,36 @@
         <img src="/assets/images/posts/hac.png" alt="">
       </div>
     
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.14</p>
+      
       
         <a href="/usl/ml-hca/" rel="permalink">Hierarchical Agglomerate Clustering(HAC) - 포켓몬 군집화
 </a>
       
     </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
         
-          4 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">Hierarchical Agglomerate Clustering(HAC) 이용해서 서로 다른 특성을 공유하는 Pokemon들을 군집으로 묶어보자.
-</p>
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#usl" class="page__taxonomy-item-category" rel="tag">USL</a>
+                    
+                    
+                    <a href="/tags/#clustering" class="page__taxonomy-item-tag" rel="tag">Clustering</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#hac" class="page__taxonomy-item-tag" rel="tag">HAC</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#pokemon" class="page__taxonomy-item-tag" rel="tag">Pokemon</a>
+                
+            </span>
+        </span>
   </article>
 </div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/assets/images/posts/8-tile-puzzle.png" alt="">
-      </div>
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/others/ml-8-tile-puzzle-a-search/" rel="permalink">A* Search - 8-tile Puzzle Game
-</a>
-      
-    </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          최대 1 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">A-star 알고리즘을 활용해서 8-tile Puzzle 게임을 구현한다.
-</p>
-  </article>
-</div>
-
         
           
 
@@ -2687,38 +2543,158 @@
         <img src="/assets/images/posts/lenet.JPG" alt="">
       </div>
     
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.14</p>
+      
       
         <a href="/sl/dl-miniplace-classification/" rel="permalink">LeNet 신경망 - MiniPlaces 이미지 분류
 </a>
       
     </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
         
-          2 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">LeNet 신경망을 활용해서 MiniPlaces 데이터셋 이미지 분류 작업을 수행한다.
-</p>
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#sl" class="page__taxonomy-item-category" rel="tag">SL</a>
+                    
+                    
+                    <a href="/tags/#classification" class="page__taxonomy-item-tag" rel="tag">Classification</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#lenet" class="page__taxonomy-item-tag" rel="tag">LeNet</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#pytorch" class="page__taxonomy-item-tag" rel="tag">PyTorch</a>
+                
+            </span>
+        </span>
   </article>
 </div>
+        
+          
 
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/q-learning.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.14</p>
+      
+      
+        <a href="/rl/ml-reinforcement-learning-q-learning/" rel="permalink">Reinforcement Learning - Q-Learning 알고리즘
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#rl" class="page__taxonomy-item-category" rel="tag">RL</a>
+                    
+                    
+                    <a href="/tags/#q-learning" class="page__taxonomy-item-tag" rel="tag">Q-learning</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#reinforcement-learning" class="page__taxonomy-item-tag" rel="tag">Reinforcement Learning</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/teeko.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.14</p>
+      
+      
+        <a href="/others/ml-teeko-minimax/" rel="permalink">Minimax 알고리즘 - Teeko Game
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#others" class="page__taxonomy-item-category" rel="tag">Others</a>
+                    
+                    
+                    <a href="/tags/#machine-learning" class="page__taxonomy-item-tag" rel="tag">Machine Learning</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#minimax" class="page__taxonomy-item-tag" rel="tag">Minimax</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#teeko-board-game" class="page__taxonomy-item-tag" rel="tag">Teeko Board Game</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/8-tile-puzzle.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.14</p>
+      
+      
+        <a href="/others/ml-8-tile-puzzle-a-search/" rel="permalink">A* Search - 8-tile Puzzle Game
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#others" class="page__taxonomy-item-category" rel="tag">Others</a>
+                    
+                    
+                    <a href="/tags/#a-search" class="page__taxonomy-item-tag" rel="tag">A* Search</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#game" class="page__taxonomy-item-tag" rel="tag">Game</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#machine-learning" class="page__taxonomy-item-tag" rel="tag">Machine Learning</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
         
           
 
@@ -2731,40 +2707,36 @@
         <img src="/assets/images/posts/streamlit-thumbnail.png" alt="">
       </div>
     
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.13</p>
+      
       
         <a href="/python/python-web-server-exercise/" rel="permalink">Python: PART 2 - Web Application without Server
 </a>
       
     </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
         
-          2 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">
-
-강아지 품종 분류 AI 웹페이지
-</p>
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#python" class="page__taxonomy-item-category" rel="tag">Python</a>
+                    
+                    
+                    <a href="/tags/#opencv" class="page__taxonomy-item-tag" rel="tag">Opencv</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#python-web-app" class="page__taxonomy-item-tag" rel="tag">Python Web App</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#streamlit" class="page__taxonomy-item-tag" rel="tag">Streamlit</a>
+                
+            </span>
+        </span>
   </article>
 </div>
-
         
           
 
@@ -2777,38 +2749,32 @@
         <img src="/assets/images/posts/ai-thumbnail.jpg" alt="">
       </div>
     
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.12</p>
+      
       
         <a href="/aipapernlp/ai-paper-ko-legal-nlp/" rel="permalink">[논문 분석] A Multi-Task Benchmark for Korean Legal Language Understanding and Judgement Prediction (arXiv 2022)
 </a>
       
     </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
         
-          4 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">
-</p>
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#aipapernlp" class="page__taxonomy-item-category" rel="tag">AIPaperNLP</a>
+                    
+                    
+                    <a href="/tags/#ai-research-paper" class="page__taxonomy-item-tag" rel="tag">AI Research Paper</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#kaist" class="page__taxonomy-item-tag" rel="tag">Kaist</a>
+                
+            </span>
+        </span>
   </article>
 </div>
-
         
           
 
@@ -2821,39 +2787,36 @@
         <img src="/assets/images/posts/bert-thumbnail.png" alt="">
       </div>
     
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.08</p>
+      
       
         <a href="/bert/bert-3/" rel="permalink">Part 3: BERT Language Model
 </a>
       
     </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
         
-          1 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">BERT
-Bi-directional transformer로 이루어진 언어모델로, BERT 언어모델 위에 1개의 classification layer만 부착하여 다양한 NLP task를 수행한다.
-</p>
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#bert" class="page__taxonomy-item-category" rel="tag">BERT</a>
+                    
+                    
+                    <a href="/tags/#bert" class="page__taxonomy-item-tag" rel="tag">BERT</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#language-model" class="page__taxonomy-item-tag" rel="tag">Language Model</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#nlp" class="page__taxonomy-item-tag" rel="tag">NLP</a>
+                
+            </span>
+        </span>
   </article>
 </div>
-
         
       </div>
     </div>
@@ -2912,6 +2875,20 @@ Bi-directional transformer로 이루어진 언어모델로, BERT 언어모델 �
 
 
     
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/sl/projects-3/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/sl/projects-3"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://jjunes.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
 
   
 

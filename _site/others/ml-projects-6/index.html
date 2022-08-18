@@ -104,6 +104,8 @@
 
 
     <!-- start custom head snippets -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1250314621726093"
+     crossorigin="anonymous"></script>
 
 <!-- insert favicons. use https://realfavicongenerator.net/ -->
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/logo.ico/apple-touch-icon.png">
@@ -558,9 +560,9 @@
                     
                 
                     
-                        <li><a href="/categories/USL" class="">비지도학습 (2)</a></li>
-                    
                 
+                    
+                        <li><a href="/categories/USL" class="">비지도학습 (2)</a></li>
                     
                 
             </ul>
@@ -591,9 +593,9 @@
                     
                 
                     
-                
-                    
                         <li><a href="/categories/RL" class="">강화학습 (1)</a></li>
+                    
+                
                     
                 
             </ul>
@@ -865,15 +867,15 @@
 <p class="notice--danger"><strong>[Notice]</strong> <a href="https://github.com/hchoi256/machine-learning-development">download here</a></p>
 
 <h1 id="description">Description</h1>
-<p>추천 시스템이란 가령, 아마존에서 제품을 구매하면 이 제품을 구매하는 고객들이 다른 상품에도 관심이 있을 것이라 판단해 추천해주는 방법이다. <span style="color: blue"> Providing suggestions for items that are most pertinent to a particular user</span></p>
+<p>추천 시스템이란 가령, 아마존에서 제품을 구매하면 이 제품을 구매하는 고객들이 다른 상품에도 관심이 있을 것이라 판단해 추천해주는 방법이다. <span style="color: yellow"> Providing suggestions for items that are most pertinent to a particular user</span></p>
 
-<p>‘아이템’을 기반으로 사용자에게 추천을 제공한다. <span style="color: blue"> Item-based recommendation systems, not user-based</span></p>
+<p>‘아이템’을 기반으로 사용자에게 추천을 제공한다. <span style="color: yellow"> Item-based recommendation systems, not user-based</span></p>
 
-<p>이게 무슨 말인고 하니, 세상 인구 80억 명을 전부 조사하여 단 몇 편의 영화를 기호에 따라 추천해주는 것은 지극히 비효율적인 문제일 것이다. <span style="color: blue"> It will be not effective to recommend movies after investigating huge volumne of populations</span></p>
+<p>이게 무슨 말인고 하니, 세상 인구 80억 명을 전부 조사하여 단 몇 편의 영화를 기호에 따라 추천해주는 것은 지극히 비효율적인 문제일 것이다. <span style="color: yellow"> It will be not effective to recommend movies after investigating huge volumne of populations</span></p>
 
-<p>따라서, 사람이 아닌 아이템, 즉 영화와 같은 시간이 지나도 한결같은 것들에 기준을 두고 추천 시스템을 적용한다. <span style="color: blue"> Thus, we need to focus on consistent data like movies</span></p>
+<p>따라서, 사람이 아닌 아이템, 즉 영화와 같은 시간이 지나도 한결같은 것들에 기준을 두고 추천 시스템을 적용한다. <span style="color: yellow"> Thus, we need to focus on consistent data like movies</span></p>
 
-<p>가령, 영화 ‘타이타닉’을 본 서로 다른 두 사람이 비슷한 장르의 로맨스 장르의 ‘어바웃 타임’을 시청했다면, 추천 시스템은 타이타닉을 본 새로운 사용자에게 어바웃 타임을 추천할 것이다. <span style="color: blue"> For example, if two people watched ‘Titanic’ and ‘About Time’, the model would suggest ‘About Time’ for new people who watched ‘Titanic’ </span></p>
+<p>가령, 영화 ‘타이타닉’을 본 서로 다른 두 사람이 비슷한 장르의 로맨스 장르의 ‘어바웃 타임’을 시청했다면, 추천 시스템은 타이타닉을 본 새로운 사용자에게 어바웃 타임을 추천할 것이다. <span style="color: yellow"> For example, if two people watched ‘Titanic’ and ‘About Time’, the model would suggest ‘About Time’ for new people who watched ‘Titanic’ </span></p>
 
 <h1 id="loading-the-dataset">Loading the dataset</h1>
 
@@ -944,23 +946,23 @@
 
 <p><img src="https://user-images.githubusercontent.com/39285147/180882141-f4292103-5f94-40c2-88a6-233e34978d3e.png" alt="image" /></p>
 
-<p>상기 분포도에서 별점 평균이 3인 경우가 가장 많이 차지하는 것을 확인할 수 있다. <span style="color: blue"> Star rate 3 appears the most in the distribution above</span></p>
+<p>상기 분포도에서 별점 평균이 3인 경우가 가장 많이 차지하는 것을 확인할 수 있다. <span style="color: yellow"> Star rate 3 appears the most in the distribution above</span></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ratings_mean_count_df</span><span class="p">[</span><span class="s">'count'</span><span class="p">].</span><span class="n">plot</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s">'hist'</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s">'r'</span><span class="p">)</span> 
 </code></pre></div></div>
 
 <p><img src="https://user-images.githubusercontent.com/39285147/180882216-a837effd-7434-4b2b-a8f1-a31350bb8041.png" alt="image" /></p>
 
-<p>분포도에서 확인할 수 있듯이, 대다수의 영화가 대략 한 두번 정도 이내로 평가받은 것을 볼 수 있다. <span style="color: blue"> As shown in the distribution, most movies are rated at most two times</span></p>
+<p>분포도에서 확인할 수 있듯이, 대다수의 영화가 대략 한 두번 정도 이내로 평가받은 것을 볼 수 있다. <span style="color: yellow"> As shown in the distribution, most movies are rated at most two times</span></p>
 
 <h1 id="아이템-기반-협력-필터링-item-based-collaborative-filtering">아이템 기반 협력 필터링 (item-based collaborative filtering)</h1>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">userid_movietitle_matrix</span> <span class="o">=</span> <span class="n">movies_rating_df</span><span class="p">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">index</span> <span class="o">=</span> <span class="s">'user_id'</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="s">'title'</span><span class="p">,</span> <span class="n">values</span> <span class="o">=</span> <span class="s">'rating'</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>상기 코드로 만들어진 테이블은 요소값으로 ‘rating’, 즉 별점을 나타낸다. <span style="color: blue">‘rating’ = star rate</span></p>
+<p>상기 코드로 만들어진 테이블은 요소값으로 ‘rating’, 즉 별점을 나타낸다. <span style="color: yellow">‘rating’ = star rate</span></p>
 
-<p>열은 ‘title’, 그리고 행들은 ‘user_id’이다. <span style="color: blue">column = ‘title’ and row = ‘user_id’</span></p>
+<p>열은 ‘title’, 그리고 행들은 ‘user_id’이다. <span style="color: yellow">column = ‘title’ and row = ‘user_id’</span></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">titanic</span> <span class="o">=</span> <span class="n">userid_movietitle_matrix</span><span class="p">[</span><span class="s">'Titanic (1997)'</span><span class="p">]</span>
 
@@ -975,16 +977,16 @@
 
 <p><img src="https://user-images.githubusercontent.com/39285147/180883922-2164ef1f-d80f-4089-afef-55fc56e551ed.png" alt="image" /></p>
 
-<p>영화 ‘타이타닉’이 다른 영화들과 연관성이 얼마만큼 있는지 <em>Correlation</em> 열의 요소값들을 통하여 확인 가능하다. <span style="color: blue"> Can check how much ‘Titanic’ is related to other movies using <em>Correlation</em></span></p>
+<p>영화 ‘타이타닉’이 다른 영화들과 연관성이 얼마만큼 있는지 <em>Correlation</em> 열의 요소값들을 통하여 확인 가능하다. <span style="color: yellow"> Can check how much ‘Titanic’ is related to other movies using <em>Correlation</em></span></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">titanic_correlations</span><span class="p">[</span><span class="n">titanic_correlations</span><span class="p">[</span><span class="s">'count'</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">80</span><span class="p">].</span><span class="n">sort_values</span><span class="p">(</span><span class="s">'Correlation'</span><span class="p">,</span><span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">).</span><span class="n">head</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p><img src="https://user-images.githubusercontent.com/39285147/180883994-d9fe6bc6-509b-42a5-a077-20386409ad8b.png" alt="image" /></p>
 
-<p>결과 테이블에서 우리는 ‘타이타닉’을 본 사람에게 추천해줄 영화로써 가장 적절한 영화는 타이타닉 자기자신을 제외하고 ‘River Wild, The (1994)’인 것을 확인한다. <span style="color: blue"> The resultant table tells us the second most appropriate movie for people who watched ‘Titanic’ is ‘River Wild, The (1994)’</span></p>
+<p>결과 테이블에서 우리는 ‘타이타닉’을 본 사람에게 추천해줄 영화로써 가장 적절한 영화는 타이타닉 자기자신을 제외하고 ‘River Wild, The (1994)’인 것을 확인한다. <span style="color: yellow"> The resultant table tells us the second most appropriate movie for people who watched ‘Titanic’ is ‘River Wild, The (1994)’</span></p>
 
-<p>그렇다면, 타이타닉처럼 특정 영화와 연관성이 높은 타영화가 아니라 전체 데이터를 대상으로 한 번에 연관성을 확인해볼 수는 없을까? <span style="color: blue"> Can’t we check the correlation for all the data at once?</span></p>
+<p>그렇다면, 타이타닉처럼 특정 영화와 연관성이 높은 타영화가 아니라 전체 데이터를 대상으로 한 번에 연관성을 확인해볼 수는 없을까? <span style="color: yellow"> Can’t we check the correlation for all the data at once?</span></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Obtain the correlations between all movies in the dataframe
 </span><span class="n">movie_correlations</span> <span class="o">=</span> <span class="n">userid_movietitle_matrix</span><span class="p">.</span><span class="n">corr</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s">'pearson'</span><span class="p">,</span> <span class="n">min_periods</span> <span class="o">=</span> <span class="mi">80</span><span class="p">)</span>
@@ -1007,11 +1009,11 @@
 </span>    <span class="n">similar_movies_list</span> <span class="o">=</span> <span class="n">similar_movies_list</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">similar_movie</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>‘movie_correlations’의 데이터 수치들은 [0, 1] 사이 값으로, 서로 다른 타이틀 간의 상관관계를 나타내는 지표이다. <span style="color: blue"> ‘movie_correlations’ is in range [0, 1] and represents the correlation among titles</span></p>
+<p>‘movie_correlations’의 데이터 수치들은 [0, 1] 사이 값으로, 서로 다른 타이틀 간의 상관관계를 나타내는 지표이다. <span style="color: yellow"> ‘movie_correlations’ is in range [0, 1] and represents the correlation among titles</span></p>
 
-<p>따라서, ‘상관관계’가 가장 클 경우 그 값은 1일 것이고, 우리가 다루는 ‘별점’의 총점은 5점이다. <span style="color: blue"> The max <strong>corrlation</strong> and <strong>star rate</strong> is 1 and 5, respectively</span></p>
+<p>따라서, ‘상관관계’가 가장 클 경우 그 값은 1일 것이고, 우리가 다루는 ‘별점’의 총점은 5점이다. <span style="color: yellow"> The max <strong>corrlation</strong> and <strong>star rate</strong> is 1 and 5, respectively</span></p>
 
-<p>따라서, [0, 1]의 상관계수에 별점을 곱하여, 그 값이 높은 순서로 나열한다면, 그것은 해당 사용자에게 가장 알맞은 추천 리스트가 도출될 것이다.<span style="color: blue">  Recommendation systems based on the value of <strong>corrlation</strong> * <strong>star rate</strong></span></p>
+<p>따라서, [0, 1]의 상관계수에 별점을 곱하여, 그 값이 높은 순서로 나열한다면, 그것은 해당 사용자에게 가장 알맞은 추천 리스트가 도출될 것이다.<span style="color: yellow">  Recommendation systems based on the value of <strong>corrlation</strong> * <strong>star rate</strong></span></p>
 
 <p><code class="language-plaintext highlighter-rouge">python
 similar_movies_list.sort_values(inplace = True, ascending = False)
@@ -1031,9 +1033,9 @@ print (similar_movies_list.head(10))
     dtype: float64
 </code></pre></div></div>
 
-<p>상기 결과는 ‘Liar Liar’이라는 영화에 높은 별점을 선사한 해당 사용자에게 추천할만한 타영화 리스트이다. <span style="color: blue"> Recommending the shown movies for people who watched ‘Liar Liar’</span></p>
+<p>상기 결과는 ‘Liar Liar’이라는 영화에 높은 별점을 선사한 해당 사용자에게 추천할만한 타영화 리스트이다. <span style="color: yellow"> Recommending the shown movies for people who watched ‘Liar Liar’</span></p>
 
-<p>별점으로써 표현된 가장 높은 연관성을 나타내는 ‘Liar Liar’ 자기자신을 제외하고 ‘Con Air’라는 영화가 두 번째로 해당 사용자에게 가장 추천해줄 영화일 것이다. <span style="color: blue"> The movie ‘Con Air’ will be the best recommendation for the people. </span></p>
+<p>별점으로써 표현된 가장 높은 연관성을 나타내는 ‘Liar Liar’ 자기자신을 제외하고 ‘Con Air’라는 영화가 두 번째로 해당 사용자에게 가장 추천해줄 영화일 것이다. <span style="color: yellow"> The movie ‘Con Air’ will be the best recommendation for the people. </span></p>
 
         
       </section>
@@ -1097,11 +1099,11 @@ print (similar_movies_list.head(10))
       
   <nav class="pagination">
     
-      <a href="/nlp/projects-5/" class="pagination--pager" title="NLP Basic
+      <a href="/sl/projects-4/" class="pagination--pager" title="LeNet - Traffic Signs Classification
 ">이전</a>
     
     
-      <a href="/star/ai-study-guide/" class="pagination--pager" title="AI 학습자료
+      <a href="/sl/dl-ann-for-bike-rentals-prediction/" class="pagination--pager" title="ANN - Regression: Bike Rental Prediction
 ">다음</a>
     
   </nav>
@@ -1128,126 +1130,32 @@ print (similar_movies_list.head(10))
         <img src="/assets/images/posts/nlp-thumbnail.jpg" alt="">
       </div>
     
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <h2 class="archive__item-title" itemprop="headline">
       
-        <a href="/nlp/nlp-NER/" rel="permalink">NLP - Part 7: Name Entity Recognition (NER) 앱
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.16</p>
+      
+      
+        <a href="/nlp/nlp-NER/" rel="permalink">NLP - Part 6: Name Entity Recognition (NER) 앱
 </a>
       
     </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
         
-          최대 1 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">사전 설정
-</p>
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#nlp" class="page__taxonomy-item-category" rel="tag">NLP</a>
+                    
+                    
+                    <a href="/tags/#ner" class="page__taxonomy-item-tag" rel="tag">NER</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#nlp" class="page__taxonomy-item-tag" rel="tag">NLP</a>
+                
+            </span>
+        </span>
   </article>
 </div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/assets/images/posts/teeko.png" alt="">
-      </div>
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/others/ml-teeko-minimax/" rel="permalink">Minimax 알고리즘 - Teeko Game
-</a>
-      
-    </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          12 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">Minimax 알고리즘을 활용해서 Teeko 게임을 구현한다.
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/assets/images/posts/q-learning.png" alt="">
-      </div>
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/rl/ml-reinforcement-learning-q-learning/" rel="permalink">Reinforcement Learning - Q-Learning 알고리즘
-</a>
-      
-    </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          최대 1 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">Q-Learning 알고리즘을 활용한 예제이다.
-</p>
-  </article>
-</div>
-
         
           
 
@@ -1260,38 +1168,32 @@ print (similar_movies_list.head(10))
         <img src="/assets/images/posts/pca-image-compression.png" alt="">
       </div>
     
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.14</p>
+      
       
         <a href="/usl/ml-pca/" rel="permalink">PCA - Image Compression(이미지 압축)
 </a>
       
     </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
         
-          2 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">PCA를 이용해서 이미지 압축을 진행해보자.
-</p>
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#usl" class="page__taxonomy-item-category" rel="tag">USL</a>
+                    
+                    
+                    <a href="/tags/#image-compression" class="page__taxonomy-item-tag" rel="tag">Image Compression</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#pca" class="page__taxonomy-item-tag" rel="tag">PCA</a>
+                
+            </span>
+        </span>
   </article>
 </div>
-
         
           
 
@@ -1304,82 +1206,36 @@ print (similar_movies_list.head(10))
         <img src="/assets/images/posts/hac.png" alt="">
       </div>
     
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.14</p>
+      
       
         <a href="/usl/ml-hca/" rel="permalink">Hierarchical Agglomerate Clustering(HAC) - 포켓몬 군집화
 </a>
       
     </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
         
-          4 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">Hierarchical Agglomerate Clustering(HAC) 이용해서 서로 다른 특성을 공유하는 Pokemon들을 군집으로 묶어보자.
-</p>
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#usl" class="page__taxonomy-item-category" rel="tag">USL</a>
+                    
+                    
+                    <a href="/tags/#clustering" class="page__taxonomy-item-tag" rel="tag">Clustering</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#hac" class="page__taxonomy-item-tag" rel="tag">HAC</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#pokemon" class="page__taxonomy-item-tag" rel="tag">Pokemon</a>
+                
+            </span>
+        </span>
   </article>
 </div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/assets/images/posts/8-tile-puzzle.png" alt="">
-      </div>
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/others/ml-8-tile-puzzle-a-search/" rel="permalink">A* Search - 8-tile Puzzle Game
-</a>
-      
-    </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          최대 1 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">A-star 알고리즘을 활용해서 8-tile Puzzle 게임을 구현한다.
-</p>
-  </article>
-</div>
-
         
           
 
@@ -1392,38 +1248,158 @@ print (similar_movies_list.head(10))
         <img src="/assets/images/posts/lenet.JPG" alt="">
       </div>
     
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.14</p>
+      
       
         <a href="/sl/dl-miniplace-classification/" rel="permalink">LeNet 신경망 - MiniPlaces 이미지 분류
 </a>
       
     </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
         
-          2 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">LeNet 신경망을 활용해서 MiniPlaces 데이터셋 이미지 분류 작업을 수행한다.
-</p>
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#sl" class="page__taxonomy-item-category" rel="tag">SL</a>
+                    
+                    
+                    <a href="/tags/#classification" class="page__taxonomy-item-tag" rel="tag">Classification</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#lenet" class="page__taxonomy-item-tag" rel="tag">LeNet</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#pytorch" class="page__taxonomy-item-tag" rel="tag">PyTorch</a>
+                
+            </span>
+        </span>
   </article>
 </div>
+        
+          
 
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/q-learning.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.14</p>
+      
+      
+        <a href="/rl/ml-reinforcement-learning-q-learning/" rel="permalink">Reinforcement Learning - Q-Learning 알고리즘
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#rl" class="page__taxonomy-item-category" rel="tag">RL</a>
+                    
+                    
+                    <a href="/tags/#q-learning" class="page__taxonomy-item-tag" rel="tag">Q-learning</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#reinforcement-learning" class="page__taxonomy-item-tag" rel="tag">Reinforcement Learning</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/teeko.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.14</p>
+      
+      
+        <a href="/others/ml-teeko-minimax/" rel="permalink">Minimax 알고리즘 - Teeko Game
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#others" class="page__taxonomy-item-category" rel="tag">Others</a>
+                    
+                    
+                    <a href="/tags/#machine-learning" class="page__taxonomy-item-tag" rel="tag">Machine Learning</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#minimax" class="page__taxonomy-item-tag" rel="tag">Minimax</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#teeko-board-game" class="page__taxonomy-item-tag" rel="tag">Teeko Board Game</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/8-tile-puzzle.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.14</p>
+      
+      
+        <a href="/others/ml-8-tile-puzzle-a-search/" rel="permalink">A* Search - 8-tile Puzzle Game
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#others" class="page__taxonomy-item-category" rel="tag">Others</a>
+                    
+                    
+                    <a href="/tags/#a-search" class="page__taxonomy-item-tag" rel="tag">A* Search</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#game" class="page__taxonomy-item-tag" rel="tag">Game</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#machine-learning" class="page__taxonomy-item-tag" rel="tag">Machine Learning</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
         
           
 
@@ -1436,40 +1412,36 @@ print (similar_movies_list.head(10))
         <img src="/assets/images/posts/streamlit-thumbnail.png" alt="">
       </div>
     
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.13</p>
+      
       
         <a href="/python/python-web-server-exercise/" rel="permalink">Python: PART 2 - Web Application without Server
 </a>
       
     </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
         
-          2 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">
-
-강아지 품종 분류 AI 웹페이지
-</p>
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#python" class="page__taxonomy-item-category" rel="tag">Python</a>
+                    
+                    
+                    <a href="/tags/#opencv" class="page__taxonomy-item-tag" rel="tag">Opencv</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#python-web-app" class="page__taxonomy-item-tag" rel="tag">Python Web App</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#streamlit" class="page__taxonomy-item-tag" rel="tag">Streamlit</a>
+                
+            </span>
+        </span>
   </article>
 </div>
-
         
           
 
@@ -1482,38 +1454,32 @@ print (similar_movies_list.head(10))
         <img src="/assets/images/posts/ai-thumbnail.jpg" alt="">
       </div>
     
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.12</p>
+      
       
         <a href="/aipapernlp/ai-paper-ko-legal-nlp/" rel="permalink">[논문 분석] A Multi-Task Benchmark for Korean Legal Language Understanding and Judgement Prediction (arXiv 2022)
 </a>
       
     </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
         
-          4 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">
-</p>
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#aipapernlp" class="page__taxonomy-item-category" rel="tag">AIPaperNLP</a>
+                    
+                    
+                    <a href="/tags/#ai-research-paper" class="page__taxonomy-item-tag" rel="tag">AI Research Paper</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#kaist" class="page__taxonomy-item-tag" rel="tag">Kaist</a>
+                
+            </span>
+        </span>
   </article>
 </div>
-
         
           
 
@@ -1526,39 +1492,36 @@ print (similar_movies_list.head(10))
         <img src="/assets/images/posts/bert-thumbnail.png" alt="">
       </div>
     
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.08</p>
+      
       
         <a href="/bert/bert-3/" rel="permalink">Part 3: BERT Language Model
 </a>
       
     </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
         
-          1 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">BERT
-Bi-directional transformer로 이루어진 언어모델로, BERT 언어모델 위에 1개의 classification layer만 부착하여 다양한 NLP task를 수행한다.
-</p>
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#bert" class="page__taxonomy-item-category" rel="tag">BERT</a>
+                    
+                    
+                    <a href="/tags/#bert" class="page__taxonomy-item-tag" rel="tag">BERT</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#language-model" class="page__taxonomy-item-tag" rel="tag">Language Model</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#nlp" class="page__taxonomy-item-tag" rel="tag">NLP</a>
+                
+            </span>
+        </span>
   </article>
 </div>
-
         
       </div>
     </div>
@@ -1617,6 +1580,20 @@ Bi-directional transformer로 이루어진 언어모델로, BERT 언어모델 �
 
 
     
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/others/ml-projects-6/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/others/ml-projects-6"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://jjunes.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
 
   
 

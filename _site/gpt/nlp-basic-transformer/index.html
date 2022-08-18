@@ -104,6 +104,8 @@
 
 
     <!-- start custom head snippets -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1250314621726093"
+     crossorigin="anonymous"></script>
 
 <!-- insert favicons. use https://realfavicongenerator.net/ -->
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/logo.ico/apple-touch-icon.png">
@@ -558,9 +560,9 @@
                     
                 
                     
-                        <li><a href="/categories/USL" class="">비지도학습 (2)</a></li>
-                    
                 
+                    
+                        <li><a href="/categories/USL" class="">비지도학습 (2)</a></li>
                     
                 
             </ul>
@@ -591,9 +593,9 @@
                     
                 
                     
-                
-                    
                         <li><a href="/categories/RL" class="">강화학습 (1)</a></li>
+                    
+                
                     
                 
             </ul>
@@ -862,31 +864,31 @@
           </aside>
         
         <h1 id="transformer-w-tensorflow">Transformer w/ Tensorflow</h1>
-<p><strong>번역, 질문 답변, 텍스트 요약</strong> 등과 같은 작업을 위해 <strong>순차적으로</strong> 데이터를 처리하도록 설계된 2017년에 구글이 소개한 딥러닝 아키텍처이다. <span style="color: blue"> It is a deep learning architecture introduced by Google in 2017 designed to process data sequentially for tasks such as <strong>translation, question answering, text summarization</strong>, and more.</span></p>
+<p><strong>번역, 질문 답변, 텍스트 요약</strong> 등과 같은 작업을 위해 <strong>순차적으로</strong> 데이터를 처리하도록 설계된 2017년에 구글이 소개한 딥러닝 아키텍처이다. <span style="color: yellow"> It is a deep learning architecture introduced by Google in 2017 designed to process data sequentially for tasks such as <strong>translation, question answering, text summarization</strong>, and more.</span></p>
 
-<p>텍스트 생성기로 <em>GPT-2, GPT-3</em> 등이 있는데, <em>GPT-2</em>의 텍스트 생성 기능은 대부분이 사용할 수 있는 가장 인기 있는 transformer 아키텍처 중에 하나이다. <span style="color: blue"> As text generators, there are <em>GPT-2</em> and <em>GPT-3</em>, and the text generation function of <em>GPT-2</em> is one of the most popular transformer architectures that most of them can use. </span></p>
+<p>텍스트 생성기로 <em>GPT-2, GPT-3</em> 등이 있는데, <em>GPT-2</em>의 텍스트 생성 기능은 대부분이 사용할 수 있는 가장 인기 있는 transformer 아키텍처 중에 하나이다. <span style="color: yellow"> As text generators, there are <em>GPT-2</em> and <em>GPT-3</em>, and the text generation function of <em>GPT-2</em> is one of the most popular transformer architectures that most of them can use. </span></p>
 
 <blockquote>
-  <p>단어들은 불연속적 단위이기 때문에 각각에 대힌 확률값을 얻을 수 있다. 여기서, ‘언어 모델’은 단어 시퀀스에 확률을 할당하는 모델입니다. <span style="color: blue"> Since words are discrete units, we can obtain a probability value for each. Here, a ‘language model’ is a model that assigns probabilities to word sequences.</span></p>
+  <p>단어들은 불연속적 단위이기 때문에 각각에 대힌 확률값을 얻을 수 있다. 여기서, ‘언어 모델’은 단어 시퀀스에 확률을 할당하는 모델입니다. <span style="color: yellow"> Since words are discrete units, we can obtain a probability value for each. Here, a ‘language model’ is a model that assigns probabilities to word sequences.</span></p>
 </blockquote>
 
 <h1 id="gpt-2-generative-pre-training-transformer-2">GPT-2 (Generative Pre-training Transformer 2)</h1>
-<p>WebText라 불리는 40GB 크기의 거대한 코퍼스에다가 인터넷에서 크롤링한 데이터를 합쳐서 훈련시킨 자귀 회귀 언어 모델이며, 이 모델은 디코더 스택만 사용하는 Attention를 활용한다 (BERT는 인코더 스택만 사용한다). <span style="color: blue"> It is a <em>*auto-regressive</em> language model trained by combining data crawled from the Internet in a huge 40GB corpus called WebText, and this language model utilizes Attention using only the decoder stack (BERT uses only the encoder stack).</span></p>
+<p>WebText라 불리는 40GB 크기의 거대한 코퍼스에다가 인터넷에서 크롤링한 데이터를 합쳐서 훈련시킨 자귀 회귀 언어 모델이며, 이 모델은 디코더 스택만 사용하는 Attention를 활용한다 (BERT는 인코더 스택만 사용한다). <span style="color: yellow"> It is a <em>*auto-regressive</em> language model trained by combining data crawled from the Internet in a huge 40GB corpus called WebText, and this language model utilizes Attention using only the decoder stack (BERT uses only the encoder stack).</span></p>
 <ul>
-  <li><strong>Generative</strong>: 한 단어(토큰)가 들어오면 다음에 올 적절한 토큰을 생성하는 언어 모델이다. <span style="color: blue"> It is a language model that, when a word (token) comes in, generates the appropriate token to follow.</span>
+  <li><strong>Generative</strong>: 한 단어(토큰)가 들어오면 다음에 올 적절한 토큰을 생성하는 언어 모델이다. <span style="color: yellow"> It is a language model that, when a word (token) comes in, generates the appropriate token to follow.</span>
     <ul>
-      <li>예를들어, “오늘” 이라는 단어가 GPT 모델에 Input으로 들어가면, GPT는 “날씨가”  같은 뒤에 올 적절한 단어를 Output으로 내보낸다. <span style="color: blue"> For example, if the word “today” is input to the GPT model, GPT outputs the appropriate word followed by something like “weather” as output.</span></li>
+      <li>예를들어, “오늘” 이라는 단어가 GPT 모델에 Input으로 들어가면, GPT는 “날씨가”  같은 뒤에 올 적절한 단어를 Output으로 내보낸다. <span style="color: yellow"> For example, if the word “today” is input to the GPT model, GPT outputs the appropriate word followed by something like “weather” as output.</span></li>
     </ul>
   </li>
-  <li><strong>Pre-trained</strong>: 말뭉치 (Corpus) 만을 가지고 <em>사전 학습</em>한다. <span style="color: blue"> <em>pre-learning</em> with only the corpus.</span>
+  <li><strong>Pre-trained</strong>: 말뭉치 (Corpus) 만을 가지고 <em>사전 학습</em>한다. <span style="color: yellow"> <em>pre-learning</em> with only the corpus.</span>
     <ul>
-      <li>Encoding 과 Decoding 의 과정이 필요하지 않는다. <span style="color: blue"> Encoding and decoding processes are not required.</span></li>
+      <li>Encoding 과 Decoding 의 과정이 필요하지 않는다. <span style="color: yellow"> Encoding and decoding processes are not required.</span></li>
     </ul>
   </li>
 </ul>
 
 <blockquote>
-  <p><strong>자기회귀 모델(auto-regressive model)</strong>: 이전의 출력이 다음의 입력이 되는 모델을 의미한다. <span style="color: blue">  A model in which the previous output becomes the next input.</span></p>
+  <p><strong>자기회귀 모델(auto-regressive model)</strong>: 이전의 출력이 다음의 입력이 되는 모델을 의미한다. <span style="color: yellow">  A model in which the previous output becomes the next input.</span></p>
 </blockquote>
 
 <blockquote>
@@ -911,7 +913,7 @@
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">GPT2</span> <span class="o">=</span> <span class="n">TFGPT2LMHeadModel</span><span class="p">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s">"gpt2-large"</span><span class="p">,</span> <span class="n">pad_token_id</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">.</span><span class="n">eos_token_id</span><span class="p">)</span> <span class="c1"># EOS토큰을 PAD토큰으로 지정하여 warning이 나오지 않게 한다 Designating EOS tokens as PAD tokens to avoid warnings
 </span></code></pre></div></div>
 
-<p>상기 코드에서 보는 것처럼 GPT는 사전 훈련 기반 모델이며, fine-tuning을 거치지 않는다. <span style="color: blue"> As shown in the code above, GPT is a pre-training-based model and does not undergo fine-tuning.</span></p>
+<p>상기 코드에서 보는 것처럼 GPT는 사전 훈련 기반 모델이며, fine-tuning을 거치지 않는다. <span style="color: yellow"> As shown in the code above, GPT is a pre-training-based model and does not undergo fine-tuning.</span></p>
 
 <blockquote>
   <p><strong>eos_token_id</strong>: The end of sequence token.</p>
@@ -944,11 +946,11 @@
 
 <p><strong>generate()</strong></p>
 <ul>
-  <li><em>max_length</em>: 출력 문자열이 가질 수 있는 단어의 최대 갯수 <span style="color: blue"> Max number of words the output string can have</span></li>
+  <li><em>max_length</em>: 출력 문자열이 가질 수 있는 단어의 최대 갯수 <span style="color: yellow"> Max number of words the output string can have</span></li>
   <li><em>do_sample</em>: activate sampling</li>
   <li><em>top_k</em>: sampling only from the most likely k words</li>
   <li><em>top_p</em>: Top-p sampling chooses from the smallest possible set of words whose cumulative probability exceeds the probability p</li>
-  <li><em>num_return_sequences</em>: 출력 개수 <span style="color: blue"> # outputs</span></li>
+  <li><em>num_return_sequences</em>: 출력 개수 <span style="color: yellow"> # outputs</span></li>
 </ul>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">"Output:</span><span class="se">\n</span><span class="s">"</span> <span class="o">+</span> <span class="mi">100</span> <span class="o">*</span> <span class="s">"-"</span><span class="p">)</span>
@@ -978,14 +980,14 @@
     I'll walk to the train station and I'll just think, "I want to go to the.
 </code></pre></div></div>
 
-<p>상기 결과에서 볼 수 있듯이, 하나의 문장 인풋으로 GPT-2가 유사도가 높은 여러 개의 문장을 생성해냈다. <span style="color: blue"> As can be seen from the above results, with one sentence input, GPT-2 generated several sentences with high similarity.</span></p>
+<p>상기 결과에서 볼 수 있듯이, 하나의 문장 인풋으로 GPT-2가 유사도가 높은 여러 개의 문장을 생성해냈다. <span style="color: yellow"> As can be seen from the above results, with one sentence input, GPT-2 generated several sentences with high similarity.</span></p>
 
-<p>생성된 각 문장은 우리가 지정한 아키텍쳐과 맞아 떨어진다; 문장 길이 최대 70자 이내. <span style="color: blue"> Each generated statement matches the architecture we specified; Sentence length up to 70 characters.</span></p>
+<p>생성된 각 문장은 우리가 지정한 아키텍쳐과 맞아 떨어진다; 문장 길이 최대 70자 이내. <span style="color: yellow"> Each generated statement matches the architecture we specified; Sentence length up to 70 characters.</span></p>
 
-<p>우리 아키텍쳐가 지침하는대로, 이러한 문장들은 인풋 텍스트와 유사도가 가장 높은 문장으로 선별한 50개 중 최대 5개를 추출하여 보여준다. <span style="color: blue"> As our architecture guides, these sentences extract and display up to 5 out of 50 sentences with the highest similarity to the input text.</span></p>
+<p>우리 아키텍쳐가 지침하는대로, 이러한 문장들은 인풋 텍스트와 유사도가 가장 높은 문장으로 선별한 50개 중 최대 5개를 추출하여 보여준다. <span style="color: yellow"> As our architecture guides, these sentences extract and display up to 5 out of 50 sentences with the highest similarity to the input text.</span></p>
 
 <blockquote>
-  <p><strong>Beam Search</strong>: 매번 선택하는 단어의 갯수로, 선택은 확률 값이 높은 순서대로 한다. num_beams가 2인 경우, 다음 2가지 확률값이 높은 단어에 대해서 탐색한다. 단어 생성에서 가능성이 더 높은 다음 예측 단어를 놓치는 Greedy 방식의 단점을 보완하고자 고안되었다. <span style="color: blue"> With the number of words selected each time, the selection is made in order of highest probability value. When num_beams is 2, the following two high probability words are searched for. It was designed to compensate for the disadvantage of the Greedy method, which misses the next more likely predictive word in word generation.</span></p>
+  <p><strong>Beam Search</strong>: 매번 선택하는 단어의 갯수로, 선택은 확률 값이 높은 순서대로 한다. num_beams가 2인 경우, 다음 2가지 확률값이 높은 단어에 대해서 탐색한다. 단어 생성에서 가능성이 더 높은 다음 예측 단어를 놓치는 Greedy 방식의 단점을 보완하고자 고안되었다. <span style="color: yellow"> With the number of words selected each time, the selection is made in order of highest probability value. When num_beams is 2, the following two high probability words are searched for. It was designed to compensate for the disadvantage of the Greedy method, which misses the next more likely predictive word in word generation.</span></p>
 </blockquote>
 
 <h1 id="bert"><a href="https://hchoi256.github.io/nlp/bert-1/">BERT</a></h1>
@@ -1085,126 +1087,32 @@
         <img src="/assets/images/posts/nlp-thumbnail.jpg" alt="">
       </div>
     
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <h2 class="archive__item-title" itemprop="headline">
       
-        <a href="/nlp/nlp-NER/" rel="permalink">NLP - Part 7: Name Entity Recognition (NER) 앱
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.16</p>
+      
+      
+        <a href="/nlp/nlp-NER/" rel="permalink">NLP - Part 6: Name Entity Recognition (NER) 앱
 </a>
       
     </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
         
-          최대 1 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">사전 설정
-</p>
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#nlp" class="page__taxonomy-item-category" rel="tag">NLP</a>
+                    
+                    
+                    <a href="/tags/#ner" class="page__taxonomy-item-tag" rel="tag">NER</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#nlp" class="page__taxonomy-item-tag" rel="tag">NLP</a>
+                
+            </span>
+        </span>
   </article>
 </div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/assets/images/posts/teeko.png" alt="">
-      </div>
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/others/ml-teeko-minimax/" rel="permalink">Minimax 알고리즘 - Teeko Game
-</a>
-      
-    </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          12 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">Minimax 알고리즘을 활용해서 Teeko 게임을 구현한다.
-</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/assets/images/posts/q-learning.png" alt="">
-      </div>
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/rl/ml-reinforcement-learning-q-learning/" rel="permalink">Reinforcement Learning - Q-Learning 알고리즘
-</a>
-      
-    </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          최대 1 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">Q-Learning 알고리즘을 활용한 예제이다.
-</p>
-  </article>
-</div>
-
         
           
 
@@ -1217,38 +1125,32 @@
         <img src="/assets/images/posts/pca-image-compression.png" alt="">
       </div>
     
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.14</p>
+      
       
         <a href="/usl/ml-pca/" rel="permalink">PCA - Image Compression(이미지 압축)
 </a>
       
     </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
         
-          2 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">PCA를 이용해서 이미지 압축을 진행해보자.
-</p>
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#usl" class="page__taxonomy-item-category" rel="tag">USL</a>
+                    
+                    
+                    <a href="/tags/#image-compression" class="page__taxonomy-item-tag" rel="tag">Image Compression</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#pca" class="page__taxonomy-item-tag" rel="tag">PCA</a>
+                
+            </span>
+        </span>
   </article>
 </div>
-
         
           
 
@@ -1261,82 +1163,36 @@
         <img src="/assets/images/posts/hac.png" alt="">
       </div>
     
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.14</p>
+      
       
         <a href="/usl/ml-hca/" rel="permalink">Hierarchical Agglomerate Clustering(HAC) - 포켓몬 군집화
 </a>
       
     </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
         
-          4 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">Hierarchical Agglomerate Clustering(HAC) 이용해서 서로 다른 특성을 공유하는 Pokemon들을 군집으로 묶어보자.
-</p>
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#usl" class="page__taxonomy-item-category" rel="tag">USL</a>
+                    
+                    
+                    <a href="/tags/#clustering" class="page__taxonomy-item-tag" rel="tag">Clustering</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#hac" class="page__taxonomy-item-tag" rel="tag">HAC</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#pokemon" class="page__taxonomy-item-tag" rel="tag">Pokemon</a>
+                
+            </span>
+        </span>
   </article>
 </div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/assets/images/posts/8-tile-puzzle.png" alt="">
-      </div>
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/others/ml-8-tile-puzzle-a-search/" rel="permalink">A* Search - 8-tile Puzzle Game
-</a>
-      
-    </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          최대 1 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">A-star 알고리즘을 활용해서 8-tile Puzzle 게임을 구현한다.
-</p>
-  </article>
-</div>
-
         
           
 
@@ -1349,38 +1205,158 @@
         <img src="/assets/images/posts/lenet.JPG" alt="">
       </div>
     
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.14</p>
+      
       
         <a href="/sl/dl-miniplace-classification/" rel="permalink">LeNet 신경망 - MiniPlaces 이미지 분류
 </a>
       
     </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
         
-          2 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">LeNet 신경망을 활용해서 MiniPlaces 데이터셋 이미지 분류 작업을 수행한다.
-</p>
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#sl" class="page__taxonomy-item-category" rel="tag">SL</a>
+                    
+                    
+                    <a href="/tags/#classification" class="page__taxonomy-item-tag" rel="tag">Classification</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#lenet" class="page__taxonomy-item-tag" rel="tag">LeNet</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#pytorch" class="page__taxonomy-item-tag" rel="tag">PyTorch</a>
+                
+            </span>
+        </span>
   </article>
 </div>
+        
+          
 
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/q-learning.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.14</p>
+      
+      
+        <a href="/rl/ml-reinforcement-learning-q-learning/" rel="permalink">Reinforcement Learning - Q-Learning 알고리즘
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#rl" class="page__taxonomy-item-category" rel="tag">RL</a>
+                    
+                    
+                    <a href="/tags/#q-learning" class="page__taxonomy-item-tag" rel="tag">Q-learning</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#reinforcement-learning" class="page__taxonomy-item-tag" rel="tag">Reinforcement Learning</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/teeko.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.14</p>
+      
+      
+        <a href="/others/ml-teeko-minimax/" rel="permalink">Minimax 알고리즘 - Teeko Game
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#others" class="page__taxonomy-item-category" rel="tag">Others</a>
+                    
+                    
+                    <a href="/tags/#machine-learning" class="page__taxonomy-item-tag" rel="tag">Machine Learning</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#minimax" class="page__taxonomy-item-tag" rel="tag">Minimax</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#teeko-board-game" class="page__taxonomy-item-tag" rel="tag">Teeko Board Game</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/8-tile-puzzle.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.14</p>
+      
+      
+        <a href="/others/ml-8-tile-puzzle-a-search/" rel="permalink">A* Search - 8-tile Puzzle Game
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#others" class="page__taxonomy-item-category" rel="tag">Others</a>
+                    
+                    
+                    <a href="/tags/#a-search" class="page__taxonomy-item-tag" rel="tag">A* Search</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#game" class="page__taxonomy-item-tag" rel="tag">Game</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#machine-learning" class="page__taxonomy-item-tag" rel="tag">Machine Learning</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
         
           
 
@@ -1393,40 +1369,36 @@
         <img src="/assets/images/posts/streamlit-thumbnail.png" alt="">
       </div>
     
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.13</p>
+      
       
         <a href="/python/python-web-server-exercise/" rel="permalink">Python: PART 2 - Web Application without Server
 </a>
       
     </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
         
-          2 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">
-
-강아지 품종 분류 AI 웹페이지
-</p>
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#python" class="page__taxonomy-item-category" rel="tag">Python</a>
+                    
+                    
+                    <a href="/tags/#opencv" class="page__taxonomy-item-tag" rel="tag">Opencv</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#python-web-app" class="page__taxonomy-item-tag" rel="tag">Python Web App</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#streamlit" class="page__taxonomy-item-tag" rel="tag">Streamlit</a>
+                
+            </span>
+        </span>
   </article>
 </div>
-
         
           
 
@@ -1439,38 +1411,32 @@
         <img src="/assets/images/posts/ai-thumbnail.jpg" alt="">
       </div>
     
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.12</p>
+      
       
         <a href="/aipapernlp/ai-paper-ko-legal-nlp/" rel="permalink">[논문 분석] A Multi-Task Benchmark for Korean Legal Language Understanding and Judgement Prediction (arXiv 2022)
 </a>
       
     </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
         
-          4 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">
-</p>
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#aipapernlp" class="page__taxonomy-item-category" rel="tag">AIPaperNLP</a>
+                    
+                    
+                    <a href="/tags/#ai-research-paper" class="page__taxonomy-item-tag" rel="tag">AI Research Paper</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#kaist" class="page__taxonomy-item-tag" rel="tag">Kaist</a>
+                
+            </span>
+        </span>
   </article>
 </div>
-
         
           
 
@@ -1483,39 +1449,36 @@
         <img src="/assets/images/posts/bert-thumbnail.png" alt="">
       </div>
     
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.08</p>
+      
       
         <a href="/bert/bert-3/" rel="permalink">Part 3: BERT Language Model
 </a>
       
     </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
         
-          1 분 소요
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">BERT
-Bi-directional transformer로 이루어진 언어모델로, BERT 언어모델 위에 1개의 classification layer만 부착하여 다양한 NLP task를 수행한다.
-</p>
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#bert" class="page__taxonomy-item-category" rel="tag">BERT</a>
+                    
+                    
+                    <a href="/tags/#bert" class="page__taxonomy-item-tag" rel="tag">BERT</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#language-model" class="page__taxonomy-item-tag" rel="tag">Language Model</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#nlp" class="page__taxonomy-item-tag" rel="tag">NLP</a>
+                
+            </span>
+        </span>
   </article>
 </div>
-
         
       </div>
     </div>
@@ -1574,6 +1537,20 @@ Bi-directional transformer로 이루어진 언어모델로, BERT 언어모델 �
 
 
     
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/gpt/nlp-basic-transformer/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/gpt/nlp-basic-transformer"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://jjunes.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
 
   
 

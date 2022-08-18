@@ -35,17 +35,17 @@ var store = [{
         "url": "http://localhost:4000/sl/projects-3/",
         "teaser": "http://localhost:4000/assets/images/posts/dl-thumbnail.jpg"
       },{
-        "title": "LeNet - Traffic Signs Classification",
-        "excerpt":"Code [Notice] download here Observing the dataset Classes are as listed below: ( 0, b’Speed limit (20km/h)’) ( 1, b’Speed limit (30km/h)’) ( 2, b’Speed limit (50km/h)’) ( 3, b’Speed limit (60km/h)’) ( 4, b’Speed limit (70km/h)’) ( 5, b’Speed limit (80km/h)’) ( 6, b’End of speed limit (80km/h)’) (...","categories": ["SL"],
-        "tags": ["LeNet","Classification"],
-        "url": "http://localhost:4000/sl/projects-4/",
-        "teaser": "http://localhost:4000/assets/images/posts/dl-thumbnail.jpg"
-      },{
         "title": "NLP Basic",
         "excerpt":"Code [Notice] download here Learning Goals Naive Beyas Theorem 베이즈 정리에 기반한 분류 기술 Classification techniques with beyas theorem 자연어 처리의 기초 Understanding NLP tokenization with NLTK Extracting features with Count Vectorizer 우도, 사전 확률, 주변 우도의 차이점 Likelihood, prior, marginal likelihood 불균형 데이터 처리 방법 How to handle unbalanced...","categories": ["NLP"],
         "tags": ["NLP","python"],
         "url": "http://localhost:4000/nlp/projects-5/",
         "teaser": "http://localhost:4000/assets/images/posts/nlp-thumbnail.jpg"
+      },{
+        "title": "LeNet - Traffic Signs Classification",
+        "excerpt":"Code [Notice] download here Observing the dataset Classes are as listed below: ( 0, b’Speed limit (20km/h)’) ( 1, b’Speed limit (30km/h)’) ( 2, b’Speed limit (50km/h)’) ( 3, b’Speed limit (60km/h)’) ( 4, b’Speed limit (70km/h)’) ( 5, b’Speed limit (80km/h)’) ( 6, b’End of speed limit (80km/h)’) (...","categories": ["SL"],
+        "tags": ["LeNet","Classification"],
+        "url": "http://localhost:4000/sl/projects-4/",
+        "teaser": "http://localhost:4000/assets/images/posts/dl-thumbnail.jpg"
       },{
         "title": "사용자 기반 협업 필터링 (Collaborative Filtering) - 영화 추천 시스템 (Movie Recommender Systems)",
         "excerpt":"Code [Notice] download here Description 추천 시스템이란 가령, 아마존에서 제품을 구매하면 이 제품을 구매하는 고객들이 다른 상품에도 관심이 있을 것이라 판단해 추천해주는 방법이다. Providing suggestions for items that are most pertinent to a particular user ‘아이템’을 기반으로 사용자에게 추천을 제공한다. Item-based recommendation systems, not user-based 이게 무슨 말인고 하니, 세상...","categories": ["Others"],
@@ -83,6 +83,12 @@ var store = [{
         "url": "http://localhost:4000/aipapercv/ai-paper-learning-loss-for-active-learning/",
         "teaser": "http://localhost:4000/assets/images/posts/ai-thumbnail.jpg"
       },{
+        "title": "NLP: Data Preprocessing",
+        "excerpt":"Loading the libraries and dataset import pandas as pd import numpy as np raw_data = pd.read_csv(\"Corona_NLP_train.csv\", encoding = \"latin-1\") # load the dataset raw_data.shape # check the shape raw_data.head() # view the dataset briefly raw_data.drop([\"UserName\", \"ScreenName\", \"Location\", \"TweetAt\"], axis = 1) # remove unnecessary columns raw_data = raw_data [ [\"OriginalTweet\",...","categories": ["NLP"],
+        "tags": ["NLP","Data Preprocessing"],
+        "url": "http://localhost:4000/nlp/nlp-basic-text-classification/",
+        "teaser": "http://localhost:4000/assets/images/posts/nlp-thumbnail.jpg"
+      },{
         "title": "CNN - Classification: MNIST with Tensorflow",
         "excerpt":"Code [Notice] download here Observing the dataset MNIST 데이터셋에는 0부터 9까지 10종류의 숫자가 여러 2차원 이미지 데이터 형태로 저장되어 있으며, RGB 차원은 따로 없는 흑백사진이다. In the MNIST dataset, 10 types of numbers from 0 to 9 are stored in the form of several two-dimensional image data, and it is...","categories": ["SL"],
         "tags": ["CNN","MNIST","Tensorflow","PyTorch"],
@@ -94,12 +100,6 @@ var store = [{
         "tags": ["RNN","LSTM","Time Series"],
         "url": "http://localhost:4000/sl/dl-rnn-lstm/",
         "teaser": "http://localhost:4000/assets/images/posts/dl-thumbnail.jpg"
-      },{
-        "title": "NLP: Data Preprocessing",
-        "excerpt":"Loading the libraries and dataset import pandas as pd import numpy as np raw_data = pd.read_csv(\"Corona_NLP_train.csv\", encoding = \"latin-1\") # load the dataset raw_data.shape # check the shape raw_data.head() # view the dataset briefly raw_data.drop([\"UserName\", \"ScreenName\", \"Location\", \"TweetAt\"], axis = 1) # remove unnecessary columns raw_data = raw_data [ [\"OriginalTweet\",...","categories": ["NLP"],
-        "tags": ["NLP","Data Preprocessing"],
-        "url": "http://localhost:4000/nlp/nlp-basic-text-classification/",
-        "teaser": "http://localhost:4000/assets/images/posts/nlp-thumbnail.jpg"
       },{
         "title": "Data Preprocessing Techniques",
         "excerpt":"‘raw_data’ is the temporary dataset, and we are going to address various preprocessing tasks with it. 데이터 확인 (Describing the dataset) raw_data.info() &lt;class 'pandas.core.frame.DataFrame'&gt; Int64Index: 23 entries, 0 to 29 Data columns (total 8 columns): # Column Non-Null Count Dtype --- ------ -------------- ----- 0 customer_id 23 non-null int64 1...","categories": ["Study"],
@@ -149,17 +149,29 @@ var store = [{
         "url": "http://localhost:4000/python/python-web-server-exercise/",
         "teaser": "http://localhost:4000/assets/images/posts/streamlit-thumbnail.png"
       },{
-        "title": "LeNet 신경망 - MiniPlaces 이미지 분류",
-        "excerpt":"LeNet 신경망을 활용해서 MiniPlaces 데이터셋 이미지 분류 작업을 수행한다. ‘MiniPlaces’ 데이터셋은 캐글과 같은 온라인에서 손쉽게 구할 수 있다 여기. Code [Notice] download here CNN이나 LeNet 신경망에 대한 보다 자세한 내용은 여기를 참조하자. 라이브러리 불러오기 # python imports import os from tqdm import tqdm # torch imports import torch import torch.nn...","categories": ["SL"],
-        "tags": ["LeNet","Classification","PyTorch"],
-        "url": "http://localhost:4000/sl/dl-miniplace-classification/",
-        "teaser": "http://localhost:4000/assets/images/posts/lenet.JPG"
-      },{
         "title": "A* Search - 8-tile Puzzle Game",
         "excerpt":"A-star 알고리즘을 활용해서 8-tile Puzzle 게임을 구현한다.      8-tile Puzzle 정보는 여기서 참고하자.    이 게임에서 당신은 AI 로봇과 Teeko 보드 게임을 펼치게 될 것이다.   이 프로젝트는 A* 탐색 알고리즘을 이해하고 있다는 전제로 진행한다.      A* 탐색 알고리즘이란?    Code  [Notice] download here   ","categories": ["Others"],
         "tags": ["Machine Learning","Game","A* Search"],
         "url": "http://localhost:4000/others/ml-8-tile-puzzle-a-search/",
         "teaser": "http://localhost:4000/assets/images/posts/8-tile-puzzle.png"
+      },{
+        "title": "Minimax 알고리즘 - Teeko Game",
+        "excerpt":"Minimax 알고리즘을 활용해서 Teeko 게임을 구현한다. Teeko 게임은 한국인들에게는 익숙하지 않은 보드 게임일 수도 있다 (하기 설명 참조). Teeko Game이란? It is a game between two players on a 5x5 board. Each player has four markers of either red or black. Beginning with black, they take turns placing markers (the...","categories": ["Others"],
+        "tags": ["Machine Learning","Teeko Board Game","Minimax"],
+        "url": "http://localhost:4000/others/ml-teeko-minimax/",
+        "teaser": "http://localhost:4000/assets/images/posts/teeko.png"
+      },{
+        "title": "Reinforcement Learning - Q-Learning 알고리즘",
+        "excerpt":"Q-Learning 알고리즘을 활용한 예제이다.   이 프로젝트는 Q-Learning 알고리즘을 이해하고 있다는 전제로 진행한다.   Code  [Notice] download here   ","categories": ["RL"],
+        "tags": ["Reinforcement Learning","Q-learning"],
+        "url": "http://localhost:4000/rl/ml-reinforcement-learning-q-learning/",
+        "teaser": "http://localhost:4000/assets/images/posts/q-learning.png"
+      },{
+        "title": "LeNet 신경망 - MiniPlaces 이미지 분류",
+        "excerpt":"LeNet 신경망을 활용해서 MiniPlaces 데이터셋 이미지 분류 작업을 수행한다. ‘MiniPlaces’ 데이터셋은 캐글과 같은 온라인에서 손쉽게 구할 수 있다 여기. Code [Notice] download here CNN이나 LeNet 신경망에 대한 보다 자세한 내용은 여기를 참조하자. 라이브러리 불러오기 # python imports import os from tqdm import tqdm # torch imports import torch import torch.nn...","categories": ["SL"],
+        "tags": ["LeNet","Classification","PyTorch"],
+        "url": "http://localhost:4000/sl/dl-miniplace-classification/",
+        "teaser": "http://localhost:4000/assets/images/posts/lenet.JPG"
       },{
         "title": "Hierarchical Agglomerate Clustering(HAC) - 포켓몬 군집화",
         "excerpt":"Hierarchical Agglomerate Clustering(HAC) 이용해서 서로 다른 특성을 공유하는 Pokemon들을 군집으로 묶어보자. ‘Pokemon.csv’는 온라인에서 손쉽게 구할 수 있다. 이 프로젝트는 군집화(Clustering)의 개념을 숙지하고 있다는 전제로 수행한다. Code [Notice] download here 데이터셋 관찰 Columns: Attack, Sp. Atk, Speed, Defense, Sp. Def, and HP 라이브러리 불러오기 from scipy.cluster.hierarchy import dendrogram, linkage import csv...","categories": ["USL"],
@@ -173,19 +185,7 @@ var store = [{
         "url": "http://localhost:4000/usl/ml-pca/",
         "teaser": "http://localhost:4000/assets/images/posts/pca-image-compression.png"
       },{
-        "title": "Reinforcement Learning - Q-Learning 알고리즘",
-        "excerpt":"Q-Learning 알고리즘을 활용한 예제이다.   이 프로젝트는 Q-Learning 알고리즘을 이해하고 있다는 전제로 진행한다.   Code  [Notice] download here   ","categories": ["RL"],
-        "tags": ["Reinforcement Learning","Q-learning"],
-        "url": "http://localhost:4000/rl/ml-reinforcement-learning-q-learning/",
-        "teaser": "http://localhost:4000/assets/images/posts/q-learning.png"
-      },{
-        "title": "Minimax 알고리즘 - Teeko Game",
-        "excerpt":"Minimax 알고리즘을 활용해서 Teeko 게임을 구현한다. Teeko 게임은 한국인들에게는 익숙하지 않은 보드 게임일 수도 있다 (하기 설명 참조). Teeko Game이란? It is a game between two players on a 5x5 board. Each player has four markers of either red or black. Beginning with black, they take turns placing markers (the...","categories": ["Others"],
-        "tags": ["Machine Learning","Teeko Board Game","Minimax"],
-        "url": "http://localhost:4000/others/ml-teeko-minimax/",
-        "teaser": "http://localhost:4000/assets/images/posts/teeko.png"
-      },{
-        "title": "NLP - Part 7: Name Entity Recognition (NER) 앱",
+        "title": "NLP - Part 6: Name Entity Recognition (NER) 앱",
         "excerpt":"사전 설정 % pip install spacy spacy_streamlit % python -m spacy download en_core_web_trf 1) 하나하나 직접 입력! -&gt; 노동력이 필요 -&gt; 시간도 필요 -&gt; 실수가 있을 수 있다. -&gt; 입력 도중에 값이 변할 수도 있다. 2) Copy &amp; Paste 로 할 때 총 1640번의 반복작업을 해야한다. 붙여넣기 하고 정리가 필요하다!...","categories": ["NLP"],
         "tags": ["NLP","NER"],
         "url": "http://localhost:4000/nlp/nlp-NER/",
