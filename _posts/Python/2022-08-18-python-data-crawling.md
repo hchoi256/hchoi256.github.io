@@ -236,7 +236,8 @@ con.close() # 연결 종료
 ```
 
 
-# SQLAlchemy
+# DB-API 2.0 (SQLAlchemy)
+![image](https://user-images.githubusercontent.com/39285147/185639200-a4e6192d-d6c5-4789-9460-c10ae6465958.png)
 
 앞서 언급했던 모든 과정을 단 몇 줄의 코드로 더 간편하게 해결 가능하다.
 
@@ -280,11 +281,11 @@ import psycopg2
 
 ```python
 con = psycopg2.connect(
-    host = "ec2-54-85-56-210.compute-1.amazonaws.com",
-    user = "dffrhrsfxfgosu",
-    password = "efdfee5504b904acb62a1d48b34c81de2f5db10b912dedcb66bfba78749c582b",
-    port = "5432",
-    dbname = "dfrh7r7ssbr3rm"
+    host = "",
+    user = "",
+    password = "",
+    port = "",
+    dbname = ""
 )
 print(type(con))
 ```
@@ -304,6 +305,8 @@ cur.fetchone()
         (5,)
 
 # MySQL
+![image](https://user-images.githubusercontent.com/39285147/185639113-4498bebe-fe0e-4e83-942c-a8e90af47994.png)
+
 
 이제, 실제 범용 DB인 MySQL을 활용해서 실제 서버를 대상으로 데이터를 관리해보자.
 
@@ -322,10 +325,10 @@ import mysql.connector
 
 ```python
 con = mysql.connector.connect(
-    host = "www.db4free.net",
-    user = "fermat39007",
-    password = "1q2w3e4r",
-    port = "3306"
+    host = "",
+    user = "",
+    password = "",
+    port = ""
 )
 
 print(type(con))
