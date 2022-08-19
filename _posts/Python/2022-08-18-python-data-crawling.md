@@ -1,8 +1,8 @@
 ---
 layout: single
-title: "Python: Data Crawling (BeautifulSoup)"
+title: "Python: Data Crawling"
 categories: Python
-tag: [Python, Data Crawling, BeautifulSoup]
+tag: [Python, SQL, BeautifulSoup, sqlite]
 toc: true
 toc_sticky: true
 toc_label: "쭌스log"
@@ -15,7 +15,7 @@ sidebar:
 
 Python으로 정부 사이트와 같은 정보 제공 사이트에서 데이터를 불러와 엑셀 파일로 변환해보자.
 
-# 실습 예제 1: Excel
+# Excel
 
 ## 라이브러리
 
@@ -104,7 +104,7 @@ now = datetime.datetime.now() # 현재 시간
 df.to_excel("식재료_종류_" + now.strftime("%Y%m%d%H%M%S")  + ".xlsx", index = False)
 ```
 
-# 실습 예제 2: sqlite3
+# sqlite3
 
 여러분은 엑셀로 직접 저장하는 것이 아니라 데이터베이스에 넣고싶을 수도 있다.
 
@@ -151,7 +151,7 @@ cur.execute(execute_SQL)
 # 값 추가
 execute_SQL = """INSERT INTO singsingfood VALUES (
     1, 
-    "A", 
+    ('A', 200), 
     "B",
     "C",
     "D", 
@@ -165,7 +165,7 @@ result_set.fetchone() # 하나의 행 값
 ```
 
 
-        (1, 'A', 'B', 'C', 'D', 'E', 'F', 'G')
+        (1, ('A', 200), 'B', 'C', 'D', 'E', 'F', 'G')
 
 
 ```python
@@ -221,12 +221,22 @@ cur.execute("DELETE FROM singsingfood") # 입력한 데이터 1번에 모두 삭
 ```
 
 ```python
+# 테이블 생성
+cur.execute("CREATE TABLE clients(Name TEXT, Number INT);")
+```
+
+```python
+# 테이블 삭제
+cur.execute("DROP TABLE clients;") # clients라는 테이블을 삭제해달라!
+```
+
+```python
 con.commit() # 실제 DB에 반영
 con.close() # 연결 종료
 ```
 
 
-# 실습 예제 3: DB-API (SQLAlchemy)
+# SQLAlchemy
 
 앞서 언급했던 모든 과정을 단 몇 줄의 코드로 더 간편하게 해결 가능하다.
 
@@ -238,6 +248,8 @@ con.close() # 연결 종료
 from sqlalchemy import create_engine
 ```
 
+## 사용법
+
 앞선 예제에서 만들었던 'crawling.db'에 접근해보자.
 
 ```python
@@ -246,4 +258,91 @@ engine = create_engine("sqlite:///crawling.db", echo=True, future=True)
 
 ```python
 df.to_sql("singsingfood2", con = engine) # 'crawling.db' 복사하여 새로운 DB 생성 
+```
+
+> 보다 자세한 사용 방법은 [여기](https://gggggeun.tistory.com/77) 참조.
+
+# Psycopg2
+
+## 라이브러리
+
+```python
+!pip install psycopg2
+```
+
+```python
+import psycopg2
+```
+
+## 사용법
+
+우선 연결하려는 DB의 Configuration 정보를 입력해야 한다.
+
+```python
+con = psycopg2.connect(
+    host = "ec2-54-85-56-210.compute-1.amazonaws.com",
+    user = "dffrhrsfxfgosu",
+    password = "efdfee5504b904acb62a1d48b34c81de2f5db10b912dedcb66bfba78749c582b",
+    port = "5432",
+    dbname = "dfrh7r7ssbr3rm"
+)
+print(type(con))
+```
+
+        <class 'psycopg2.extensions.connection'>
+
+
+ConnectionPool의 Configuration 정보로 연결을 시도하고, SQL 문을 입력해보자
+
+```python
+cur = con.cursor() # 연결 권한 획득
+cur.execute("SELECT 2 + 3;")
+
+cur.fetchone()
+```
+
+        (5,)
+
+# MySQL
+
+이제, 실제 범용 DB인 MySQL을 활용해서 실제 서버를 대상으로 데이터를 관리해보자.
+
+## 라이브러리
+
+```python
+!pip install mysql-connector-python
+# !pip install pymysql
+```
+
+```python
+import mysql.connector
+```
+
+## 사용법
+
+```python
+con = mysql.connector.connect(
+    host = "www.db4free.net",
+    user = "fermat39007",
+    password = "1q2w3e4r",
+    port = "3306"
+)
+
+print(type(con))
+```
+
+        <class 'mysql.connector.connection_cext.CMySQLConnection'>
+
+
+```python
+cur = con.cursor() # 연결 권한 획득
+cur.execute("SHOW DATABASES;") # 데이터베이스 목록
+
+# 데이터베이스 목록 확인
+for n in cur:
+    print(n)
+```
+
+```python
+cur.execute("CREATE DATABASE newData") # 데이터베이스 생성
 ```
