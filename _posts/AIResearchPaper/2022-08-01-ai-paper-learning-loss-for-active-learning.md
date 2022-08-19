@@ -2,7 +2,7 @@
 layout: single
 title: "[논문 분석] Learning loss for active learning (CVPR 2019)"
 categories: AIPaperCV
-tag: [AI Research Papers, CV, NLP]
+tag: [CVPR, CV, Active Learning]
 toc: true
 toc_sticky: true
 toc_label: "쭌스log"

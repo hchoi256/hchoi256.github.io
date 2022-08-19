@@ -2,7 +2,7 @@
 layout: single
 title: "[논문 분석] Deep Learning-Based Vehicle Anomaly Detection by Combining Vehicle Sensor Data (KAIS 2021)"
 categories: AIPaperOthers
-tag: [AI Research Paper, Self-driving]
+tag: [KAIS, Self-driving]
 toc: true
 toc_sticky: true
 toc_label: "쭌스log"

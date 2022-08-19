@@ -2,7 +2,7 @@
 layout: single
 title: "[논문 분석] A Multi-Task Benchmark for Korean Legal Language Understanding and Judgement Prediction (arXiv 2022)"
 categories: AIPaperNLP
-tag: [AI Research Paper, Kaist]
+tag: [arXiv, Kaist, Korean Legal Language]
 toc: true
 toc_sticky: true
 toc_label: "쭌스log"
