@@ -2,7 +2,7 @@
 layout: single
 title: "설명 가능한 AI (XAI): Perturbation Map & Influence Map"
 categories: XAI
-tag: [XAI, Perturbation Map, LIME, RISE]
+tag: [XAI, Perturbation Map, LIME, RISE, Inception]
 toc: true
 toc_sticky: true
 toc_label: "쭌스log"
