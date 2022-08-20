@@ -54,9 +54,9 @@ var store = [{
         "teaser": "http://localhost:4000/assets/images/posts/ml-thumbnail.jpg"
       },{
         "title": "AI 학습자료",
-        "excerpt":"AI 대학원 전공 면접 질문 모음: Preparing for AI Graduate School Math, Statistics Linear Algebra(KAIST) or Linear Algebra(YouTube) Prababilities and Statistics Programming &amp; Data Analysis Python R AI AI Machine Learning ML(SNU) or ML(Stanford) Reinforcemnet Learning(Stanford) or Reinforcemnet Learning(Stanford) Deep Learning Deep Learning(MIT)) CNN(Stanford) Computer Vision(Georgia Tech) NLP(Stanford) Deep NLP(Stanford)...","categories": ["Star"],
+        "excerpt":"AI 대학원 전공 면접 질문 모음: Preparing for AI Graduate School Math, Statistics Linear Algebra(KAIST) or Linear Algebra(YouTube) Prababilities and Statistics Programming &amp; Data Analysis Python R AI AI Machine Learning ML(SNU) or ML(Stanford) Reinforcemnet Learning(Stanford) or Reinforcemnet Learning(Stanford) Deep Learning Deep Learning(MIT)) CNN(Stanford) Computer Vision(Georgia Tech) NLP(Stanford) Deep NLP(Stanford)...","categories": ["Study"],
         "tags": ["AI","KAIST","SNU","Graduate School"],
-        "url": "http://localhost:4000/star/ai-study-guide/",
+        "url": "http://localhost:4000/study/ai-study-guide/",
         "teaser": "http://localhost:4000/assets/images/posts/data-thumbnail.jpg"
       },{
         "title": "NLP - Part 4: Naive Classifier",
@@ -79,7 +79,7 @@ var store = [{
       },{
         "title": "[논문 분석] Learning loss for active learning (CVPR 2019)",
         "excerpt":"Learning loss for active learning 논문 Background We need big dataset to train a deep learning model Low cost: image collection (unlabeled dataset) High cost: image annotation (labeled dataset) Semi-Supervised Learning vs. Active Learning Semi-Supervised Learning How to train unlabeled dataset based on labeled data Active Learning What data to...","categories": ["AIPaperCV"],
-        "tags": ["AI Research Papers","CV","NLP"],
+        "tags": ["CVPR","CV","Active Learning"],
         "url": "http://localhost:4000/aipapercv/ai-paper-learning-loss-for-active-learning/",
         "teaser": "http://localhost:4000/assets/images/posts/ai-thumbnail.jpg"
       },{
@@ -107,7 +107,7 @@ var store = [{
         "url": "http://localhost:4000/study/ai-data-preprocessing/",
         "teaser": "http://localhost:4000/assets/images/posts/data-thumbnail.jpg"
       },{
-        "title": "Python: PART 1 - Web Application without Server",
+        "title": "Python: PART 1 - 서버없이 웹 어플 구현하기 (Streamlit)",
         "excerpt":"파이썬으로 웹 서버 구동없이 웹 어플리케이션을 만들기 위해 ‘streamlit’ 라이브러리가 활용된다. To create a web application without a server, we use the ‘streamlit’ library. Loading the library for web server import streamlit as st Texts st.write(\"Hello, World!\") # print out the message to the web page st.markdown(\"\"\"This is an H1=============\"\"\")...","categories": ["Python"],
         "tags": ["Python Web App","Streamlit"],
         "url": "http://localhost:4000/python/python-web-server/",
@@ -115,35 +115,35 @@ var store = [{
       },{
         "title": "[논문 분석] Deep Learning-Based Vehicle Anomaly Detection by Combining Vehicle Sensor Data (KAIS 2021)",
         "excerpt":"Deep Learning-Based Vehicle Anomaly Detection by Combining Vehicle Sensor Data 논문 PART 1: Background 기존 이상탐지 방법은 제한된 데이터를 다루는 전통적인 통계 방법에 의존한다. 이 논문은 **AI 기반 보다 효과적인 이상탐지 방법을 제안한다. 자동차의 공회전 센서 및 **이상 탐지 간의 상관관계를 분석하여 인공지능 모델을 설계하였다. 기존의 SVM이나 PCA 모델 등은...","categories": ["AIPaperOthers"],
-        "tags": ["AI Research Paper","Self-driving"],
+        "tags": ["KAIS","Self-driving"],
         "url": "http://localhost:4000/aipaperothers/ai-paper-dl-behicle-detection-by-sensor/",
         "teaser": "http://localhost:4000/assets/images/posts/ai-thumbnail.jpg"
       },{
         "title": "Part 1: BERT Language Model",
         "excerpt":"자연어 처리(Natural Language Processing, NLP) 자연어란? 부호화(Encoding) 해독(Decoding) 자연어 처리는 상기 도표에서 컴퓨터가 텍스트를 해독하는 과정을 의미한다. 일상에서 사용하는 모든 인간의 언어로, 한국어, 영어와 같은 것들이 예시이다. 인공언어: 프로그래밍 언어, etc. 자연어 처리의 두 종류 규칙 기반 접근법 (Symbolic approach) 확률 기반 접근법 (Statistical approach) TF-IDF TF(Term frequency): 단어가 문서에...","categories": ["BERT"],
-        "tags": ["NLP","BERT","Language Model"],
+        "tags": ["NLP","Word Embedding","Word2Vec","One Hot Encoding"],
         "url": "http://localhost:4000/bert/bert-1/",
         "teaser": "http://localhost:4000/assets/images/posts/bert-thumbnail.png"
       },{
         "title": "Part 2: BERT Language Model",
         "excerpt":"언어 모델 (Language Model, LM) ‘자연어’의 법칙을 컴퓨터로 모사하는 모델로, 다음에 등장할 단어 예측을 수행한다(= ‘맥락’을 고려한다). Markov 확률 모델 이전 단어의 형태를 통하여 확률적으로 다음에 나올 단어를 예측한다 가령, ‘like’ 다음에 ‘rabbit’이라는 단어가 나타날 확률은 주어진 학습 데이터에 기반하여 33%로 나타난다. RNN (Recurrent Neural Network) 모델 Markov 체인 모델을...","categories": ["BERT"],
-        "tags": ["NLP","BERT","Language Model"],
+        "tags": ["NLP","BERT","Seq2Seq","Attention","Transformer"],
         "url": "http://localhost:4000/bert/bert-2/",
         "teaser": "http://localhost:4000/assets/images/posts/bert-thumbnail.png"
       },{
         "title": "Part 3: BERT Language Model",
-        "excerpt":"BERT Bi-directional transformer로 이루어진 언어모델로, BERT 언어모델 위에 1개의 classification layer만 부착하여 다양한 NLP task를 수행한다. WordPiece tokenizing 입력 문장을 toeknizing하고, 그 token들로 ‘token sequence’를 만들어 학습에 사용한다. BPE와는 다르게 WordPiece는 우도로 병합을 진행하여, 두 문자가 같이 오는 문자 단위를 중요시한다. 우도: 전체 글자 중 각 단어가 따로 등장한 것을...","categories": ["BERT"],
-        "tags": ["NLP","BERT","Language Model"],
+        "excerpt":"BERT Bi-directional transformer로 이루어진 언어모델로, 양방향으로 encoder를 발산하여 전체 단어를 학습에 활용한다 (전체 맥락을 이해한다). BERT 언어모델 위에 1개의 classification layer만 부착하여 다양한 NLP task를 수행한다. BERT: Transformer 의 Encoder (self attention) GPT: Transformer 의 Decoder (Multi-head attention) BPE (Byte Pair Encoding) 빈도수에 기반하여 토큰을 병합하는 BPE (Byte Pair Encoding)...","categories": ["BERT"],
+        "tags": ["NLP","BERT","BPE","WordPiece","KorBERT"],
         "url": "http://localhost:4000/bert/bert-3/",
         "teaser": "http://localhost:4000/assets/images/posts/bert-thumbnail.png"
       },{
         "title": "[논문 분석] A Multi-Task Benchmark for Korean Legal Language Understanding and Judgement Prediction (arXiv 2022)",
         "excerpt":"논문 들어가면서 법률 계약서는 일반인이 독해하기 어려운 단어들 뿐만 아니라, 한 문장이 한 페이지를 차지할 정도로 긴 문장들을 포함한다. 이전에 참가한 한 세미나에서는 이러한 법률 계약서에 존재하는 오류를 검사하는 AI 모델을 실제 변호사와 대결시킨 사례를 소개했다. AI 모델은 26초 만에 94%의 정확도로 오류를 검증해내었고, 반면 사람 변호사는 96분 동안 86%의...","categories": ["AIPaperNLP"],
-        "tags": ["AI Research Paper","Kaist"],
+        "tags": ["arXiv","Kaist","Korean Legal Language"],
         "url": "http://localhost:4000/aipapernlp/ai-paper-ko-legal-nlp/",
         "teaser": "http://localhost:4000/assets/images/posts/ai-thumbnail.jpg"
       },{
-        "title": "Python: PART 2 - Web Application without Server",
+        "title": "Python: PART 2 - 서버없이 웹 어플 구현하기 (Streamlit)",
         "excerpt":"강아지 품종 분류 AI 웹페이지 % pip install opencv-python # Loading the libraries from distutils.command.install_egg_info import to_filename import numpy as np import streamlit as st import cv2 # *opencv import tensorflow as tf from tensorflow import keras 상기 라이브러리 중에 눈에 띄는 것이 있다; cv2 cv2 라이브러리는 opencv 패키지를 설치해서...","categories": ["Python"],
         "tags": ["Python Web App","Streamlit","Opencv"],
         "url": "http://localhost:4000/python/python-web-server-exercise/",
@@ -186,8 +186,50 @@ var store = [{
         "teaser": "http://localhost:4000/assets/images/posts/pca-image-compression.png"
       },{
         "title": "NLP - Part 6: Name Entity Recognition (NER) 앱",
-        "excerpt":"사전 설정 % pip install spacy spacy_streamlit % python -m spacy download en_core_web_trf 1) 하나하나 직접 입력! -&gt; 노동력이 필요 -&gt; 시간도 필요 -&gt; 실수가 있을 수 있다. -&gt; 입력 도중에 값이 변할 수도 있다. 2) Copy &amp; Paste 로 할 때 총 1640번의 반복작업을 해야한다. 붙여넣기 하고 정리가 필요하다!...","categories": ["NLP"],
+        "excerpt":"개체명 인식(Named Entity Recognition)이란 말 그대로 이름을 가진 개체(named entity)를 인식하겠다는 것을 의미한다. 어떤 이름을 의미하는 단어를 보고는 그 단어가 어떤 유형인지를 인식하는 것을 말한다. 라이브러리 % pip install spacy spacy_streamlit % python -m spacy download en_core_web_trf import streamlit as st import spacy_streamlit as spt import spacy import spacy_transformers nlp...","categories": ["NLP"],
         "tags": ["NLP","NER"],
         "url": "http://localhost:4000/nlp/nlp-NER/",
         "teaser": "http://localhost:4000/assets/images/posts/nlp-thumbnail.jpg"
+      },{
+        "title": "Python: Data Crawling",
+        "excerpt":"Python으로 정부 사이트와 같은 정보 제공 사이트에서 데이터를 불러와 엑셀 파일로 변환해보자. Excel 라이브러리 from urllib import request # 웹 연동 from bs4 import BeautifulSoup # dataframe 조정 데이터 불러오기 URL = \"http://singsing.sejong.go.kr/pages/sub02_01.do?pageIndex=%PAGE_NUMBER%&amp;tmpcls2=&amp;searchMenu=&amp;searchMenu2=&amp;searchKeyword1=\" # 세종특별자치시 공공급식지원센터 request.urlopen(url), type(request.urlopen(url)) # 해당 웹링크 접근 권한 획득 html = request.urlopen(url) # 해당 사이트...","categories": ["Python"],
+        "tags": ["Python","SQL","BeautifulSoup","sqlite"],
+        "url": "http://localhost:4000/python/python-data-crawling/",
+        "teaser": "http://localhost:4000/assets/images/posts/data-thumbnail.jpg"
+      },{
+        "title": "Python: 이메일 보내기 (SMTP)",
+        "excerpt":"실습 예제: 단순 내용 보내기 본문 작성을 위해 &lt;https://yeolco.tistory.com/93&gt; 참조했다. 라이브러리 import smtplib # Send Mail Transport Protocol Library from email.message import EmailMessage 내용 작성 email = EmailMessage() # print(dir(email)) email[\"from\"] = \"메일을 보내는 자 &lt;fermat39@gmail.com&gt;\" email[\"to\"] = \"이메일을 받는자 &lt;fermat39@naver.com&gt;\" email[\"subject\"] = \"이메일을 보냅니다!\" email.set_content(\"\"\"Hello, World! \"\"\") 이메일 보내기...","categories": ["Python"],
+        "tags": ["Python","Email"],
+        "url": "http://localhost:4000/python/python-send-email/",
+        "teaser": "http://localhost:4000/assets/images/posts/email.png"
+      },{
+        "title": "설명 가능한 AI (XAI): Saliency Map",
+        "excerpt":"Saliency Map은 하나의 이미지 샘플이 모델의 입력으로 들어가면, 그 샘플에 대한 예측 결과에 대한 설명을 이미지에서 중요한 부분에 하이라이트(heatmap)해서 보여준다. Simple Gradient Method 입력에 대한 모델의 Gradient(가중치)로 설명을 제공한다. 여기서, Gradient는 딥러닝 모델 Back-Propagation 과정에서 간단히 구해지는 것이다. Gradient ↑ –&gt; 해당 픽셀 중요도 ↑ 장단점 장점 Easy to compute...","categories": ["XAI"],
+        "tags": ["XAI","Saliency Map","SmoothGrad","CAM","Grad CAM"],
+        "url": "http://localhost:4000/xai/XAI-saliency/",
+        "teaser": "http://localhost:4000/assets/images/posts/xai.png"
+      },{
+        "title": "설명 가능한 AI(Explainable AI, XAI)... 왜 중요할까?",
+        "excerpt":"배경 딥러닝의 발전에 따라 다양한 분야에서 큰 발전을 거머쥘 수 있었다. 딥러닝은 종단간 기계학습 (End-to-end) 기반으로 입력에서 출력까지 ‘파이프라인 네트워크’ 없이 한 번에 학습을 처리한다. 이러한 맥락에서, 대용량 학습 데이터를 다루기 시작하면서 점점 모델의 구조가 복잡해지고 이해하는 것이 불가능에 가까워졌다. 신경망 모델이 도출하는 결과에 대한 근거, 즉 출력값에 대한 설명의...","categories": ["XAI"],
+        "tags": ["XAI"],
+        "url": "http://localhost:4000/xai/XAI/",
+        "teaser": "http://localhost:4000/assets/images/posts/xai.png"
+      },{
+        "title": "[논문 분석] How do Transformer-Architecture Models Address Polysemy of Korean Adverbial Postpositions? (ACL 2022)",
+        "excerpt":"논문   TBD  ","categories": ["AIPaperNLP"],
+        "tags": ["ACL","NLP","Transformer","Polysemy","Korean Adverbial Postposition"],
+        "url": "http://localhost:4000/aipapernlp/transformer-polysemy-korean/",
+        "teaser": "http://localhost:4000/assets/images/posts/ai-thumbnail.jpg"
+      },{
+        "title": "설명 가능한 AI (XAI): Perturbation Map & Influence Map",
+        "excerpt":"Perturbation Map 모델의 정확한 구조나 계수는 모르는 상태에서 그 모델에 대한 입출력만 가지고 있는 경우 설명하는 방법이다. 입력 데이터를 조금씩 바꾸면서 그에 대한 출력을 보고, 그 변화에 기반해서 설명한다. 대리 분석(surrogate analysis) XAI에서 대리 분석이란, 설명하고자 하는 원래 모델이 지나치게 복잡해서 해석하기 어려울 때, 해석 가능한 대리 모델(surrogate model)을 사용하여...","categories": ["XAI"],
+        "tags": ["XAI","Perturbation Map","LIME","RISE","Inception"],
+        "url": "http://localhost:4000/xai/XAI-perturbation-influence/",
+        "teaser": "http://localhost:4000/assets/images/posts/xai.png"
+      },{
+        "title": "설명 가능한 AI (XAI): Quantitative Metrics & Sanity checks/Robustness",
+        "excerpt":" ","categories": ["XAI"],
+        "tags": ["XAI","Quantitative Metrics","Sanity check","Robustness"],
+        "url": "http://localhost:4000/xai/XAI-quantitative/",
+        "teaser": "http://localhost:4000/assets/images/posts/xai.png"
       }]

@@ -1,0 +1,1769 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <!--폰트 : "Nanum Gothic Coding", "Coming Soon"-->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Coming+Soon&family=Nanum+Gothic+Coding&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Coming+Soon&family=Nanum+Gothic+Coding&display=swap">
+    
+    <!--폰트 : "Iropke Batang"-->
+    <link rel="preload" as="style" href="https://cdn.jsdelivr.net/font-iropke-batang/1.2/font-iropke-batang.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/font-iropke-batang/1.2/font-iropke-batang.css">
+
+    <!--폰트 : "Cafe24Oneprettynight"-->
+    <link rel="preload" as="style" href="/assets/css/main.css">
+
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Python: Data Crawling | 정리하여 내 것으로, AI 📂</title>
+<meta name="description" content="Python으로 정부 사이트와 같은 정보 제공 사이트에서 데이터를 불러와 엑셀 파일로 변환해보자.">
+
+
+  <meta name="author" content="쭌스🎄">
+  
+  <meta property="article:author" content="쭌스🎄">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="정리하여 내 것으로, AI 📂">
+<meta property="og:title" content="Python: Data Crawling">
+<meta property="og:url" content="http://localhost:4000/python/python-data-crawling/">
+
+
+  <meta property="og:description" content="Python으로 정부 사이트와 같은 정보 제공 사이트에서 데이터를 불러와 엑셀 파일로 변환해보자.">
+
+
+
+  <meta property="og:image" content="http://localhost:4000/assets/images/posts/data-thumbnail.jpg">
+
+
+
+
+
+  <meta property="article:published_time" content="2022-08-18T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/python/python-data-crawling/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "쭌스🎄",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+  <meta name="naver-site-verification" content="57d020c8f9b26bf56ed7846608b8d873481e9b84">
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정리하여 내 것으로, AI 📂 Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1250314621726093"
+     crossorigin="anonymous"></script>
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/logo.ico/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/logo.ico/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/logo.ico/favicon-16x16.png">
+<link rel="mask-icon" href="/assets/logo.ico/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+<!-- end custom head snippets -->
+
+    <!-- 스크롤바 커스터마이징 -->
+    <style> 
+      ::-webkit-scrollbar{width: 16px;}
+      ::-webkit-scrollbar-track {background-color:#4b4f52; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb {background-color:#5e6265; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb:hover {background: #ffd24c;}
+      ::-webkit-scrollbar-button:start:decrement,::-webkit-scrollbar-button:end:increment 
+      {
+          width:12px;height:12px;background:transparent;}
+      }  
+
+      
+    </style>
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          정리하여 내 것으로, AI 📂
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/search/">Search</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+  
+    
+
+
+
+<nav class="breadcrumbs">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    
+    
+      
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/" itemprop="item"><span itemprop="name">Home</span></a>
+
+          <meta itemprop="position" content="1" />
+        </li>
+        <span class="sep">/</span>
+      
+      
+        
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/categories/#python" itemprop="item"><span itemprop="name">Python</span></a>
+          <meta itemprop="position" content="2" />
+        </li>
+        <span class="sep">/</span>
+      
+    
+      
+      
+        <li class="current">Python: Data Crawling</li>
+      
+    
+  </ol>
+</nav>
+
+  
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/echoi.jpg" alt="쭌스🎄" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">쭌스🎄</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>I am a senior-year B.S. student in Computer Science and Data Science at the University of Wisconsin, Madison.</p>
+
+<p>My research interests are <strong>hyper-scale AI</strong>, <strong>ML</strong>, <strong>deep NLP</strong>, and <strong>XAI in computer vision</strong>.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="mailto:hchoi256@wisc.edu" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/hchoi256" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="/assets/포트폴리오.pdf" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Portfolio</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items">
+    
+  </ul>
+</nav>
+
+    
+  
+
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">47</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
+      </li>
+      <li>
+        <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C#-->
+        <span class="nav__sub-title">Important</span>
+        <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+        <ul>
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/categories/Study" class="">AI 기본지식 (2)</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </ul>
+        <ul>
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/categories/Python" class="">Python (4)</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </ul>
+        <ul>
+            
+                
+                    <li><a href="/categories/Basic" class="">기타 (1)</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </ul>
+        <span class="nav__sub-title">AI Research Papers</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/AIPaperCV" class="">CV (1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/AIPaperNLP" class="">NLP (2)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/AIPaperOthers" class="">기타 (1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>   
+        <span class="nav__sub-title">ML/DL</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/SL" class="">지도학습 (14)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/USL" class="">비지도학습 (2)</a></li>
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/RL" class="">강화학습 (1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/XAI" class="">XAI (4)</a></li>
+                    
+                
+            </ul>
+        <span class="nav__sub-title">NLP</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                        <li><a href="/categories/NLP" class="">NLP (8)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/BERT" class="">BERT (3)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/GPT" class="">GPT (1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>  
+      </li>
+  </ul>
+</nav>
+
+  
+
+  </div>
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Python: Data Crawling">
+    <meta itemprop="description" content="Python으로 정부 사이트와 같은 정보 제공 사이트에서 데이터를 불러와 엑셀 파일로 변환해보자.">
+    <meta itemprop="datePublished" content="2022-08-18T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="http://localhost:4000/python/python-data-crawling/" class="u-url" itemprop="url">Python: Data Crawling
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> 쭌스log</h4></header>
+              <ul class="toc__menu"><li><a href="#excel">Excel</a><ul><li><a href="#라이브러리">라이브러리</a></li><li><a href="#데이터-불러오기">데이터 불러오기</a></li><li><a href="#dataframe-변환">DataFrame 변환</a></li><li><a href="#엑셀-저장하기">엑셀 저장하기</a></li></ul></li><li><a href="#sqlite3">sqlite3</a><ul><li><a href="#라이브러리-1">라이브러리</a></li><li><a href="#connection-획득하기">Connection 획득하기</a></li><li><a href="#sql-문-실행">SQL 문 실행</a></li><li><a href="#데이터베이스-접근--수정하기">데이터베이스 접근 &amp; 수정하기</a></li></ul></li><li><a href="#db-api-20-sqlalchemy">DB-API 2.0 (SQLAlchemy)</a><ul><li><a href="#라이브러리-2">라이브러리</a></li><li><a href="#사용법">사용법</a></li></ul></li><li><a href="#psycopg2">Psycopg2</a><ul><li><a href="#라이브러리-3">라이브러리</a></li><li><a href="#사용법-1">사용법</a></li></ul></li><li><a href="#mysql">MySQL</a><ul><li><a href="#라이브러리-4">라이브러리</a></li><li><a href="#사용법-2">사용법</a></li></ul></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p>Python으로 정부 사이트와 같은 정보 제공 사이트에서 데이터를 불러와 엑셀 파일로 변환해보자.</p>
+
+<h1 id="excel">Excel</h1>
+
+<h2 id="라이브러리">라이브러리</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">urllib</span> <span class="kn">import</span> <span class="n">request</span> <span class="c1"># 웹 연동
+</span><span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span> <span class="c1"># dataframe 조정
+</span></code></pre></div></div>
+
+<h2 id="데이터-불러오기">데이터 불러오기</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">URL</span> <span class="o">=</span> <span class="s">"http://singsing.sejong.go.kr/pages/sub02_01.do?pageIndex=%PAGE_NUMBER%&amp;tmpcls2=&amp;searchMenu=&amp;searchMenu2=&amp;searchKeyword1="</span> <span class="c1"># 세종특별자치시 공공급식지원센터
+</span>
+<span class="n">request</span><span class="p">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">),</span> <span class="nb">type</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">))</span> <span class="c1"># 해당 웹링크 접근 권한 획득
+</span>
+<span class="n">html</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="c1"># 해당 사이트 html 추출
+# html.read().decode("utf-8") # 인코딩 필요시
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">target_page</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="s">"html5lib"</span><span class="p">)</span>
+<span class="n">target_page</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    &lt;!DOCTYPE html&gt;
+    &lt;html lang="ko"&gt;&lt;head&gt;
+    &lt;meta charset="utf-8"/&gt;
+    &lt;meta content="text/html; charset=utf-8" http-equiv="Content-Type"/&gt;
+    &lt;meta content="IE=edge" http-equiv="X-UA-Compatible"/&gt;&lt;!-- IE에서만 --&gt;
+    &lt;meta content="telephone=no,email=no,address=no" name="format-detection"/&gt;
+    &lt;meta content="" name="author"/&gt;
+    &lt;meta content="세종특별자치시 로컬푸드 학교급식 지원센터" name="Keywords"/&gt;
+    &lt;meta content="" name="description"/&gt;
+</code></pre></div></div>
+
+<p>상기 출력값처럼 해당 사이트의 html을 긁어왔다.</p>
+
+<p>이제, 사이트에 나와있는 데이터 테이블을 파이썬에서 dataframe으로 변환해보자.</p>
+
+<h2 id="dataframe-변환">DataFrame 변환</h2>
+
+<p>해당 사이트에 나와있는 테이블의 열을 보고, Dataframe 뼈대를 작성해보자.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s">"NO"</span><span class="p">,</span> <span class="s">"대분류"</span><span class="p">,</span> <span class="s">"중분류"</span><span class="p">,</span> <span class="s">"NEIS식품명/상세식품명"</span><span class="p">,</span> <span class="s">"식품설명"</span><span class="p">,</span> <span class="s">"포장중량"</span><span class="p">,</span> <span class="s">"중량단위"</span><span class="p">,</span> <span class="s">"포장단위"</span><span class="p">]</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p>이제 직접 상기 Dataframe에 웹 페이지의 데이터를 넣어보자.</p>
+
+<p>여기서, 해당 사이트의 각 페이지에는 테이블이 딱 하나씩 있어서 테이블을 나타내는 태그인 <strong>tbody</strong>를 곧바로 가져와도 무방하다.</p>
+
+<p>해당 사이트의 모든 페이지를 다 조회해서 나타난 데이터를 Dataframe으로 받아오자.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">PAGE_NUMBER</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">html</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">URL</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="s">"%PAGE_NUMBER%"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">PAGE_NUMBER</span><span class="p">)))</span> <span class="c1"># URL에서 '%PAGE_NUMBER%'과 치환
+</span>    <span class="n">target_page</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="s">"html5lib"</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">tr</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">target_page</span><span class="p">.</span><span class="n">select</span><span class="p">(</span><span class="s">"tbody tr"</span><span class="p">)):</span> <span class="c1"># 행
+</span>        <span class="n">list_td</span> <span class="o">=</span> <span class="n">tr</span><span class="p">.</span><span class="n">find_all</span><span class="p">(</span><span class="s">"td"</span><span class="p">)</span> <span class="c1"># 열
+</span>
+        <span class="n">temp_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">({</span>
+            <span class="s">"NO"</span> <span class="p">:</span> <span class="n">list_td</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">text</span><span class="p">,</span> 
+            <span class="s">"대분류"</span> <span class="p">:</span> <span class="n">list_td</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">text</span><span class="p">,</span> 
+            <span class="s">"중분류"</span> <span class="p">:</span> <span class="n">list_td</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">text</span><span class="p">,</span> 
+            <span class="s">"NEIS식품명/상세식품명"</span> <span class="p">:</span> <span class="n">list_td</span><span class="p">[</span><span class="mi">3</span><span class="p">].</span><span class="n">text</span><span class="p">,</span> 
+            <span class="s">"식품설명"</span> <span class="p">:</span> <span class="n">list_td</span><span class="p">[</span><span class="mi">4</span><span class="p">].</span><span class="n">text</span><span class="p">,</span> 
+            <span class="s">"포장중량"</span> <span class="p">:</span> <span class="n">list_td</span><span class="p">[</span><span class="mi">5</span><span class="p">].</span><span class="n">text</span><span class="p">,</span> 
+            <span class="s">"중량단위"</span> <span class="p">:</span> <span class="n">list_td</span><span class="p">[</span><span class="mi">6</span><span class="p">].</span><span class="n">text</span><span class="p">,</span> 
+            <span class="s">"포장단위"</span> <span class="p">:</span> <span class="n">list_td</span><span class="p">[</span><span class="mi">7</span><span class="p">].</span><span class="n">text</span>
+        <span class="p">},</span> <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span> <span class="n">temp_df</span><span class="p">])</span> 
+    
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>    
+</code></pre></div></div>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/185467114-08016845-f5ea-4296-9065-f3cf1e507d8e.png" alt="image" /></p>
+
+<h2 id="엑셀-저장하기">엑셀 저장하기</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="n">datetime</span><span class="p">.</span><span class="n">now</span><span class="p">()</span> <span class="c1"># 현재 시간
+</span>
+<span class="n">df</span><span class="p">.</span><span class="n">to_excel</span><span class="p">(</span><span class="s">"식재료_종류_"</span> <span class="o">+</span> <span class="n">now</span><span class="p">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">"%Y%m%d%H%M%S"</span><span class="p">)</span>  <span class="o">+</span> <span class="s">".xlsx"</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h1 id="sqlite3">sqlite3</h1>
+
+<p>여러분은 엑셀로 직접 저장하는 것이 아니라 데이터베이스에 넣고싶을 수도 있다.</p>
+
+<p>이를 위해, 크게 세 가지 방법이 존재한다.</p>
+<ul>
+  <li>SQLite3</li>
+  <li>MySQL</li>
+  <li>PostgreSQL</li>
+</ul>
+
+<blockquote>
+  <p>SQL : DML (Manipulate) + DDL (Define) + DCL (Control)</p>
+</blockquote>
+
+<blockquote>
+  <p>CRUD : Create (INSERT in SQL) + READ (SELECT in SQL) + UPDATE (UPDAETE in SQL) + DELETE (DELETE in SQL)</p>
+</blockquote>
+
+<h2 id="라이브러리-1">라이브러리</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sqlite3</span>  <span class="c1"># 파일형 데이터베이스
+</span></code></pre></div></div>
+
+<h2 id="connection-획득하기">Connection 획득하기</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">con</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">"crawling.db"</span><span class="p">)</span> <span class="c1"># Connection 오브젝트 생성 
+</span><span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="p">.</span><span class="n">cursor</span><span class="p">()</span> <span class="c1"># Cursor 오브젝트 생성
+</span></code></pre></div></div>
+
+<h2 id="sql-문-실행">SQL 문 실행</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 테이블 생성
+</span><span class="n">execute_SQL</span> <span class="o">=</span> <span class="s">"""CREATE TABLE singsingfood (
+    NO interger, 
+    CategoryA text, 
+    CategoryB text, 
+    FoodName text, 
+    FoodDesc text, 
+    unit_A text, 
+    unit_B text, 
+    unit_C text
+)
+"""</span>
+<span class="n">cur</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="n">execute_SQL</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 값 추가
+</span><span class="n">execute_SQL</span> <span class="o">=</span> <span class="s">"""INSERT INTO singsingfood VALUES (
+    1, 
+    ('A', 200), 
+    "B",
+    "C",
+    "D", 
+    "E",
+    "F",
+    "G"
+)
+"""</span>
+<span class="n">cur</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="n">execute_SQL</span><span class="p">)</span>
+<span class="n">result_set</span><span class="p">.</span><span class="n">fetchone</span><span class="p">()</span> <span class="c1"># 하나의 행 값
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    (1, ('A', 200), 'B', 'C', 'D', 'E', 'F', 'G')
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">con</span><span class="p">.</span><span class="n">commit</span><span class="p">()</span> <span class="c1"># 작업 내역 적용
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">con</span><span class="p">.</span><span class="n">close</span><span class="p">()</span> <span class="c1"># Connection 종료
+</span></code></pre></div></div>
+
+<h2 id="데이터베이스-접근--수정하기">데이터베이스 접근 &amp; 수정하기</h2>
+
+<p>앞서 ‘crawling.db’ 이름으로 데이터 베이스를 하나 만들었는데, 여기로 접근해보자.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 데이터베이스 접근
+</span><span class="n">con</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="s">"crawling.db"</span><span class="p">)</span> <span class="c1"># DB 접근 권한
+</span><span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="p">.</span><span class="n">cursor</span><span class="p">()</span> <span class="c1"># Cursor 획득
+</span><span class="n">result_set</span> <span class="o">=</span> <span class="n">cur</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">"SELECT * FROM singsingfood"</span><span class="p">)</span> <span class="c1"># SQL문 실행
+</span><span class="n">result_set</span><span class="p">.</span><span class="n">fetchall</span><span class="p">()</span> <span class="c1"># 모든 값 보여주기
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    [('16,304', '수산물', '어란류', '대구알', '1000g/kg/외국산/일반/대구알/냉동', '1000', 'g', 'kg'),
+    ('16,305',
+    '축산물',
+    '한우',
+    '한우(채끝)/일반',
+    '1000g/kg/국산/일반/HACCP/1등급이상/한우/채끝/냉장',
+    '1000',
+    'g',
+    ...
+    '돼지고기(갈비)/친환경',
+    '1000g/kg/국산/친환경/HACCP/1등급이상/돼지고기/무항생제/갈비/냉장',
+    '1000',
+    'g',
+    'kg')]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 데이터베이스 추가
+</span><span class="n">df_list</span> <span class="o">=</span> <span class="n">df</span><span class="p">.</span><span class="n">values</span><span class="p">.</span><span class="n">tolist</span><span class="p">()</span> <span class="c1"># 판다스 DataFrame을 리스트형태로 변환
+</span>
+<span class="c1"># SQL문 작성
+</span><span class="n">execute_SQL</span> <span class="o">=</span> <span class="s">"""INSERT INTO singsingfood VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+"""</span>
+<span class="n">cur</span><span class="p">.</span><span class="n">executemany</span><span class="p">(</span><span class="n">execute_SQL</span><span class="p">,</span> <span class="n">df_list</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 데이터베이스 삭제
+</span><span class="n">cur</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">"DELETE FROM singsingfood"</span><span class="p">)</span> <span class="c1"># 입력한 데이터 1번에 모두 삭제
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 테이블 생성
+</span><span class="n">cur</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">"CREATE TABLE clients(Name TEXT, Number INT);"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 테이블 삭제
+</span><span class="n">cur</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">"DROP TABLE clients;"</span><span class="p">)</span> <span class="c1"># clients라는 테이블을 삭제해달라!
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">con</span><span class="p">.</span><span class="n">commit</span><span class="p">()</span> <span class="c1"># 실제 DB에 반영
+</span><span class="n">con</span><span class="p">.</span><span class="n">close</span><span class="p">()</span> <span class="c1"># 연결 종료
+</span></code></pre></div></div>
+
+<h1 id="db-api-20-sqlalchemy">DB-API 2.0 (SQLAlchemy)</h1>
+<p><img src="https://user-images.githubusercontent.com/39285147/185639200-a4e6192d-d6c5-4789-9460-c10ae6465958.png" alt="image" /></p>
+
+<p>앞서 언급했던 모든 과정을 단 몇 줄의 코드로 더 간편하게 해결 가능하다.</p>
+
+<p>이를 도와주는 DB-API가 <strong>‘SQLAlchemy’</strong>이다.</p>
+
+<h2 id="라이브러리-2">라이브러리</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+</code></pre></div></div>
+
+<h2 id="사용법">사용법</h2>
+
+<p>앞선 예제에서 만들었던 ‘crawling.db’에 접근해보자.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">"sqlite:///crawling.db"</span><span class="p">,</span> <span class="n">echo</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">future</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span><span class="p">.</span><span class="n">to_sql</span><span class="p">(</span><span class="s">"singsingfood2"</span><span class="p">,</span> <span class="n">con</span> <span class="o">=</span> <span class="n">engine</span><span class="p">)</span> <span class="c1"># 'crawling.db' 복사하여 새로운 DB 생성 
+</span></code></pre></div></div>
+
+<blockquote>
+  <p>보다 자세한 사용 방법은 <a href="https://gggggeun.tistory.com/77">여기</a> 참조.</p>
+</blockquote>
+
+<h1 id="psycopg2">Psycopg2</h1>
+
+<h2 id="라이브러리-3">라이브러리</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">psycopg2</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">psycopg2</span>
+</code></pre></div></div>
+
+<h2 id="사용법-1">사용법</h2>
+
+<p>우선 연결하려는 DB의 Configuration 정보를 입력해야 한다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">con</span> <span class="o">=</span> <span class="n">psycopg2</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span>
+    <span class="n">host</span> <span class="o">=</span> <span class="s">""</span><span class="p">,</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="s">""</span><span class="p">,</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="s">""</span><span class="p">,</span>
+    <span class="n">port</span> <span class="o">=</span> <span class="s">""</span><span class="p">,</span>
+    <span class="n">dbname</span> <span class="o">=</span> <span class="s">""</span>
+<span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">con</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    &lt;class 'psycopg2.extensions.connection'&gt;
+</code></pre></div></div>
+
+<p>ConnectionPool의 Configuration 정보로 연결을 시도하고, SQL 문을 입력해보자</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="p">.</span><span class="n">cursor</span><span class="p">()</span> <span class="c1"># 연결 권한 획득
+</span><span class="n">cur</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">"SELECT 2 + 3;"</span><span class="p">)</span>
+
+<span class="n">cur</span><span class="p">.</span><span class="n">fetchone</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    (5,)
+</code></pre></div></div>
+
+<h1 id="mysql">MySQL</h1>
+<p><img src="https://user-images.githubusercontent.com/39285147/185639113-4498bebe-fe0e-4e83-942c-a8e90af47994.png" alt="image" /></p>
+
+<p>이제, 실제 범용 DB인 MySQL을 활용해서 실제 서버를 대상으로 데이터를 관리해보자.</p>
+
+<h2 id="라이브러리-4">라이브러리</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">mysql</span><span class="o">-</span><span class="n">connector</span><span class="o">-</span><span class="n">python</span>
+<span class="c1"># !pip install pymysql
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">mysql.connector</span>
+</code></pre></div></div>
+
+<h2 id="사용법-2">사용법</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">con</span> <span class="o">=</span> <span class="n">mysql</span><span class="p">.</span><span class="n">connector</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span>
+    <span class="n">host</span> <span class="o">=</span> <span class="s">""</span><span class="p">,</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="s">""</span><span class="p">,</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="s">""</span><span class="p">,</span>
+    <span class="n">port</span> <span class="o">=</span> <span class="s">""</span>
+<span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">con</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    &lt;class 'mysql.connector.connection_cext.CMySQLConnection'&gt;
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="p">.</span><span class="n">cursor</span><span class="p">()</span> <span class="c1"># 연결 권한 획득
+</span><span class="n">cur</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">"SHOW DATABASES;"</span><span class="p">)</span> <span class="c1"># 데이터베이스 목록
+</span>
+<span class="c1"># 데이터베이스 목록 확인
+</span><span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">cur</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cur</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">"CREATE DATABASE newData"</span><span class="p">)</span> <span class="c1"># 데이터베이스 생성
+</span></code></pre></div></div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#beautifulsoup" class="page__taxonomy-item p-category" rel="tag">BeautifulSoup</a><span class="sep">, </span>
+    
+      <a href="/tags/#python" class="page__taxonomy-item p-category" rel="tag">Python</a><span class="sep">, </span>
+    
+      <a href="/tags/#sql" class="page__taxonomy-item p-category" rel="tag">SQL</a><span class="sep">, </span>
+    
+      <a href="/tags/#sqlite" class="page__taxonomy-item p-category" rel="tag">sqlite</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#python" class="page__taxonomy-item p-category" rel="tag">Python</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-08-18T00:00:00+09:00">2022-08-18</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Python%3A+Data+Crawling%20http%3A%2F%2Flocalhost%3A4000%2Fpython%2Fpython-data-crawling%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fpython%2Fpython-data-crawling%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fpython%2Fpython-data-crawling%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/nlp/nlp-NER/" class="pagination--pager" title="NLP - Part 6: Name Entity Recognition (NER) 앱
+">이전</a>
+    
+    
+      <a href="/python/python-send-email/" class="pagination--pager" title="Python: 이메일 보내기 (SMTP)
+">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">참고</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/xai.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.20</p>
+      
+      
+        <a href="/xai/XAI-quantitative/" rel="permalink">설명 가능한 AI (XAI): Quantitative Metrics &amp; Sanity checks/Robustness
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#xai" class="page__taxonomy-item-category" rel="tag">XAI</a>
+                    
+                    
+                    <a href="/tags/#quantitative-metrics" class="page__taxonomy-item-tag" rel="tag">Quantitative Metrics</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#robustness" class="page__taxonomy-item-tag" rel="tag">Robustness</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#sanity-check" class="page__taxonomy-item-tag" rel="tag">Sanity check</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#xai" class="page__taxonomy-item-tag" rel="tag">XAI</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/xai.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.19</p>
+      
+      
+        <a href="/xai/XAI-perturbation-influence/" rel="permalink">설명 가능한 AI (XAI): Perturbation Map &amp; Influence Map
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#xai" class="page__taxonomy-item-category" rel="tag">XAI</a>
+                    
+                    
+                    <a href="/tags/#inception" class="page__taxonomy-item-tag" rel="tag">Inception</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#lime" class="page__taxonomy-item-tag" rel="tag">LIME</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#perturbation-map" class="page__taxonomy-item-tag" rel="tag">Perturbation Map</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#rise" class="page__taxonomy-item-tag" rel="tag">RISE</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#xai" class="page__taxonomy-item-tag" rel="tag">XAI</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/ai-thumbnail.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.19</p>
+      
+      
+        <a href="/aipapernlp/transformer-polysemy-korean/" rel="permalink">[논문 분석] How do Transformer-Architecture Models Address Polysemy of Korean Adverbial Postpositions? (ACL 2022)
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#aipapernlp" class="page__taxonomy-item-category" rel="tag">AIPaperNLP</a>
+                    
+                    
+                    <a href="/tags/#acl" class="page__taxonomy-item-tag" rel="tag">ACL</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#korean-adverbial-postposition" class="page__taxonomy-item-tag" rel="tag">Korean Adverbial Postposition</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#nlp" class="page__taxonomy-item-tag" rel="tag">NLP</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#polysemy" class="page__taxonomy-item-tag" rel="tag">Polysemy</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#transformer" class="page__taxonomy-item-tag" rel="tag">Transformer</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/xai.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.18</p>
+      
+      
+        <a href="/xai/XAI/" rel="permalink">설명 가능한 AI(Explainable AI, XAI)… 왜 중요할까?
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#xai" class="page__taxonomy-item-category" rel="tag">XAI</a>
+                    
+                    
+                    <a href="/tags/#xai" class="page__taxonomy-item-tag" rel="tag">XAI</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/xai.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.18</p>
+      
+      
+        <a href="/xai/XAI-saliency/" rel="permalink">설명 가능한 AI (XAI): Saliency Map
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#xai" class="page__taxonomy-item-category" rel="tag">XAI</a>
+                    
+                    
+                    <a href="/tags/#cam" class="page__taxonomy-item-tag" rel="tag">CAM</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#grad-cam" class="page__taxonomy-item-tag" rel="tag">Grad CAM</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#saliency-map" class="page__taxonomy-item-tag" rel="tag">Saliency Map</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#smoothgrad" class="page__taxonomy-item-tag" rel="tag">SmoothGrad</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#xai" class="page__taxonomy-item-tag" rel="tag">XAI</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/email.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.18</p>
+      
+      
+        <a href="/python/python-send-email/" rel="permalink">Python: 이메일 보내기 (SMTP)
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#python" class="page__taxonomy-item-category" rel="tag">Python</a>
+                    
+                    
+                    <a href="/tags/#email" class="page__taxonomy-item-tag" rel="tag">Email</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#python" class="page__taxonomy-item-tag" rel="tag">Python</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/nlp-thumbnail.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.16</p>
+      
+      
+        <a href="/nlp/nlp-NER/" rel="permalink">NLP - Part 6: Name Entity Recognition (NER) 앱
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#nlp" class="page__taxonomy-item-category" rel="tag">NLP</a>
+                    
+                    
+                    <a href="/tags/#ner" class="page__taxonomy-item-tag" rel="tag">NER</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#nlp" class="page__taxonomy-item-tag" rel="tag">NLP</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/pca-image-compression.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.14</p>
+      
+      
+        <a href="/usl/ml-pca/" rel="permalink">PCA - Image Compression(이미지 압축)
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#usl" class="page__taxonomy-item-category" rel="tag">USL</a>
+                    
+                    
+                    <a href="/tags/#image-compression" class="page__taxonomy-item-tag" rel="tag">Image Compression</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#pca" class="page__taxonomy-item-tag" rel="tag">PCA</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/hac.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.14</p>
+      
+      
+        <a href="/usl/ml-hca/" rel="permalink">Hierarchical Agglomerate Clustering(HAC) - 포켓몬 군집화
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#usl" class="page__taxonomy-item-category" rel="tag">USL</a>
+                    
+                    
+                    <a href="/tags/#clustering" class="page__taxonomy-item-tag" rel="tag">Clustering</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#hac" class="page__taxonomy-item-tag" rel="tag">HAC</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#pokemon" class="page__taxonomy-item-tag" rel="tag">Pokemon</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/lenet.JPG" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.14</p>
+      
+      
+        <a href="/sl/dl-miniplace-classification/" rel="permalink">LeNet 신경망 - MiniPlaces 이미지 분류
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#sl" class="page__taxonomy-item-category" rel="tag">SL</a>
+                    
+                    
+                    <a href="/tags/#classification" class="page__taxonomy-item-tag" rel="tag">Classification</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#lenet" class="page__taxonomy-item-tag" rel="tag">LeNet</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#pytorch" class="page__taxonomy-item-tag" rel="tag">PyTorch</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="mailto:hchoi256@wisc.edu" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+          <li><a href="https://github.com/hchoi256" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="/assets/포트폴리오.pdf" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Portfolio</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 쭌스🎄. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/python/python-data-crawling/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/python/python-data-crawling"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://jjunes.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+
+  </body>
+</html>
