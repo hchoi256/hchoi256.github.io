@@ -40,7 +40,7 @@ A* 알고리즘은 **휴리스틱 추정값**을 통해 알고리즘을 개선�
 import heapq # heap queue
 ```
 
-게임 구현을 위해 필요한 라이브러리는 'heapq' 밖에 없다.
+게임 구현을 위해 필요한 라이브러리는 ['heapq'](https://docs.python.org/3/library/heapq.html) 밖에 없다.
 
 # Helper Functions
 
@@ -295,11 +295,18 @@ def solve(state, goal_state=[1, 2, 3, 4, 5, 6, 7, 0, 0]):
                 curr_idx += 1
 ```
 
+상기 solve 함수에서 주목해야할 부분은 **heapq.heappush(pq, (g + h, succ_state, (g, h, popped_i[2] + 1)))** 이 부분이다.
+
+'*heapq.heappush(pq ,(cost, state, (g, h, parent_index)))*'
+- **pq**: the priority queue
+- **g**: the cost from the starting node (= the number of moves so far): 초기 ~ 현재 step
+- **h**: the value of the heuristic function: 현재 step ~ 목표
+- **cost**=g+h 
+- **A parent index**: 이전 step의 index; -1 denotes the initial state(without any parent).
 
 # 결과
 
 자, 이제 게임 실행을 위해 필요한 모든 세팅은 끝이났다.
-
 
 ```python
 test = [4,3,0,5,1,6,7,2,0]
