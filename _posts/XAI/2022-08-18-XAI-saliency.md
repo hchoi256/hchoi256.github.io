@@ -140,4 +140,4 @@ CAM에서는 Feature Map에 GAP를 적용해 나온 가중치를 가지고 설�
 - **LG Aimers** 교육 프로그램
 
 
-이제, 본격적으로 [다음 글](https://hchoi256.github.io/xai/XAI-perturbation/)에서 Perturbation-based 기법들에 대하여 학습해보자.
+이제, 본격적으로 [다음 글](https://hchoi256.github.io/xai/XAI-perturbation-influence/)에서 Perturbation-based 기법들에 대하여 학습해보자.

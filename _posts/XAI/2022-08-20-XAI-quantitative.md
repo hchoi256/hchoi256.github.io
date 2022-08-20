@@ -1,8 +1,8 @@
 ---
 layout: single
-title: "설명 가능한 AI (XAI): Perturbation Map"
+title: "설명 가능한 AI (XAI): Influence Function Map"
 categories: XAI
-tag: [XAI, Perturbation Map, LIME, RISE]
+tag: [XAI, Influence Function Map, Inception, RISE]
 toc: true
 toc_sticky: true
 toc_label: "쭌스log"
@@ -63,4 +63,4 @@ LIME과 비슷하게 여러 번 입력을 perturb해서 설명을 구하는 Blac
 - **High computational complexity** (LIME보다 더 많은 randomly generated masked images 필요로 한다)
 - **Noisy due to sampling** (# masked images에 따라 설명이 달라진다)
 
-이제, 본격적으로 [다음 글](https://hchoi256.github.io/xai/XAI-perturbation/)에서 XAI 기법들에 대하여 학습해보자.
+이제, 본격적으로 [다음 글](https://hchoi256.github.io/xai/XAI-quantitative-sanity/)에서 XAI 기법들에 대하여 학습해보자.

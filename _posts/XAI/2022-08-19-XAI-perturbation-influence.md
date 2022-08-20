@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "설명 가능한 AI (XAI): Perturbation Map"
+title: "설명 가능한 AI (XAI): Perturbation Map & Influence Map"
 categories: XAI
 tag: [XAI, Perturbation Map, LIME, RISE]
 toc: true
@@ -13,11 +13,13 @@ sidebar:
     nav: "docs"
 ---
 
+# Perturbation Map
+
 모델의 정확한 구조나 계수는 모르는 상태에서 **그 모델에 대한 입출력만 가지고** 있는 경우 설명하는 방법이다.
 
 입력 데이터를 조금씩 바꾸면서 그에 대한 출력을 보고, 그 변화에 기반해서 설명한다.
 
-# 대리 분석(surrogate analysis)
+## 대리 분석(surrogate analysis)
 ![image](https://user-images.githubusercontent.com/39285147/185720735-07e8c018-f7b9-416d-b411-7590bc726878.png)
 
 XAI에서 대리 분석이란, 설명하고자 하는 원래 모델이 지나치게 복잡해서 해석하기 어려울 때, 해석 가능한 대리 모델(surrogate model)을 사용하여 기존의 모델을 해석하는 기법을 말한다. 
@@ -28,7 +30,7 @@ XAI에서 대리 분석이란, 설명하고자 하는 원래 모델이 지나치
 
 이제 Local 대리 분석 방법인 LIME을 살펴보자.
 
-# Local Interpretable Model agnostic Explanations (LIME)
+## Local Interpretable Model agnostic Explanations (LIME)
 ![image](https://user-images.githubusercontent.com/39285147/185719899-ae369fe4-a82b-4565-9897-3eadf6c032bd.png)
 
 모든 예측 모델에 대한 결과를 해석 가능하고 신뢰할 수 있는 방법으로 설명하는 새로운 기법을 제공하는 알고리즘이다.
@@ -41,7 +43,7 @@ XAI에서 대리 분석이란, 설명하고자 하는 원래 모델이 지나치
 
 손실함수로 *대리 함수*를 적합하고, 그 결과를 사용해 모델이 **개별 샘플(= 강아지가 포함된 사진을 강아지라 예측할 때, '강아지')에 대해 왜 그러한 판단을 내렸는지**를 유추해볼 수 있다.
 
-## 직관
+### 직관
 ![image](https://user-images.githubusercontent.com/39285147/185719520-6be6e6cc-c6c6-483f-9fe8-e20ecf750ca9.png)
 
 설명하려는 데이터(굵은 빨간 십자가)의 살짝 옆에만 본다면, 그 주변만 근사한 선형 함수를 만들어낼 수 있다.
@@ -52,7 +54,7 @@ XAI에서 대리 분석이란, 설명하고자 하는 원래 모델이 지나치
 
 > Local: 한 개인, 혹은 한 샘플에 내려진 판단이 어떻게 내려진 것인지를 분석한다.
 
-## 작동 원리
+### 작동 원리
 ![image](https://user-images.githubusercontent.com/39285147/185719561-6ab4f8c1-21a1-4122-a5f4-d58120c01aff.png)
 
 입력 데이터를 조금씩 바꾸면서(perturb) 그에 대한 출력을 보고, 이렇게 나온 입출력 Pair(purturbed된 이미지, 출력확률)들을 간단한 **선형 모델**로 근사하여 설명한다.
@@ -71,13 +73,13 @@ XAI에서 대리 분석이란, 설명하고자 하는 원래 모델이 지나치
 
 6. **Feature weights from the simple model make explanation for the complex models local behavior**: 여기서 구한 모델의 기울기(coef)는 local scale에서 해당 observation에 대한 설명
 
-## Super Pixel
+### Super Pixel
 ![image](https://user-images.githubusercontent.com/39285147/185717221-41fa234d-29fa-468a-a594-ba00328ffba3.png)
 
 **Super pixel**이란 유사성을 지닌 픽셀들을 일정 기준에 따라 묶어서 만든 하나의 커다란 픽셀을 말한다.
 - May not capture correct regions.
 
-## 장단점
+### 장단점
 **장점**
 - **주어진 입력과 그에 대한 출력**만 얻을 수 있다면 **어떤 모델에 대해서도 다 적용할 수 있는 설명 방법**으로, **Blackbox**에 대한 해결이 가능하다.
 
@@ -87,14 +89,14 @@ XAI에서 대리 분석이란, 설명하고자 하는 원래 모델이 지나치
 - 객체 분류가 아니라 이미지 **전체 분류에는 취약하다**.
     - ![image](https://user-images.githubusercontent.com/39285147/185717070-c46652fa-7856-4436-8e21-f420a5a3137c.png)
 
-# Randomized Input Sampling for Explanation (RISE)
+## Randomized Input Sampling for Explanation (RISE)
 ![image](https://user-images.githubusercontent.com/39285147/185717478-0298b1e6-8d5a-42dc-a824-81451b9d07a5.png)
 
 LIME과 비슷하게 여러 번 입력을 perturb해서 설명을 구하는 Black-box 설명 방법이다.
 
 여러 개의 랜덤 마스킹이 되어 있는 입력에 대한 **출력 스코어**(= 확률)를 구하고, 이 마스크들에 가중치를 둬서 평균을 냈을 때 나오는 것이 출력값인 Map이다.
 
-## 장단점
+### 장단점
 ![image](https://user-images.githubusercontent.com/39285147/185717611-df50da1a-c6b4-4534-ba95-74ae1d9f9dfc.png)
 
 **장점**
@@ -104,4 +106,22 @@ LIME과 비슷하게 여러 번 입력을 perturb해서 설명을 구하는 Blac
 - **High computational complexity** (LIME보다 더 많은 randomly generated masked images 필요로 한다)
 - **Noisy due to sampling** (# masked images에 따라 설명이 달라진다)
 
-이제, 본격적으로 [다음 글](https://hchoi256.github.io/xai/XAI-influence-function/)에서 Influence function-based 기법들에 대하여 학습해보자.
+# Influence function-based
+![image](https://user-images.githubusercontent.com/39285147/185722555-aabac63f-ef87-4bd5-90d4-69a2c5cac6f2.png)
+
+해당 테스트 이미지 분류에 있어서 Training image 샘플 하나를 제외하고 학습했을 때 분류 스코어가 얼만큼 변할지 근사하는 함수이다. 
+
+가장 큰 영향력을 행사한 Training 샘플을 설명으로 제공한다.
+
+> [우도비 검증](https://github.com/hchoi256/ai-terms)
+
+## SVM vs. Inception
+![image](https://user-images.githubusercontent.com/39285147/185722593-1f43bcff-395b-492a-b636-3bc6fdf3d14f.png)
+
+**SVM**
+- Test image와 **색깔**이 비슷한 제외 후 분류 스코어 변화가 가장 큰 Training image를 찾는다.
+
+**Inception(CNN)**
+- 실제 Test image(열대어)와 비슷한 Training image를 찾는다 (제대로된 특징들을 더 잘 뽑아내서 학습한다).
+
+이제, 본격적으로 [다음 글](https://hchoi256.github.io/xai/XAI-quantitative/)에서 설명 방법들끼리 비교하는 방법론들에 대하여 학습해보자.
