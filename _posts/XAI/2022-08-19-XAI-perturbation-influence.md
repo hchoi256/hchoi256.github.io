@@ -124,4 +124,7 @@ LIME과 비슷하게 여러 번 입력을 perturb해서 설명을 구하는 Blac
 **Inception(CNN)**
 - 실제 Test image(열대어)와 비슷한 Training image를 찾는다 (제대로된 특징들을 더 잘 뽑아내서 학습한다).
 
+# Reference
+["Why Should I Trust You?" Explaining the Predictions of Any Classifier](http://sameersingh.org/files/papers/lime-kdd16.pdf)
+
 이제, 본격적으로 [다음 글](https://hchoi256.github.io/xai/XAI-quantitative/)에서 설명 방법들끼리 비교하는 방법론들에 대하여 학습해보자.
