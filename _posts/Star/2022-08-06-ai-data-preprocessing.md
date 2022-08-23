@@ -17,6 +17,7 @@ sidebar:
 'raw_data' is the temporary dataset, and we are going to address various preprocessing tasks with it.
 
 
+****
 # 데이터 확인 (Describing the dataset)
 
 ```python
@@ -71,6 +72,7 @@ raw_data.drop( ["customer_id", "date"], axis = 1, inplace = True ) # remove colu
 ```
 
 
+****
 # 결측치 (Missing Values)
 
 ```python
@@ -86,6 +88,7 @@ imputer = SimpleImputer(missing_values = np.nan, strategy= "mean") # usually rep
 raw_data = imputer.fit_transform(raw_data) # apply the tranformation
 ```
 
+****
 # 데이터 정리 (Organizing the data)
 ```python
 raw_data.replace("ERR", np.nan, inplace = True) # replace 'ERR' to 'NaN'

@@ -18,6 +18,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 ```
 
+****
 # 단순 Plot
 
 ```python
@@ -50,6 +51,7 @@ plt.show()
 ![image](https://user-images.githubusercontent.com/39285147/186053025-a9f5e2a8-ccdc-4dbb-a991-41c2ba547217.png)
 
 
+****
 # Plot Style
 
 ```python
@@ -153,6 +155,7 @@ plt.show()
 
 ![image](https://user-images.githubusercontent.com/39285147/186054489-b79f3339-795d-4e02-8e32-288c182306b7.png)
 
+****
 # 폰트 지정
 
 ```python
@@ -183,6 +186,7 @@ from pathlib import Path
 fpath2 = Path("./fonts/SANGJU Haerye.ttf")
 ```
 
+****
 # 사인/코사인 Plot
 
 ```python
@@ -206,3 +210,27 @@ plt.show()
 ```
 
 ![image](https://user-images.githubusercontent.com/39285147/186053633-b8fbff6e-9996-497b-95df-d84db86a888e.png)
+
+****
+# 다양한 함수 형태
+
+```python
+fig, ( (ax1, ax2), (ax3, ax4) ) = plt.subplots(2, 2)
+
+ax1.plot(x, y)
+ax1.set_yscale("linear")
+
+ax2.plot(x, y)
+ax2.set_yscale("log")
+
+ax3.plot(x, y)
+ax3.set_yscale("symlog")
+
+ax4.plot(x, y)
+ax4.set_yscale("logit")
+
+plt.style.use("Solarize_Light2")
+plt.show()
+```
+
+![image](https://user-images.githubusercontent.com/39285147/186150020-68c0880e-fe5c-4308-954f-f3c00eb1df07.png)

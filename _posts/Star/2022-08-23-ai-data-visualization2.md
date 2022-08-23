@@ -13,6 +13,7 @@ sidebar:
     nav: "docs"
 ---
 
+****
 # 복습
 이전 [챕터](https://hchoi256.github.io/study/ai-data-visualization/)에서 다룬 기술들을 간단히 복기해보자.
 
@@ -31,6 +32,7 @@ plt.show()
 
 ![image](https://user-images.githubusercontent.com/39285147/186143432-a53d3239-aadb-4935-b1f4-544530f49e63.png)
 
+****
 # Plot 글자 추가
 
 ```python
@@ -90,6 +92,7 @@ plt.show()
 
 ![image](https://user-images.githubusercontent.com/39285147/186148099-06f607f1-e924-4b9b-9462-1a140d059977.png)
 
+****
 # X, Y Tick 수정
 
 ```python
@@ -107,6 +110,7 @@ plt.show()
 
 ![image](https://user-images.githubusercontent.com/39285147/186148329-8b00f0ea-7ae1-4ffb-b0e8-86facfd1f36a.png)
 
+****
 # 직선 그리기
 
 ```python
@@ -117,3 +121,39 @@ plt.show()
 ```
 
 ![image](https://user-images.githubusercontent.com/39285147/186148502-7f4b8023-790b-4091-92bb-1615c1ef54cd.png)
+
+****
+# Legend
+
+```python
+x = np.arange(5)
+
+fig, ax = plt.subplots()
+
+ax.plot(x, x, label = "Linear plot")
+ax.plot(x, x ** 2, label = "Quadratic plot")
+ax.plot(x, x ** 3, label = "Cubic plot")
+plt.style.use("fast")
+plt.legend(loc = "lower left", title="Various plots", title_fontsize = 15,
+    edgecolor = "#ED412B",
+    facecolor ="#C6EDD0",
+    shadow="True"
+)
+plt.show()
+```
+
+![image](https://user-images.githubusercontent.com/39285147/186150271-e4d1bfcc-e2dd-4b62-8bd2-96ee730502dc.png)
+
+
+
+```python
+fig, ax = plt.subplots()
+line1, = ax.plot([1, 2, 3], label = "Line up", linestyle="--")
+line2, = ax.plot([3, 2, 1], label = "Line down", linewidth = 4)
+
+plt.legend()
+plt.show()
+```
+
+![image](https://user-images.githubusercontent.com/39285147/186150494-7c5f6d96-907e-4e05-a9e4-0ab2120c3340.png)
+
