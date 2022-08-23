@@ -2,71 +2,13 @@
 layout: single
 title: "PART 1: Word Embedding, Seq2Seq, and Basic Attention"
 categories: NLP
-tag: [NLP, NER]
+tag: [NLP, Word Embedding, Seq2Seq, Attention]
 toc: true
 toc_sticky: true
 toc_label: "쭌스log"
 #author_profile: false
 header:
-    teaser: /assets/images/posts/nlp-thumbnail.jpg
+    teaser: /assets/images/posts/seq2seq.png
 sidebar:
     nav: "docs"
 ---
-
-개체명 인식(Named Entity Recognition)이란 말 그대로 이름을 가진 개체(named entity)를 인식하겠다는 것을 의미한다.
-
-어떤 이름을 의미하는 단어를 보고는 그 단어가 어떤 유형인지를 인식하는 것을 말한다.
-
-# 라이브러리
-
-```python
-% pip install spacy spacy_streamlit
-% python -m spacy download en_core_web_trf
-```
-
-```python
-import streamlit as st
-import spacy_streamlit as spt
-import spacy
-import spacy_transformers
-```
-
-```python
-nlp = spacy.load("en_core_web_trf") # 개체명 인식 라이브러리
-```
-
-# 간단 개체명 인식 웹 구현
-
-```python
-st.title("Name Entity Recognition (NER) 앱")
-
-menu = ["Home", "NER"] # two cateogries
-choice = st.sidebar.selectbox("메뉴", menu)
-```
-
-```python
-if choice == "Home": # test tokenizing
-    st.subheader("Word Tokenization")
-    raw_text = st.text_area(label = "토큰화할 텍스트 입력", placeholder = "여기에 텍스트 입력")
-    docs = nlp(raw_text)
-    if st.button("Tokenize"):
-        spt.visualize_tokens(docs)
-elif choice == "NER": # test NER
-    st.subheader("Name Entity Recognition")
-    raw_text = st.text_area(label = "NER할 텍스트 입력", placeholder="여기에 텍스트 입력")
-    docs = nlp(raw_text)
-    spt.visualize_ner(docs)
-```
-
-![image](https://user-images.githubusercontent.com/39285147/185464427-67656bdf-dc48-48b0-a3ec-e1bddc479458.png)
-
-만약 'Tokenizing'을 실행할 경우, 상기 사진처럼 여러 가지 토큰 분류 기준들과 결과들이 나타난다.
-
-매우 많은 결과에 눈이 어지러워 진다.
-
-하지만, NER을 사용하면, 알아서 해당 문장에서 개체명을 가지는 단어들을 알아서 찾아낸다.
-
-![image](https://user-images.githubusercontent.com/39285147/185464490-78fccd68-d5df-403e-a09e-54e70e04018e.png)
-
-상기 사진에서, NER은 'English'는 Language라는 개체명으로 인식하고 자동으로 찾아내는 모습이다.
-
