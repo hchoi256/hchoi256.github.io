@@ -31,4 +31,62 @@ plt.show()
 
 ![image](https://user-images.githubusercontent.com/39285147/186143432-a53d3239-aadb-4935-b1f4-544530f49e63.png)
 
-# 
+# Plot 글자 추가
+
+```python
+fig, ax = plt.subplots()
+ax.text(
+    0.4, 
+    0.4,  
+    "안녕하세요", 
+    ha="right", # horizontal align 
+    va="top", # vertical align
+    rotation=45, 
+    color="red",
+    font = "Gulim",
+    fontsize = 15,
+    style = "italic",
+    bbox = dict(
+        boxstyle="larrow", fc = "yellow", ec = "red", lw=2, alpha = 0.4
+    )
+)
+ax.text(
+    0.4, 
+    0.2,  
+    "반갑습니다.", 
+    ha="right", # horizontal align 
+    va="top", # vertical align
+    color="red",
+    font = "Gulim",
+    fontsize = 15,
+    style = "oblique"
+)
+plt.show()
+```
+
+![image](https://user-images.githubusercontent.com/39285147/186147842-21051aa7-2376-4641-99ce-ca19abf4e595.png)
+
+
+```python
+fig, ax = plt.subplots(figsize = (6, 3))
+x = np.arange(0.0, 5.0, 0.01)
+y = np.cos(2*np.pi*x)
+ax.plot(x, y, lw = 3)
+ax.text(
+    1.1, 
+    1.5,  
+    "반갑습니다.", 
+    ha="right", # horizontal align 
+    va="top", # vertical align
+    color="red",
+    font = "Gulim",
+    fontsize = 15,
+)
+ax.annotate("최대값", xy=(3, 1), xytext=(4, 1.5), arrowprops=dict(fc="red", ec="blue"), font="Gulim")
+ax.annotate("최소값", xy=(2.5, -1.0), xytext=(1, -1.5), arrowprops=dict(fc="red", ec="blue"), font="Gulim")
+ax.set_ylim(-2.0, 2.0)
+plt.show()
+```
+
+![image](https://user-images.githubusercontent.com/39285147/186148099-06f607f1-e924-4b9b-9462-1a140d059977.png)
+
