@@ -2,7 +2,7 @@
 layout: single
 title: "Data Preprocessing Techniques"
 categories: Study
-tag: [AI, Data Preprocessing]
+tag: [Data Preprocessing, Python]
 toc: false
 toc_sticky: false
 toc_label: "쭌스log"
