@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "(개발) PART 7: Name Entity Recognition (NER) 앱"
+title: "PART 1: Word Embedding, Seq2Seq, and Basic Attention"
 categories: NLP
 tag: [NLP, NER]
 toc: true

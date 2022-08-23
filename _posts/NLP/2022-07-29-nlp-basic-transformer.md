@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "NLP: Transformer - GPT-2"
+title: "(개발) PART 6: Transformer - GPT-2"
 categories: GPT
 tag: [NLP, GPT, Transformer]
 toc: true

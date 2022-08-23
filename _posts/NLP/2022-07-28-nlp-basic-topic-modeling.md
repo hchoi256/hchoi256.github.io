@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "NLP - Part 5: Topic Modeling"
+title: "(개발) PART 5: Topic Modeling"
 categories: NLP
 tag: [NLP, Topic Modeling]
 toc: true

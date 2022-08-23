@@ -1,10 +1,10 @@
 ---
 layout: single
-title: "Data Visualization Techniques"
+title: "PART 1: Data Visualization Techniques"
 categories: Study
 tag: [Data Visualization, Python]
-# toc: false
-# toc_sticky: false
+toc: true
+toc_sticky: true
 toc_label: "쭌스log"
 # author_profile: false
 header:

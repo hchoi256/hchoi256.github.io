@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "NLP - Part 1: Text Mining and Tokenization"
+title: "(개발) PART 1: Text Mining and Tokenization"
 categories: NLP
 tag: [NLP, python]
 toc: true

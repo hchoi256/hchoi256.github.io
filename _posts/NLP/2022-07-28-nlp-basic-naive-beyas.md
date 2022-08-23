@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "NLP - Part 4: Naive Classifier"
+title: "(개발) PART 4: Naive Classifier"
 categories: NLP
 tag: [NLP, Naive Classifier]
 toc: true

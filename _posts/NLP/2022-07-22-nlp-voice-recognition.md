@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "NLP - Part 3: Voice Recognition"
+title: "(개발) PART 3: Voice Recognition"
 categories: NLP
 tag: [NLP, Voice Recognition, STT, TTS]
 toc: true
