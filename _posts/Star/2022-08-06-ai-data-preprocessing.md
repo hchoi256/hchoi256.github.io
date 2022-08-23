@@ -3,8 +3,8 @@ layout: single
 title: "Data Preprocessing Techniques"
 categories: Study
 tag: [Data Preprocessing, Python]
-toc: false
-toc_sticky: false
+# toc: false
+# toc_sticky: false
 toc_label: "쭌스log"
 # author_profile: false
 header:

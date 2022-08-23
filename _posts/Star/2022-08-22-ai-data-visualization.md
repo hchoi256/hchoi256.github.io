@@ -3,8 +3,8 @@ layout: single
 title: "Data Visualization Techniques"
 categories: Study
 tag: [Data Visualization, Python]
-toc: false
-toc_sticky: false
+# toc: false
+# toc_sticky: false
 toc_label: "쭌스log"
 # author_profile: false
 header:
