@@ -13,6 +13,9 @@ sidebar:
     nav: "docs"
 ---
 
+# 복습
+이전 [챕터](https://hchoi256.github.io/study/ai-data-visualization/)에서 다룬 기술들을 간단히 복기해보자.
+
 ```python
 plt.rcParams["figure.dpi"] = 100
 data1, data2, data3, data4 = np.random.randn(4, 100)
@@ -25,3 +28,7 @@ ax.set_ylabel("y values", fontsize = 15, loc = "bottom", color= "g", labelpad = 
 ax.legend()
 plt.show()
 ```
+
+![image](https://user-images.githubusercontent.com/39285147/186143432-a53d3239-aadb-4935-b1f4-544530f49e63.png)
+
+# 
