@@ -191,6 +191,28 @@ plt.show()
 
 ```python
 people = ["A", "B", "C", "D"]
+x_pos = np.arange(len(people))
+performance = 3 + 10 * np.random.rand(len(people))
+error = np.random.rand(len(people))
+
+fig, ax = plt.subplots()
+ax.bar(x_pos, performance, yerr = error)
+
+ax.set_xlabel("Category")
+ax.set_ylabel("Category Value")
+ax.set_title("Catergory Performance")
+
+ax.set_xticks(x_pos)
+ax.set_xticklabels(people)
+
+plt.show()
+```
+
+![image](https://user-images.githubusercontent.com/39285147/186161723-34319d8e-1dd3-4d3e-a367-2717ff65b7f7.png)
+
+
+```python
+people = ["A", "B", "C", "D"]
 y_pos = np.arange(len(people))
 performance = 3 + 10 * np.random.rand(len(people))
 error = np.random.rand(len(people))
