@@ -8,7 +8,7 @@ toc_sticky: true
 toc_label: "쭌스log"
 # author_profile: false
 header:
-    teaser: /assets/images/posts/data-thumbnail.jpg
+    teaser: /assets/images/posts/data-visual.jpg
 sidebar:
     nav: "docs"
 ---
@@ -234,3 +234,5 @@ plt.show()
 ```
 
 ![image](https://user-images.githubusercontent.com/39285147/186150020-68c0880e-fe5c-4308-954f-f3c00eb1df07.png)
+
+다음 데이터 시각화 실습 [바로가기]()

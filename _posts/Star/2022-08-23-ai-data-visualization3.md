@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "PART 2: Data Visualization Techniques"
+title: "PART 3: Data Visualization Techniques"
 categories: Study
 tag: [Data Visualization, Python]
 toc: true
