@@ -155,6 +155,17 @@ plt.show()
 
 ![image](https://user-images.githubusercontent.com/39285147/186054489-b79f3339-795d-4e02-8e32-288c182306b7.png)
 
+```python
+# plt.rcParams["lines.linestyle"] = "--"
+plt.rc("lines", linewidth=2, linestyle="--")
+data = np.random.randn(50)
+plt.plot(data)
+plt.show()
+```
+
+![image](https://user-images.githubusercontent.com/39285147/186154007-563282ac-4a0f-432e-bcc6-502f9a9816f5.png)
+
+
 ****
 # 폰트 지정
 
@@ -235,4 +246,4 @@ plt.show()
 
 ![image](https://user-images.githubusercontent.com/39285147/186150020-68c0880e-fe5c-4308-954f-f3c00eb1df07.png)
 
-다음 데이터 시각화 실습 [바로가기]()
+다음 데이터 시각화 실습 [바로가기](https://hchoi256.github.io/study/ai-data-visualization2/).

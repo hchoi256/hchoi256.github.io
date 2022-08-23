@@ -157,3 +157,55 @@ plt.show()
 
 ![image](https://user-images.githubusercontent.com/39285147/186150494-7c5f6d96-907e-4e05-a9e4-0ab2120c3340.png)
 
+****
+# 도형
+
+```python
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+from matplotlib.path import Path
+plt.rcParams["figure.dpi"] = 150
+```
+
+```python
+path = Path(verts, codes)
+patch = patches.PathPatch(path, facecolor="orange", edgecolor="black")
+patch_rect = patches.Rectangle( (0.5, 0.5), 1, 0.6, facecolor = "white", edgecolor="black", hatch="*")
+patch_polygon = patches.Polygon(polyPath, hatch = ".")
+patch_circle = patches.Circle( (0.3, -0.5), radius = 0.5, hatch = "o")
+
+fig, ax = plt.subplots()
+ax.add_patch(patch)
+ax.add_patch(patch_rect)
+ax.add_patch(patch_polygon)
+ax.add_patch(patch_circle)
+
+ax.set_xlim(-2, 2)
+ax.set_ylim(-2, 2)
+plt.show()
+```
+
+![image](https://user-images.githubusercontent.com/39285147/186153689-8ad4cd39-9030-468b-8b68-a7abaeeede06.png)
+
+## Bar
+
+```python
+people = ["A", "B", "C", "D"]
+y_pos = np.arange(len(people))
+performance = 3 + 10 * np.random.rand(len(people))
+error = np.random.rand(len(people))
+
+fig, ax = plt.subplots()
+ax.barh(y_pos, performance, xerr = error)
+
+ax.set_xlabel("Category")
+ax.set_ylabel("Category Value")
+ax.set_title("Catergory Performance")
+
+ax.set_yticks(x_pos)
+ax.set_yticklabels(people)
+
+plt.show()
+```
+
+![image](https://user-images.githubusercontent.com/39285147/186159643-bcb3767b-4ad0-48ae-98e1-65ce01b7c5e7.png)
