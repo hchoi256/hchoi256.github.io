@@ -90,3 +90,30 @@ plt.show()
 
 ![image](https://user-images.githubusercontent.com/39285147/186148099-06f607f1-e924-4b9b-9462-1a140d059977.png)
 
+# X, Y Tick 수정
+
+```python
+fig, axs = plt.subplots(2, 1)
+axs[0].plot(xdata, data)
+axs[0].set_title("Automatic ticks")
+
+axs[1].plot(xdata, data)
+axs[1].set_xticks(np.arange(0, 100, 30), ["zero", "thrity", "sixty", "ninety"])
+axs[1].set_yticks([-1.5, 0, 1.5])
+axs[1].set_title("Manual ticks")
+
+plt.show()
+```
+
+![image](https://user-images.githubusercontent.com/39285147/186148329-8b00f0ea-7ae1-4ffb-b0e8-86facfd1f36a.png)
+
+# 직선 그리기
+
+```python
+fig, ax = plt.subplots(figsize = (8, 8))
+ax.axhline(0.4, ls="--", color="b", lw= 3)
+ax.axvline(0.6, ls=":", color="r", lw= 3)
+plt.show()
+```
+
+![image](https://user-images.githubusercontent.com/39285147/186148502-7f4b8023-790b-4091-92bb-1615c1ef54cd.png)
