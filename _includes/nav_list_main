@@ -94,7 +94,7 @@
                     {% endif %}
                 {% endfor %}
             </ul>
-        <span class="nav__sub-title">NLP</span>
+        <span class="nav__sub-title">NLP/CV</span>
             <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
             <ul>
                 <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
@@ -107,8 +107,8 @@
             </ul>
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "BERT" %}
-                        <li><a href="/categories/BERT" class="">BERT ({{category[1].size}})</a></li>
+                    {% if category[0] == "CV" %}
+                        <li><a href="/categories/CV" class="">CV ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
