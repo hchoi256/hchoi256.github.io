@@ -231,3 +231,175 @@ plt.show()
 ```
 
 ![image](https://user-images.githubusercontent.com/39285147/186159643-bcb3767b-4ad0-48ae-98e1-65ce01b7c5e7.png)
+
+```python
+data = {
+    "Seoul": 10000,
+    "Busan": 15000,
+    "Incheon": 8000,
+    "Gwangju": 20000
+}
+
+comp_names = list(data.keys())
+comp_value = list(data.values())
+```
+
+```python
+fig, ax = plt.subplots()
+ax.barh(comp_names, comp_value, edgecolor = "black")
+ax.set(xlim=[0, 25000], xlabel="Total Value", ylabel="City", title="City and Value")
+labels = ax.get_xticklabels()
+plt.setp(labels, rotation = 45)
+
+def currency(x, pos):
+    if x >= 100000:
+        s = "${:1.1f}M".format(x / 100000)
+    else:
+        s = "${:1.0f}K".format(x / 1000)
+    return s
+
+ax.xaxis.set_major_formatter(currency)
+
+ax.axvline(np.mean(comp_value), ls = "--", color= "red")
+
+for annotation in [1, 3]:
+    ax.text(23000, annotation, "평균 이상", fontsize = 16, font="Gulim")
+
+plt.show()
+```
+
+![image](https://user-images.githubusercontent.com/39285147/186550240-2b16da9f-c7bd-4b50-b0d2-f9b8976c51bc.png)
+
+
+```python
+x = np.arange(1, 5)
+y1 = np.arange(1, 5)
+y2 = np.ones(y1.shape) * 4
+```
+
+```python
+fig = plt.figure()
+axs = fig.subplot_mosaic([ ["bar1", "bar2", "bar3"], ["bar4", "bar2", "bar6"]])
+
+axs["bar1"].bar(x, y1, edgecolor = "black", facecolor = "blue", hatch = "/", label = "blue")
+axs["bar1"].bar(x, y2, edgecolor = "black", facecolor = "orange", hatch = ".", label = "orange", bottom = y1)
+axs["bar1"].legend()
+
+axs["bar4"].bar(x, y1, edgecolor="black", hatch = ["--", "+", "O", "\\"])
+axs["bar4"].bar(x, y2, edgecolor="black", hatch = ["*", "o", "x", "."], bottom = y1)
+
+axs["bar2"].bar(x, x * 2, hatch = ".") 
+
+plt.show()
+```
+
+![image](https://user-images.githubusercontent.com/39285147/186550128-c3596a6a-813f-4b15-800e-627440516165.png)
+
+```python
+plt.style.available
+```
+
+
+        ['Solarize_Light2',
+        '_classic_test_patch',
+        '_mpl-gallery',
+        '_mpl-gallery-nogrid',
+        'bmh',
+        'classic',
+        'dark_background',
+        'fast',
+        'fivethirtyeight',
+        'ggplot',
+        'grayscale',
+        'seaborn',
+        'seaborn-bright',
+        'seaborn-colorblind',
+        'seaborn-dark',
+        'seaborn-dark-palette',
+        'seaborn-darkgrid',
+        'seaborn-deep',
+        'seaborn-muted',
+        'seaborn-notebook',
+        'seaborn-paper',
+        'seaborn-pastel',
+        'seaborn-poster',
+        'seaborn-talk',
+        'seaborn-ticks',
+        'seaborn-white',
+        'seaborn-whitegrid',
+        'tableau-colorblind10']
+
+        
+
+```python
+data1 = 4 + np.random.normal(0, 1.5, 200)
+data2 = np.random.randn(1000, 3)
+```
+
+```python
+plt.style.use("fivethirtyeight")
+
+fig, ( (ax1, ax2), (ax3, ax4) ) = plt.subplots(2, 2)
+colors = ["blue", "green", "red"]
+
+ax1.hist(data1, bins= 5, edgecolor="black", facecolor="pink")
+
+ax2.hist(data1, histtype="step", linewidth = 3, density = True)
+
+ax3.hist(data2, color=colors)
+
+ax4.hist(data2, color=colors, stacked = True, edgecolor="black")
+
+plt.show()
+```
+
+![image](https://user-images.githubusercontent.com/39285147/186550309-845cc82e-4ebf-4138-b2bc-b4abbe8023ff.png)
+
+# 원형
+```python
+labels = "Russia", "Canada", "United States", "China", "India"
+sizes = [17, 10, 10, 9, 3]
+
+fig, ax = plt.subplots()
+ax.pie(
+    sizes, 
+    autopct= "%1.1f%%", 
+    textprops = dict(color="white"),
+    shadow = True,
+    counterclock = False,
+    startangle = 90,
+    explode = [0, 0, 0.2, 0, 0]
+)
+ax.legend(labels, loc = "center right", title="Land Sizes", bbox_to_anchor=(1., 0., 0.5, 1))
+
+plt.show()
+```
+
+![image](https://user-images.githubusercontent.com/39285147/186553248-860be279-20a0-429e-94b5-23859fab3d05.png)
+
+
+# 이미지
+
+```python
+import matplotlib.image as mpimg
+```
+
+```python
+img = mpimg.imread("<강아지 이미지>.png")
+
+fig, ax = plt.subplots()
+ax.imshow(img)
+rect = patches.Rectangle( (650, 120), 300, 300, linewidth=1, edgecolor="red", alpha=0.5)
+ax.add_patch(rect)
+plt.show()
+```
+
+![image](https://user-images.githubusercontent.com/39285147/186553258-a667a720-76bf-450c-9fce-c06efb9cc5d9.png)
+
+```python
+plt.figure()
+plt.imshow(img[:,:,1], cmap="nipy_spectral")
+plt.colorbar()
+```
+
+![image](https://user-images.githubusercontent.com/39285147/186553280-974cd4f7-9190-45dc-ac49-672b0d18a8ab.png)
