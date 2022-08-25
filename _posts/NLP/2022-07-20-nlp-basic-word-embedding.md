@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "(개발) PART 2: Word Embedding"
+title: "[개발] PART 2: Word Embedding"
 categories: NLP
 tag: [NLP, Word Embedding]
 toc: true
