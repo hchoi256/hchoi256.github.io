@@ -1,7 +1,7 @@
 ---
-title: "공지사항"
+title: "Notice"
 layout: archive
-permalink: categories/StStudyar
+permalink: categories/Study
 author_profile: true
 sidebar_main: true
 ---

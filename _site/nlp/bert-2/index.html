@@ -1,0 +1,1573 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <!--폰트 : "Nanum Gothic Coding", "Coming Soon"-->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Coming+Soon&family=Nanum+Gothic+Coding&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Coming+Soon&family=Nanum+Gothic+Coding&display=swap">
+    
+    <!--폰트 : "Iropke Batang"-->
+    <link rel="preload" as="style" href="https://cdn.jsdelivr.net/font-iropke-batang/1.2/font-iropke-batang.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/font-iropke-batang/1.2/font-iropke-batang.css">
+
+    <!--폰트 : "Cafe24Oneprettynight"-->
+    <link rel="preload" as="style" href="/assets/css/main.css">
+
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>언어모델, Seq2Seq, Attention Models | 정리하여 내 것으로, AI 📂</title>
+<meta name="description" content="언어 모델 (Language Model, LM) ‘자연어’의 법칙을 컴퓨터로 모사하는 모델로, 다음에 등장할 단어 예측을 수행한다(= ‘맥락’을 고려한다).">
+
+
+  <meta name="author" content="쭌스🎄">
+  
+  <meta property="article:author" content="쭌스🎄">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="정리하여 내 것으로, AI 📂">
+<meta property="og:title" content="언어모델, Seq2Seq, Attention Models">
+<meta property="og:url" content="http://localhost:4000/nlp/bert-2/">
+
+
+  <meta property="og:description" content="언어 모델 (Language Model, LM) ‘자연어’의 법칙을 컴퓨터로 모사하는 모델로, 다음에 등장할 단어 예측을 수행한다(= ‘맥락’을 고려한다).">
+
+
+
+  <meta property="og:image" content="http://localhost:4000/assets/images/posts/bert-thumbnail.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2022-08-08T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/nlp/bert-2/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "쭌스🎄",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+  <meta name="naver-site-verification" content="57d020c8f9b26bf56ed7846608b8d873481e9b84">
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정리하여 내 것으로, AI 📂 Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+    <!-- start custom head snippets -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1250314621726093"
+     crossorigin="anonymous"></script>
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/logo.ico/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/logo.ico/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/logo.ico/favicon-16x16.png">
+<link rel="mask-icon" href="/assets/logo.ico/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+<!-- end custom head snippets -->
+
+    <!-- 스크롤바 커스터마이징 -->
+    <style> 
+      ::-webkit-scrollbar{width: 16px;}
+      ::-webkit-scrollbar-track {background-color:#4b4f52; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb {background-color:#5e6265; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb:hover {background: #ffd24c;}
+      ::-webkit-scrollbar-button:start:decrement,::-webkit-scrollbar-button:end:increment 
+      {
+          width:12px;height:12px;background:transparent;}
+      }  
+
+      
+    </style>
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          정리하여 내 것으로, AI 📂
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/search/">Search</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+  
+    
+
+
+
+<nav class="breadcrumbs">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    
+    
+      
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/" itemprop="item"><span itemprop="name">Home</span></a>
+
+          <meta itemprop="position" content="1" />
+        </li>
+        <span class="sep">/</span>
+      
+      
+        
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/categories/#nlp" itemprop="item"><span itemprop="name">Nlp</span></a>
+          <meta itemprop="position" content="2" />
+        </li>
+        <span class="sep">/</span>
+      
+    
+      
+      
+        <li class="current">언어모델, Seq2Seq, Attention Models</li>
+      
+    
+  </ol>
+</nav>
+
+  
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/echoi.jpg" alt="쭌스🎄" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">쭌스🎄</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>I am a senior-year B.S. student in Computer Science and Data Science at the University of Wisconsin, Madison.</p>
+
+<p>My research interests are <strong>hyper-scale AI</strong>, <strong>ML</strong>, <strong>deep NLP</strong>, and <strong>XAI in computer vision</strong>.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="mailto:hchoi256@wisc.edu" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/hchoi256" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="/assets/포트폴리오.pdf" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Portfolio</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items">
+    
+  </ul>
+</nav>
+
+    
+  
+
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">53</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
+      </li>
+      <li>
+        <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C#-->
+        <span class="nav__sub-title">Important</span>
+        <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+        <ul>
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/categories/Study" class="">AI 기본지식 (4)</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </ul>
+        <ul>
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/categories/Python" class="">Python (4)</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </ul>
+        <ul>
+            
+                
+                    <li><a href="/categories/Basic" class="">기타 (1)</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </ul>
+        <span class="nav__sub-title">AI Research Papers</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/AIPaperCV" class="">CV (3)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/AIPaperNLP" class="">NLP (1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/AIPaperOthers" class="">기타 (1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>   
+        <span class="nav__sub-title">ML/DL</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/SL" class="">지도학습 (14)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/USL" class="">비지도학습 (2)</a></li>
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/RL" class="">강화학습 (1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/XAI" class="">XAI (4)</a></li>
+                    
+                
+            </ul>
+        <span class="nav__sub-title">NLP/CV</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                        <li><a href="/categories/NLP" class="">NLP (15)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <!-- <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>   -->
+      </li>
+  </ul>
+</nav>
+
+  
+
+  </div>
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="언어모델, Seq2Seq, Attention Models">
+    <meta itemprop="description" content="언어 모델 (Language Model, LM)‘자연어’의 법칙을 컴퓨터로 모사하는 모델로, 다음에 등장할 단어 예측을 수행한다(= ‘맥락’을 고려한다).">
+    <meta itemprop="datePublished" content="2022-08-08T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="http://localhost:4000/nlp/bert-2/" class="u-url" itemprop="url">언어모델, Seq2Seq, Attention Models
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> 쭌스log</h4></header>
+              <ul class="toc__menu"><li><a href="#언어-모델-language-model-lm">언어 모델 (Language Model, LM)</a><ul><li><a href="#markov-확률-모델">Markov 확률 모델</a></li></ul></li><li><a href="#rnn-recurrent-neural-network-모델">RNN (Recurrent Neural Network) 모델</a><ul><li><a href="#seq2seq">Seq2Seq</a></li></ul></li><li><a href="#attention-models-rnn">Attention Models (RNN)</a><ul><li><a href="#seq2seq-with-attention">Seq2Seq with Attention</a><ul><li><a href="#기계번역-사례">기계번역 사례</a></li></ul></li><li><a href="#image-captioning-with-attention">Image Captioning with Attention</a><ul><li><a href="#visual-question-answering">Visual-Question Answering</a></li></ul></li></ul></li><li><a href="#reference">Reference</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <hr />
+<h1 id="언어-모델-language-model-lm">언어 모델 (Language Model, LM)</h1>
+<p>‘자연어’의 법칙을 컴퓨터로 모사하는 모델로, 다음에 등장할 단어 예측을 수행한다(= ‘맥락’을 고려한다).</p>
+
+<h2 id="markov-확률-모델">Markov 확률 모델</h2>
+<p><img src="https://user-images.githubusercontent.com/39285147/183536291-32897298-797e-4fd8-aac9-4bcc9ef3459e.png" alt="image" /></p>
+
+<p>이전 단어의 형태를 통하여 확률적으로 다음에 나올 단어를 예측한다</p>
+
+<p>가령, ‘like’ 다음에 ‘rabbit’이라는 단어가 나타날 확률은 주어진 학습 데이터에 기반하여 <strong>33%</strong>로 나타난다.</p>
+
+<p>이러한 과정을 <strong><em>Language Modeling</em></strong>이라 일컫는다.</p>
+
+<hr />
+<h1 id="rnn-recurrent-neural-network-모델">RNN (Recurrent Neural Network) 모델</h1>
+<p><img src="https://user-images.githubusercontent.com/39285147/183536890-b8d596a2-c3c0-4c90-8193-ac96f8b8cdb0.png" alt="image" /></p>
+
+<p>Markov 체인 모델을 <strong>딥러닝</strong>에 접목하여 확장한 모델이 바로 RNN이다.</p>
+
+<p>현재 state를 결정하기 위하여 이전 state의 hidden layer 정보를 인풋으로 받는다.</p>
+
+<p>이를 통해 <strong>앞선 문맥을 고려한</strong> 최종 출력 vector(Context vector)를 만든다.</p>
+
+<p>하나의 RNN을 ‘인코더’, 다른 하나의 RNN을 ‘디코더’라는 모듈로 명명하고, 두 개의 RNN을 연결해서 사용하는 <strong>인코더-디코더 구조</strong>이다.</p>
+<ul>
+  <li>인코더-디코더 구조: 주로 입력 문장과 출력 문장의 길이가 다를 경우에 사용하는데, 대표적인 분야가 번역기나 텍스트 요약과 같은 경우이다.</li>
+</ul>
+
+<blockquote>
+  <p>보다 자세한 내용은 <a href="https://github.com/hchoi256/ai-terms/blob/main/README.md">여기</a>를 참조하자.</p>
+</blockquote>
+
+<h2 id="seq2seq">Seq2Seq</h2>
+<p><img src="https://user-images.githubusercontent.com/39285147/183537292-5cfe7c3f-d380-4e0c-aa20-266341ae5d9a.png" alt="image" />
+<img src="https://user-images.githubusercontent.com/39285147/185516796-59b5f330-c2b1-40c0-9bcb-14c43a31af03.png" alt="image" /></p>
+
+<blockquote>
+  <p>LSTM에 관한 자세한 내용은 <a href="https://github.com/hchoi256/ai-terms/blob/main/README.md">여기</a>를 참조하자.</p>
+</blockquote>
+
+<ul>
+  <li><strong>Encoder layer</strong>: Context vector 획득</li>
+  <li><strong>Decoder layer</strong>: Context vecotr 해독/해석</li>
+</ul>
+
+<p>인코더는 입력 문장의 모든 단어들을 순차적으로 입력받은 뒤에 마지막에 이 모든 단어 정보들을 압축해서 하나의 벡터로 만드는데, 이를 <strong>컨텍스트 벡터(context vector)</strong>라고 지칭한다.</p>
+
+<p>입력 문장의 정보가 하나의 컨텍스트 벡터로 모두 압축되면 인코더는 컨텍스트 벡터를 디코더로 전송하고, 각 디코더는 컨텍스트 벡터를 받아서 Output Layer를 거쳐서 도출된 번역된 단어를 한 개씩 순차적으로 출력한다.</p>
+
+<p>이 때, 다음 디코더 레이어로 이전 디코더의 출력이 입력으로써 전달된다.</p>
+
+<p><strong>번역</strong>에 자주 사용되어, 자연어를 인식(encoding)하고 알맞은 언어로 번역(decoding)하여 출력한다.</p>
+
+<p>그 외에도, 챗봇(Chatbot), 기계 번역(Machine Translation), 내용 요약(Text Summarization), STT(Speech to Text) 분야에서 활용되고 있다.</p>
+
+<p>하지만, sequence가 길어진다면, <strong>초기 단어에 대한 정보를 점차 소실</strong>되는 구조적 한계점, <strong>병렬화 불가능</strong>, <strong>중요하지 않은 token의 정보</strong>가 최종 출력에 영향을 주는 단점이 존재한다.</p>
+
+<p>또한, RNN의 고질적인 문제인 <strong>기울기 소실(vanishing gradient) 문제</strong>가 존재한다.</p>
+
+<h1 id="attention-models-rnn">Attention Models (RNN)</h1>
+<p><img src="https://user-images.githubusercontent.com/39285147/185522397-1fafee32-76bc-4cac-9d6c-cee081e341b1.png" alt="image" /></p>
+
+<p>입력 시퀀스의 마지막 시점의 벡터에 모든 정보를 모두 담기가 어려우므로, <strong>모든 입력 시퀀스의 정보를 조합하여 각 출력 단어</strong>를 생성한다.</p>
+
+<p>모든 token을 고려하는 기존 Seq2Seq의 한계점을 보완하기 위하여, <strong>특정 중요 단어/입력에 대한 집중도(attention/alignmnet weight)</strong>를 부여한다.</p>
+
+<blockquote>
+  <p>흔히, 딥러닝 모델이 내놓은 결과의 원인을 설명할 수 없는(<a href="https://github.com/hchoi256/ai-terms/blob/main/README.md">Blackbox</a>) 경우가 많음에도 불구하고, Attention 모델은 attention weight 덕분에 해당 설명이 가능하다.</p>
+</blockquote>
+
+<p>하지만, RNN 신경망 구조를 기반으로 하기 때문에 이전 state의 결과를 기다려야 한다는 점에서 여전히 <strong>연산 속도가 느리다</strong>.</p>
+
+<h2 id="seq2seq-with-attention">Seq2Seq with Attention</h2>
+<p><img src="https://user-images.githubusercontent.com/39285147/183538147-9eb2a2cf-b06c-4994-9a3b-11a4013a6fc8.png" alt="image" /></p>
+
+<p><strong>RNN의 셀 각각이 도출하는 Output을 모두 활용</strong>하여 더 dynamic하게 Context Vector를 생성한다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/186281646-1f620a26-7a61-4e9a-81de-9dd9b88b75e2.png" alt="image" /></p>
+
+<ul>
+  <li><strong>Q = Query</strong> : t 시점의 디코더 셀에서의 은닉 상태</li>
+  <li><strong>K = Keys</strong> : 모든 시점의 인코더 셀의 은닉 상태들</li>
+  <li><strong>V = Values</strong> : 모든 시점의 인코더 셀의 은닉 상태들</li>
+</ul>
+
+<p>Query는 Decoder Cell(FCL)에서 도출되고, Key와 Value는 Encoder Cell에서 도출된다.</p>
+
+<p>여기서, Attention Weight은 <strong>해당 Key에 대응되는 Query에 대한 유사도</strong>이다.</p>
+<ul>
+  <li>유사도 계산 함수: dot product, splice, detector, etc.</li>
+</ul>
+
+<blockquote>
+  <p>Attention(Q, K, V) = Attention Value</p>
+</blockquote>
+
+<p>하나의 디코더에서 예측 단어를 출력하기 위한 과정:</p>
+<ol>
+  <li>RNN 셀들과 앞선 단어 문맥을 고려한 출력값에 대한 <strong>similarity score를</strong> 내적으로 계산한다</li>
+  <li>Softmax 활성화 함수를 사용해서 <strong>Attention Weight</strong>를 도출한다 (Decoder).</li>
+  <li>각 셀에 대한 결과값과 업데이트된 attention weight을 곱한 합계로 context vector를 구한다.</li>
+  <li>이렇게 구한 Context Vector를 다음 decoder 레이어에서 concat하여 하나의 벡터를 만든다.</li>
+  <li>이 벡터는 인코더로부터 얻은 정보를 활용하여 더 나은 예측을 하기위한 예측 연산의 입력으로 사용된다.</li>
+  <li>최종 output의 분류 결과가 여전히 안 좋다면, 다시 score를 조정하여 <strong>decoder가 해석하기에 용이한 attention weight를 재계산한다</strong>.</li>
+</ol>
+
+<p>인코더에서의 전체 입력 문장을 다시 한 번 참고하여 각 디코더에 대하여 상기 과정을 반복한다.</p>
+
+<blockquote>
+  <p>다양한 종류의 Attention</p>
+
+  <p><img src="https://user-images.githubusercontent.com/39285147/186280401-2314828d-877c-4056-b578-872f229e6b52.png" alt="image" /></p>
+</blockquote>
+
+<h3 id="기계번역-사례">기계번역 사례</h3>
+<p><img src="https://user-images.githubusercontent.com/39285147/186273750-3ecf29f3-289c-44aa-a345-afe3a325a265.png" alt="image" /></p>
+
+<p>상기 모형은, 가독성 좋게 heatmap으로 단어 토큰별 기계번역(영어 –&gt; 프랑스어) 과정을 표현한다.</p>
+
+<p>밝은 픽셀값을 가진 부분들은, 가령 ‘The’라는 영단어는 ‘L’이라는 프랑스어로 번역될 가중치가 가장 높게 나타났다는 의미이다.</p>
+
+<p>중간에 ‘zone’이라는 프랑스어가 영어의 ‘Area’와 매칭되는 것으로 프랑스어어의 어순에 맞게 잘 번역하는 모습을 볼 수 있다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/186274146-b9fedbd5-7b6e-40a0-ba57-9f1599e82001.png" alt="image" /></p>
+
+<p>또한, ‘change’는 프랑스어로 ‘va’와 ‘changer’ 두 개의 단어에 영향을 주는 모습이다.</p>
+
+<p>이것은 가령 어떤 단어는 관사가 필요로 해서, 다수 단어로 기계번역되어야 하는 경우들이라고 생각하면 좋다.</p>
+
+<h2 id="image-captioning-with-attention">Image Captioning with Attention</h2>
+<p><img src="https://user-images.githubusercontent.com/39285147/186275873-843f6307-9463-44c9-aab6-9c36fb97b0fb.png" alt="image" /></p>
+
+<p>어떤 이미지가 주어졌을 때, <strong>이미지에 대한 설명을 caption</strong>으로 제공하는 것을 목표로 한다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/186276848-50615f64-ba96-491f-8848-7dea5a9f986f.png" alt="image" /></p>
+
+<p>상기 사진에서 <strong>CNN을 활용해서 이미지 특성을 인풋</strong>으로 가져온다.</p>
+<ul>
+  <li>이미지 특성의 spatial localization을 유지한다</li>
+</ul>
+
+<p>이후 과정은 앞서 언급된 Attention 모델과 동일한 매커니즘을 따른다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/186277826-5554b458-4ec2-49ad-8a88-338e2bf7c159.png" alt="image" /></p>
+
+<ul>
+  <li><strong>Soft</strong>: Rough하게 포인트를 잡는다.</li>
+  <li><strong>Hard</strong>: 날카롭게 포인트를 잡는다.</li>
+</ul>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/186278089-53f57436-b083-4e52-a259-532a5220aee7.png" alt="image" /></p>
+
+<p>이미지 영역에서 ‘bird’를 잘 나타내는 영역은 높은 가중치를 띄고있을 것이다.</p>
+
+<h3 id="visual-question-answering">Visual-Question Answering</h3>
+<p><img src="https://user-images.githubusercontent.com/39285147/186278538-5cc4ab6b-4deb-4821-a81d-a0dacf81207f.png" alt="image" /></p>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/186278341-8640156d-70f2-45d2-ae1c-110e1b6dbf21.png" alt="image" /></p>
+
+<p>인풋으로 질문 텍스트와 사진이 주어지면 AI가 그 텍스트 질문에 답을 하는 task이다.</p>
+
+<p>이제 <a href="https://hchoi256.github.io/bert/bert-3/"><strong>ConvS2S, Self-Attention</strong></a>에 대해 알아보자.</p>
+
+<h1 id="reference">Reference</h1>
+<p><a href="https://www.youtube.com/watch?v=JqkfT1s60cI&amp;list=PLep-kTP3NkcOjOS1a30UNW-tH2FSoGYfg&amp;index=1">Deep Learning for NLP - KAIST 주재걸 교수님</a></p>
+
+<p><a href="https://wikidocs.net/22893">딥 러닝을 이용한 자연어 처리 입문</a></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#attention" class="page__taxonomy-item p-category" rel="tag">Attention</a><span class="sep">, </span>
+    
+      <a href="/tags/#nlp-language-model" class="page__taxonomy-item p-category" rel="tag">NLP Language Model</a><span class="sep">, </span>
+    
+      <a href="/tags/#seq2seq" class="page__taxonomy-item p-category" rel="tag">Seq2Seq</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#nlp" class="page__taxonomy-item p-category" rel="tag">NLP</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-08-08T00:00:00+09:00">2022-08-08</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%EC%96%B8%EC%96%B4%EB%AA%A8%EB%8D%B8%2C+Seq2Seq%2C+Attention+Models%20http%3A%2F%2Flocalhost%3A4000%2Fnlp%2Fbert-2%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fnlp%2Fbert-2%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fnlp%2Fbert-2%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/nlp/bert-1/" class="pagination--pager" title="자연어와 Word Embedding
+">이전</a>
+    
+    
+      <a href="/nlp/bert-3/" class="pagination--pager" title="Self-Attention, Transformer, BERT, BPE, WordPiece
+">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">참고</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/nlp-thumbnail.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.25</p>
+      
+      
+        <a href="/nlp/text-summarization-attention/" rel="permalink">[개발] 긴 영문 글/기사 요약번역 웹 페이지 구현하기
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#nlp" class="page__taxonomy-item-category" rel="tag">NLP</a>
+                    
+                    
+                    <a href="/tags/#nlp" class="page__taxonomy-item-tag" rel="tag">NLP</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#streamlit" class="page__taxonomy-item-tag" rel="tag">Streamlit</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#text-summarization" class="page__taxonomy-item-tag" rel="tag">Text Summarization</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#translator" class="page__taxonomy-item-tag" rel="tag">Translator</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/cyclegan.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.24</p>
+      
+      
+        <a href="/aipapercv/CycleGAN/" rel="permalink">[논문 분석] Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks (ICCV 2017)
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#aipapercv" class="page__taxonomy-item-category" rel="tag">AIPaperCV</a>
+                    
+                    
+                    <a href="/tags/#cyclegan" class="page__taxonomy-item-tag" rel="tag">CycleGAN</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#gan" class="page__taxonomy-item-tag" rel="tag">GAN</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#image-to-image-translation" class="page__taxonomy-item-tag" rel="tag">Image-to-Image Translation</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/data-visual.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.23</p>
+      
+      
+        <a href="/study/ai-data-visualization2/" rel="permalink">PART 2: Data Visualization Techniques
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#study" class="page__taxonomy-item-category" rel="tag">Study</a>
+                    
+                    
+                    <a href="/tags/#data-visualization" class="page__taxonomy-item-tag" rel="tag">Data Visualization</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#python" class="page__taxonomy-item-tag" rel="tag">Python</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/bert-thumbnail.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.23</p>
+      
+      
+        <a href="/nlp/bert-5/" rel="permalink">KoBERT 실습
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#nlp" class="page__taxonomy-item-category" rel="tag">NLP</a>
+                    
+                    
+                    <a href="/tags/#keyword-extraction" class="page__taxonomy-item-tag" rel="tag">Keyword Extraction</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#kobert" class="page__taxonomy-item-tag" rel="tag">KoBERT</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#nlp" class="page__taxonomy-item-tag" rel="tag">NLP</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#sentimental-analysis" class="page__taxonomy-item-tag" rel="tag">Sentimental Analysis</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/bert-thumbnail.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.23</p>
+      
+      
+        <a href="/nlp/bert-4/" rel="permalink">Transformer, BERT, BPE, WordPiece
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#nlp" class="page__taxonomy-item-category" rel="tag">NLP</a>
+                    
+                    
+                    <a href="/tags/#bert" class="page__taxonomy-item-tag" rel="tag">BERT</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#bpe" class="page__taxonomy-item-tag" rel="tag">BPE</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#nlp" class="page__taxonomy-item-tag" rel="tag">NLP</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#transformer" class="page__taxonomy-item-tag" rel="tag">Transformer</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#wordpiece" class="page__taxonomy-item-tag" rel="tag">WordPiece</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/gan.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.23</p>
+      
+      
+        <a href="/aipapercv/GAN/" rel="permalink">[논문 분석] Generative Adversarial Nets, GAN (NIPS 2014)
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#aipapercv" class="page__taxonomy-item-category" rel="tag">AIPaperCV</a>
+                    
+                    
+                    <a href="/tags/#gan" class="page__taxonomy-item-tag" rel="tag">GAN</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#image-geneartion" class="page__taxonomy-item-tag" rel="tag">Image Geneartion</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/data-visual.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.22</p>
+      
+      
+        <a href="/study/ai-data-visualization/" rel="permalink">PART 1: Data Visualization Techniques
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#study" class="page__taxonomy-item-category" rel="tag">Study</a>
+                    
+                    
+                    <a href="/tags/#data-visualization" class="page__taxonomy-item-tag" rel="tag">Data Visualization</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#python" class="page__taxonomy-item-tag" rel="tag">Python</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/xai.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.20</p>
+      
+      
+        <a href="/xai/XAI-quantitative/" rel="permalink">설명 가능한 AI (XAI): Quantitative Metrics &amp; Sanity Check/Robustness
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#xai" class="page__taxonomy-item-category" rel="tag">XAI</a>
+                    
+                    
+                    <a href="/tags/#quantitative-metrics" class="page__taxonomy-item-tag" rel="tag">Quantitative Metrics</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#robustness" class="page__taxonomy-item-tag" rel="tag">Robustness</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#sanity-check" class="page__taxonomy-item-tag" rel="tag">Sanity check</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#xai" class="page__taxonomy-item-tag" rel="tag">XAI</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/xai.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.19</p>
+      
+      
+        <a href="/xai/XAI-perturbation-influence/" rel="permalink">설명 가능한 AI (XAI): Perturbation Map &amp; Influence Map
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#xai" class="page__taxonomy-item-category" rel="tag">XAI</a>
+                    
+                    
+                    <a href="/tags/#inception" class="page__taxonomy-item-tag" rel="tag">Inception</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#lime" class="page__taxonomy-item-tag" rel="tag">LIME</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#perturbation-map" class="page__taxonomy-item-tag" rel="tag">Perturbation Map</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#rise" class="page__taxonomy-item-tag" rel="tag">RISE</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#xai" class="page__taxonomy-item-tag" rel="tag">XAI</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/xai.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.18</p>
+      
+      
+        <a href="/xai/XAI/" rel="permalink">설명 가능한 AI(Explainable AI, XAI)… 왜 중요할까?
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#xai" class="page__taxonomy-item-category" rel="tag">XAI</a>
+                    
+                    
+                    <a href="/tags/#xai" class="page__taxonomy-item-tag" rel="tag">XAI</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="mailto:hchoi256@wisc.edu" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+          <li><a href="https://github.com/hchoi256" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="/assets/포트폴리오.pdf" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Portfolio</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 쭌스🎄. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+    
+<!-- MathJax -->
+<script src="/assets/js/mathjax-config.js"></script>
+<script id="MathJax-script" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.min.js">
+</script>
+
+
+
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/nlp/bert-2/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/nlp/bert-2"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://jjunes.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+  </body>
+</html>

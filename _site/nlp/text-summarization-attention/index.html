@@ -1,0 +1,1582 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <!--폰트 : "Nanum Gothic Coding", "Coming Soon"-->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Coming+Soon&family=Nanum+Gothic+Coding&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Coming+Soon&family=Nanum+Gothic+Coding&display=swap">
+    
+    <!--폰트 : "Iropke Batang"-->
+    <link rel="preload" as="style" href="https://cdn.jsdelivr.net/font-iropke-batang/1.2/font-iropke-batang.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/font-iropke-batang/1.2/font-iropke-batang.css">
+
+    <!--폰트 : "Cafe24Oneprettynight"-->
+    <link rel="preload" as="style" href="/assets/css/main.css">
+
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>[개발] 긴 영문 글/기사 요약번역 웹 페이지 구현하기 | 정리하여 내 것으로, AI 📂</title>
+<meta name="description" content="style.css ```python 폰트 설정 @import url(‘https://fonts.googleapis.com/css2?family=Roboto:wght@100&amp;display=swap’);">
+
+
+  <meta name="author" content="쭌스🎄">
+  
+  <meta property="article:author" content="쭌스🎄">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="정리하여 내 것으로, AI 📂">
+<meta property="og:title" content="[개발] 긴 영문 글/기사 요약번역 웹 페이지 구현하기">
+<meta property="og:url" content="http://localhost:4000/nlp/text-summarization-attention/">
+
+
+  <meta property="og:description" content="style.css ```python 폰트 설정 @import url(‘https://fonts.googleapis.com/css2?family=Roboto:wght@100&amp;display=swap’);">
+
+
+
+  <meta property="og:image" content="http://localhost:4000/assets/images/posts/nlp-thumbnail.jpg">
+
+
+
+
+
+  <meta property="article:published_time" content="2022-08-25T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/nlp/text-summarization-attention/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "쭌스🎄",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+  <meta name="naver-site-verification" content="57d020c8f9b26bf56ed7846608b8d873481e9b84">
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="정리하여 내 것으로, AI 📂 Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+    <!-- start custom head snippets -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1250314621726093"
+     crossorigin="anonymous"></script>
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/logo.ico/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/logo.ico/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/logo.ico/favicon-16x16.png">
+<link rel="mask-icon" href="/assets/logo.ico/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+<!-- end custom head snippets -->
+
+    <!-- 스크롤바 커스터마이징 -->
+    <style> 
+      ::-webkit-scrollbar{width: 16px;}
+      ::-webkit-scrollbar-track {background-color:#4b4f52; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb {background-color:#5e6265; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb:hover {background: #ffd24c;}
+      ::-webkit-scrollbar-button:start:decrement,::-webkit-scrollbar-button:end:increment 
+      {
+          width:12px;height:12px;background:transparent;}
+      }  
+
+      
+    </style>
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          정리하여 내 것으로, AI 📂
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/search/">Search</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+  
+    
+
+
+
+<nav class="breadcrumbs">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    
+    
+    
+      
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/" itemprop="item"><span itemprop="name">Home</span></a>
+
+          <meta itemprop="position" content="1" />
+        </li>
+        <span class="sep">/</span>
+      
+      
+        
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="/categories/#nlp" itemprop="item"><span itemprop="name">Nlp</span></a>
+          <meta itemprop="position" content="2" />
+        </li>
+        <span class="sep">/</span>
+      
+    
+      
+      
+        <li class="current">[개발] 긴 영문 글/기사 요약번역 웹 페이지 구현하기</li>
+      
+    
+  </ol>
+</nav>
+
+  
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/echoi.jpg" alt="쭌스🎄" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">쭌스🎄</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>I am a senior-year B.S. student in Computer Science and Data Science at the University of Wisconsin, Madison.</p>
+
+<p>My research interests are <strong>hyper-scale AI</strong>, <strong>ML</strong>, <strong>deep NLP</strong>, and <strong>XAI in computer vision</strong>.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+        
+          
+            <li><a href="mailto:hchoi256@wisc.edu" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/hchoi256" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="/assets/포트폴리오.pdf" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Portfolio</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items">
+    
+  </ul>
+</nav>
+
+    
+  
+
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">53</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
+      </li>
+      <li>
+        <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C#-->
+        <span class="nav__sub-title">Important</span>
+        <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+        <ul>
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/categories/Study" class="">AI 기본지식 (4)</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </ul>
+        <ul>
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+                    <li><a href="/categories/Python" class="">Python (4)</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </ul>
+        <ul>
+            
+                
+                    <li><a href="/categories/Basic" class="">기타 (1)</a></li>
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+                
+            
+        </ul>
+        <span class="nav__sub-title">AI Research Papers</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/AIPaperCV" class="">CV (3)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/AIPaperNLP" class="">NLP (1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/AIPaperOthers" class="">기타 (1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>   
+        <span class="nav__sub-title">ML/DL</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/SL" class="">지도학습 (14)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/USL" class="">비지도학습 (2)</a></li>
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/RL" class="">강화학습 (1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/XAI" class="">XAI (4)</a></li>
+                    
+                
+            </ul>
+        <span class="nav__sub-title">NLP/CV</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                        <li><a href="/categories/NLP" class="">NLP (15)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <!-- <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>   -->
+      </li>
+  </ul>
+</nav>
+
+  
+
+  </div>
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[개발] 긴 영문 글/기사 요약번역 웹 페이지 구현하기">
+    <meta itemprop="description" content="style.css```python폰트 설정@import url(‘https://fonts.googleapis.com/css2?family=Roboto:wght@100&amp;display=swap’);">
+    <meta itemprop="datePublished" content="2022-08-25T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="http://localhost:4000/nlp/text-summarization-attention/" class="u-url" itemprop="url">[개발] 긴 영문 글/기사 요약번역 웹 페이지 구현하기
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> 쭌스log</h4></header>
+              <ul class="toc__menu"><li><a href="#stylecss">style.css</a></li><li><a href="#텍스트-요약">텍스트 요약</a></li><li><a href="#웹-페이지-streamlit">웹 페이지 (Streamlit)</a></li><li><a href="#결과">결과</a></li><li><a href="#references">References</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <h1 id="stylecss">style.css</h1>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 폰트 설정
+</span><span class="o">@</span><span class="kn">import</span> <span class="nn">url</span><span class="p">(</span><span class="s">'https://fonts.googleapis.com/css2?family=Roboto:wght@100&amp;display=swap'</span><span class="p">);</span> 
+
+<span class="n">html</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="p">[</span><span class="n">class</span><span class="o">*=</span><span class="s">"css"</span><span class="p">]</span> <span class="p">{</span>
+    <span class="n">font</span><span class="o">-</span><span class="n">family</span><span class="p">:</span> <span class="s">'Roboto'</span><span class="p">,</span> <span class="n">sans</span><span class="o">-</span><span class="n">serif</span><span class="p">;</span>
+    <span class="n">font</span><span class="o">-</span><span class="n">weight</span><span class="p">:</span> <span class="mi">500</span><span class="p">;</span>
+    <span class="n">color</span><span class="p">:</span> <span class="c1">#091747;
+</span><span class="p">}</span>
+</code></pre></div></div>
+
+<h1 id="텍스트-요약">텍스트 요약</h1>
+<p>텍스트 내용에서 가장 많이 등장한 단어들을 포함하는 문장을 취합해서 최종 요약본으로 제시한다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">bs4</span> <span class="k">as</span> <span class="n">bs</span> <span class="c1"># html 컨트롤
+</span><span class="kn">import</span> <span class="nn">urllib.request</span> <span class="c1"># url 접근
+</span><span class="kn">import</span> <span class="nn">re</span> <span class="c1"># regex 
+</span><span class="kn">import</span> <span class="nn">nltk</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">TextSummarization</span><span class="p">():</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="s">'https://en.wikipedia.org/wiki/Korea'</span><span class="p">):</span> <span class="c1"># default url                     
+</span>        <span class="c1"># 단락 가져오기
+</span>        <span class="n">scraped_data</span> <span class="o">=</span> <span class="n">urllib</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="c1"># url 접근 
+</span>        <span class="n">article</span> <span class="o">=</span> <span class="n">scraped_data</span><span class="p">.</span><span class="n">read</span><span class="p">()</span> <span class="c1"># url 데이터 가져오기
+</span>        <span class="n">parsed_article</span> <span class="o">=</span> <span class="n">bs</span><span class="p">.</span><span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">article</span><span class="p">,</span><span class="s">'lxml'</span><span class="p">)</span> <span class="c1"># lxml 형식으로 파싱
+</span>        <span class="bp">self</span><span class="p">.</span><span class="n">paragraphs</span> <span class="o">=</span> <span class="n">parsed_article</span><span class="p">.</span><span class="n">find_all</span><span class="p">(</span><span class="s">'p'</span><span class="p">)</span> <span class="c1"># 문단 가져오기
+</span>
+    <span class="k">def</span> <span class="nf">summarize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># 요약
+</span>        <span class="n">article_text</span> <span class="o">=</span> <span class="s">""</span>
+
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">.</span><span class="n">paragraphs</span><span class="p">:</span>
+            <span class="n">article_text</span> <span class="o">+=</span> <span class="n">p</span><span class="p">.</span><span class="n">text</span> <span class="c1"># article 내용
+</span>        <span class="c1"># Removing Square Brackets and Extra Spaces
+</span>        <span class="n">article_text</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s">'\[[0-9]*\]'</span><span class="p">,</span> <span class="s">' '</span><span class="p">,</span> <span class="n">article_text</span><span class="p">)</span>
+        <span class="n">article_text</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s">'\s+'</span><span class="p">,</span> <span class="s">' '</span><span class="p">,</span> <span class="n">article_text</span><span class="p">)</span>
+        <span class="c1"># Removing special characters and digits
+</span>        <span class="n">formatted_article_text</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="n">sub</span><span class="p">(</span><span class="s">'[^a-zA-Z]'</span><span class="p">,</span> <span class="s">' '</span><span class="p">,</span> <span class="n">article_text</span> <span class="p">)</span>
+        <span class="n">formatted_article_text</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s">'\s+'</span><span class="p">,</span> <span class="s">' '</span><span class="p">,</span> <span class="n">formatted_article_text</span><span class="p">)</span>
+        <span class="n">sentence_list</span> <span class="o">=</span> <span class="n">nltk</span><span class="p">.</span><span class="n">sent_tokenize</span><span class="p">(</span><span class="n">article_text</span><span class="p">)</span> <span class="c1"># 문장 토크나이저
+</span>        <span class="n">stopwords</span> <span class="o">=</span> <span class="n">nltk</span><span class="p">.</span><span class="n">corpus</span><span class="p">.</span><span class="n">stopwords</span><span class="p">.</span><span class="n">words</span><span class="p">(</span><span class="s">'english'</span><span class="p">)</span> <span class="c1"># 영어 불용어
+</span>
+        <span class="n">word_frequencies</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1"># 단어 등장 빈도
+</span>        <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">nltk</span><span class="p">.</span><span class="n">word_tokenize</span><span class="p">(</span><span class="n">formatted_article_text</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stopwords</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">word_frequencies</span><span class="p">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="n">word_frequencies</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">word_frequencies</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">maximum_frequncy</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">word_frequencies</span><span class="p">.</span><span class="n">values</span><span class="p">())</span> <span class="c1"># 최다 단어 빈도수
+</span>        <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">word_frequencies</span><span class="p">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">word_frequencies</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">word_frequencies</span><span class="p">[</span><span class="n">word</span><span class="p">]</span><span class="o">/</span><span class="n">maximum_frequncy</span><span class="p">)</span> <span class="c1"># 빈도 확률 계산
+</span>        <span class="n">sentence_scores</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1"># 문장별 단어 빈도 확률 총합
+</span>        <span class="k">for</span> <span class="n">sent</span> <span class="ow">in</span> <span class="n">sentence_list</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">nltk</span><span class="p">.</span><span class="n">word_tokenize</span><span class="p">(</span><span class="n">sent</span><span class="p">.</span><span class="n">lower</span><span class="p">()):</span>
+                <span class="k">if</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">word_frequencies</span><span class="p">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sent</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">' '</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">30</span><span class="p">:</span> <span class="c1"># 문장 단어 30개 미만
+</span>                        <span class="k">if</span> <span class="n">sent</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sentence_scores</span><span class="p">.</span><span class="n">keys</span><span class="p">():</span>
+                            <span class="n">sentence_scores</span><span class="p">[</span><span class="n">sent</span><span class="p">]</span> <span class="o">=</span> <span class="n">word_frequencies</span><span class="p">[</span><span class="n">word</span><span class="p">]</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">sentence_scores</span><span class="p">[</span><span class="n">sent</span><span class="p">]</span> <span class="o">+=</span> <span class="n">word_frequencies</span><span class="p">[</span><span class="n">word</span><span class="p">]</span>
+        <span class="c1"># 요약 방식 처리
+</span>        <span class="n">sent_max</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sentence_scores</span><span class="p">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">sent_n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">sent_max</span> <span class="o">&gt;</span> <span class="n">sent_n</span><span class="p">:</span>
+                <span class="n">sent_max</span> <span class="o">=</span> <span class="n">sent_n</span> <span class="c1"># advanced
+</span>            <span class="k">else</span><span class="p">:</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">sent_max</span> <span class="o">&gt;</span> <span class="mi">7</span><span class="p">:</span>
+                <span class="n">sent_max</span> <span class="o">=</span> <span class="mi">7</span> <span class="c1"># default
+</span>                
+        <span class="kn">import</span> <span class="nn">heapq</span>
+        <span class="n">summary_sentences</span> <span class="o">=</span> <span class="n">heapq</span><span class="p">.</span><span class="n">nlargest</span><span class="p">(</span><span class="n">sent_max</span><span class="p">,</span> <span class="n">sentence_scores</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">sentence_scores</span><span class="p">.</span><span class="n">get</span><span class="p">)</span> <span class="c1"># 우선순위 큐에서 문장 단어 빈도 확률이 가장 높은 7개의 문장 가져옴 
+</span>
+        <span class="n">summary</span> <span class="o">=</span> <span class="s">' '</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">summary_sentences</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">summary</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h1 id="웹-페이지-streamlit">웹 페이지 (Streamlit)</h1>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">streamlit</span> <span class="k">as</span> <span class="n">st</span>
+<span class="kn">import</span> <span class="nn">validators</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">text_summarization</span> <span class="k">as</span> <span class="n">ts</span>
+<span class="kn">from</span> <span class="nn">googletrans</span> <span class="kn">import</span> <span class="n">Translator</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Preparations
+</span>
+<span class="c1"># 폰트 설정
+</span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">__file__</span><span class="p">)),</span> <span class="s">"css/style.css"</span><span class="p">))</span> <span class="k">as</span> <span class="n">css</span><span class="p">:</span>
+    <span class="n">st</span><span class="p">.</span><span class="n">markdown</span><span class="p">(</span> <span class="sa">f</span><span class="s">'&lt;style&gt;</span><span class="si">{</span><span class="n">css</span><span class="p">.</span><span class="n">read</span><span class="p">()</span><span class="si">}</span><span class="s">&lt;/style&gt;'</span><span class="p">,</span> <span class="n">unsafe_allow_html</span><span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+
+<span class="c1"># 사이드 바 크기
+# st.markdown(f'&lt;style&gt;.sidebar .sidebar-content &lt;/style&gt;', unsafe_allow_html=True)
+</span>
+<span class="c1"># 요약 방식 설정
+</span><span class="n">sidebar_radio</span> <span class="o">=</span> <span class="n">st</span><span class="p">.</span><span class="n">sidebar</span><span class="p">.</span><span class="n">radio</span><span class="p">(</span><span class="s">"How to Summarize"</span><span class="p">,</span> <span class="p">[</span><span class="s">"Simple"</span><span class="p">,</span> <span class="s">"Advanced"</span><span class="p">])</span>
+<span class="n">summ_opt</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">if</span> <span class="n">sidebar_radio</span> <span class="o">==</span> <span class="s">"Advanced"</span><span class="p">:</span>
+    <span class="n">summ_opt</span> <span class="o">=</span> <span class="mi">15</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Helper Function
+</span><span class="k">def</span> <span class="nf">url_val</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+    <span class="c1"># URL 유효성 검사
+</span>    <span class="k">if</span> <span class="n">validators</span><span class="p">.</span><span class="n">url</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="k">return</span> <span class="mi">0</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Web Implementation
+</span><span class="n">st</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">"Article Summarizer &amp; Online Translating Tool (ENG/KOR)"</span><span class="p">)</span> <span class="c1"># title
+</span><span class="n">st</span><span class="p">.</span><span class="n">markdown</span><span class="p">(</span><span class="s">"---"</span><span class="p">)</span> <span class="c1"># division
+</span>
+<span class="c1"># url 텍스트 박스 생성
+</span><span class="n">url</span> <span class="o">=</span> <span class="n">st</span><span class="p">.</span><span class="n">text_area</span><span class="p">(</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="s">"Press your URL here."</span><span class="p">,</span>
+    <span class="c1"># value = "https://en.wikipedia.org/wiki/Korea", # text_input의 초기값
+</span>    <span class="n">max_chars</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="n">placeholder</span><span class="o">=</span> <span class="s">"Press Ctrl + Enter to apply."</span> <span class="c1"># default
+</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">url_val</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"URL accepted: {}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">url</span><span class="p">))</span>        
+    <span class="n">summary</span><span class="p">,</span> <span class="n">res</span> <span class="o">=</span> <span class="n">ts</span><span class="p">.</span><span class="n">TextSummarization</span><span class="p">(</span><span class="n">url</span><span class="p">).</span><span class="n">summarize</span><span class="p">(</span><span class="n">summ_opt</span><span class="p">)</span>
+    
+    <span class="c1"># 요약
+</span>    <span class="n">st</span><span class="p">.</span><span class="n">text_area</span><span class="p">(</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="s">"Summary"</span><span class="p">,</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">summary</span><span class="p">,</span> <span class="c1"># text_input의 초기값
+</span>    <span class="n">max_chars</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">,</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="mi">200</span><span class="p">,</span>
+    <span class="p">)</span>
+    
+    <span class="c1"># 번역
+</span>    <span class="n">translator</span> <span class="o">=</span> <span class="n">Translator</span><span class="p">()</span>
+    
+    <span class="n">st</span><span class="p">.</span><span class="n">text_area</span><span class="p">(</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="s">"Translated"</span><span class="p">,</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">translator</span><span class="p">.</span><span class="n">translate</span><span class="p">(</span><span class="n">summary</span><span class="p">,</span> <span class="n">src</span><span class="o">=</span><span class="s">"en"</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s">"ko"</span><span class="p">).</span><span class="n">text</span><span class="p">,</span> <span class="c1"># text_input의 초기값
+</span>    <span class="n">max_chars</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">,</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="mi">200</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">url</span> <span class="o">!=</span> <span class="s">""</span><span class="p">:</span>
+        <span class="n">st</span><span class="p">.</span><span class="n">warning</span><span class="p">(</span><span class="s">'Please enter a valid Website URL (e.g., https://en.wikipedia.org/wiki/Korea).'</span><span class="p">)</span>
+        
+<span class="n">st</span><span class="p">.</span><span class="n">markdown</span><span class="p">(</span><span class="s">"---"</span><span class="p">)</span> <span class="c1"># division
+</span><span class="n">st</span><span class="p">.</span><span class="n">markdown</span><span class="p">(</span><span class="s">"Made by Eric Choi"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h1 id="결과">결과</h1>
+
+<p>아래는 <a href="https://en.wikipedia.org/wiki/Korea">South Korea</a> 위키피디아 기사를 요약번역 해본 예시이다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/186647668-865e9aec-1f43-4e7b-9855-d3b5e9e81d0d.png" alt="image" /></p>
+
+<p>장문의 기사가 몇 줄로 요약되고, 그 번역본 또한 손쉽게 확인할 수 있다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/186647810-cc1edba2-a7c7-4352-9cb9-2eea07b5250d.png" alt="image" /></p>
+
+<p>요약 설정은 간단하게 <strong>Simple, Advanced</strong> 옵션을 선택할 수 있다.</p>
+
+<p>Advanced 옵션은 더 많은 중요 문장 내용을 포함하는 요약본이다.</p>
+
+<h1 id="references">References</h1>
+<p><a href="https://www.kaggle.com/code/imkrkannan/text-summarization-with-nltk-in-python/notebook">Text Summarization</a></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#nlp" class="page__taxonomy-item p-category" rel="tag">NLP</a><span class="sep">, </span>
+    
+      <a href="/tags/#streamlit" class="page__taxonomy-item p-category" rel="tag">Streamlit</a><span class="sep">, </span>
+    
+      <a href="/tags/#text-summarization" class="page__taxonomy-item p-category" rel="tag">Text Summarization</a><span class="sep">, </span>
+    
+      <a href="/tags/#translator" class="page__taxonomy-item p-category" rel="tag">Translator</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#nlp" class="page__taxonomy-item p-category" rel="tag">NLP</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-08-25T00:00:00+09:00">2022-08-25</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%5B%EA%B0%9C%EB%B0%9C%5D+%EA%B8%B4+%EC%98%81%EB%AC%B8+%EA%B8%80%2F%EA%B8%B0%EC%82%AC+%EC%9A%94%EC%95%BD%EB%B2%88%EC%97%AD+%EC%9B%B9+%ED%8E%98%EC%9D%B4%EC%A7%80+%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0%20http%3A%2F%2Flocalhost%3A4000%2Fnlp%2Ftext-summarization-attention%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fnlp%2Ftext-summarization-attention%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fnlp%2Ftext-summarization-attention%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/aipapercv/CycleGAN/" class="pagination--pager" title="[논문 분석] Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks (ICCV 2017)
+">이전</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">참고</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/cyclegan.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.24</p>
+      
+      
+        <a href="/aipapercv/CycleGAN/" rel="permalink">[논문 분석] Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks (ICCV 2017)
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#aipapercv" class="page__taxonomy-item-category" rel="tag">AIPaperCV</a>
+                    
+                    
+                    <a href="/tags/#cyclegan" class="page__taxonomy-item-tag" rel="tag">CycleGAN</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#gan" class="page__taxonomy-item-tag" rel="tag">GAN</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#image-to-image-translation" class="page__taxonomy-item-tag" rel="tag">Image-to-Image Translation</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/data-visual.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.23</p>
+      
+      
+        <a href="/study/ai-data-visualization2/" rel="permalink">PART 2: Data Visualization Techniques
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#study" class="page__taxonomy-item-category" rel="tag">Study</a>
+                    
+                    
+                    <a href="/tags/#data-visualization" class="page__taxonomy-item-tag" rel="tag">Data Visualization</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#python" class="page__taxonomy-item-tag" rel="tag">Python</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/bert-thumbnail.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.23</p>
+      
+      
+        <a href="/nlp/bert-5/" rel="permalink">KoBERT 실습
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#nlp" class="page__taxonomy-item-category" rel="tag">NLP</a>
+                    
+                    
+                    <a href="/tags/#keyword-extraction" class="page__taxonomy-item-tag" rel="tag">Keyword Extraction</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#kobert" class="page__taxonomy-item-tag" rel="tag">KoBERT</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#nlp" class="page__taxonomy-item-tag" rel="tag">NLP</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#sentimental-analysis" class="page__taxonomy-item-tag" rel="tag">Sentimental Analysis</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/bert-thumbnail.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.23</p>
+      
+      
+        <a href="/nlp/bert-4/" rel="permalink">Transformer, BERT, BPE, WordPiece
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#nlp" class="page__taxonomy-item-category" rel="tag">NLP</a>
+                    
+                    
+                    <a href="/tags/#bert" class="page__taxonomy-item-tag" rel="tag">BERT</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#bpe" class="page__taxonomy-item-tag" rel="tag">BPE</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#nlp" class="page__taxonomy-item-tag" rel="tag">NLP</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#transformer" class="page__taxonomy-item-tag" rel="tag">Transformer</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#wordpiece" class="page__taxonomy-item-tag" rel="tag">WordPiece</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/gan.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.23</p>
+      
+      
+        <a href="/aipapercv/GAN/" rel="permalink">[논문 분석] Generative Adversarial Nets, GAN (NIPS 2014)
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#aipapercv" class="page__taxonomy-item-category" rel="tag">AIPaperCV</a>
+                    
+                    
+                    <a href="/tags/#gan" class="page__taxonomy-item-tag" rel="tag">GAN</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#image-geneartion" class="page__taxonomy-item-tag" rel="tag">Image Geneartion</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/data-visual.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.22</p>
+      
+      
+        <a href="/study/ai-data-visualization/" rel="permalink">PART 1: Data Visualization Techniques
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#study" class="page__taxonomy-item-category" rel="tag">Study</a>
+                    
+                    
+                    <a href="/tags/#data-visualization" class="page__taxonomy-item-tag" rel="tag">Data Visualization</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#python" class="page__taxonomy-item-tag" rel="tag">Python</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/xai.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.20</p>
+      
+      
+        <a href="/xai/XAI-quantitative/" rel="permalink">설명 가능한 AI (XAI): Quantitative Metrics &amp; Sanity Check/Robustness
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#xai" class="page__taxonomy-item-category" rel="tag">XAI</a>
+                    
+                    
+                    <a href="/tags/#quantitative-metrics" class="page__taxonomy-item-tag" rel="tag">Quantitative Metrics</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#robustness" class="page__taxonomy-item-tag" rel="tag">Robustness</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#sanity-check" class="page__taxonomy-item-tag" rel="tag">Sanity check</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#xai" class="page__taxonomy-item-tag" rel="tag">XAI</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/xai.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.19</p>
+      
+      
+        <a href="/xai/XAI-perturbation-influence/" rel="permalink">설명 가능한 AI (XAI): Perturbation Map &amp; Influence Map
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#xai" class="page__taxonomy-item-category" rel="tag">XAI</a>
+                    
+                    
+                    <a href="/tags/#inception" class="page__taxonomy-item-tag" rel="tag">Inception</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#lime" class="page__taxonomy-item-tag" rel="tag">LIME</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#perturbation-map" class="page__taxonomy-item-tag" rel="tag">Perturbation Map</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#rise" class="page__taxonomy-item-tag" rel="tag">RISE</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#xai" class="page__taxonomy-item-tag" rel="tag">XAI</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/xai.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.18</p>
+      
+      
+        <a href="/xai/XAI/" rel="permalink">설명 가능한 AI(Explainable AI, XAI)… 왜 중요할까?
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#xai" class="page__taxonomy-item-category" rel="tag">XAI</a>
+                    
+                    
+                    <a href="/tags/#xai" class="page__taxonomy-item-tag" rel="tag">XAI</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/xai.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.18</p>
+      
+      
+        <a href="/xai/XAI-saliency/" rel="permalink">설명 가능한 AI (XAI): Saliency Map
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#xai" class="page__taxonomy-item-category" rel="tag">XAI</a>
+                    
+                    
+                    <a href="/tags/#cam" class="page__taxonomy-item-tag" rel="tag">CAM</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#grad-cam" class="page__taxonomy-item-tag" rel="tag">Grad CAM</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#saliency-map" class="page__taxonomy-item-tag" rel="tag">Saliency Map</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#smoothgrad" class="page__taxonomy-item-tag" rel="tag">SmoothGrad</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#xai" class="page__taxonomy-item-tag" rel="tag">XAI</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="mailto:hchoi256@wisc.edu" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+          <li><a href="https://github.com/hchoi256" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="/assets/포트폴리오.pdf" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Portfolio</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 쭌스🎄. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+    
+<!-- MathJax -->
+<script src="/assets/js/mathjax-config.js"></script>
+<script id="MathJax-script" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.min.js">
+</script>
+
+
+
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/nlp/text-summarization-attention/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/nlp/text-summarization-attention"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://jjunes.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+  </body>
+</html>

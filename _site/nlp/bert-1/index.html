@@ -20,8 +20,8 @@
 
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>[논문 분석] How do Transformer-Architecture Models Address Polysemy of Korean Adverbial Postpositions? (ACL 2022) | 정리하여 내 것으로, AI 📂</title>
-<meta name="description" content="논문">
+<!-- begin _includes/seo.html --><title>자연어와 Word Embedding | 정리하여 내 것으로, AI 📂</title>
+<meta name="description" content="자연어 처리(Natural Language Processing, NLP) 자연어란?">
 
 
   <meta name="author" content="쭌스🎄">
@@ -33,32 +33,32 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:site_name" content="정리하여 내 것으로, AI 📂">
-<meta property="og:title" content="[논문 분석] How do Transformer-Architecture Models Address Polysemy of Korean Adverbial Postpositions? (ACL 2022)">
-<meta property="og:url" content="http://localhost:4000/aipapernlp/transformer-polysemy-korean/">
+<meta property="og:title" content="자연어와 Word Embedding">
+<meta property="og:url" content="http://localhost:4000/nlp/bert-1/">
 
 
-  <meta property="og:description" content="논문">
-
-
-
-  <meta property="og:image" content="http://localhost:4000/assets/images/posts/ai-thumbnail.jpg">
+  <meta property="og:description" content="자연어 처리(Natural Language Processing, NLP) 자연어란?">
 
 
 
-
-
-  <meta property="article:published_time" content="2022-08-19T00:00:00+09:00">
+  <meta property="og:image" content="http://localhost:4000/assets/images/posts/bert-thumbnail.png">
 
 
 
 
 
-  
+  <meta property="article:published_time" content="2022-08-08T00:00:00+09:00">
+
+
+
+
 
   
 
+  
 
-<link rel="canonical" href="http://localhost:4000/aipapernlp/transformer-polysemy-korean/">
+
+<link rel="canonical" href="http://localhost:4000/nlp/bert-1/">
 
 
 
@@ -100,7 +100,6 @@
 <link rel="stylesheet" href="/assets/css/main.css">
 <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
-
 
 
     <!-- start custom head snippets -->
@@ -196,7 +195,7 @@
       
         
         <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a href="/categories/#aipapernlp" itemprop="item"><span itemprop="name">Aipapernlp</span></a>
+          <a href="/categories/#nlp" itemprop="item"><span itemprop="name">Nlp</span></a>
           <meta itemprop="position" content="2" />
         </li>
         <span class="sep">/</span>
@@ -204,7 +203,7 @@
     
       
       
-        <li class="current">[논문 분석] How do Transformer-Architecture Models Address Polysemy of Korean Adverbial Postpositions? (ACL 2022)</li>
+        <li class="current">자연어와 Word Embedding</li>
       
     
   </ol>
@@ -356,7 +355,7 @@
   <ul class="nav__items" id="category_tag_menu">
       <!--전체 글 수-->
       <li>
-            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">47</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">53</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
       </li>
       <li>
         <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C#-->
@@ -373,11 +372,7 @@
                 
             
                 
-                    <li><a href="/categories/Study" class="">AI 기본지식 (2)</a></li>
-                
-            
-                
-            
+                    <li><a href="/categories/Study" class="">AI 기본지식 (4)</a></li>
                 
             
                 
@@ -396,8 +391,6 @@
             
         </ul>
         <ul>
-            
-                
             
                 
             
@@ -425,17 +418,11 @@
             
                 
             
-                
-            
         </ul>
         <ul>
             
                 
                     <li><a href="/categories/Basic" class="">기타 (1)</a></li>
-                
-            
-                
-            
                 
             
                 
@@ -478,11 +465,7 @@
                     
                 
                     
-                
-                    
-                        <li><a href="/categories/AIPaperCV" class="">CV (1)</a></li>
-                    
-                
+                        <li><a href="/categories/AIPaperCV" class="">CV (3)</a></li>
                     
                 
                     
@@ -519,11 +502,7 @@
                     
                 
                     
-                
-                    
-                
-                    
-                        <li><a href="/categories/AIPaperNLP" class="">NLP (2)</a></li>
+                        <li><a href="/categories/AIPaperNLP" class="">NLP (1)</a></li>
                     
                 
                     
@@ -550,11 +529,7 @@
                     
                 
                     
-                
-                    
                         <li><a href="/categories/AIPaperOthers" class="">기타 (1)</a></li>
-                    
-                
                     
                 
                     
@@ -598,16 +573,8 @@
                 
                     
                 
-                    
-                
-                    
-                
             </ul>
             <ul>
-                
-                    
-                
-                    
                 
                     
                 
@@ -637,10 +604,6 @@
                 
             </ul>
             <ul>
-                
-                    
-                
-                    
                 
                     
                 
@@ -694,15 +657,11 @@
                     
                 
                     
-                
-                    
-                
-                    
                         <li><a href="/categories/XAI" class="">XAI (4)</a></li>
                     
                 
             </ul>
-        <span class="nav__sub-title">NLP</span>
+        <span class="nav__sub-title">NLP/CV</span>
             <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
             <ul>
                 <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
@@ -711,11 +670,7 @@
                     
                 
                     
-                        <li><a href="/categories/NLP" class="">NLP (8)</a></li>
-                    
-                
-                    
-                
+                        <li><a href="/categories/NLP" class="">NLP (15)</a></li>
                     
                 
                     
@@ -760,32 +715,16 @@
                     
                 
                     
-                        <li><a href="/categories/BERT" class="">BERT (3)</a></li>
-                    
-                
-                    
-                
-                    
                 
                     
                 
                     
                 
             </ul>
-            <ul>
+            <!-- <ul>
                 
                     
                 
-                    
-                
-                    
-                
-                    
-                
-                    
-                
-                    
-                        <li><a href="/categories/GPT" class="">GPT (1)</a></li>
                     
                 
                     
@@ -804,7 +743,11 @@
                 
                     
                 
-            </ul>  
+                    
+                
+                    
+                
+            </ul>   -->
       </li>
   </ul>
 </nav>
@@ -815,16 +758,16 @@
 
 
   <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="[논문 분석] How do Transformer-Architecture Models Address Polysemy of Korean Adverbial Postpositions? (ACL 2022)">
-    <meta itemprop="description" content="논문">
-    <meta itemprop="datePublished" content="2022-08-19T00:00:00+09:00">
+    <meta itemprop="headline" content="자연어와 Word Embedding">
+    <meta itemprop="description" content="자연어 처리(Natural Language Processing, NLP)자연어란?">
+    <meta itemprop="datePublished" content="2022-08-08T00:00:00+09:00">
     
 
     <div class="page__inner-wrap">
       
         <header>
           <h1 id="page-title" class="page__title p-name" itemprop="headline">
-            <a href="http://localhost:4000/aipapernlp/transformer-polysemy-korean/" class="u-url" itemprop="url">[논문 분석] How do Transformer-Architecture Models Address Polysemy of Korean Adverbial Postpositions? (ACL 2022)
+            <a href="http://localhost:4000/nlp/bert-1/" class="u-url" itemprop="url">자연어와 Word Embedding
 </a>
           </h1>
           
@@ -841,7 +784,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          최대 1 분 소요
+          2 분 소요
         
       </span>
     
@@ -856,14 +799,169 @@
           <aside class="sidebar__right sticky">
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> 쭌스log</h4></header>
-              <ul class="toc__menu"><li><a href="#tbd">TBD</a></li></ul>
+              <ul class="toc__menu"><li><a href="#자연어-처리natural-language-processing-nlp">자연어 처리(Natural Language Processing, NLP)</a><ul><li><a href="#자연어란">자연어란?</a></li><li><a href="#자연어-처리의-두-종류">자연어 처리의 두 종류</a></li><li><a href="#자연어-처리의-단계">자연어 처리의 단계</a></li><li><a href="#nlp-활용-분야">NLP 활용 분야</a></li></ul></li><li><a href="#word-embedding">Word Embedding</a><ul><li><a href="#1-one-hot-encoding-sparse-representation">1. One-hot encoding (sparse representation)</a><ul><li><a href="#유사도">유사도</a></li></ul></li><li><a href="#2-word2vec-dense-representation">2. Word2Vec (dense representation)</a></li><li><a href="#3-glove">3. GloVe</a></li><li><a href="#4-fasttext">4. FastText</a></li><li><a href="#word-embedding-한계점">Word embedding 한계점</a></li></ul></li></ul>
 
             </nav>
           </aside>
         
-        <p><a href="https://aclanthology.org/2022.deelio-1.2.pdf"><strong>논문</strong></a></p>
+        <hr />
+<h1 id="자연어-처리natural-language-processing-nlp">자연어 처리(Natural Language Processing, NLP)</h1>
+<h2 id="자연어란">자연어란?</h2>
+<p><img src="https://user-images.githubusercontent.com/39285147/183526289-0d7a43a8-f329-4ed1-9e0b-31259a32fe6f.png" alt="image" /></p>
 
-<h1 id="tbd">TBD</h1>
+<ul>
+  <li>부호화(Encoding)</li>
+  <li>해독(Decoding)</li>
+</ul>
+
+<p>자연어 처리는 상기 도표에서 컴퓨터가 <strong>텍스트를 해독하는 과정</strong>을 의미한다.</p>
+
+<p>일상에서 사용하는 모든 인간의 언어로, 한국어, 영어와 같은 것들이 예시이다.</p>
+
+<blockquote>
+  <p>인공언어: 프로그래밍 언어, etc.</p>
+</blockquote>
+
+<h2 id="자연어-처리의-두-종류">자연어 처리의 두 종류</h2>
+<ol>
+  <li>
+    <p><strong>규칙 기반 접근법 (Symbolic approach)</strong></p>
+  </li>
+  <li>
+    <p><strong>확률 기반 접근법 (Statistical approach)</strong></p>
+    <ul>
+      <li><em>TF-IDF</em>
+        <ul>
+          <li>TF(Term frequency): 단어가 문서에 등장한 개수 (TF ↑, 중요단어확률 ↑)</li>
+          <li>DF(Document frequency): 해당 단어가 등장한 문서의 개수 (DF ↑, 중요단어확률 ↓)</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="자연어-처리의-단계">자연어 처리의 단계</h2>
+<p>① <strong>전처리</strong></p>
+
+<ul>
+  <li>개행문자, 특수문자, 공백, 중복 표현, 이메일 및 링크, 불용어, 조사 제거</li>
+  <li>띄어쓰기, 문장분리 보정</li>
+  <li>어간추출</li>
+</ul>
+
+<p>② <strong>Tokenizing</strong></p>
+
+<p><img src="https://user-images.githubusercontent.com/39285147/183527388-2369aaca-6791-42d0-821b-1e09460d713f.png" alt="image" /></p>
+
+<ul>
+  <li>어절 tokenizing</li>
+  <li>형태소 tokenizing</li>
+  <li>n-gram tokenizing</li>
+  <li><strong>WordPiece tokenizing</strong> (BERT)</li>
+</ul>
+
+<p>③ <strong>Lexical analysis</strong></p>
+
+<ul>
+  <li>어휘, 형태소 분석</li>
+  <li>개체명 인식</li>
+  <li>상호 참조</li>
+</ul>
+
+<p>④ <strong>Syntactic analysis</strong></p>
+
+<ul>
+  <li>구문 분석</li>
+</ul>
+
+<p>⑤ <strong>Semantic analysis</strong></p>
+
+<ul>
+  <li>의미 분석</li>
+</ul>
+
+<h2 id="nlp-활용-분야">NLP 활용 분야</h2>
+<ul>
+  <li>의미 분석 (i.e., 최초의 컴퓨터는 무엇 –&gt; ‘질문’)</li>
+  <li>구문 분석 (i.e., 문법 구문 분석)</li>
+  <li>감성 분석</li>
+  <li>형태소 분석</li>
+  <li>개체명 인식 (i.e., 네이버는 어떤 회사 –&gt; ‘기관’)</li>
+</ul>
+
+<hr />
+<h1 id="word-embedding">Word Embedding</h1>
+<p>‘자연어’에서 특징을 추출하는 방법이다.</p>
+
+<p>텍스트를 컴퓨터가 이해하고, 효율적으로 처리하게 하기 위해서는 컴퓨터가 이해할 수 있도록 텍스트를 적절히 숫자로 변환하여 좌표평면/벡터공간 위에 표현할 필요가 있다.</p>
+
+<p>그러한 공간에서, 서로 다른 두 포인트/벡터 간의 거리를 유추하는 <strong>유사도</strong> 측정이 가능하다.</p>
+
+<h2 id="1-one-hot-encoding-sparse-representation">1. <strong>One-hot encoding</strong> (sparse representation)</h2>
+<p><img src="https://user-images.githubusercontent.com/39285147/183528088-8343c972-2c27-4f45-812b-3259e39e2151.png" alt="image" /></p>
+
+<ul>
+  <li>각 단어가 가지는 <strong>의미 파악이 불가능하다</strong></li>
+  <li>단어 간 <strong>유사도 비교가 불가능하다</strong>.</li>
+  <li><a href="https://github.com/hchoi256/ai-terms"><strong>차원의 저주</strong></a>에 빠질 위험성 多</li>
+</ul>
+
+<h3 id="유사도">유사도</h3>
+<p><img src="https://user-images.githubusercontent.com/39285147/186249354-87d4c3d8-797c-494a-ad1f-befc687e48c4.png" alt="image" />
+<img src="https://user-images.githubusercontent.com/39285147/186250196-79d14e07-c6b9-4771-a8ca-99b7e21993f7.png" alt="image" /></p>
+
+<p>여기서 유사성을 측정하는 여러 가지 척도가 존재한다: Euclidean, Cosin, 내적, etc.</p>
+
+<p>상기 모형에서, <strong>초록색은 Cosin 거리, 빨간색은 Euclidean 거리</strong>이다.</p>
+
+<p>Cosin 거리는 각도가 좁아질 수록, 두 벡터간의 유사도가 높다는 지표이다.</p>
+
+<p>원핫 인코딩은 좌표평면에 단어를 표현하기 때문에, 상기 모형처럼 각도가 <strong>90도로 모두 동일한</strong> 모습이다.</p>
+
+<p>따라서, Cosin Simliarity를 구하면 서로 모두 동일한 유사도를 가지기 때문에 비교가 불가능하다.</p>
+
+<p>이러한, 한계점을 타파한 것이 벡터공간에 단어의 의미를 담아 표현한 Word2Vec이다.</p>
+
+<h2 id="2-word2vec-dense-representation">2. Word2Vec (dense representation)</h2>
+<p><img src="https://user-images.githubusercontent.com/39285147/183535690-05358c7b-a9ba-4893-8959-53e36b521513.png" alt="image" /></p>
+
+<ul>
+  <li>자연어의 <strong>의미를 ‘벡터 공간’에 임베딩</strong>하여, one-hot encoding의 한계점을 해결한다.
+    <ul>
+      <li>i.e., <em>한국 - 서울 + 도쿄 = 일본</em></li>
+    </ul>
+  </li>
+  <li>한 단어의 <strong>주변 단어들을 통해</strong> 비지도학습으로 그 단어의 의미 파악이 가능하다 (유사성 有).</li>
+  <li><strong>한정된 자원</strong>으로 표현이 가능하다.</li>
+</ul>
+
+<p>One-hot 벡터들을 인풋으로 받고, 2개의 간단한 hidden layer를 가진 신경망으로 구성되있다.</p>
+
+<p>주변부 단어를 예측하는 방식으로 학습하여 인풋 단어를 올바르게 유츄해낸다.</p>
+<ul>
+  <li>임베딩된 단어의 <strong>내적(inner product)</strong>이 코사인 유사도이다.</li>
+</ul>
+
+<p>단어 벡터의 유사도과 semantic 혹은 syntactic analogy를 통하여 Word2Vec 성능을 검증한다.</p>
+
+<p>하지만, 단어의 <strong>subword information(i,e., 서울 vs 서울시)을 무시</strong>하고 <strong>학습에 사용될 충분한 vocabulary가 주어져야 한다</strong>는 한계가 존재한다.</p>
+
+<h2 id="3-glove">3. <a href="https://wikidocs.net/22885">GloVe</a></h2>
+
+<h2 id="4-fasttext">4. FastText</h2>
+<p><img src="https://user-images.githubusercontent.com/39285147/183534835-d42db067-905f-483d-a738-e437e4dc4e78.png" alt="image" /></p>
+
+<p>subword information을 무시하는 Word2Vec 한계를 <strong>n-gram 기법</strong>을 통해 subword를 직접 학습하면서 극복한다 (i.e., assumption에 2-gram을 적용하면 as, ss, su,..).</p>
+
+<p>FastText는 단어를 n-gram으로 분리한 후, 모든 n-gram vector를 합산한 평균을 통해 단어 벡터를 획득한다.</p>
+
+<p><strong>오탈자, OOV (Out of Vocabulary), 그리고 빈도수가 적은 단어</strong>에 대한 학습이 용이하다.</p>
+<h2 id="word-embedding-한계점">Word embedding 한계점</h2>
+<p><strong>동형어, 다의어</strong>(<em>account: 계좌, 차지하다, etc.</em>)와 같은 단어에 대한 embedding 성능이 좋지 않다.</p>
+
+<p><del>주변 단어를 예측하는 방식으로 학습하기 때문에 <strong>‘문맥’을 고려할 수 없다</strong>.</del></p>
+
+<p>따라서, Word Embedding으로 input을 처리한 후, 이러한 한계점을 타파하고자 적용하는 <a href="https://hchoi256.github.io/bert/bert-2/"><strong>언어 모델(Language Model)</strong></a>에 대해 다음 시간에 알아보자.</p>
 
         
       </section>
@@ -880,15 +978,15 @@
     <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
     <span itemprop="keywords">
     
-      <a href="/tags/#acl" class="page__taxonomy-item p-category" rel="tag">ACL</a><span class="sep">, </span>
-    
-      <a href="/tags/#korean-adverbial-postposition" class="page__taxonomy-item p-category" rel="tag">Korean Adverbial Postposition</a><span class="sep">, </span>
+      <a href="/tags/#glove" class="page__taxonomy-item p-category" rel="tag">GloVe</a><span class="sep">, </span>
     
       <a href="/tags/#nlp" class="page__taxonomy-item p-category" rel="tag">NLP</a><span class="sep">, </span>
     
-      <a href="/tags/#polysemy" class="page__taxonomy-item p-category" rel="tag">Polysemy</a><span class="sep">, </span>
+      <a href="/tags/#one-hot-encoding" class="page__taxonomy-item p-category" rel="tag">One Hot Encoding</a><span class="sep">, </span>
     
-      <a href="/tags/#transformer" class="page__taxonomy-item p-category" rel="tag">Transformer</a>
+      <a href="/tags/#word-embedding" class="page__taxonomy-item p-category" rel="tag">Word Embedding</a><span class="sep">, </span>
+    
+      <a href="/tags/#word2vec" class="page__taxonomy-item p-category" rel="tag">Word2Vec</a>
     
     </span>
   </p>
@@ -905,7 +1003,7 @@
     <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
     <span itemprop="keywords">
     
-      <a href="/categories/#aipapernlp" class="page__taxonomy-item p-category" rel="tag">AIPaperNLP</a>
+      <a href="/categories/#nlp" class="page__taxonomy-item p-category" rel="tag">NLP</a>
     
     </span>
   </p>
@@ -913,7 +1011,7 @@
 
         
 
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-08-19T00:00:00+09:00">2022-08-19</time></p>
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-08-08T00:00:00+09:00">2022-08-08</time></p>
 
       </footer>
 
@@ -922,22 +1020,22 @@
     <h4 class="page__share-title">공유하기</h4>
   
 
-  <a href="https://twitter.com/intent/tweet?text=%5B%EB%85%BC%EB%AC%B8+%EB%B6%84%EC%84%9D%5D+How+do+Transformer-Architecture+Models+Address+Polysemy+of+Korean+Adverbial+Postpositions%3F+%28ACL+2022%29%20http%3A%2F%2Flocalhost%3A4000%2Faipapernlp%2Ftransformer-polysemy-korean%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=%EC%9E%90%EC%97%B0%EC%96%B4%EC%99%80+Word+Embedding%20http%3A%2F%2Flocalhost%3A4000%2Fnlp%2Fbert-1%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Faipapernlp%2Ftransformer-polysemy-korean%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fnlp%2Fbert-1%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Faipapernlp%2Ftransformer-polysemy-korean%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fnlp%2Fbert-1%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 </section>
 
 
       
   <nav class="pagination">
     
-      <a href="/xai/XAI/" class="pagination--pager" title="설명 가능한 AI(Explainable AI, XAI)… 왜 중요할까?
+      <a href="/aipaperothers/ai-paper-dl-behicle-detection-by-sensor/" class="pagination--pager" title="[논문 분석] Deep Learning-Based Vehicle Anomaly Detection by Combining Vehicle Sensor Data (KAIS 2021)
 ">이전</a>
     
     
-      <a href="/xai/XAI-perturbation-influence/" class="pagination--pager" title="설명 가능한 AI (XAI): Perturbation Map &amp; Influence Map
+      <a href="/nlp/bert-2/" class="pagination--pager" title="언어모델, Seq2Seq, Attention Models
 ">다음</a>
     
   </nav>
@@ -961,6 +1059,304 @@
   <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
       <div class="archive__item-teaser">
+        <img src="/assets/images/posts/nlp-thumbnail.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.25</p>
+      
+      
+        <a href="/nlp/text-summarization-attention/" rel="permalink">[개발] 긴 영문 글/기사 요약번역 웹 페이지 구현하기
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#nlp" class="page__taxonomy-item-category" rel="tag">NLP</a>
+                    
+                    
+                    <a href="/tags/#nlp" class="page__taxonomy-item-tag" rel="tag">NLP</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#streamlit" class="page__taxonomy-item-tag" rel="tag">Streamlit</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#text-summarization" class="page__taxonomy-item-tag" rel="tag">Text Summarization</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#translator" class="page__taxonomy-item-tag" rel="tag">Translator</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/cyclegan.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.24</p>
+      
+      
+        <a href="/aipapercv/CycleGAN/" rel="permalink">[논문 분석] Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks (ICCV 2017)
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#aipapercv" class="page__taxonomy-item-category" rel="tag">AIPaperCV</a>
+                    
+                    
+                    <a href="/tags/#cyclegan" class="page__taxonomy-item-tag" rel="tag">CycleGAN</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#gan" class="page__taxonomy-item-tag" rel="tag">GAN</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#image-to-image-translation" class="page__taxonomy-item-tag" rel="tag">Image-to-Image Translation</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/data-visual.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.23</p>
+      
+      
+        <a href="/study/ai-data-visualization2/" rel="permalink">PART 2: Data Visualization Techniques
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#study" class="page__taxonomy-item-category" rel="tag">Study</a>
+                    
+                    
+                    <a href="/tags/#data-visualization" class="page__taxonomy-item-tag" rel="tag">Data Visualization</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#python" class="page__taxonomy-item-tag" rel="tag">Python</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/bert-thumbnail.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.23</p>
+      
+      
+        <a href="/nlp/bert-5/" rel="permalink">KoBERT 실습
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#nlp" class="page__taxonomy-item-category" rel="tag">NLP</a>
+                    
+                    
+                    <a href="/tags/#keyword-extraction" class="page__taxonomy-item-tag" rel="tag">Keyword Extraction</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#kobert" class="page__taxonomy-item-tag" rel="tag">KoBERT</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#nlp" class="page__taxonomy-item-tag" rel="tag">NLP</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#sentimental-analysis" class="page__taxonomy-item-tag" rel="tag">Sentimental Analysis</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/bert-thumbnail.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.23</p>
+      
+      
+        <a href="/nlp/bert-4/" rel="permalink">Transformer, BERT, BPE, WordPiece
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#nlp" class="page__taxonomy-item-category" rel="tag">NLP</a>
+                    
+                    
+                    <a href="/tags/#bert" class="page__taxonomy-item-tag" rel="tag">BERT</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#bpe" class="page__taxonomy-item-tag" rel="tag">BPE</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#nlp" class="page__taxonomy-item-tag" rel="tag">NLP</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#transformer" class="page__taxonomy-item-tag" rel="tag">Transformer</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#wordpiece" class="page__taxonomy-item-tag" rel="tag">WordPiece</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/gan.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.23</p>
+      
+      
+        <a href="/aipapercv/GAN/" rel="permalink">[논문 분석] Generative Adversarial Nets, GAN (NIPS 2014)
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#aipapercv" class="page__taxonomy-item-category" rel="tag">AIPaperCV</a>
+                    
+                    
+                    <a href="/tags/#gan" class="page__taxonomy-item-tag" rel="tag">GAN</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#image-geneartion" class="page__taxonomy-item-tag" rel="tag">Image Geneartion</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/posts/data-visual.jpg" alt="">
+      </div>
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.22</p>
+      
+      
+        <a href="/study/ai-data-visualization/" rel="permalink">PART 1: Data Visualization Techniques
+</a>
+      
+    </h2>
+    <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#study" class="page__taxonomy-item-category" rel="tag">Study</a>
+                    
+                    
+                    <a href="/tags/#data-visualization" class="page__taxonomy-item-tag" rel="tag">Data Visualization</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#python" class="page__taxonomy-item-tag" rel="tag">Python</a>
+                
+            </span>
+        </span>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
         <img src="/assets/images/posts/xai.png" alt="">
       </div>
     
@@ -969,7 +1365,7 @@
       <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.20</p>
       
       
-        <a href="/xai/XAI-quantitative/" rel="permalink">설명 가능한 AI (XAI): Quantitative Metrics &amp; Sanity checks/Robustness
+        <a href="/xai/XAI-quantitative/" rel="permalink">설명 가능한 AI (XAI): Quantitative Metrics &amp; Sanity Check/Robustness
 </a>
       
     </h2>
@@ -1083,300 +1479,6 @@
   </article>
 </div>
         
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/assets/images/posts/xai.png" alt="">
-      </div>
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.18</p>
-      
-      
-        <a href="/xai/XAI-saliency/" rel="permalink">설명 가능한 AI (XAI): Saliency Map
-</a>
-      
-    </h2>
-    <!--Archive page 용-: (post -> page)-->
-<!--page__taxonomy.html에서 가져 옴-->
-        
-        <span class="page__taxonomy">
-            <span itemprop="keywords"><a href="/categories/#xai" class="page__taxonomy-item-category" rel="tag">XAI</a>
-                    
-                    
-                    <a href="/tags/#cam" class="page__taxonomy-item-tag" rel="tag">CAM</a><span class="sep"> </span>
-                
-                    
-                    
-                    <a href="/tags/#grad-cam" class="page__taxonomy-item-tag" rel="tag">Grad CAM</a><span class="sep"> </span>
-                
-                    
-                    
-                    <a href="/tags/#saliency-map" class="page__taxonomy-item-tag" rel="tag">Saliency Map</a><span class="sep"> </span>
-                
-                    
-                    
-                    <a href="/tags/#smoothgrad" class="page__taxonomy-item-tag" rel="tag">SmoothGrad</a><span class="sep"> </span>
-                
-                    
-                    
-                    <a href="/tags/#xai" class="page__taxonomy-item-tag" rel="tag">XAI</a>
-                
-            </span>
-        </span>
-  </article>
-</div>
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/assets/images/posts/email.png" alt="">
-      </div>
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.18</p>
-      
-      
-        <a href="/python/python-send-email/" rel="permalink">Python: 이메일 보내기 (SMTP)
-</a>
-      
-    </h2>
-    <!--Archive page 용-: (post -> page)-->
-<!--page__taxonomy.html에서 가져 옴-->
-        
-        <span class="page__taxonomy">
-            <span itemprop="keywords"><a href="/categories/#python" class="page__taxonomy-item-category" rel="tag">Python</a>
-                    
-                    
-                    <a href="/tags/#email" class="page__taxonomy-item-tag" rel="tag">Email</a><span class="sep"> </span>
-                
-                    
-                    
-                    <a href="/tags/#python" class="page__taxonomy-item-tag" rel="tag">Python</a>
-                
-            </span>
-        </span>
-  </article>
-</div>
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/assets/images/posts/data-thumbnail.jpg" alt="">
-      </div>
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.18</p>
-      
-      
-        <a href="/python/python-data-crawling/" rel="permalink">Python: Data Crawling
-</a>
-      
-    </h2>
-    <!--Archive page 용-: (post -> page)-->
-<!--page__taxonomy.html에서 가져 옴-->
-        
-        <span class="page__taxonomy">
-            <span itemprop="keywords"><a href="/categories/#python" class="page__taxonomy-item-category" rel="tag">Python</a>
-                    
-                    
-                    <a href="/tags/#beautifulsoup" class="page__taxonomy-item-tag" rel="tag">BeautifulSoup</a><span class="sep"> </span>
-                
-                    
-                    
-                    <a href="/tags/#python" class="page__taxonomy-item-tag" rel="tag">Python</a><span class="sep"> </span>
-                
-                    
-                    
-                    <a href="/tags/#sqlite" class="page__taxonomy-item-tag" rel="tag">sqlite</a><span class="sep"> </span>
-                
-                    
-                    
-                    <a href="/tags/#sql" class="page__taxonomy-item-tag" rel="tag">SQL</a>
-                
-            </span>
-        </span>
-  </article>
-</div>
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/assets/images/posts/nlp-thumbnail.jpg" alt="">
-      </div>
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.16</p>
-      
-      
-        <a href="/nlp/nlp-NER/" rel="permalink">NLP - Part 6: Name Entity Recognition (NER) 앱
-</a>
-      
-    </h2>
-    <!--Archive page 용-: (post -> page)-->
-<!--page__taxonomy.html에서 가져 옴-->
-        
-        <span class="page__taxonomy">
-            <span itemprop="keywords"><a href="/categories/#nlp" class="page__taxonomy-item-category" rel="tag">NLP</a>
-                    
-                    
-                    <a href="/tags/#ner" class="page__taxonomy-item-tag" rel="tag">NER</a><span class="sep"> </span>
-                
-                    
-                    
-                    <a href="/tags/#nlp" class="page__taxonomy-item-tag" rel="tag">NLP</a>
-                
-            </span>
-        </span>
-  </article>
-</div>
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/assets/images/posts/pca-image-compression.png" alt="">
-      </div>
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.14</p>
-      
-      
-        <a href="/usl/ml-pca/" rel="permalink">PCA - Image Compression(이미지 압축)
-</a>
-      
-    </h2>
-    <!--Archive page 용-: (post -> page)-->
-<!--page__taxonomy.html에서 가져 옴-->
-        
-        <span class="page__taxonomy">
-            <span itemprop="keywords"><a href="/categories/#usl" class="page__taxonomy-item-category" rel="tag">USL</a>
-                    
-                    
-                    <a href="/tags/#image-compression" class="page__taxonomy-item-tag" rel="tag">Image Compression</a><span class="sep"> </span>
-                
-                    
-                    
-                    <a href="/tags/#pca" class="page__taxonomy-item-tag" rel="tag">PCA</a>
-                
-            </span>
-        </span>
-  </article>
-</div>
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/assets/images/posts/hac.png" alt="">
-      </div>
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.14</p>
-      
-      
-        <a href="/usl/ml-hca/" rel="permalink">Hierarchical Agglomerate Clustering(HAC) - 포켓몬 군집화
-</a>
-      
-    </h2>
-    <!--Archive page 용-: (post -> page)-->
-<!--page__taxonomy.html에서 가져 옴-->
-        
-        <span class="page__taxonomy">
-            <span itemprop="keywords"><a href="/categories/#usl" class="page__taxonomy-item-category" rel="tag">USL</a>
-                    
-                    
-                    <a href="/tags/#clustering" class="page__taxonomy-item-tag" rel="tag">Clustering</a><span class="sep"> </span>
-                
-                    
-                    
-                    <a href="/tags/#hac" class="page__taxonomy-item-tag" rel="tag">HAC</a><span class="sep"> </span>
-                
-                    
-                    
-                    <a href="/tags/#pokemon" class="page__taxonomy-item-tag" rel="tag">Pokemon</a>
-                
-            </span>
-        </span>
-  </article>
-</div>
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-      <div class="archive__item-teaser">
-        <img src="/assets/images/posts/lenet.JPG" alt="">
-      </div>
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> 2022.08.14</p>
-      
-      
-        <a href="/sl/dl-miniplace-classification/" rel="permalink">LeNet 신경망 - MiniPlaces 이미지 분류
-</a>
-      
-    </h2>
-    <!--Archive page 용-: (post -> page)-->
-<!--page__taxonomy.html에서 가져 옴-->
-        
-        <span class="page__taxonomy">
-            <span itemprop="keywords"><a href="/categories/#sl" class="page__taxonomy-item-category" rel="tag">SL</a>
-                    
-                    
-                    <a href="/tags/#classification" class="page__taxonomy-item-tag" rel="tag">Classification</a><span class="sep"> </span>
-                
-                    
-                    
-                    <a href="/tags/#lenet" class="page__taxonomy-item-tag" rel="tag">LeNet</a><span class="sep"> </span>
-                
-                    
-                    
-                    <a href="/tags/#pytorch" class="page__taxonomy-item-tag" rel="tag">PyTorch</a>
-                
-            </span>
-        </span>
-  </article>
-</div>
-        
       </div>
     </div>
   
@@ -1425,6 +1527,14 @@
       </footer>
     </div>
     
+<!-- MathJax -->
+<script src="/assets/js/mathjax-config.js"></script>
+<script id="MathJax-script" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.min.js">
+</script>
+
+
+
   <script src="/assets/js/main.min.js"></script>
 
 
@@ -1436,8 +1546,8 @@
     
   <script>
     var disqus_config = function () {
-      this.page.url = "http://localhost:4000/aipapernlp/transformer-polysemy-korean/";  /* Replace PAGE_URL with your page's canonical URL variable */
-      this.page.identifier = "/aipapernlp/transformer-polysemy-korean"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+      this.page.url = "http://localhost:4000/nlp/bert-1/";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/nlp/bert-1"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
     };
     (function() { /* DON'T EDIT BELOW THIS LINE */
       var d = document, s = d.createElement('script');
@@ -1450,7 +1560,6 @@
 
 
   
-
 
 
 

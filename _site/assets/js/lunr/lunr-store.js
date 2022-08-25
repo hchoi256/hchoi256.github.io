@@ -1,17 +1,17 @@
 var store = [{
-        "title": "NLP - Part 1: Text Mining and Tokenization",
+        "title": "[개발] PART 1: Text Mining and Tokenization",
         "excerpt":"PART 1: Text Mining 1-1) 텍스트 마이닝(Text Mining)이란? 비정형(= 구조화 되지 않은) 텍스트 빅 데이터에 대하여 효과적인 탐색 및 분석을 통해 유용한 정보, 패턴 및 실행 가능한 통찰력을 도출하는 과정이다. ‘Text Mining’ utilizes effective exploration and analysis to produce feasible insights (i.e., valuable patterns) into the extensive dataset of unstructured...","categories": ["NLP"],
         "tags": ["NLP","python"],
         "url": "http://localhost:4000/nlp/nlp-basic-tokenizer/",
         "teaser": "http://localhost:4000/assets/images/posts/nlp-thumbnail.jpg"
       },{
-        "title": "NLP - Part 2: Word Embedding",
+        "title": "[개발] PART 2: Word Embedding",
         "excerpt":"어간추출(Stemmer) vs. 표제어추출(Lemmatizer) Stemmer 단어에서 일반적인 형태 및 굴절 어미를 제거하는 프로세스. A process for removing the commoner morphological and inflexional endings from words. from nltk.stem.porter import PorterStemmer # least strict from nltk.stem.snowball import SnowballStemmer # average (best) from nltk.stem.lancaster import LancasterStemmer # most strict input_words = ['writing', 'calves', 'be',...","categories": ["NLP"],
         "tags": ["NLP","Word Embedding"],
         "url": "http://localhost:4000/nlp/nlp-basic-word-embedding/",
         "teaser": "http://localhost:4000/assets/images/posts/nlp-thumbnail.jpg"
       },{
-        "title": "NLP - Part 3: Voice Recognition",
+        "title": "[개발] PART 3: Voice Recognition",
         "excerpt":"PART 1: STT(Speech to Text) !pip install SpeechRecognition !pip install PyAudio import speech_recognition as sr def transform(): r = sr.Recognizer() with sr.Microphone() as source: r.pause_threshold = 0.8 # 0.8초 동안 정적이면 자동으로 음성 녹음을 종료한다 terminate recording in 0.8 seconds of silence said = r.listen(source) # 녹음본 'said'에 저장하기 save...","categories": ["NLP"],
         "tags": ["NLP","Voice Recognition","STT","TTS"],
         "url": "http://localhost:4000/nlp/nlp-voice-recognition/",
@@ -59,22 +59,22 @@ var store = [{
         "url": "http://localhost:4000/study/ai-study-guide/",
         "teaser": "http://localhost:4000/assets/images/posts/data-thumbnail.jpg"
       },{
-        "title": "NLP - Part 4: Naive Classifier",
+        "title": "[개발] PART 4: Naive Classifier",
         "excerpt":"PART 1: Gender Identifier Corpus의 영어 이름에서 마지막 ‘몇 글자’를 보고 남자 혹은 여자 이름인지 확인하여 분류한다. Identifying sex through the last ‘few letters’ of the corpus Naive Bayes Classifier 모든 고유한 단어가 텍스트에서 추출 extracting words from texts 라벨 확인 checking labels 분류 classification Naive Beyas Loading the libraries...","categories": ["NLP"],
         "tags": ["NLP","Naive Classifier"],
         "url": "http://localhost:4000/nlp/nlp-basic-naive-beyas/",
         "teaser": "http://localhost:4000/assets/images/posts/nlp-thumbnail.jpg"
       },{
-        "title": "NLP - Part 5: Topic Modeling",
+        "title": "[개발] PART 5: Topic Modeling",
         "excerpt":"What is Topic Modeling? 주제 모델링(Topic Modeling)이란 주제에 해당하는 텍스트 데이터의 패턴을 식별하는 과정이다. Topic Modeling is the process of identifying a pattern of text data corresponding to a topic. 텍스트에 여러 주제가 포함된 경우 이 기술을 사용하여 입력 텍스트 내에서 해당 주제를 식별하고 분리할 수 있다. If the text...","categories": ["NLP"],
         "tags": ["NLP","Topic Modeling"],
         "url": "http://localhost:4000/nlp/nlp-basic-topic-modeling/",
         "teaser": "http://localhost:4000/assets/images/posts/nlp-thumbnail.jpg"
       },{
-        "title": "NLP: Transformer - GPT-2",
-        "excerpt":"Transformer w/ Tensorflow 번역, 질문 답변, 텍스트 요약 등과 같은 작업을 위해 순차적으로 데이터를 처리하도록 설계된 2017년에 구글이 소개한 딥러닝 아키텍처이다. It is a deep learning architecture introduced by Google in 2017 designed to process data sequentially for tasks such as translation, question answering, text summarization, and more. 텍스트 생성기로...","categories": ["GPT"],
+        "title": "[개발] PART 6: Transformer - GPT-2",
+        "excerpt":"Transformer w/ Tensorflow 번역, 질문 답변, 텍스트 요약 등과 같은 작업을 위해 순차적으로 데이터를 처리하도록 설계된 2017년에 구글이 소개한 딥러닝 아키텍처이다. It is a deep learning architecture introduced by Google in 2017 designed to process data sequentially for tasks such as translation, question answering, text summarization, and more. 텍스트 생성기로...","categories": ["NLP"],
         "tags": ["NLP","GPT","Transformer"],
-        "url": "http://localhost:4000/gpt/nlp-basic-transformer/",
+        "url": "http://localhost:4000/nlp/nlp-basic-transformer/",
         "teaser": "http://localhost:4000/assets/images/posts/nlp-thumbnail.jpg"
       },{
         "title": "[논문 분석] Learning loss for active learning (CVPR 2019)",
@@ -103,7 +103,7 @@ var store = [{
       },{
         "title": "Data Preprocessing Techniques",
         "excerpt":"‘raw_data’ is the temporary dataset, and we are going to address various preprocessing tasks with it. 데이터 확인 (Describing the dataset) raw_data.info() &lt;class 'pandas.core.frame.DataFrame'&gt; Int64Index: 23 entries, 0 to 29 Data columns (total 8 columns): # Column Non-Null Count Dtype --- ------ -------------- ----- 0 customer_id 23 non-null int64 1...","categories": ["Study"],
-        "tags": ["AI","Data Preprocessing"],
+        "tags": ["Data Preprocessing","Python"],
         "url": "http://localhost:4000/study/ai-data-preprocessing/",
         "teaser": "http://localhost:4000/assets/images/posts/data-thumbnail.jpg"
       },{
@@ -119,22 +119,22 @@ var store = [{
         "url": "http://localhost:4000/aipaperothers/ai-paper-dl-behicle-detection-by-sensor/",
         "teaser": "http://localhost:4000/assets/images/posts/ai-thumbnail.jpg"
       },{
-        "title": "Part 1: BERT Language Model",
-        "excerpt":"자연어 처리(Natural Language Processing, NLP) 자연어란? 부호화(Encoding) 해독(Decoding) 자연어 처리는 상기 도표에서 컴퓨터가 텍스트를 해독하는 과정을 의미한다. 일상에서 사용하는 모든 인간의 언어로, 한국어, 영어와 같은 것들이 예시이다. 인공언어: 프로그래밍 언어, etc. 자연어 처리의 두 종류 규칙 기반 접근법 (Symbolic approach) 확률 기반 접근법 (Statistical approach) TF-IDF TF(Term frequency): 단어가 문서에...","categories": ["BERT"],
-        "tags": ["NLP","Word Embedding","Word2Vec","One Hot Encoding"],
-        "url": "http://localhost:4000/bert/bert-1/",
+        "title": "자연어와 Word Embedding",
+        "excerpt":"자연어 처리(Natural Language Processing, NLP) 자연어란? 부호화(Encoding) 해독(Decoding) 자연어 처리는 상기 도표에서 컴퓨터가 텍스트를 해독하는 과정을 의미한다. 일상에서 사용하는 모든 인간의 언어로, 한국어, 영어와 같은 것들이 예시이다. 인공언어: 프로그래밍 언어, etc. 자연어 처리의 두 종류 규칙 기반 접근법 (Symbolic approach) 확률 기반 접근법 (Statistical approach) TF-IDF TF(Term frequency): 단어가 문서에...","categories": ["NLP"],
+        "tags": ["NLP","Word Embedding","One Hot Encoding","Word2Vec","GloVe"],
+        "url": "http://localhost:4000/nlp/bert-1/",
         "teaser": "http://localhost:4000/assets/images/posts/bert-thumbnail.png"
       },{
-        "title": "Part 2: BERT Language Model",
-        "excerpt":"언어 모델 (Language Model, LM) ‘자연어’의 법칙을 컴퓨터로 모사하는 모델로, 다음에 등장할 단어 예측을 수행한다(= ‘맥락’을 고려한다). Markov 확률 모델 이전 단어의 형태를 통하여 확률적으로 다음에 나올 단어를 예측한다 가령, ‘like’ 다음에 ‘rabbit’이라는 단어가 나타날 확률은 주어진 학습 데이터에 기반하여 33%로 나타난다. RNN (Recurrent Neural Network) 모델 Markov 체인 모델을...","categories": ["BERT"],
-        "tags": ["NLP","BERT","Seq2Seq","Attention","Transformer"],
-        "url": "http://localhost:4000/bert/bert-2/",
+        "title": "언어모델, Seq2Seq, Attention Models",
+        "excerpt":"언어 모델 (Language Model, LM) ‘자연어’의 법칙을 컴퓨터로 모사하는 모델로, 다음에 등장할 단어 예측을 수행한다(= ‘맥락’을 고려한다). Markov 확률 모델 이전 단어의 형태를 통하여 확률적으로 다음에 나올 단어를 예측한다 가령, ‘like’ 다음에 ‘rabbit’이라는 단어가 나타날 확률은 주어진 학습 데이터에 기반하여 33%로 나타난다. 이러한 과정을 Language Modeling이라 일컫는다. RNN (Recurrent Neural...","categories": ["NLP"],
+        "tags": ["NLP Language Model","Seq2Seq","Attention"],
+        "url": "http://localhost:4000/nlp/bert-2/",
         "teaser": "http://localhost:4000/assets/images/posts/bert-thumbnail.png"
       },{
-        "title": "Part 3: BERT Language Model",
-        "excerpt":"BERT Bi-directional transformer로 이루어진 언어모델로, 양방향으로 encoder를 발산하여 전체 단어를 학습에 활용한다 (전체 맥락을 이해한다). BERT 언어모델 위에 1개의 classification layer만 부착하여 다양한 NLP task를 수행한다. BERT: Transformer 의 Encoder (self attention) GPT: Transformer 의 Decoder (Multi-head attention) BPE (Byte Pair Encoding) 빈도수에 기반하여 토큰을 병합하는 BPE (Byte Pair Encoding)...","categories": ["BERT"],
-        "tags": ["NLP","BERT","BPE","WordPiece","KorBERT"],
-        "url": "http://localhost:4000/bert/bert-3/",
+        "title": "Self-Attention, Transformer, BERT, BPE, WordPiece",
+        "excerpt":"Convolution Seq2Seq (ConvS2S) [Convolutional block structure for encoder] Residual Connection: 입력 정보가 다음 레이어에 전달될 벡터에 더해져서 최종 출력에 영향을 줄 수 있도록 하기 위함. ResNet 알아보기. 기존 RNN의 ‘직렬화’라는 한계점을 타파하고자 RNN 구조를 제거하고 ‘Convolution’으로 대체한 경우이다. [Convolution 동작 원리] 순환 신경망의 연결선을 제거하여 이전 출력을 기다릴 필요없이, 가령...","categories": ["NLP"],
+        "tags": ["NLP","Transformer","BERT","BPE","WordPiece"],
+        "url": "http://localhost:4000/nlp/bert-3/",
         "teaser": "http://localhost:4000/assets/images/posts/bert-thumbnail.png"
       },{
         "title": "[논문 분석] A Multi-Task Benchmark for Korean Legal Language Understanding and Judgement Prediction (arXiv 2022)",
@@ -150,7 +150,7 @@ var store = [{
         "teaser": "http://localhost:4000/assets/images/posts/streamlit-thumbnail.png"
       },{
         "title": "A* Search - 8-tile Puzzle Game",
-        "excerpt":"A-star 알고리즘을 활용해서 8-tile Puzzle 게임을 구현한다.      8-tile Puzzle 정보는 여기서 참고하자.    이 게임에서 당신은 AI 로봇과 Teeko 보드 게임을 펼치게 될 것이다.   이 프로젝트는 A* 탐색 알고리즘을 이해하고 있다는 전제로 진행한다.      A* 탐색 알고리즘이란?    Code  [Notice] download here   ","categories": ["Others"],
+        "excerpt":"Code [Notice] download here A-star 알고리즘을 활용해서 8-tile Puzzle 게임을 구현한다. 8-tile Puzzle 정보는 여기서 참고하자. 이 게임에서 당신은 AI 로봇과 Teeko 보드 게임을 펼치게 될 것이다. A* 탐색 알고리즘은 시작 노드와 목적지 노드를 분명하게 지정해 이 두 노드 간의 최단 경로를 파악할 수 있다. A* 알고리즘은 휴리스틱 추정값을 통해...","categories": ["Others"],
         "tags": ["Machine Learning","Game","A* Search"],
         "url": "http://localhost:4000/others/ml-8-tile-puzzle-a-search/",
         "teaser": "http://localhost:4000/assets/images/posts/8-tile-puzzle.png"
@@ -185,7 +185,7 @@ var store = [{
         "url": "http://localhost:4000/usl/ml-pca/",
         "teaser": "http://localhost:4000/assets/images/posts/pca-image-compression.png"
       },{
-        "title": "NLP - Part 6: Name Entity Recognition (NER) 앱",
+        "title": "[개발] PART 7: Name Entity Recognition (NER) 앱",
         "excerpt":"개체명 인식(Named Entity Recognition)이란 말 그대로 이름을 가진 개체(named entity)를 인식하겠다는 것을 의미한다. 어떤 이름을 의미하는 단어를 보고는 그 단어가 어떤 유형인지를 인식하는 것을 말한다. 라이브러리 % pip install spacy spacy_streamlit % python -m spacy download en_core_web_trf import streamlit as st import spacy_streamlit as spt import spacy import spacy_transformers nlp...","categories": ["NLP"],
         "tags": ["NLP","NER"],
         "url": "http://localhost:4000/nlp/nlp-NER/",
@@ -215,21 +215,57 @@ var store = [{
         "url": "http://localhost:4000/xai/XAI/",
         "teaser": "http://localhost:4000/assets/images/posts/xai.png"
       },{
-        "title": "[논문 분석] How do Transformer-Architecture Models Address Polysemy of Korean Adverbial Postpositions? (ACL 2022)",
-        "excerpt":"논문   TBD  ","categories": ["AIPaperNLP"],
-        "tags": ["ACL","NLP","Transformer","Polysemy","Korean Adverbial Postposition"],
-        "url": "http://localhost:4000/aipapernlp/transformer-polysemy-korean/",
-        "teaser": "http://localhost:4000/assets/images/posts/ai-thumbnail.jpg"
-      },{
         "title": "설명 가능한 AI (XAI): Perturbation Map & Influence Map",
         "excerpt":"Perturbation Map 모델의 정확한 구조나 계수는 모르는 상태에서 그 모델에 대한 입출력만 가지고 있는 경우 설명하는 방법이다. 입력 데이터를 조금씩 바꾸면서 그에 대한 출력을 보고, 그 변화에 기반해서 설명한다. 대리 분석(surrogate analysis) XAI에서 대리 분석이란, 설명하고자 하는 원래 모델이 지나치게 복잡해서 해석하기 어려울 때, 해석 가능한 대리 모델(surrogate model)을 사용하여...","categories": ["XAI"],
         "tags": ["XAI","Perturbation Map","LIME","RISE","Inception"],
         "url": "http://localhost:4000/xai/XAI-perturbation-influence/",
         "teaser": "http://localhost:4000/assets/images/posts/xai.png"
       },{
-        "title": "설명 가능한 AI (XAI): Quantitative Metrics & Sanity checks/Robustness",
-        "excerpt":" ","categories": ["XAI"],
+        "title": "설명 가능한 AI (XAI): Quantitative Metrics & Sanity Check/Robustness",
+        "excerpt":"설명 방법들끼리 비교하는 방법론에 대한 연구이다. Quantitative Metrics Human based visual assessment ‘사람들이 직접’ XAI 방법들이 만들어낸 설명을 보고 비교 평가하는 것이다. AMT (Amazon Mechanical Turk) Test 모델이 내놓은 예측 결과에 대해 사람이 어떤 예측인지 맞추는 방식으로 평가한다. 단점 Obtaining human assessment is very expensive. Human annotation Some metrics employ...","categories": ["XAI"],
         "tags": ["XAI","Quantitative Metrics","Sanity check","Robustness"],
         "url": "http://localhost:4000/xai/XAI-quantitative/",
         "teaser": "http://localhost:4000/assets/images/posts/xai.png"
+      },{
+        "title": "PART 1: Data Visualization Techniques",
+        "excerpt":"import matplotlib.pyplot as plt import numpy as np 단순 Plot fig, ax = plt.subplots() # plot() 보다 세부적으로 plot 조정 가능 ax.plot([1, 2, 3, 4], [1, 4, 5, 7]) x = np.linspace(0, 2, 100) # 0 ~ 2 사이는 균등하게 100개로 쪼개라 # Objected Oriented Style fig, ax = plt.subplots()...","categories": ["Study"],
+        "tags": ["Data Visualization","Python"],
+        "url": "http://localhost:4000/study/ai-data-visualization/",
+        "teaser": "http://localhost:4000/assets/images/posts/data-visual.jpg"
+      },{
+        "title": "[논문 분석] Generative Adversarial Nets, GAN (NIPS 2014)",
+        "excerpt":"논문 들어가면서 이 논문을 읽기 전, 나는 GAN이라는 기술의 정의와 막연한 쓰임 정도만 알고 있었다. GAN은 생성자와 구분자가 서로 적대적으로 대치를 거듭하며 모델의 성능 향상을 도모하는 방법이다. 도둑과 경찰의 예시에서, 도둑은 위조 지폐를 진짜처럼 만들어내는 ‘생성자’, 경찰은 위조 지폐를 위조라고 판별하는 구분자 역할을 이행한다. 도둑은 경찰의 눈을 속이기 위해 더...","categories": ["AIPaperCV"],
+        "tags": ["GAN","Image Geneartion"],
+        "url": "http://localhost:4000/aipapercv/GAN/",
+        "teaser": "http://localhost:4000/assets/images/posts/gan.png"
+      },{
+        "title": "Transformer, BERT, BPE, WordPiece",
+        "excerpt":"Transformer 모델 Multi-head attention으로 이루어진 encoder를 여러 층 쌓아서 encoding을 수행하며, 이것이 바로 BERT에 탑재된 기술이다. seq2seq의 구조인 ‘인코더-디코더‘를 따르면서도, 어텐션(Attention)만으로 구현한 모델이기 때문에 RNN을 사용하지 않는다. 또한, 인코더-디코더 구조를 설계하였음에도 번역 성능에서도 RNN보다 우수한 성능을 보여준다. BERT Bi-directional transformer로 이루어진 언어모델로, 양방향으로 encoder를 발산하여 전체 단어를 학습에 활용한다 (전체...","categories": ["NLP"],
+        "tags": ["NLP","Transformer","BERT","BPE","WordPiece"],
+        "url": "http://localhost:4000/nlp/bert-4/",
+        "teaser": "http://localhost:4000/assets/images/posts/bert-thumbnail.png"
+      },{
+        "title": "KoBERT 실습",
+        "excerpt":"ETRI KorBERT 한국어는 영어와 다르게 조사의 쓰임에 따라 형태소가 변하는 문법적 특성나 교착어 등 NLP 처리에 까다로운 tasks를 수반하는 언어 중 하나이다. 영어 BERT 모델과 다르게, 형태소 단위로 corpus를 분절하고(= Mecab tokenzier) Word2Vec으로 1차 tokenizing 이전에 형태소 태그를 단어마다 붙여놓는 labeling 작업이 수반된다. 이 작업은 텍스트가 더 쪼개질 수 있도록...","categories": ["NLP"],
+        "tags": ["NLP","KoBERT","Sentimental Analysis","Keyword Extraction"],
+        "url": "http://localhost:4000/nlp/bert-5/",
+        "teaser": "http://localhost:4000/assets/images/posts/bert-thumbnail.png"
+      },{
+        "title": "PART 2: Data Visualization Techniques",
+        "excerpt":"복습 이전 챕터에서 다룬 기술들을 간단히 복기해보자. plt.rcParams[\"figure.dpi\"] = 100 data1, data2, data3, data4 = np.random.randn(4, 100) fig, ax = plt.subplots(figsize = (6, 3)) # 단위가 inch ax.scatter(data1, data2, s = 100, fc = \"aqua\", marker=\"^\", label = \"first datas\") ax.scatter(data3, data4, s = 100, fc = \"red\", marker=\"*\", label...","categories": ["Study"],
+        "tags": ["Data Visualization","Python"],
+        "url": "http://localhost:4000/study/ai-data-visualization2/",
+        "teaser": "http://localhost:4000/assets/images/posts/data-visual.jpg"
+      },{
+        "title": "[논문 분석] Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks (ICCV 2017)",
+        "excerpt":"논문   TBD  ","categories": ["AIPaperCV"],
+        "tags": ["GAN","CycleGAN","Image-to-Image Translation"],
+        "url": "http://localhost:4000/aipapercv/CycleGAN/",
+        "teaser": "http://localhost:4000/assets/images/posts/cyclegan.jpg"
+      },{
+        "title": "[개발] 긴 영문 글/기사 요약번역 웹 페이지 구현하기",
+        "excerpt":"style.css # 폰트 설정 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&amp;display=swap'); html, body, [class*=\"css\"] { font-family: 'Roboto', sans-serif; font-weight: 500; color: #091747; } 텍스트 요약 텍스트 내용에서 가장 많이 등장한 단어들을 포함하는 문장을 취합해서 최종 요약본으로 제시한다. import bs4 as bs # html 컨트롤 import urllib.request # url 접근 import re # regex import nltk...","categories": ["NLP"],
+        "tags": ["NLP","Text Summarization","Translator","Streamlit"],
+        "url": "http://localhost:4000/nlp/text-summarization-attention/",
+        "teaser": "http://localhost:4000/assets/images/posts/nlp-thumbnail.jpg"
       }]
