@@ -355,6 +355,35 @@ plt.show()
 
 ![image](https://user-images.githubusercontent.com/39285147/186550309-845cc82e-4ebf-4138-b2bc-b4abbe8023ff.png)
 
+```python
+data = pd.read_csv("020 five-us-states.csv")
+data
+```
+
+![image](https://user-images.githubusercontent.com/39285147/186997234-cad8d04a-429e-42ab-89da-312188b057f3.png)
+
+
+```python
+states = data.iloc[:, 0]
+pop2010 = data.iloc[:, 1]
+pop2020 = data.iloc[:, 2]
+```
+
+```python
+fig, ax = plt.subplots()
+x = np.arange(len(states))
+width = 0.35
+
+bar1 = ax.bar(x - width/2, pop2010, width, label="2010")
+bar2 = ax.bar(x + width/2, pop2020, width, label="2020")
+
+ax.set_xticks(x)
+ax.set_xticklabels(states)
+plt.show()
+```
+
+![image](https://user-images.githubusercontent.com/39285147/186997243-4f58e134-2cf4-4974-9780-e374b7d75b1f.png)
+
 # 원형
 ```python
 labels = "Russia", "Canada", "United States", "China", "India"
@@ -403,3 +432,26 @@ plt.colorbar()
 ```
 
 ![image](https://user-images.githubusercontent.com/39285147/186553280-974cd4f7-9190-45dc-ac49-672b0d18a8ab.png)
+
+# 3D 공간
+
+```python
+fig = plt.figure()
+ax = fig.add_subplot(projection = "3d")
+
+x = np.random.randn(20)
+y = np.random.randn(20)
+z = np.random.randn(20)
+
+ax.scatter(x, y, z, marker = "*", color= "red")
+
+ax.set_xlabel("X")
+ax.set_ylabel("Y")
+ax.set_zlabel("Z")
+
+plt.show()
+```
+
+![image](https://user-images.githubusercontent.com/39285147/186997306-6988e280-0a5d-4749-8056-64033dc0d9c7.png)
+
+다음 데이터 시각화 실습 [바로가기](https://hchoi256.github.io/study/ai-data-visualization3/).
