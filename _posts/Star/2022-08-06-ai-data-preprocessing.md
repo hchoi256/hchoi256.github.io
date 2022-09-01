@@ -150,3 +150,57 @@ raw_data = pd.get_dummies(raw_data, columns = ["country"]) # make new columns wi
 ![image](https://user-images.githubusercontent.com/39285147/183245822-467b1cd4-2b08-4554-8ed5-ffcacedd9d92.png)
 
 
+# Concat, Merge, Join
+```python
+df_1, df_2
+```
+
+![image](https://user-images.githubusercontent.com/39285147/187830604-72195444-1e11-4bd6-aa9b-eadca6a7796c.png) ![image](https://user-images.githubusercontent.com/39285147/187830639-195cdb22-4a75-4b6e-b6cc-dc7169771246.png)
+
+```python
+# 비어 있는 항목에는  NaN 으로 채워진다.
+df_cat = pd.concat([df_1, df_2, df_3]) # 아래로 합치기
+df_cat = pd.concat([df_1, df_2, df_3], axis = 1) # 옆으로 합치기
+```
+
+```python
+pd.merge(df_1, df_2, on = "Customer Name", how = "inner")
+```
+
+![image](https://user-images.githubusercontent.com/39285147/187830696-daac193c-a038-4104-b0a9-a42f41e041b1.png)
+
+
+```python
+pd.merge(df_2, df_1, on = "Customer Name", how = "outer")
+```
+
+![image](https://user-images.githubusercontent.com/39285147/187830744-09e60a4a-4d20-413c-a3c6-883d0e67d6fe.png)
+
+
+```python
+pd.merge(df_1, df_2, on = "Customer Name", how = "outer").drop_duplicates()
+```
+
+![image](https://user-images.githubusercontent.com/39285147/187830721-2e3f227b-0004-472f-8f84-cef46a04a7cd.png)
+
+```python
+df_1.join(df_2, how="left"), df_1.join(df_2, how="right"), df_1.join(df_2, how="inner"), df_1.join(df_2, how="outer")
+```
+
+![image](https://user-images.githubusercontent.com/39285147/187833998-3344532e-91b9-4ab7-97e0-57798e808dbe.png) ![image](https://user-images.githubusercontent.com/39285147/187834052-47868fbd-1fd9-4e3a-8b3e-a981578b39aa.png) ![image](https://user-images.githubusercontent.com/39285147/187834115-b144a12a-5caf-4c02-bfbe-31d0aca03aab.png) ![image](https://user-images.githubusercontent.com/39285147/187834134-703cd536-7de6-4cde-a468-2ae459ea7833.png)
+
+```python
+
+```
+```python
+
+```
+
+# Indexing
+
+```python
+df_2.set_index( ["Customer Name"], inplace = True)
+```
+
+![image](https://user-images.githubusercontent.com/39285147/187833974-500ef442-27a5-4e3e-8584-5f01ee8937a6.png)
+
