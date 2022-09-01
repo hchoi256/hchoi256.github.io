@@ -76,9 +76,21 @@ raw_data.drop( ["customer_id", "date"], axis = 1, inplace = True ) # remove colu
 # 결측치 (Missing Values)
 
 ```python
+# 방법 1
 raw_data.isna().sum() # return the number of missing values in the dataset
 
 raw_data.dropna(inplace=True) # remove rows including 'NaN'
+```
+
+```python
+# 방법 2
+for c in df_missing.columns:
+    missing = df_missing[c].isnull().sum()
+    if missing > 0:
+        print("{} has {} missing values".format(c, missing))
+
+df_missing.fillna("DONE")
+# df_missing["Sales"].fillna( df_missing["Sales"].mean() )
 ```
 
 ```python
