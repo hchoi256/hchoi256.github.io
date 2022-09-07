@@ -29,62 +29,76 @@ async def root():
 
 # 영화 추가 웹페이지 with DB 연동 
 ```python
-from fastapi import FastAPI
-import sqlite3
+from fastapi import FastAPI, HTTPException
+import psycopg2
+from pydantic import BaseModel
+from Movie import Movie
+
+pgdb = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST)
+cur = pgdb.cursor()
 
 app = FastAPI()
 
-# http method
-# get : 일반적으로 웹페이지에 접속하는 방법
-# post : 내가 제출한 데이터가 있으니 받아줘!
-# delete : 삭제
-
-movies = [ 
+# movies = [{"title":"Batman", "year":2021}]
+movies = [
+    {"title":"", "year":0}, 
     {"title":"Batman", "year":2021}, 
     {"title":"Joker", "year":2022},
     {"title":"Lion King", "year":1999},
-    {"title":"백설공주", "year":1998}
+    {"title":"Snow white", "year":1998}, 
+    {"title":"Ice age", "year":2012}, 
 ]
 
 @app.get("/")
 async def root():
-    return {"message": "DB 예제!!!"}
+    return {"message": "환영합니다"}
 
 @app.get("/movies")
 def get_movies():
-    connection = sqlite3.connect("datafile.db")
-    cursor = connection.cursor()
     sql = "SELECT * FROM movies"
-    cursor.execute(sql)
-    movies = cursor.fetchall()
-    connection.close()
+    cur.execute(sql)
+    movies = cur.fetchall()
     return movies
 
 @app.get("/movie/{movie_id}")
 def get_movie(movie_id:int):
-    return movies[movie_id]
+    sql = "SELECT * FROM movies WHERE id = %s"
+    val = (movie_id, )
+    cur.execute(sql, val)
+    movies = cur.fetchall()
+    return movies[0]
+
+@app.get("/movie_by_title/{movie_title}")
+def get_mvoie_by_title(movie_title:str):
+    sql = "SELECT * FROM movies WHERE title = %s"
+    val = (movie_title, )
+    cur.execute(sql, val)
+    movie = cur.fetchall()
+    if len(movie) == 0:
+        raise HTTPException(status_code=500, detail="영화가 존재하지 않습니다")
+    return movie[0]
 
 @app.delete("/movie/{movie_id}")
 def delete_movie(movie_id:int):
-    movies.pop(movie_id)
-    return {"message": "영화가 성공적으로 삭제되었습니다."}
+    sql = "DELETE FROM movies WHERE id = %s"
+    val = (movie_id, )
+    cur.execute(sql, val)
+    pgdb.commit()
+    return {"message":"영화가 성공적으로 삭제되었습니다."}
 
-@app.post("/movie")
-def create_movie(movie:dict):
-    connection = sqlite3.connect("datafile.db")
-    cursor = connection.cursor()
-    sql = "INSERT INTO movies (title, year) VALUES (%s, %s)"
-    val = ( movie["title"], movie["year"] )
-    cursor.execute(sql, val)
-    connection.commit()
-    connection.close()
+@app.post("/create_movie")
+def create_movie(movie:Movie):
+    sql = "INSERT INTO movies (title, year, sstoryline) VALUES (%s, %s, %s)"
+    val = (movie.title, movie.year, movie.storyline)
+    cur.execute(sql, val)
+    pgdb.commit()
     return movie
 
 @app.post("/update_movie")
-def update_movie(movie_id:int, movie:dict):
-    movie_to_updated = movies[movie_id]
-    movie_to_updated["title"] = movie["title"]
-    movie_to_updated["year"] = movie["year"]
-    movies[movie_id] = movie_to_updated
-    return movie_to_updated
+def update_movie(movie:Movie, movie_id: int):
+    sql = "UPDATE movies SET title = %s, year = %s, storyline = %s WHERE id = %s"
+    val = (movie.title, movie.year, movie.storyline, movie_id)
+    cur.execute(sql, val)
+    pgdb.commit()
+    return movie
 ```
