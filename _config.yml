@@ -113,24 +113,30 @@ author:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
       url: "mailto:hchoi256@wisc.edu"  
+    - label: "CV"
+      icon: "fas fa-fw fa-link"
+      url: "/assets/CV.pdf"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/hchoi256"
     - label: "Portfolio"
       icon: "fas fa-fw fa-link"
-      url: "/assets/포트폴리오.pdf"
+      url: "/assets/Portfolio.pdf"
 # Site Footer
 footer:
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
       url: "mailto:hchoi256@wisc.edu"       
+    - label: "CV"
+      icon: "fas fa-fw fa-link"
+      url: "/assets/CV.pdf"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/hchoi256"
     - label: "Portfolio"
       icon: "fas fa-fw fa-link"
-      url: "/assets/포트폴리오.pdf"
+      url: "/assets/Portfolio.pdf"
 
 
 # Reading Files
