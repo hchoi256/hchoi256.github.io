@@ -16,12 +16,12 @@ sidebar:
 # style.css
 ```python
 # 폰트 설정
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap'); 
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap') 
 
 html, body, [class*="css"] {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 500;
-    color: #091747;
+    font-family: 'Roboto', sans-serif
+    font-weight: 500
+    color: #091747
 }
 ```
 
