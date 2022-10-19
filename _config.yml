@@ -106,7 +106,7 @@ analytics:
 author:
   name             : "쭌스🎄"
   avatar           : "/assets/images/echoi.jpg"
-  bio              : "I am a senior-year B.S. student in Computer Science and Data Science at the University of Wisconsin, Madison.\n\nI have a broad interest in computer vision; **3D visual perception**, **semantic segmentation**, and **object detection**. My research goal is to build a robust ML system in healthcare and sustainable development."
+  bio              : "I am a senior-year B.S. student in Computer Science and Data Science at the University of Wisconsin, Madison.\n\nI have a broad interest in big data and computer vision; **Data Mining, 3D visual perception**, **semantic segmentation**, and **object detection**. My research goal is to build a robust ML system in healthcare and sustainable development."
   # location         : "Madison"
   # email            : "hchoi256@wisc.edu"
   links:
