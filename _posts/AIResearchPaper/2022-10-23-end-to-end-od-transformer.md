@@ -43,7 +43,7 @@ sidebar:
 # INTRODUCTION 👀
  ![image](https://user-images.githubusercontent.com/39285147/197411640-e6c3de0f-b4f3-4665-ae05-6a0b45c90bf3.png)
 
-## 기술 용어
+## 배경지식
 ### Bipartite matching(이분매칭)
 [*Bipartite Graph*]
 
@@ -81,16 +81,8 @@ sidebar:
 - pairwise interactions between elements in a sequence
 - duplicate predictions 제거 가능
 
-### Auxiliary decoding losses
-- 알맞은 개수의 object 예측 가능
-- 각 decoder layer에 대해 prediction FFN & Hungarian loss 추가
-    - 모든 prediction FFN은 같은 파라미터를 사용
-- 다른 decoder layer의 input 정규화를 위해 layer norm 추가
-
-> **FFN**
->> simple feed forward network(FFN)
-
-### DETR
+****
+# DETR Model ✒
 - bipartite matching loss + transformers with (non-autoregressive) parallel decoding
 - **하나의 CNN를 Transformer 아키텍쳐와 병합** --> **직접 예측** 가능
 - extra-long training schedule
@@ -99,19 +91,10 @@ sidebar:
 > **자기회귀(AR; Autoregressive)**
 >> 과거의 움직임에 기반 미래 예측
 
-- ***한번에*** N개의 obejct를 병렬 예측
-    - 1) Input embedding
-        - *object query(positional encoding)* 통해 표현
-    - 2) N개의 object query는 디코더에 의해 output embedding으로 변환
-    - 3) N개의 마지막 예측값들 산출
-    - 4) self/encoder-decoder간 어텐션을 통해 각 object 간의 global 관계 학습
-
-****
-# Related Work 🗂
 ## Set Prediction
 **Indirect Set Prediction**
 - multilabel classification (postprocessing)
-    - near-identical boxes 해결 불가능
+    - near-identical boxes 해결 어렵
 
 **Direct Set Prediction**
 - postprocessing-free
@@ -120,19 +103,55 @@ sidebar:
     - bipartite matching loss            
     - permutation-invariance
 
-**DETR**
-- bipartite matching loss + transformers (non-autoregressive) parallel decoding
-
-## Transformers and Parallel Decoding
-
-## Object Detection
-
-
-****
-# DETR Model ✒
 ## Object Detection Set Prediction Loss
+- bipartite matching loss + transformers (non-autoregressive) parallel decoding
+- loss = 최적 bipartite matching(예측값 ~ GT)
+    - 최적 bipartite matching = 예측값 ~ 실제값 매칭 방법 중 최저 비용을 갖는 매칭
+    - Hungarian algorithm을 통해 효율적으로 찾을 수 있다
+
+> **Hungarian algorithm**
+>> ![image](https://user-images.githubusercontent.com/39285147/197422840-8c8770b5-895b-4c82-b967-da083a62c4df.png)
+>> ![image](https://user-images.githubusercontent.com/39285147/197422872-acf77efd-3103-4008-921c-f62aa22a13fc.png)
+
+> **Bounding box loss**
+>> ![image](https://user-images.githubusercontent.com/39285147/197422932-1866e001-8086-4f89-a231-4582d8e304d2.png)
+>> ![image](https://user-images.githubusercontent.com/39285147/197422984-634e754a-c7db-47fd-9eaa-2523296a2057.png)
 
 ## DETR Architecture
+![image](https://user-images.githubusercontent.com/39285147/197422990-0d50e9ab-0866-40d2-9940-ff3ffb91fdde.png)
+
+## Backbone
+- feature extraction
+
+## Transformer Encoder
+- feature maps 생성 과정
+- 기존 transformer encoder에 **positional encoding** 추가
+    - 덕분에 autoregressive와 다르게 인풋 순서 상관 안 써도됨
+
+## Transformer Decoder
+- ***한번에*** N개의 obejct를 병렬 예측
+    - 1) Input embedding
+        - *object query(positional encoding)* 통해 표현
+    - 2) N개의 object query는 디코더에 의해 output embedding으로 변환
+    - 3) N개의 마지막 예측값들 산출
+    - 4) self/encoder-decoder간 어텐션을 통해 각 object 간의 global 관계 학습
+
+## Prediction FFN
+- 최종 디텍션 예측
+- 3개의 perceptron, ReLU, linea projection으로 구성
+- Procedure
+    - 1) FFN --> 상대적인 중앙값 예측
+    - 2) linear layer --> softmax로 class 예측
+        - 실제 object 외 class = ∅
+
+## Auxiliary decoding losses
+- 알맞은 개수의 object 예측 가능
+- 각 decoder layer에 대해 prediction FFN & Hungarian loss 추가
+    - 모든 prediction FFN은 같은 파라미터를 사용
+- 다른 decoder layer의 input 정규화를 위해 layer norm 추가
+
+> **FFN**
+>> simple feed forward network(FFN)
 
 ****
 # Experiments ✏
