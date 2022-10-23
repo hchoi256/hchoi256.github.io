@@ -76,11 +76,6 @@ sidebar:
 ### COCO
 - one of the most popular object detection datasets
 
-### Transformer Decoder
-**기존 Transformer** = autoregressive (output sequence를 ***하나하나*** 넣어주는 방식) 
-- pairwise interactions between elements in a sequence
-- duplicate predictions 제거 가능
-
 ****
 # DETR Model ✒
 - bipartite matching loss + transformers with (non-autoregressive) parallel decoding
@@ -129,6 +124,12 @@ sidebar:
     - 덕분에 autoregressive와 다르게 인풋 순서 상관 안 써도됨
 
 ## Transformer Decoder
+**기존 Transformer**
+- autoregressive (output sequence를 ***하나하나*** 넣어주는 방식) 
+- pairwise interactions between elements in a sequence
+- duplicate predictions 제거 가능
+
+**새로운 Transformer**
 - ***한번에*** N개의 obejct를 병렬 예측
     - 1) Input embedding
         - *object query(positional encoding)* 통해 표현
