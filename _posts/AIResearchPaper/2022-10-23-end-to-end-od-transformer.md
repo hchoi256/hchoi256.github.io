@@ -158,13 +158,15 @@ sidebar:
 # Experiments ✏
 
 ## 성능 비교: Faster R-CNN and RetinaNet
+![image](https://user-images.githubusercontent.com/39285147/197423492-347a9b5f-f3d1-4555-b6b4-d3bb0679dc22.png)
 
-## Ablations
+- Faster RCNN과 비슷한 성능
 
-## DETR for Panoptic Segmentation
+$$AP: Average Precision$$
+$$AP_50: IoU > 50(correct)$$
 
 ****
-# 결과 ✔
+# 요약 ✔
 ## DETR 장점
 - DETR 정확도 SOTA R-CNN 모델 능가
 - 유연한 Transformer 아키텍쳐 --> Panoptic segmentation 성능 ↑
