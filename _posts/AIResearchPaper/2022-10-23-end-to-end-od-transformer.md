@@ -99,17 +99,19 @@ sidebar:
     - permutation-invariance
 
 ## Object Detection Set Prediction Loss
-- bipartite matching loss + transformers (non-autoregressive) parallel decoding
+![image](https://user-images.githubusercontent.com/39285147/197422840-8c8770b5-895b-4c82-b967-da083a62c4df.png)- bipartite matching loss + transformers (non-autoregressive) parallel decoding
+
 - loss = 최적 bipartite matching(예측값 ~ GT)
     - 최적 bipartite matching = 예측값 ~ 실제값 매칭 방법 중 최저 비용을 갖는 매칭
     - Hungarian algorithm을 통해 효율적으로 찾을 수 있다
 
 > **Hungarian algorithm**
->> ![image](https://user-images.githubusercontent.com/39285147/197422840-8c8770b5-895b-4c82-b967-da083a62c4df.png)
 >> ![image](https://user-images.githubusercontent.com/39285147/197422872-acf77efd-3103-4008-921c-f62aa22a13fc.png)
 
-> **Bounding box loss**
+> **Bounding box loss**![image](https://user-images.githubusercontent.com/39285147/197450096-d32373ac-9af3-4085-b473-60372b5f0406.png)
 >> ![image](https://user-images.githubusercontent.com/39285147/197422932-1866e001-8086-4f89-a231-4582d8e304d2.png)
+
+> **IoU**
 >> ![image](https://user-images.githubusercontent.com/39285147/197422984-634e754a-c7db-47fd-9eaa-2523296a2057.png)
 
 ## DETR Architecture
