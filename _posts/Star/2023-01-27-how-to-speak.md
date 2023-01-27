@@ -65,6 +65,7 @@ Patrick 교수는 어쩌면 좋은 발표자를 꿈꾸는 이들에게 높은 �
 학생들에게 종종 질문을 던지자
 - should be frequent/answerable
 
+****
 # The Time & Place 👓
 **시간**: 오전 10 or 11시
 
