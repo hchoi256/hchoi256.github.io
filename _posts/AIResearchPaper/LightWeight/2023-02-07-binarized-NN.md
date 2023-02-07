@@ -86,7 +86,7 @@ BN 과정은 분산값 구하는 과정을 수반하는데, 여기서 행렬 곱
 
 > 100 << 2 $$\rightarrow$$ 10000
 
-![image](https://user-images.githubusercontent.com/39285147/217180006-bc5326b1-04b4-4b59-9820-a6b01d00bd24.png)
+![image](https://user-images.githubusercontent.com/39285147/217182568-da564c2a-ec58-4894-8179-37248504a1f7.png)
 
 해당 논문은 $$AP2()$$ 함수를 새로 제시하여, 기존 BN의 variance와 normalize 부분의 행렬 곱셈 과정을 bit-wise 연산으로 대체한다.
 
@@ -101,10 +101,20 @@ Bit shift를 통해 2의 거듭제곱을 쉽게 연산 가능하다. 이는 행�
 따라서, $$AP2()$$ 함수가 배출하는 정보를 받아 $$<<>>$$ 연산자와 어우러져 주어진 Input에 대한 제곱을 구한다.
 
 ## SAM(Shift based AdaMax)
+![image](https://user-images.githubusercontent.com/39285147/217182903-f8de2a68-7008-4953-8d40-88a87f62c50a.png)
+
 ADAM Optimizer Multiplication多
+
+## First Layer
+![image](https://user-images.githubusercontent.com/39285147/217183231-d15d4b68-beb5-42dd-9bcc-ded8721fbef2.png)
+
 
 ****
 # Experiment 👀
+![image](https://user-images.githubusercontent.com/39285147/217183021-554b5794-555c-453b-9edd-f186fdb364dc.png)
+
+- *데이터셋*: MNIST, CIFAR-10, SVHN
+- *사용모델*: BNN(Torch7, Theano)
 
 
 ****
