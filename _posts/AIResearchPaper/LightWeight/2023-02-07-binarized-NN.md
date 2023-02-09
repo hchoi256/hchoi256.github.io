@@ -29,12 +29,6 @@ sidebar:
 이진화란 값을 참/거짓, -1/+1 처럼 두 개중 하나의 값으로 결과를 반환하는 이분법적인 접근 방식이다. 하여 그러한 결과값들이 필요로 하는 bit 개수는 오로지 1개이기 때문에, 극단적으로 bit 개수를 줄임으로써 inference 성능을 향상시킨다.
 
 ****
-# Challenges 💣
-- `Training` Requires **more epoches** than the original NN in terms of the same accuracy
-    - 대신, 하나의 operation에 대한 연산 속도 및 memory size가 적다.
-- Activation function 으로 사용된 함수인 htahn의 형태적 특성(기울기가 0이 되는 부분 존재) 때문에 **Gradient Vanishing** 현상 여전히 잔재
-
-****
 # Definition ✏
             `Given` a pre-trained FP32 model
             `Returns` a (mixed-)binarized model
@@ -79,7 +73,7 @@ STE는 뉴럴 네트워크에 threshold operation이 있을 때 gradient 전달�
 
 ![image](https://user-images.githubusercontent.com/39285147/217173042-b2f0e912-5977-4f6e-b2d9-89a1cdc03afa.png)
 
-상기 이미지는 Network 동작 원리를 한 눈에 파악하기 좋은 시각 자료이다. 순전파 과정에서의 Binarize() 함수를 보면, Activation에 대해서만 Htanh 함수를 적용한다. 그 이유는 Activation의 미분값이 역전파의 가중치 업데이트 과정에서 필요하기 때문이다. 하여 $$Sign()$$ 함수는 그 미분값이 대부분의 지역에서 0이 된다는 점에서, Activation Binarization에 대해서 올바른 쓰임이 아닐 것이다.
+상기 이미지는 Network 동작 원리를 한 눈에 파악하기 좋은 시각 자료이다. 순전파 과정에서의 Binarize() 함수를 보면, Activation에 대해서만 Htanh 함수를 적용한다. 그 이유는 Activation의 미분값이 역전파의 가중치 업데이트 과정에서 필요하기 때문이다. 하여 $$Sign()$$ 함수는 그 미분값이 대부분의 지역에서 0이 된다는 점에서, Activation Binarization에 대한 올바른 쓰임이 아닐 것이다.
 
 ## SBN(Shift based batch normalization)
 BN 과정은 분산값 구하는 과정을 수반하는데, 여기서 행렬 곱셈(제곱) 연산이 사용된다. 거진 모든 피라미터가 bit-wise arithmatic으로 전개되는 Binarized NN 모델에서는 행렬 곱셈 연산이 불필요하다. 대신, 우리는 손쉽게 bit-wise 연산자를 활용하여 주어진 input에 대한 거듭제곱 값을 구할 수 있을 것이다.
@@ -103,11 +97,36 @@ Bit shift를 통해 2의 거듭제곱을 쉽게 연산 가능하다. 이는 행�
 ## SAM(Shift based AdaMax)
 ![image](https://user-images.githubusercontent.com/39285147/217182903-f8de2a68-7008-4953-8d40-88a87f62c50a.png)
 
-ADAM Optimizer Multiplication多
+해당 논문에서 최적화 함수로 채택하고 있는 ADAM Optimizer는 Matrix Multiplication를 많이 필요로 한다.
+
+하여 bit-wise 연산을 통해 행렬 곱셈을 최소화하고자 **Shift based AdaMax**를 도입한다.
+
+원리는 SBN과 동일하며, 정확도 손실없이 행렬 곱센을 bit-wise 연산 가능하다.
 
 ## First Layer
 ![image](https://user-images.githubusercontent.com/39285147/217183231-d15d4b68-beb5-42dd-9bcc-ded8721fbef2.png)
 
+## First Layer: Binary Operation 무시
+해당 논문에서는 첫 번째 layer에 들어오는 input들은 거진 bit operation이 적용되지 않는 non-binary images라는 점을 시사한다.
+
+이미지 데이터는 고작 3개의 channel (RGB)를 가지고 있기 때문에, 우리는 직관적으로 하기 관계식을 도출할 수 있다.
+
+                Input data representation(3) << Model representation(多)
+
+첫 번째 Layer의 output을 binary 형태로 배출하여 나머지 layers들은 모두 binary input를 받는다.
+
+하여 첫 번째 Layer는 binary operation를 무시하거나, 혹은 특수한 데이터 가공 처리(8-bit 고정소수점)를 취한다.
+
+## First Layer: XNOR Operation
+[*Bitwise XNOR Convolution*]
+
+![image](https://user-images.githubusercontent.com/39285147/217767638-f1b2bc36-084a-4bea-bdb6-3340b53076f4.png)
+
+$$input = 8-bit <XNOR> Binarized Weight$$
+
+이미지 데이터들에 대해서 우리는 Convolution(합성곱)을 활용하여 행렬 곱셈 연산을 수행한다.
+
+이 때, Convolution 연산을 bit-wise하게 변환한 수식이 바로 **XNOR bit operation**이다.
 
 ****
 # Experiment 👀
@@ -116,7 +135,6 @@ ADAM Optimizer Multiplication多
 - *데이터셋*: MNIST, CIFAR-10, SVHN
 - *사용모델*: BNN(Torch7, Theano)
 
-
 ****
 # Conclusion ✨
 ## Strengths
@@ -124,6 +142,11 @@ ADAM Optimizer Multiplication多
 - **Power efficiency**
     - Accesses and replaces most arithmetic operations with bit-wise operations
 - Available on-line
+
+## Weaknesses
+- `Training` Requires **more epoches** than the original NN in terms of the same accuracy
+    - 대신, 하나의 operation에 대한 연산 속도 및 memory size가 적다.
+- Activation function 으로 사용된 함수인 htahn의 형태적 특성(기울기가 0이 되는 부분 존재) 때문에 **Gradient Vanishing** 현상 여전히 잔재
 
 ****
 # Reference
