@@ -53,14 +53,16 @@ sidebar:
                 ADD reg1, reg2, reg3;
                 STR reg3, [0x00040222h];
 
-1. $$1 \rightarrow\ R1$$.
-2. $$2 \rightarrow\ R2$$.
-3. $$R1+R2\ \rightarrow\ R3$$ (ALU).
-4. $$R3 $$\rightarrow$$ 0x00040222h$$.
+1. `1 CLOCK`: $$1 \rightarrow\ R1$$.
+2. `2 CLOCK`: $$2 \rightarrow\ R2$$.
+3. `3 CLOCK`: $$R1+R2\ \rightarrow\ R3$$ (ALU).
+4. `4 CLOCK`: $$R3 $$\rightarrow$$ 0x00040222h$$.
 
 > `Register`: CPU 내부 저장소
 >
 > `Memory`: CPU 바깥 저장소
+
+`4 CLOCK`이 순차적으로 지난 후, 최종 addition의 결과가 CPU 외부 Memory의 0x00040222h 주소값 위치에 저장될 것입니다.
 
 ****
 # GPU ✏
