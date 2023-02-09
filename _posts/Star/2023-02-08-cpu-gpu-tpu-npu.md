@@ -27,7 +27,7 @@ sidebar:
 
 ****
 # CPU(Centralized Processing Unit) 💣
-## CPU 구조
+## CPU 특징
 [*폰 노이만 아키텍쳐*]
 
 ![image](https://user-images.githubusercontent.com/39285147/217796521-ee649b42-a210-4fdb-ada2-4981ca9ed28a.png)
@@ -36,6 +36,7 @@ sidebar:
 - 유연한 **직렬계산 능력** (이전-다음 계산 결과의 연계)
     - ALU 연산 이후 Memory 저장 필수
     - 한 번에 하나의 transaction 순차적 처리
+- 평균 이상의 효율 $$\rightarrow$$ 컴퓨터, mobile devices, 임베디드 장비들의 main processor 역할
 
 ## CPU 연산
 ### Instruction Set Architecture(ISA)
@@ -56,7 +57,7 @@ sidebar:
 1. `1 CLOCK`: $$1 \rightarrow\ R1$$.
 2. `2 CLOCK`: $$2 \rightarrow\ R2$$.
 3. `3 CLOCK`: $$R1+R2\ \rightarrow\ R3$$ (ALU).
-4. `4 CLOCK`: $$R3 $$\rightarrow$$ 0x00040222h$$.
+4. `4 CLOCK`: $$R3\ \rightarrow\ 0x00040222h$$.
 
 > `Register`: CPU 내부 저장소
 >
@@ -65,7 +66,15 @@ sidebar:
 `4 CLOCK`이 순차적으로 지난 후, 최종 addition의 결과가 CPU 외부 Memory의 0x00040222h 주소값 위치에 저장될 것입니다.
 
 ****
-# GPU ✏
+# Graphic Processing Unit(GPU) ✏
+![image](https://user-images.githubusercontent.com/39285147/217838136-115071f3-7445-4c14-93f5-3bdd6aa85c7d.png)
+
+CPU 처리 기반에서는 고사양 게임을 모니터 화면에 표현하는 동안 키보드 입력이 안되는 문제가 발생할 수 있습니다.
+
+이는 CPU가 직렬처리 방식에 기반하고 있어서, 모니터 화면이 다 표현될 때까지 키보드 입력 처리가 awaiting 되기 때문인데요.
+
+이러한 한계점을 타파하고자 등장한 것이 바로 병렬처리 방식으로 동작하는 GPU입니다.
+
 
 ****
 # NPU 🧿
