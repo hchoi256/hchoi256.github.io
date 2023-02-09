@@ -149,4 +149,4 @@ $$input = 8-bit <XNOR> Binarized Weight$$
 - Activation function 으로 사용된 함수인 htahn의 형태적 특성(기울기가 0이 되는 부분 존재) 때문에 **Gradient Vanishing** 현상 여전히 잔재
 
 ****
-# Reference
+# Reference 💕
