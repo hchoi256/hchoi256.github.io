@@ -69,7 +69,7 @@ Binarization을 구현하는 두 가지 방법이 있다: **(1) Deterministic bi
 
 ![image](https://user-images.githubusercontent.com/39285147/217171474-a027ac93-5baf-4950-95a1-25ef372c433e.png)
 
-해당 논문은 *Hard Tanh* 비선형 활성화 함수 ($$1_{|r|<=1}$$)를 사용하여 **STE(Straight-Through Estimator)**를 구현하여 상기 문제를 해결한다.
+해당 논문은 *Hard Tanh* 비선형 활성화 함수 $$1_{|r|<=1}$$를 사용하여 **STE(Straight-Through Estimator)**를 구현하여 상기 문제를 해결한다.
 
 $$g_q=Sign(r)$$
 
