@@ -1,7 +1,7 @@
 ---
 layout: single
-title: "[논문분석] Template"
-categories: AIPaperOthers
+title: "CPU, GPU, NPU, TPU 이해"
+categories: Study
 tag: []
 toc: true
 toc_sticky: true
