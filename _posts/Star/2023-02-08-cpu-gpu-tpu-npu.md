@@ -27,6 +27,8 @@ sidebar:
 
 ****
 # CPU(Centralized Processing Unit) 💣
+$$CPU\ 범용\ 계산기$$
+
 ## CPU 특징
 [*폰 노이만 아키텍쳐*]
 
@@ -37,6 +39,9 @@ sidebar:
     - ALU 연산 이후 Memory 저장 필수
     - 한 번에 하나의 transaction 순차적 처리
 - 평균 이상의 효율 $$\rightarrow$$ 컴퓨터, mobile devices, 임베디드 장비들의 main processor 역할
+    - 복잡한 명령어세트를 실행하기 위한 정교한 아키텍쳐
+        - 복잡한 명령어 세트나 많은 수의 레지스터 및 복잡한 캐시 구조를 가진다
+    - 똑똑한 만큼 개별 계산당 비용이 크다
 
 ## CPU 연산
 ### Instruction Set Architecture(ISA)
@@ -67,6 +72,8 @@ sidebar:
 
 ****
 # Graphic Processing Unit(GPU) ✏
+$$대규모\ 병렬\ 곱셈\ 계산기$$
+
 ![image](https://user-images.githubusercontent.com/39285147/217838136-115071f3-7445-4c14-93f5-3bdd6aa85c7d.png)
 
 CPU 처리 기반에서는 고사양 게임을 모니터 화면에 표현하는 동안 키보드 입력이 안되는 문제가 발생할 수 있습니다.
@@ -74,6 +81,24 @@ CPU 처리 기반에서는 고사양 게임을 모니터 화면에 표현하는 
 이는 CPU가 직렬처리 방식에 기반하고 있어서, 모니터 화면이 다 표현될 때까지 키보드 입력 처리가 awaiting 되기 때문인데요.
 
 이러한 한계점을 타파하고자 등장한 것이 바로 병렬처리 방식으로 동작하는 GPU입니다.
+
+## GPU 특징
+- CPU 코어의 복잡한 구조를 단순화 $$\rightarrow$$ 개별 계산 비용 최소화
+- 단순한 형태의 코어 대량 집적 $$\rightarrow$$ 단순 연산 병렬 수행
+
+## GPU 쓰임
+### 그래픽 처리
+GPU는 단순한 대량 계산을 복잡한 계산에 유리한 CPU로부터 독립시키기 위해 고안된 Co-processor입니다.
+
+하여 GPU는 주로 그래픽 처리에 많이 활용되어 NVIDIA 같은 업체가 그 대표적인 예시입니다.
+
+그래픽 처리에 필요한 계산에는 동일한 형태의 부동 소수점 곱셈 대량 수행이 전부입니다.
+
+### AI 합성곱 연산
+AI 추론이나 학습을 할 때 핵심적으로 필요한 연산이 바로 행렬 합성곱(convolution) 연산입니다.
+
+합성곱 연산 비중에 따라, 모델의 training/inference 성능이 결정됩니다.
+
 
 
 ****
