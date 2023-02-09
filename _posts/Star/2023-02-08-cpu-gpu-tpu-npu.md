@@ -13,29 +13,23 @@ sidebar:
     nav: "docs"
 ---
 
-[논문링크]()
-
-****
-# 한줄요약 ✔
-
-
 ****
 # Introduction 🙌
 
 
 ****
-# Challenges 💣
+# CPU 💣
 
 
 ****
-# Definition ✏
+# GPU ✏
 
 ****
-# Proposed Method 🧿
+# NPU 🧿
 
 
 ****
-# Experiment 👀
+# TPU 👀
 
 
 ****
