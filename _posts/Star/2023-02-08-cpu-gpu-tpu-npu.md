@@ -1,8 +1,8 @@
 ---
 layout: single
-title: "CPU, GPU(CUDA), NPU, TPU 이해"
+title: "CPU, GPU(CUDA), FPGA, NPU, TPU 이해"
 categories: Study
-tag: [CPU, GPU, NPU, TPU, CUDA]
+tag: [CPU, GPU, NPU, TPU, FPGA, CUDA]
 toc: true
 toc_sticky: true
 toc_label: "쭌스log"
