@@ -2,7 +2,7 @@
 layout: single
 title: "초거대AI 멀티모델(MultiModal)이란?"
 categories: LargeAI
-tag: [HyperscaleAI, MultiModal]
+tag: [HyperscaleAI, MultiModal, Transformer]
 toc: true
 toc_sticky: true
 toc_label: "쭌스log"
@@ -12,8 +12,6 @@ header:
 sidebar:
     nav: "docs"
 ---
-
-[논문링크]()
 
 ****
 # 한줄요약 ✔
