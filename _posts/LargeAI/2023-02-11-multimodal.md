@@ -1,8 +1,8 @@
 ---
 layout: single
-title: "[논문분석] Template"
+title: "초거대AI 멀티모델(MultiModal)이란?"
 categories: LargeAI
-tag: []
+tag: [HyperscaleAI, MultiModal, LargeAI]
 toc: true
 toc_sticky: true
 toc_label: "쭌스log"
