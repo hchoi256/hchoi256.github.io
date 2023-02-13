@@ -30,9 +30,10 @@ sidebar:
 ![image](https://user-images.githubusercontent.com/39285147/218533664-d0255d17-a412-43c3-aa51-e9405c16ab99.png)
 
 - 비대칭(Asymmetric)
+- `(2)` 보다 정확도 ↑, Cost 효율 ↓
 
 
-$$f(x)=s\times x+z \\ s=\frac{2^b-1}{\alpha-\beta} \\ z=-round(\beta \times s)-2^{b-1}$$
+$$f(x)=s\times x+z \\\\ s=\frac{2^b-1}{\alpha-\beta} \\\\ z=-round(\beta \times s)-2^{b-1}$$
 
 $$z$$: zero-point, 변환 전 0의 위치가 변환 후 어느 점으로 대응되는지 표현
 $$s$$: scaling factor
@@ -45,7 +46,7 @@ $$quantize(x,b,s,z)=clip(round(s\times x+z),-2^{b-1},2^{b-1}-1) \\  dequantize(x
 ![image](https://user-images.githubusercontent.com/39285147/218533713-ffa45cd5-e3e4-43e9-8074-7e2d231e4f3d.png)
 
 - 대칭(Symmetric)
-
+- `(1)` 보다 정확도 ↓, Cost 효율 ↑
 
 $$f(x)=s\times x \\ s=\frac{2^{b-1}-1}{\alpha}$$
 
@@ -69,3 +70,6 @@ $$quantize(x,b,s)=clip(round(s\times x),-2^{b-1}+1,2^{b-1}-1) \\ dequantize(x_q,
 
 ****
 # Reference
+## Quantization Granularity
+- **Activation**: tensor quantization.
+- **Weights**: tensor or chennel quantization.
