@@ -38,7 +38,7 @@ $$f(x)=s\times x+z \\\\ s=\frac{2^b-1}{\alpha-\beta} \\\\ z=-round(\beta \times 
 $$z$$: zero-point, 변환 전 0의 위치가 변환 후 어느 점으로 대응되는지 표현
 $$s$$: scaling factor
 
-$$quantize(x,b,s,z)=clip(round(s\times x+z),-2^{b-1},2^{b-1}-1) \\  dequantize(x_q,s,z)=\frac{x_q-z}{s}$$
+$$quantize(x,b,s,z)=clip(round(s\times x+z),-2^{b-1},2^{b-1}-1) \\\\  dequantize(x_q,s,z)=\frac{x_q-z}{s}$$
 
 > `Fake Image/Quantization`: 양자화 변환 후 값들이다.
 
@@ -48,9 +48,9 @@ $$quantize(x,b,s,z)=clip(round(s\times x+z),-2^{b-1},2^{b-1}-1) \\  dequantize(x
 - 대칭(Symmetric)
 - `(1)` 보다 정확도 ↓, Cost 효율 ↑
 
-$$f(x)=s\times x \\ s=\frac{2^{b-1}-1}{\alpha}$$
+$$f(x)=s\times x \\\\ s=\frac{2^{b-1}-1}{\alpha}$$
 
-$$quantize(x,b,s)=clip(round(s\times x),-2^{b-1}+1,2^{b-1}-1) \\ dequantize(x_q,s)=\frac{x_q}{s}$$
+$$quantize(x,b,s)=clip(round(s\times x),-2^{b-1}+1,2^{b-1}-1) \\\\ dequantize(x_q,s)=\frac{x_q}{s}$$
 
 ## Non-uniform(비균일 양자화)
 - step size 비균일
