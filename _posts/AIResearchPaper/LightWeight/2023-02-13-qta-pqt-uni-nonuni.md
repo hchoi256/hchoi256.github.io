@@ -27,6 +27,8 @@ Activation의 Calibration은 상당히 까다롭다.
 Input은 Offline에서 알 수 없는 변수라서 input 이후 Calibration이 진행되어야 한다.
 - Input 개수 ↑, 학습/추론 이미지의 분포 유사도 ↑ $$\rightarrow$$ Calibration 효율 ↑.
 
+Calibration 피벗값을 고르는 방법 중, `Entropy` 접근법이 가장 일반화적인 방법이다
+
 > `Max`: 원소값중 가장 큰 값의 절대값
 >
 > `Entropy`: 양자화된 값과 기존 FP 값의 차이를 최소로 만드는 값 
@@ -89,11 +91,37 @@ $$dequantize(x_q,s)=\frac{x_q}{s}$$
 
 ****
 # Post Training Quantization ✏
+![image](https://user-images.githubusercontent.com/39285147/218542552-a3ee22f2-8c8d-4971-92e8-26f4dcaf62cd.png)
+
+학습이 완료된 기학습 모델을 이용해서 양자화를 진행하기 때문에, Offline에서 Weights, 학습 파라미터들이 모두 설정된 상태이다.
+
+`Max`, `Entropy`, `Percentile` 등 다양한 calibration 적용하여 best 찾는다.
 
 ****
 # Quantization Aware Training 💜
+![image](https://user-images.githubusercontent.com/39285147/218543021-b7625844-cf57-4aa2-820f-63fc84322bf7.png)
 
+- 학습이 진행되기 전 양자화를 진행하는 방법으로, *XNOR-Net* 같은 네트워크가 QAT에 해당.
+- 일반적으로 QAT 성능 >> PTQ.
+    - PTQ: Global Minimun에 최적화된 가중치를 덜 최적화된곳으로 보내져 `Deep Convex`에 빠지게 된다.
+    - QAT: 학습 진행 도중 최적화를 진행 $$\rightarrow$$ 가중치가 `Deep Convex`에 빠지기 어렵다.
+- **Fake Quantization**: Low-precision 타입 변환 후 행렬연산 진행 $$\rightarrow$$ 연산비용 ↓.
+    - 역전파가 불가능한 문제는 STE 방법으로 해결 (여전히 한계 존재).
 
+****
+# Partial Quantization 🥰
+![image](https://user-images.githubusercontent.com/39285147/218544154-a9a0b476-c297-4624-a05d-653ae2aa2b61.png)
+
+- 신경망의 각 Layer를 Sensitive 기준으로 내림차순하여 하나씩 양자화를 죽여나가는 방법
+    - Sensitive를 선정 기준 부재
+- 정확도를 보존 가능.
+
+****
+# Conclusion 🎄
+1. **PTQ** 방법을 우선적으로 고려한다. 앞서 학습했던 Max, Entropy, Percentile Calibration에 대해서 다양하게 적용해가며 성능을 확인한다.
+2. **Partial Quantization**: PTQ 방법이 조금 아쉬울때 적용해본다. Sensitive 기준으로 내림차순하여 하나씩 양자화를 죽여나가며 성능을 확인한다.
+3. **QAT**: 위 두가지 방법으로도 성능이 개선되지 않을때 사용한다.
+ 
 ****
 # Reference
 ## Quantization Granularity
