@@ -58,16 +58,61 @@ $$Model-Agnostic (모델과\ 상관없이)$$
 - Few-shot Learning
 - 다른 task 기학습 모델을 사용해서, 다른 task 수행하는 적은 dataset 기반 fine-tuning 알고리즘 적용
 
+## Catastrophic Forgetting
+기학습 모델에서 얻은 weight들이 어떤 Correlation이 있는지 모르는 Deep Learning에서 새로운 Task를 배우는데 정확하게 Fine Tuning을 위해 weight를 섣부르게 바꾸면, 기존 Task 정보와 관련된 weight, 즉 정보를 잃어버리는 현상이다.
+
 ## Knowledge Distillation
 - 같은 task 기학습 모델에서, 더 적은 dataset 공유하는 작은 모델로 지식(가중치) 전달
 
 ****
 # Continual Learning 🌷
-- 전이학습의 고질병 **Catastrophic forgetting (Semantic Draft)** 문제 해결을 위해 나온 알고리즘
+전이학습의 고질병 **Catastrophic forgetting (Semantic Draft)** 문제 해결을 위해 나온 알고리즘
 
-****
-# Conclusion ✨
+## (1) Elastic Weight Consoliation (EWC)
+Fine Tuning으로 weight를 섣부르게 건드리면, 기학습 모델이 학습한 Task 정보를 잃어버리게 된다.
 
+하여 새로운 task에 대하여 weight를 조금씩 건드려보자는 방식이다.
+
+기학습 모델의 weight 중에 중요한 weight에는 Regularization Term을 추가해서 살짝만 가중치를 수정한다.
+
+![image](https://user-images.githubusercontent.com/39285147/218947973-02ffeb4c-9930-4dbf-9983-d0c017b92d15.png)
+
+![image](https://user-images.githubusercontent.com/39285147/218950098-5407ffd1-005f-4dc7-ae79-2fdae1c1223c.png)
+
+$$F_i$$라는 함수는 Fisher Information Matrix로 어떤 Random Variable의 관측값으로부터, 분포의 parameter에 대해 유추할 수 있는 정보의 양이다.
+
+`L2 Reularization`과 `No Penalty 알고리즘`에서, 기존 Task A (no penalty, 파란색)가 적은 Error를 갖는 구간을 벗어나버리지만, EWC는 그 중간 지점을 교묘하게 잘 찾아가는 것을 볼 수 있다.
+
+다르게 말하면, Task A와 B에 모두를 고려한 최적의 weight를 찾는 방식이다.
+
+## (2) Dynamically expandable networks (DEN)
+![image](https://user-images.githubusercontent.com/39285147/218950462-633f040a-1713-4454-bddf-35a7ee8c8a33.png)
+
+다양한 문제를 풀려면, Neural Network의 Capacity가 증가해야 하기 때문에, Node 수가 증가시키는 방식에 대한 Appraoch이다.
+
+DEN은 동적으로 Node 수를 증가시키면서, 새로운 Task에 적응해나가는 방식이다.
+
+하기 3가지 서로 다른 process를 통해 표현될 수 있다.
+
+> 각 Process에 따른 loss function은 (2)[https://arxiv.org/abs/1708.01547]에 잘 정리되어 있다.
+
+### (1) Selective Re-training
+Re-training을 할 주요한 weight를 선별해서 update하자는 방식이다.
+
+Catastrophic forgetting 현상을 방지하고자, 기존의 weight들을 저장했다가 이후 다시 재활용한다 (Split and Duplication).
+
+### (2) Dynamic Expansion
+중요한 weight만으로는 Target Task에 대한 충분한 성능이 안 나올 수 있다.
+
+Model의 Capacity가 부족하기 때문에, 노드를 추가해야 하는 상황을 말한다.
+
+### (3) Split and Duplication
+Catastrophic forgetting 현상 방지 차원에서 기존의 weight가 Threshold 이상으로 바뀌면 복사한 기존의 weight를 옆에 붙여넣는다.
+
+1단계에서 update할 weight를 적절히 뽑지 않았으면, 3번에서 복사해서 추가될 노드가 과다하여 비효율적이거나, 혹은 Catastrophic forgetting 현상이 재발생한다. 
 
 ****
 # Reference 💕
+[1] J. Kirkpatrick, et al., “Overcoming catastrophic forgetting in neural networks,” Proc. Nat. Acad. Sci., vol. 114, no. 13, pp. 3521–3526, 2017.
+
+[2] Yoon, J., Yang, E., Lee, J., Hwang, S.J. "Lifelong learning with dynamically expandable networks", ICLR, 2017
