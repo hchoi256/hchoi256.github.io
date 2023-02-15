@@ -94,7 +94,7 @@ DEN은 동적으로 Node 수를 증가시키면서, 새로운 Task에 적응해�
 
 하기 3가지 서로 다른 process를 통해 표현될 수 있다.
 
-> 각 Process에 따른 loss function은 (2)[https://arxiv.org/abs/1708.01547]에 잘 정리되어 있다.
+> 각 Process에 따른 loss function은 [2](https://arxiv.org/abs/1708.01547)에 잘 정리되어 있다.
 
 ### (1) Selective Re-training
 Re-training을 할 주요한 weight를 선별해서 update하자는 방식이다.
