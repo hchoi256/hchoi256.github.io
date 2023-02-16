@@ -17,7 +17,7 @@ sidebar:
 글에 들어가기 앞서 ResNet에 대한 완벽한 이해가 수반됐다는 전제를 알린다.
 
 ****
-# DenseNet 👀
+# DenseNet (2016) 👀
 ![image](https://user-images.githubusercontent.com/39285147/219291172-0c3e7970-445f-428a-bf37-ffa21d787670.png)
 
 -  H() 함수: BN, ReLU, 3x3 conv
@@ -53,7 +53,7 @@ BatchNorm $$\rightarrow$$ ReLU $$\rightarrow$$ Convolution.
 ![image](https://user-images.githubusercontent.com/39285147/219304419-dc26436d-a318-4243-ad1e-558620c30c5d.png)
 
 ****
-# SqueezeNet 🎄
+# SqueezeNet (2016) 🎄
 ![image](https://user-images.githubusercontent.com/39285147/219304582-97d4c8c1-fa35-4899-b52d-82d4b4b4e106.png)
 
 ## Fire Module
@@ -102,24 +102,48 @@ Expand layer 앞에 있는 squeeze layer의 filter 수로써, expand layer의 fi
 ![image](https://user-images.githubusercontent.com/39285147/219308760-32ae48e4-87f7-47ca-8adc-a70bcdfce9e5.png)
 
 ****
-# MobileNet 🌷
+# MobileNet (2017) 🌷
+![image](https://user-images.githubusercontent.com/39285147/219313086-6c5be0b7-79e6-4cd4-b729-9cd40c453154.png)
+
 ![image](https://user-images.githubusercontent.com/39285147/219310038-9187c266-ee5e-435d-9ed3-b69a00d79a04.png)
 
 경량화 모델의 대표적인 알고리즘으로, `Depthwise Convolution`과 `1x1 conv`이 특징이다.
 
 ## Depthwise/Pointwise Convolution
+> Mobile Net은 두 유형의 합성곱을 함께 사용한다.
+
 ![image](https://user-images.githubusercontent.com/39285147/219310613-b1ff5ea7-a6d1-44dc-9be6-53ffffe7a7f3.png)
 
 ![image](https://user-images.githubusercontent.com/39285147/219310339-af409698-7433-470c-a4ff-21d6f6ee1e1f.png)
 
-**Depthwise Convolution**
-- 각 channel 별 정보만을 이용하여 convolution 수행
+### Depthwise Convolution
+$$D_k^2 \times D_F^2 \times M\ (D_K:\ input\ size,\ M:\ #input\ channel, D_F:\ feature\ map\ size)$$
 
-**Pointwise Convolution (= 1x1 conv)**
+- 각 channel 별 정보만을 이용하여 convolution 수행
+- **필요한 parameter 수 획기적 감소**
+
+### Pointwise Convolution (= 1x1 conv)
+$$N \times D_F^2 \times M\ (N:\ #\ output\ channel,\ M:\ #\ input\ channel, D_F:\ feature\ map\ size)$$
+
 - channel 간 weighted sum
 - dimension reduction의 효과
 
-> Mobile Net은 두 유형의 합성곱을 함께 사용한다.
+## Multiplier
+### Width Multiplier (α)
+- 네트워크의 width를 결정하는 파라미터
+    - conv net에서 width는 각 레이어에서 필터수를 의미 
+- 각 layer의 input & output channel의 크기를 α 비율만큼 조절
+- 입력 채널과 출력 채널에 적용: $$\alphaM,\ \alphaN$$.
+
+### Depth Multiplier (ρ)
+![image](https://user-images.githubusercontent.com/39285147/219312804-21c99315-0ba8-4d50-b57b-58f80309176a.png)
+
+- input resolution(해상도)를 결정하는 파라미터
+- 모델의 연산량을 감소시키기 위해 사용
+    - ρ는 입력 이미지에 적용하여 해상도를 낮춤
+
+## Experiment
+![image](https://user-images.githubusercontent.com/39285147/219312886-42c7e11a-5a70-42c7-894f-51bf319ab29f.png)
 
 ****
 # Reference
