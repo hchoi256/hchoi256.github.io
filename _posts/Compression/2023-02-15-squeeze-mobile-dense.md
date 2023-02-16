@@ -101,9 +101,25 @@ Expand layer 앞에 있는 squeeze layer의 filter 수로써, expand layer의 fi
 # Experinment
 ![image](https://user-images.githubusercontent.com/39285147/219308760-32ae48e4-87f7-47ca-8adc-a70bcdfce9e5.png)
 
-
 ****
 # MobileNet 🌷
+![image](https://user-images.githubusercontent.com/39285147/219310038-9187c266-ee5e-435d-9ed3-b69a00d79a04.png)
+
+경량화 모델의 대표적인 알고리즘으로, `Depthwise Convolution`과 `1x1 conv`이 특징이다.
+
+## Depthwise/Pointwise Convolution
+![image](https://user-images.githubusercontent.com/39285147/219310613-b1ff5ea7-a6d1-44dc-9be6-53ffffe7a7f3.png)
+
+![image](https://user-images.githubusercontent.com/39285147/219310339-af409698-7433-470c-a4ff-21d6f6ee1e1f.png)
+
+**Depthwise Convolution**
+- 각 channel 별 정보만을 이용하여 convolution 수행
+
+**Pointwise Convolution (= 1x1 conv)**
+- channel 간 weighted sum
+- dimension reduction의 효과
+
+> Mobile Net은 두 유형의 합성곱을 함께 사용한다.
 
 ****
 # Reference
