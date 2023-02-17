@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "CNN - Classification: fashionMNIST"
-categories: SL
+categories: ML
 tag: [CNN, Classification, FashionMNIST]
 toc: true
 toc_sticky: true

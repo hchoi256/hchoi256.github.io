@@ -12,29 +12,6 @@
       </li>
       <li>
         <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C#-->
-        <span class="nav__sub-title">Important</span>
-        <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
-        <ul>
-            {% for category in site.categories %}
-                {% if category[0] == "Study" %}
-                    <li><a href="/categories/Study" class="">AI 기본지식 ({{category[1].size}})</a></li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-        <ul>
-            {% for category in site.categories %}
-                {% if category[0] == "Python" %}
-                    <li><a href="/categories/Python" class="">Python ({{category[1].size}})</a></li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-        <ul>
-            {% for category in site.categories %}
-                {% if category[0] == "Basic" %}
-                    <li><a href="/categories/Basic" class="">기타 ({{category[1].size}})</a></li>
-                {% endif %}
-            {% endfor %}
-        </ul>
         <span class="nav__sub-title">AI Research Papers</span>
             <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
             <ul>
@@ -47,8 +24,6 @@
                 {% endfor %}
             </ul>
             <ul>
-                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
-                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
                 {% for category in site.categories %}
                     {% if category[0] == "AIPaperNLP" %}
                         <li><a href="/categories/AIPaperNLP" class="">NLP ({{category[1].size}})</a></li>
@@ -58,7 +33,14 @@
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "AIPaperOthers" %}
-                        <li><a href="/categories/AIPaperOthers" class="">기타 ({{category[1].size}})</a></li>
+                        <li><a href="/categories/AIPaperLightWeight" class="">Model Compression ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>   
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "AIPaperOthers" %}
+                        <li><a href="/categories/AIPaperOthers" class="">Others ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>   
@@ -79,40 +61,50 @@
                 {% endfor %}
             </ul>
             <ul>
-                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
-                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
                 {% for category in site.categories %}
-                    {% if category[0] == "SL" %}
-                        <li><a href="/categories/SL" class="">지도학습 ({{category[1].size}})</a></li>
+                    {% if category[0] == "CV" %}
+                        <li><a href="/categories/LightWeight" class="">Model Compression ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
-            </ul>
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "USL" %}
-                        <li><a href="/categories/USL" class="">비지도학습 ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-            <ul>
-                {% for category in site.categories %}
-                    {% if category[0] == "RL" %}
-                        <li><a href="/categories/RL" class="">강화학습 ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
+            </ul>            
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "XAI" %}
                         <li><a href="/categories/XAI" class="">XAI ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
-            </ul>            
+            </ul> 
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "AIOthers" %}
+                        <li><a href="/categories/AIOthers" class="">Others ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>           
         <span class="nav__sub-title">Others</span>
             <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
             <ul>
-                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
-                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                {% for category in site.categories %}
+                    {% if category[0] == "Study" %}
+                        <li><a href="/categories/AIStudy" class="">AI Basic ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "Python" %}
+                        <li><a href="/categories/Python" class="">Python ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "Others" %}
+                        <li><a href="/categories/Basic" class="">Others ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "DB" %}
                         <li><a href="/categories/DB" class="">DB ({{category[1].size}})</a></li>

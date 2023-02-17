@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "AI 학습자료"
-categories: Study
+categories: AIStudy
 tag: [AI, KAIST, SNU, Graduate School]
 toc: true
 toc_sticky: true

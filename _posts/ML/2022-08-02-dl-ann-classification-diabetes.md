@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "ANN - Classification: Diabetes Prediction"
-categories: SL
+categories: ML
 tag: [ANN, Classification]
 toc: true
 toc_sticky: true

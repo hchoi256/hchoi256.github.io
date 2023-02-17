@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "초거대AI 멀티모델(MultiModal)이란?"
-categories: LargeAI
+categories: LightWeight
 tag: [HyperscaleAI, MultiModal, Transformer]
 toc: true
 toc_sticky: true

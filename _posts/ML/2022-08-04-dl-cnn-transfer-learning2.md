@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "Transfer Learning #2 - Classification"
-categories: SL
+categories: ML
 tag: [CNN, Transfer Learning, Classification]
 toc: true
 toc_sticky: true

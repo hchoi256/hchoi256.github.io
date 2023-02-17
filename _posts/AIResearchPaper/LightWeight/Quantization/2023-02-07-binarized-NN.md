@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "[논문분석] Binarized Neural Networks"
-categories: LightWeight
+categories: AIPaperLightWeight
 tag: [Model Compression, Light-weight, Binarization]
 toc: true
 toc_sticky: true

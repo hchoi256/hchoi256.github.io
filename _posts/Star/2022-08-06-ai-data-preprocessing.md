@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "Data Preprocessing Techniques"
-categories: Study
+categories: AIStudy
 tag: [Data Preprocessing, Python]
 # toc: false
 # toc_sticky: false

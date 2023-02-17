@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "ANN - Regression"
-categories: SL
+categories: ML
 tag: [ANN, Regression]
 toc: true
 toc_sticky: true

@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "PART 2: Data Visualization Techniques"
-categories: Study
+categories: AIStudy
 tag: [Data Visualization, Python]
 toc: true
 toc_sticky: true

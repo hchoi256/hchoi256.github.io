@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "How to Speak (Patrick Winston)"
-categories: Study
+categories: AIStudy
 tag: [PPT, research]
 toc: true
 toc_sticky: true

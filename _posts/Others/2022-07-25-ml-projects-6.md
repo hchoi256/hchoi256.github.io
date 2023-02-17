@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "사용자 기반 협업 필터링 (Collaborative Filtering) - 영화 추천 시스템 (Movie Recommender Systems)"
-categories: Others
+categories: AIOthers
 tag: [Correlation, Movie Recommendation]
 toc: true
 toc_sticky: true

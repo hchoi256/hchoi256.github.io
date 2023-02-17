@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "RNN - Time Series: LSTM"
-categories: SL
+categories: ML
 tag: [RNN, LSTM, Time Series]
 toc: true
 toc_sticky: true

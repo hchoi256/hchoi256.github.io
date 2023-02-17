@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "LeNet 신경망 - MiniPlaces 이미지 분류"
-categories: SL
+categories: ML
 tag: [LeNet, Classification, PyTorch]
 toc: true
 toc_sticky: true

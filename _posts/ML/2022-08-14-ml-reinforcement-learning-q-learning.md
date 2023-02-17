@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "Reinforcement Learning - Q-Learning 알고리즘"
-categories: RL
+categories: ML
 tag: [Reinforcement Learning, Q-learning]
 toc: true
 toc_sticky: true

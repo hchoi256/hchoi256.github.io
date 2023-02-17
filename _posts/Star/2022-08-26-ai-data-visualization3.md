@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "PART 3: Data Visualization Techniques"
-categories: Study
+categories: AIStudy
 tag: [Data Visualization, Bokeh, Seaborn, Python]
 toc: true
 toc_sticky: true
