@@ -2,7 +2,7 @@
 layout: single
 title: "How to Speak (Patrick Winston)"
 categories: AIStudy
-tag: [PPT, research]
+tag: [PPT, Research]
 toc: true
 toc_sticky: true
 toc_label: "쭌스log"

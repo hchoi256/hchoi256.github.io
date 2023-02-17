@@ -32,7 +32,7 @@
             </ul>
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "AIPaperOthers" %}
+                    {% if category[0] == "AIPaperLightWeight" %}
                         <li><a href="/categories/AIPaperLightWeight" class="">Model Compression ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
@@ -66,7 +66,14 @@
                         <li><a href="/categories/LightWeight" class="">Model Compression ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
-            </ul>            
+            </ul>        
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "ML" %}
+                        <li><a href="/categories/ML" class="">XAI ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>     
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "XAI" %}
@@ -85,7 +92,7 @@
             <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "Study" %}
+                    {% if category[0] == "AIStudy" %}
                         <li><a href="/categories/AIStudy" class="">AI Basic ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
@@ -99,18 +106,18 @@
             </ul>
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "Others" %}
-                        <li><a href="/categories/Basic" class="">Others ({{category[1].size}})</a></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-            <ul>
-                {% for category in site.categories %}
                     {% if category[0] == "DB" %}
                         <li><a href="/categories/DB" class="">DB ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
-            </ul>        
+            </ul>    
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "Others" %}
+                        <li><a href="/categories/Others" class="">Others ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>                
       </li>
   </ul>
 </nav>

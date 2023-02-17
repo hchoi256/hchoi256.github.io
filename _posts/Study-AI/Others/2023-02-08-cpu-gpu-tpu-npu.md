@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "CPU, GPU(CUDA), FPGA, NPU, TPU 이해"
-categories: Study
+categories: AIOthers
 tag: [CPU, GPU, NPU, TPU, FPGA, CUDA]
 toc: true
 toc_sticky: true
