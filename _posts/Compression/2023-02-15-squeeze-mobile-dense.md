@@ -62,25 +62,26 @@ BatchNorm $$\rightarrow$$ ReLU $$\rightarrow$$ Convolution.
 - `e1x1`: expand layer에서 1x1 filter 수
 - `e3x3`: expand layer에서 3x3 filter 수
 
-### Squeeze Layer
-**목표 1: 3x3 filter로 입력되는 입력 채널의 수를 감소시킨다.**
+### (1) Squeeze Layer
+**GOAL: 3x3 filter로 입력되는 입력 채널의 수를 감소시킨다.**
 - 3x3 filter의 conv layer 연산량은 $$(입력 채널) \times (필터 수) \times (필터 크기)$$.
-- 입력 채널을 감소하면 3x3 filter 연산량 감소.
-- s1x1 < (e1x1 + e3x3)로 설정하여 squeeze layer의 channel수가 expand layer의 channel수보다 작게 설정
+- 하여 입력 채널을 감소하면 3x3 filter 연산량 감소.
+- `s1x1` < (`e1x1` + `e3x3`)로 설정하여 squeeze layer의 channel수가 expand layer의 channel수보다 작게 설정
 
 1x1 conv layer를 사용하여 channel reduction (원하는 채널 수로 줄이기)
 
 1x1 filter들의 출력값은 하나로 합쳐져서 expand로 전달된다.
 
-### Expansion Layer
+### (2) Expansion Layer
 1x1 conv layer와 3x3 conv layer 함께 병렬 사용
 
 Padding을 사용하여, 두 layer의 output size가 서로 일치하도록 맞춰준다
 
-### Squeeze Ratio (SR)
+### (3) Squeeze Ratio (SR)
 ![image](https://user-images.githubusercontent.com/39285147/219305188-5fb1071e-7981-420b-af03-66c414e6efe5.png)
 
-Expand layer 앞에 있는 squeeze layer의 filter 수로써, expand layer의 filter에 대한 비율이다.
+SR은 Expand layer 앞에 있는 squeeze layer의 filter 수를 결정한다.
+- Expand layer의 filter에 대한 비율이다.
 
 가령, SR = 0.75이고 expand layer의 필터 개수가 4개라면, squeeze layer 개수는 3개이다.
 
@@ -90,7 +91,7 @@ Expand layer 앞에 있는 squeeze layer의 filter 수로써, expand layer의 fi
 ![image](https://user-images.githubusercontent.com/39285147/219307842-a5fa0947-e8e7-44bc-9bdf-5305f75bb1b7.png)
 
 - **single bypass**: 기존 ResNet
-- **complex bypass**: 입력 채널수와 출력 채널수가 다른 경우, conv1x1 추가로 채널수 조정 
+- **complex bypass**: 입력 채널수와 출력 채널수가 다른 경우, conv 1x1 추가로 채널수 조정 (*해당 문장 이해가 어렵다면, ResNet Identity Mapping에 대한 이해를 먼저 하고오면 좋다*). 
 
 결과적으로 single bypass가 조금 더 나은 성능을 보인다.
 
@@ -117,13 +118,13 @@ Expand layer 앞에 있는 squeeze layer의 filter 수로써, expand layer의 fi
 ![image](https://user-images.githubusercontent.com/39285147/219310339-af409698-7433-470c-a4ff-21d6f6ee1e1f.png)
 
 ### Depthwise Convolution
-$$D_k^2 \times D_F^2 \times M\ (D_K:\ input\ size,\ M:\ #input\ channel, D_F:\ feature\ map\ size)$$
+$$D_k^2 \times D_F^2 \times M\ (D_K:\ input\ size,\ M:\ \#\ input\ channel, D_F:\ feature\ map\ size)$$
 
 - 각 channel 별 정보만을 이용하여 convolution 수행
 - **필요한 parameter 수 획기적 감소**
 
 ### Pointwise Convolution (= 1x1 conv)
-$$N \times D_F^2 \times M\ (N:\ #\ output\ channel,\ M:\ #\ input\ channel, D_F:\ feature\ map\ size)$$
+$$N \times D_F^2 \times M\ (N:\ \#\ output\ channel,\ M:\ \#\ input\ channel, D_F:\ feature\ map\ size)$$
 
 - channel 간 weighted sum
 - dimension reduction의 효과
