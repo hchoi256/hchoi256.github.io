@@ -130,13 +130,13 @@ $$N \times D_F^2 \times M\ (N:\ \#\ output\ channel,\ M:\ \#\ input\ channel, D_
 - dimension reduction의 효과
 
 ## Multiplier
-### Width Multiplier (α)
+### Width Multiplier ($$\alpha$$)
 - 네트워크의 width를 결정하는 파라미터
     - conv net에서 width는 각 레이어에서 필터수를 의미 
 - 각 layer의 input & output channel의 크기를 α 비율만큼 조절
 - 입력 채널과 출력 채널에 적용: $$\alphaM,\ \alphaN$$.
 
-### Depth Multiplier (ρ)
+### Depth Multiplier ($$\rho$$)
 ![image](https://user-images.githubusercontent.com/39285147/219312804-21c99315-0ba8-4d50-b57b-58f80309176a.png)
 
 - input resolution(해상도)를 결정하는 파라미터
