@@ -92,6 +92,20 @@ Decoder
 - **Stage 1**: Unlabeled 데이터로 Pretraining
 - **Stage 2**: Labeled 데이터로 Fine-tuning
 
+## Self-supervised Learning-based Scene Text Recognition
+[[논문] Sequence-to-Sequence Contrastove Learning for Text Recognition](https://arxiv.org/abs/2012.10873)
+
+![image](https://user-images.githubusercontent.com/39285147/219864470-36f5ad65-bc86-4cb1-8b20-018576cb9865.png)
+- Text Recognition에 Self-supervised Learning의 Constrastive Learning 적용
+- 문자인식에 Unlabeled 데이터를 함께 활용 가능한 자기지도학습 Framework 제안
+    - Contrastive Learning 활용
+
+일반적인 자기지도학습 STR 적용시 하기 한계 존재한다:
+- 기존 Data Augmentation (RandAugment) Sequence 해침
+- STR 모델의 Sequential 특징(출력값에 sequence 존재) 반영 어려움
+
+하여 일반적인 이미지 분류 문제와 다르게 여러 개의 Sequential한 출력값 반영이 필요하다.
+
 ****
 # Semi-supervised Learning 🙌
 - `Pseudo-Labeling Method`: Unlabeled 데이터 예측결과 활용하여 가짜로 레이블링 후 labeled 데이터처럼 활용
