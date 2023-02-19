@@ -106,21 +106,142 @@ Decoder
 
 하여 일반적인 이미지 분류 문제와 다르게 여러 개의 Sequential한 출력값 반영이 필요하다.
 
+![image](https://user-images.githubusercontent.com/39285147/219908547-cdb74ac3-77a5-4377-a135-e881d4c56d93.png)
+
+**Stage 1 (Pretraining Phase)**:
+- `Data Augmentation`: 이미지 sequence 해치지 않도록 aug 수행
+- `Base Encoder`: Context feature 추출
+- `Projection Head`: 이미지 representation 퀄리티 향상 
+- `Instance Mapping Function`: 이미지 sequences를 sub-words로 변환하고, 각 contrastive loss 산출
+- `Contrastive Loss`
+
+> ![image](https://user-images.githubusercontent.com/39285147/219908598-20d1c262-0bbc-43c1-8442-586c1a75bb6d.png)
+
+**Stage 2 (Fine-tuning Phase)**:
+- 일반적인 자기지도학습처럼 feature extractor를 freeze 후, decoder만 학습
+    - Stage 1에서 얻은 Base Encoder 정보 활용하여 decoder 학습
+
+### Experiment
+![image](https://user-images.githubusercontent.com/39285147/219908695-11b2adce-6f05-4de2-b042-2d8ab3dee058.png)
+
+- *Window-to-instance* 방식이 대체로 우수한 성능 보임
+- Seq 고려한 Contrastive Learning이 문자 인식에서 좋은 성능 보임
+- instance 개수:
+    - 너무 많은 instance mapping 수행 $$\rightarrow$$ misalignment pair 문제 발생.
+    - 너무 적은 instance mapping 수행 $$\rightarrow$$ negative pair 개수 감소.
+
 ****
-# Semi-supervised Learning 🙌
+# Semi-supervised Learning 🎆
 - `Pseudo-Labeling Method`: Unlabeled 데이터 예측결과 활용하여 가짜로 레이블링 후 labeled 데이터처럼 활용
 - `Consistency Regularization Method`: 데이터 및 모델에 변형 후에도 예측 일관성 갖도록 학습
 - `Hybrid Method`: 여러 준지도학습 알고리즘 아이디러 혼합 활용 학습.
 
 ![image](https://user-images.githubusercontent.com/39285147/219855596-24bea078-25c1-4e7d-9c01-647e468773fb.png)
 
-- Unlabel 데이터에 대한 모델 예측결과로 Label을 임의로 만들어주어 학습
+- Unlabeled 데이터에 대한 모델 예측결과로 Label을 임의로 만들어주어 학습
 - Labeled/Unlabeled 데이터 함께 활용 학습
 
-****
-# Conclusion ✨
+## Semi-supervised Learning-based Scene Text Recognition
+[[논문분석] Pushing the Performance Limit of Scene Text Recognizer without Human Annotation](https://openaccess.thecvf.com/content/CVPR2022/papers/Zheng_Pushing_the_Performance_Limit_of_Scene_Text_Recognizer_Without_Human_CVPR_2022_paper.pdf)
 
+![image](https://user-images.githubusercontent.com/39285147/219908893-a3c14cb7-6481-4f9a-bff9-bae0d26daed4.png)
+
+- STR에 `Consistency Regularization` 적용
+    - `Consistency Regularization`: 동일한 이미지에서 다르게 변형된 이미지를 입력으로 받더라도, 동일한 결과 갖도록 학습
+- STR에 합성 데이터+실제 Unlabeled 데이터 함께 활용하는 준지도학습
+
+일반적인 준지도학습을 STR 적용 시, 하기 한계점 존재:
+- 합성이미지 ~ 실제이미지 데이터 분포 차이로 학습률 저하
+- 글자 간 Misalignment 문제 발생하여 동일하지 않은 글자끼리 consistency regularization 수행되어 학습 방해
+
+### Model Architecture
+![image](https://user-images.githubusercontent.com/39285147/219908957-e62a71ef-47c9-409d-9d41-93ebffd927ce.png)
+
+- `Encoder`: 입력 이미지 feature 추출
+- `Decoder`: 이미지 단위 feature에서 글자 단위 feature 생성
+- `Classifier`: 글자 단위 feature에서 각 글자들을 예측
+
+![image](https://user-images.githubusercontent.com/39285147/219909589-d202fd8c-a6eb-4264-bbda-a78e63400a43.png)
+
+#### Supervised Branch
+![image](https://user-images.githubusercontent.com/39285147/219908976-2a765cad-44dd-4313-b43a-aa3105fde208.png)
+
+- Labeled 데이터(합성데이터) 활용 학습
+    - cross entropy 사용
+- Labeled 글자들 decoder의 입력 글자로 활용
+- 학습된 weights들 unsupervised branch의 online model에 공유
+
+#### Unsupervised Branch
+![image](https://user-images.githubusercontent.com/39285147/219909227-dfc89594-9cef-489b-b2b4-9e63fd42786b.png)
+![image](https://user-images.githubusercontent.com/39285147/219909455-aec2b168-68d1-44fe-b300-91fa7a065803.png)
+
+- Unlabeled 데이터 활용 학습
+- Online 모델, Target Model 모두 Asymmetric    
+    - Target Model의 글자 별 예측 확률 활용 Noisy 데이터 필터링
+        - Threshold보다 글자별 예측 확률의 가중합이 작으면 학습에서 활용하지 않음 (상기 이미지 Score: 0.5814)
+- **Character-level Consistency Regularization**: 하나의 이미지 두 번 증강 후 두 예측 값이 글자 단위로 유사해지도록 학습 (KL Divergence)
+    - *Online Model*: Strong augmentation 이미지 입력 / Eencoder + Decoder + Projection + Classifier / Weight Decay
+    - *Target Model*: Weak Augmentation 이미지 입력 / Encoder + Decoder + Classifier / Stop Gradient (EMA 활용) 
+- Autoregressive decoder: 이전 출력값 활용
+    - *Target Model*: Autoregressive하게 이전 시점값 활용
+    - *Online Model*: Target Model의 이전 시점 값 활용
+
+> **EMA**: $$\theta_t=\alpha \theta_t + (1-\alpha)\theta_{\alpha}$$.
+
+![image](https://user-images.githubusercontent.com/39285147/219909528-5251a630-4d79-43ea-ada6-f714568993bc.png)
+
+#### Domain Adaptation
+![image](https://user-images.githubusercontent.com/39285147/219909579-7ada65c8-b0cb-40a6-8bc3-dbbfda8ffcf9.png)
+![image](https://user-images.githubusercontent.com/39285147/219909575-d9104325-aed7-42f3-a2d0-091fd09d9e9e.png)
+
+합성 데이터 ~ 실제 데이터 도메인 차이 최소화
+- Supervised ~ Unsupervised Branch의 Target Model의 Vision feature에서 각각 공분산 행렬을 구한 후, 이들의 차이를 통해 Domain Shift 최소화
+
+### Summary
+- **1) Supervised Branch Loss 산출**
+    - 예측값 ~ 레이블 활용 교차 엔트로피
+- **2) Unsupervised Branch Loss 산출**
+    - 데이터 증강 2회 후 Online/Target Model 입력
+    - Encoder ~ Classifier 통과 후 각 Model 예측 수행
+    - Target Model 예측 확률값 통해 Score 점수 산정 후 Threshold 비교하여 Noisy 데이터 학습 미반영
+    - Noisy 아니라면, 글자 단위 Consistency Loss 산출 (Context Information 공유)
+- **3) Domain Adaptation Loss 산출**
+    - Supervised Branch와 Unsupervised Branch의 Target Model 활용 Loss 산출
+- **4) Overall Loss 산출**
+- **5) Weight Update**
+
+### Experiment
+![image](https://user-images.githubusercontent.com/39285147/219909733-4f28dcda-f9f8-4590-97f1-696da6319885.png)
+
+- 해당 연구 준지도학습 >> 기존 지도학습
+- 해당 연구 준지도학습 vs. 타 준지도학습
+    - depends!
+
+****
+# Self&Semi-supervised Learning 🍞
+[[논문분석] Multimodal Semi-Supervsied Learning for Text Recognition]
+
+> 최근 연구 흐름: STR에 Unlabeled 데이터 활용 연구는 Vision Feature만 고려됨 / STR은 학습 위한 Labeled 데이터 매우 부족
+
+![image](https://user-images.githubusercontent.com/39285147/219916155-6734372f-dc70-4534-9254-6628e4c91db3.png)
+
+- **STR에 Semi, Self 모두 적용**
+    - Self: Contrastive Learning
+    - Semi: Consistency Regularization
+- **Vision/Language 모두 고려한 Multimodal 모델**
+    - Vision Model Pretraining: Constrastive Learning + Supervised Loss
+    - Language Model Pretraining: Masked Language Model (MLM)으로 사전학습
+
+> **MLM**: 특정 Text token을 가리고 가려진 부분의 text token 맞추는 방식 / unlabeled data 활용 large text corpus 사전학습
+
+- **Fine-tuning & Fusion Model Training**
+    - 각 Modality별 Prediction
+    - 각 Modality별 Consistency Regularization
+
+상기 용어들 모두 사전에 다루었던 내용이므로, 잘 읽어보면 이해될 것이다.
 
 ****
 # Reference
 [Self-supervised Learning](https://greeksharifa.github.io/self-supervised%20learning/2020/11/01/Self-Supervised-Learning/)
+
+[Self/Semi-supervised Learning for Scene Text Recognition](http://dmqm.korea.ac.kr/activity/seminar/388)
