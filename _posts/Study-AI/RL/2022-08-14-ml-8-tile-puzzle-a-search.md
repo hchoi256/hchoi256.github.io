@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "A* Search - 8-tile Puzzle Game"
-categories: AIOthers
+categories: RL
 tag: [Machine Learning, Game, A* Search]
 toc: true
 toc_sticky: true

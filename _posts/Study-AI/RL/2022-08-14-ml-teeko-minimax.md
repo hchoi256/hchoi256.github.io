@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "Minimax 알고리즘 - Teeko Game"
-categories: AIOthers
+categories: RL
 tag: [Machine Learning, Teeko Board Game, Minimax]
 toc: true
 toc_sticky: true
