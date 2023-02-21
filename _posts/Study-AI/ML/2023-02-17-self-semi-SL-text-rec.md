@@ -180,7 +180,7 @@ Decoder
     - Target Model의 글자 별 예측 확률 활용 Noisy 데이터 필터링
         - Threshold보다 글자별 예측 확률의 가중합이 작으면 학습에서 활용하지 않음 (상기 이미지 Score: 0.5814)
 - **Character-level Consistency Regularization**: 하나의 이미지 두 번 증강 후 두 예측 값이 글자 단위로 유사해지도록 학습 (KL Divergence)
-    - *Online Model*: Strong augmentation 이미지 입력 / Eencoder + Decoder + Projection + Classifier / Weight Decay
+    - *Online Model*: Strong augmentation 이미지 입력 / Encoder + Decoder + Projection + Classifier / Weight Decay
     - *Target Model*: Weak Augmentation 이미지 입력 / Encoder + Decoder + Classifier / Stop Gradient (EMA 활용) 
 - Autoregressive decoder: 이전 출력값 활용
     - *Target Model*: Autoregressive하게 이전 시점값 활용
