@@ -76,7 +76,37 @@ AlphaTuning은 (1)주어진 parameters을 `binary values`와 `scaling factors`�
 
 $$A \rightarrow B$$ 과정은 QAT 대신 PTQ를 수행한다; QAT는 방대한 데이터셋에 대해 훈련 시 computational overhead가 엄청나다.
 
-<span style="color:red"> QAT 경우 overhead 줄일 수만 있다면, PTQ를 대체해도 좋을까?</span>
+<span style="color:blue"> QAT 경우 overhead 줄일 수만 있다면, PTQ를 대체해도 좋을까?</span>
+
+****
+# Related Work 😉
+## Large-Scale Language Models and Quantization
+기학습 Transformer 언어모델은 기존의 NLP 디자인 및 배포 방식을 전면적으로 변화시켰다.
+
+최근에, 초거대 언어모델에 대한 확장된 접근성은 새로운 자연어 처리의 시대를 열었고, few-shot learning과 parameter-efficient adapation 같은 기술의 재발견을 끌어낸다.
+
+Quantization은 근본적인 초거대 언어모델에 대한 공간 및 계산 시간 효율 해결책으로 손꼽히고 있지만, 기존 방법들은 양자화된 상태에서 제한된 영역과 task adapationability를 제공하는 한계를 지니고 있었다.
+
+## Parameter-Efficient Adaptation of LMs
+초거대 모델들이 판을 치는 현 시점에서 언어모델을 효율적으로 downstream task에 adapting하는 것은 이 사회의 최고 관심사이다.
+
+한 가지 전도유망한 접근방식은 (1)`in-context learning (ICL)`라는 것인데, 이것은 주어진 prompt 대한 패턴들로 부터 배우고 예측하는 언어모델이다.
+
+해당 기법은 초거대 언어모델들에 대하여 parameter-tuning 없이 합리적인 few-shot 성능을 끌내고, 수많은 확장 연구들이 탄생해왔다.
+
+또 다른 방식으로는 (2)parameter-efficient LM adapation을 위해 외부 혹은 부분적으로 내부 parameters (i.e., continuous prompt embeddings)를 이용하는 것인데, 이것은 특정 prompt prefixes가 더 나은 특정 LM 행동 방식에 관여할 수 있다는 아이디어에서 착안한다.
+
+> `Continuous/soft prompts`
+>
+>> Additional learnable parameters injected into the model
+
+과거 연구들은 **discrete** prompt token space를 조사했지만, 이후 **continuous** work embedding space를 최적화하는 것이 더 나은 결과를 보여줬다.
+
+> Prompt tuning과 관련한 더 자세한 내용은 [P-tuning](https://velog.io/@seopbo/GPT-Understands-Too) 기법을 찹조하기 바란다.
+>
+>> `P-tuning`은 기학습 언어모델의 모든 weight를 fine-tuning하지 않고, `continuous prompt embeddings`만 tuning하는 방법이다.
+
+(3)또 다른 연구로는 새로운 parameters들을 Transformer blocks이나 부분적으로 기존 parameters을 훈련시키기도 하며, (4)마지막으로는 parameter-efficient fine-tuning 방식과 관련된 모든 기존 접근 방식들을 통합하기도 했다.
 
 ****
 # Problem Definition ✏
@@ -87,37 +117,62 @@ $$A \rightarrow B$$ 과정은 QAT 대신 PTQ를 수행한다; QAT는 방대한 �
                 Such that it outperforms the performance of the original model in terms of inference time while retaining accuracy.
 
 ****
-# Challenges and Main Idea💣
-## C1
-- Accelerating a large LM using binarization is accompanied by a non-trivial reduction in accuracy.
-
-## C2
-- How can we wisely remove many redundant parameters in the adaptation phase?
-
-## C3
-- What is the ace in the hole for the combination of model compression and parameter-efficient techniques without sacrificing memory storage?
-
-## Idea
-- Freezes all binarized parameters while just fine-tuning its scaling factor.
-
-****
-# Proposed Method 🧿
-
-
-****
 # Major Takeaways 😃
 - First successful compression-aware parameter-efficient adaptation method
 - Only scaling factors (0.1% of the model size) are enough for successful adaptations
 - High scores even under 4-bit quantization throughout various LMs and downstream tasks
 
 ****
-# Open Reivew 💗
+# Challenges and Main Idea💣
+**C1)** Accelerating a large LM using binarization is accompanied by a non-trivial reduction in accuracy.
+
+**C2)** How can we wisely remove many redundant parameters in the adaptation phase?
+
+**C3)** What is the ace in the hole for the combination of model compression and parameter-efficient techniques without sacrificing memory storage?
+
+**Idea)** Freezes all binarized parameters while just fine-tuning its scaling factor.
+
+****
+# Proposed Method 🧿
+## Quantization for AlphaTuning
+### BCQ Format
+
+### Transformer Quantization
+
+## AlphaTuning: Efficient Fine-Tuning of Quantized Models
+### AlphaTuning Principles
+
+### Training Algorithm
+
+## AlphaTuning for GPT-2
+### Adaptation Details
+
+### Comparison with Fine-Tuning and LoRA
+
+### Comparison with $$A \rightarrow C \rightarrow D in Figure 1.
+
+### Hyper-Parameter Selection
 
 ****
 # Experiment 👀
+## GPT-2 Models on DART and E2E
+## OPT Models on MNLI and SAMSum
+
+****
+# Open Reivew 💗
+
+****
+# Discussion 🍟
+## Memory during Adaptation
+
+## Embedding Layers
+
+## Inference Speed
+
 
 ****
 # Conclusion ✨
 
 ****
 # Reference
+[P-tuning](https://velog.io/@seopbo/GPT-Understands-Too)
