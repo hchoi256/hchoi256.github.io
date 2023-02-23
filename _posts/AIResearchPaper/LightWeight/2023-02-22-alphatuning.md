@@ -76,11 +76,7 @@ AlphaTuning은 (1)주어진 parameters을 `binary values`와 `scaling factors`�
 
 $$A \rightarrow B$$ 과정은 QAT 대신 PTQ를 수행한다; QAT는 방대한 데이터셋에 대해 훈련 시 computational overhead가 엄청나다.
 
-<span style="color:red">
-
-QAT 경우 overhead 줄일 수만 있다면, PTQ를 대체해도 좋을까?
-
-</span>
+<span style="color:red"> QAT 경우 overhead 줄일 수만 있다면, PTQ를 대체해도 좋을까?</span>
 
 ****
 # Problem Definition ✏
@@ -110,6 +106,9 @@ QAT 경우 overhead 줄일 수만 있다면, PTQ를 대체해도 좋을까?
 
 ****
 # Major Takeaways 😃
+- First successful compression-aware parameter-efficient adaptation method
+- Only scaling factors (0.1% of the model size) are enough for successful adaptations
+- High scores even under 4-bit quantization throughout various LMs and downstream tasks
 
 ****
 # Open Reivew 💗
