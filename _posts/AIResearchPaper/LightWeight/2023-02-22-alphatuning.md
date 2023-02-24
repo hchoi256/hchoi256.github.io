@@ -74,9 +74,9 @@ AlphaTuning은 (1)주어진 parameters을 `binary values`와 `scaling factors`�
 
 이후, (2)binary values는 freeze하고, 작은 메모리 부분만을 차지하는 scaling factors에 대해서만 fine-tuning을 진행하여 추론 속도를 accelerate한다.
 
-$$A \rightarrow B$$ 과정은 QAT 대신 PTQ를 수행한다; QAT는 방대한 데이터셋에 대해 훈련 시 computational overhead가 엄청나다.
+A $$\rightarrow$$ B 과정은 QAT 대신 PTQ를 수행한다; QAT는 방대한 데이터셋에 대해 훈련 시 computational overhead가 엄청나다.
 
-<span style="color:blue"> QAT 경우 overhead 줄일 수만 있다면, PTQ를 대체해도 좋을까?</span>
+<span style="color:yellow"> QAT 경우 overhead 줄일 수만 있다면, PTQ를 대체해도 좋을까?</span>
 
 ****
 # Related Work 😉
@@ -135,9 +135,51 @@ Quantization은 근본적인 초거대 언어모델에 대한 공간 및 계산 
 ****
 # Proposed Method 🧿
 ## Quantization for AlphaTuning
+본 논문은 느리고, 비싼 QAT 기법 대신, PTQ 기법 중 `Binary Coding Quantization (BCQ)`라 불리는 binarization 기법을 활용한다.
+
+Binary 양자화는 극단적인 lower precision을 취함으로써, 극강의 압출률을 달성할 수 있지만, 정확성을 많이 잃기 마련이다.
+
 ### BCQ Format
+![image](https://user-images.githubusercontent.com/39285147/221071718-3299a693-964b-4baa-8a7c-6cfb6fd5f507.png)
+
+                q 증가할수록, 정확도 상승 | g 증가할수록 압축률 손해
+
+- Weight vectors: $$w \in \mathbb{R}^g \approx \Sigma^{q}_{i=1}\alpha_i b_i$$.
+    - 1 $$q$$: the number of quantization bits.
+    - 2 $$\alpha \in \mathbb{R}$$ a scaling factor to be shared by $$g$$ weights.
+    - 3 $$b \in \{-1,+1\}^g$$: a binary vector.
+    - 4 $$g$$: (hyper-parameter) a group size or the number of weights sharing a common sacling factor.
+
+여기서 $$\alpha,\ B_i$$는 하기의 간단한 미분을 통한 수식 연산으로 도출할 수 있다.
+
+![image](https://user-images.githubusercontent.com/39285147/221073463-80dccef8-ae3a-4227-8dd2-72bc9e82cf7f.png)
+
+하여 $$q=1$$의 경우 상기 이미지처럼 손쉬운 연산으로 $$\alpha,\ B_1$$를 도출 가능하고, 나머지 경우는 `greedy approximation` 같은 heuristic methods를 통해 전개한다.
+- `Greedy approximation`: 상기 식에서 $$q>1$$의 경우, $$q=1$$ 경우의 $$\alpha,\ B_1$$ 값 먼저 구하고 나서, $$q=2$$ 경우의 피라미터 구하는 식으로 단계별 전개.
+
+#### Row-wise Quantization
+![image](https://user-images.githubusercontent.com/39285147/221074535-d2ede1e0-4c23-40b6-9732-efbb4adc2db6.png)
+
+For $$W \in \mathbb{R}^{h_out \times h_in},\ g=h_in$$.
+
+Binarization: $$W \approx \Sigma^{q}_{i=1}diag(\alpha_i)*B_i$$.
+
+![image](https://user-images.githubusercontent.com/39285147/221074822-86f3287b-2aa1-4f82-a6f8-3f73392bcbb6.png)
+
+- Input X는 양자화 X: $$B$$가 BCQ 적용되었기에, Input은 굳이 양자화하지 않아도 이진화 전용 XNOR 연산으로 복잡한 FP 연산을 피하기 가능.
+- Activation은 양자화 진행 X 
+    - <span style="color:yellow"> 더 나은 quantization 수준을 위해 activation은 양자화에서 제외한다 하였으나, 사실 binary가 gradient를 표현하지 못해서가 아닐까? </span>
+
+> [XNOR 연산](https://hchoi256.github.io/aipaperlightweight/xnor-net/)
 
 ### Transformer Quantization
+[*Medium-sized GPT-2 model withhidden size($$h$$) of 1024*]
+
+![image](https://user-images.githubusercontent.com/39285147/221075842-1f66a2bc-4460-4703-a745-bc8ba9d551df.png)
+
+상기 이미지를 보면, ACD로 이어지는 AlphaTuning 구조에서 scaling factor만 각기 다른 downstream task에 fine-tuning 되는 모습이다.
+
+여기서, $$h=1024$$임을 감안하면, scaling factor의 row의 크기는 $$q=[1~4]$$인데 이것만 fine-tuning하게 되면 inference 시 상당한 압축 효과를 보일 것이다.
 
 ## AlphaTuning: Efficient Fine-Tuning of Quantized Models
 ### AlphaTuning Principles
@@ -176,3 +218,7 @@ Quantization은 근본적인 초거대 언어모델에 대한 공간 및 계산 
 ****
 # Reference
 [P-tuning](https://velog.io/@seopbo/GPT-Understands-Too)
+
+[BCQ](https://arxiv.org/pdf/2206.09557.pdf)
+
+[XNOR 연산](https://hchoi256.github.io/aipaperlightweight/xnor-net/)
