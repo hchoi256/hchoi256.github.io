@@ -112,15 +112,9 @@ Quantization은 근본적인 초거대 언어모델에 대한 공간 및 계산 
 # Problem Definition ✏
                 Given a large pre-trained language model
 
-                Return a quantized model
+                Return a fine-tuned model after quantizing the PLM
 
-                Such that it outperforms the performance of the original model in terms of inference time while retaining accuracy.
-
-****
-# Major Takeaways 😃
-- First successful compression-aware parameter-efficient adaptation method
-- Only scaling factors (0.1% of the model size) are enough for successful adaptations
-- High scores even under 4-bit quantization throughout various LMs and downstream tasks
+                Such that it outperforms the performance of the quantized model after the adaptation in terms of inference time while retaining accuracy.
 
 ****
 # Challenges and Main Idea💣
@@ -161,6 +155,8 @@ Binary 양자화는 극단적인 lower precision을 취함으로써, 극강의 �
 ![image](https://user-images.githubusercontent.com/39285147/221074535-d2ede1e0-4c23-40b6-9732-efbb4adc2db6.png)
 
 For $$W \in \mathbb{R}^{h_out \times h_in},\ g=h_in$$.
+
+<span style="color:yellow"> CNN에서 Depth-wise convolution처럼 row-wise 대신 group-wise처럼 달리하면 연산량이 더 감축되지 않을까? </span>
 
 Binarization: $$W \approx \Sigma^{q}_{i=1}diag(\alpha_i)*B_i$$.
 
@@ -235,13 +231,22 @@ ACD로 이어지는 AlphaTuning 구조에서 scaling factor만 각기 다른 dow
 
 > 모든 $$\alpha$$를 한 번에 학습하는 것은 **Table 2**에서 볼 수 있듯 marginal gains만을 얻으니, greedy methods 써도 무방하다는 주장인 것 같다.
 
+<span style="color:yellow"> Alternating vs. Greedy; 절대적으로 Greedy가 더 좋다고 말할 수 있나? </span>
+
 각 시도마다 5번 째 epoch에서 test scores을 기록하고, random seed를 바꿔서 마치 cross validation처럼 총 5번의 시도에서 얻은 test scores들의 기대값을 구한다.
 - 각 seed는 사전에 고정되었다.
+
+<span style="color:yellow"> 5번 epoch로 충분한가? </span>
+
+<span style="color:yellow"> Hyper-Parameter 세팅이 달라지면 AlphaTuning의 성능이 역전될수도 있지 않을까? </span>
 
 ****
 # Experiment 👀
 ## GPT-2 Models on DART and E2E
+![image](https://user-images.githubusercontent.com/39285147/221133940-8f8a3722-0892-43d2-8459-bd9c42d4ce89.png)
+
 ## OPT Models on MNLI and SAMSum
+![image](https://user-images.githubusercontent.com/39285147/221133978-a3f60d71-3b5b-46d8-be44-031f13b7c397.png)
 
 ****
 # Open Reivew 💗
@@ -256,7 +261,23 @@ ACD로 이어지는 AlphaTuning 구조에서 scaling factor만 각기 다른 dow
 
 
 ****
+# Major Takeaways 😃
+- First successful compression-aware parameter-efficient adaptation method
+- Only scaling factors (0.1% of the model size) are enough for successful adaptations
+- High scores even under 4-bit quantization throughout various LMs and downstream tasks
+
+****
 # Conclusion ✨
+## Strength
+- Stable performance on **various downstream tasks**
+- **Significant infernece boost** with a binary neural network
+
+## Weakness
+- GPT-2, 1.3B OPT보다 더 큰 초거대 언어모델의 경우에는 성능이 달라질 수 있다 (실험환경 한계).
+    - 본 논문에서는 일반적으로 모델 사이즈가 클수록 압축률이 크고 및 정확도 감소률이 적다는 믿음에 의지한다. 
+- AlphaTuning은 full FT 기법보다 추론 속도가 느리게 나타난다.
+    - 본 논문은 이 한계를 AlphaTuning 학습 방법론에 대한 정보 부족을 한계로 꼽는다.
+- 그 외 포스트에서 <span style="color:yellow"> 노란색 </span>으로 표시된 자가질문들 또한 약점이 될 수도 있다.
 
 ****
 # Reference
