@@ -177,23 +177,66 @@ Binarization: $$W \approx \Sigma^{q}_{i=1}diag(\alpha_i)*B_i$$.
 
 ![image](https://user-images.githubusercontent.com/39285147/221075842-1f66a2bc-4460-4703-a745-bc8ba9d551df.png)
 
-상기 이미지를 보면, ACD로 이어지는 AlphaTuning 구조에서 scaling factor만 각기 다른 downstream task에 fine-tuning 되는 모습이다.
+상기 이미지에서 Transformer의 weights가 상당한 memory footprint를 차지하는 모습이다.
 
-여기서, $$h=1024$$임을 감안하면, scaling factor의 row의 크기는 $$q=[1~4]$$인데 이것만 fine-tuning하게 되면 inference 시 상당한 압축 효과를 보일 것이다.
+하여 weights에 대해서 양자화 및 fine-tuning을 진행하고자 한다.
+
+ACD로 이어지는 AlphaTuning 구조에서 scaling factor만 각기 다른 downstream task에 fine-tuning 되는 모습이다.
+
+여기서, $$h=1024$$임을 감안하면, scaling factor의 row의 크기는 $$q=[1~4]$$인데 이것만 fine-tuning하게 되면 inference 시 행렬 곱셈 연산에서 상당한 압축 효과를 보일 것이다.
 
 ## AlphaTuning: Efficient Fine-Tuning of Quantized Models
 ### AlphaTuning Principles
+- **Fine-tunes** scaling factor(= affine parameter)
+- **Freezes** biases, binary values B, and those of the normalization layer and embedding layer
 
-### Training Algorithm
+#### Training Algorithm
+![image](https://user-images.githubusercontent.com/39285147/221127362-968e9b8b-771b-46e7-89cd-8858d622d964.png)
 
-## AlphaTuning for GPT-2
-### Adaptation Details
+- .$$\mathbb{I}$$: $$h_{out}$$-long all-ones vector.
+- .$$g_L$$: group size.
 
-### Comparison with Fine-Tuning and LoRA
+순/역전파 모두 quantized values 기반 학습을 수행한다.
 
-### Comparison with $$A \rightarrow C \rightarrow D in Figure 1.
+`(3)` 역전파 과정에서 Chain Rule 기반 편미분으로 피라미터들의 미분식을 도출할 수 있고, `(4)` $$g_L$$로 $$\alpha$$ updates가 크게 변동하는 현상을 최소화하여 성능의 안정성를 도모한다.
 
-### Hyper-Parameter Selection
+하여 scaling factor에 대한 fine-tuning을 downstream task에 대해 진행하게 된다.
+
+### AlphaTuning for GPT-2
+[*GPT-2 medium and larnge on WebNLG dataset*]
+
+![image](https://user-images.githubusercontent.com/39285147/221097697-1b331cbd-c140-4be0-a548-4b48013aef57.png)
+
+![image](https://user-images.githubusercontent.com/39285147/221127662-b7ccffe5-883f-436e-b7ac-3685df2a7040.png)
+
+![image](https://user-images.githubusercontent.com/39285147/221128028-ca00202d-dad8-4dbe-b34b-8276084241b8.png)
+
+![image](https://user-images.githubusercontent.com/39285147/221129587-7228534d-7689-4856-912a-dd3aac2c6f2e.png)
+
+상기 이미지들은 GPT-2 M, L 모델 성능 지표로써, AlphaTuning이 Figure 1) $$A \rightarrow C \rightarrow D$$ 방식인 LoRA 및 단순 FT보다 BLEU 정확성은 거진 근사하면서 압축률을 크게 낮춘 모습이다.
+- 학습가능한 parameters 크기 감소.
+- BLUE 지표 경쟁 모델들에 근사
+
+결과적으로 AlphaTuning with the 3-bit quantization가 가장 성능이 우수한 것으로 나타난다.
+
+![image](https://user-images.githubusercontent.com/39285147/221132720-3477e84b-c2d8-4c7b-bfa0-961a2059e05b.png)
+
+- `Learning rate`와 `weight decay factor`는 본 논문에서 직접 best 값을 찾아 고정값으로 이용하였고, 나머지 모든 hyper-parameters는 **(Hu et al., 2022) for WebNLG** 논문에서 지정한 값을 고정으로 사용한다.
+
+#### Hyper-Parameter Selection
+![image](https://user-images.githubusercontent.com/39285147/221125934-7b4d747f-07d2-44ee-8b01-80314d84ecad.png)
+
+모델 학습에 활용되는 다른 hyper-parameter 구성에 대한 실험도 진행되었다. 
+
+앞서 언급했던 것처럼, $$\alpha_i$$는 greedy methods를 통해 순차적으로 구해진다.
+- Linear decay learning rate w/o dropout.
+
+<span style="color:yellow"> scaling factors에 대해서도 threshold를 부여하여 기준치 미달 node들은 dropout 처리해도 되지않을까? </span>
+
+> 모든 $$\alpha$$를 한 번에 학습하는 것은 **Table 2**에서 볼 수 있듯 marginal gains만을 얻으니, greedy methods 써도 무방하다는 주장인 것 같다.
+
+각 시도마다 5번 째 epoch에서 test scores을 기록하고, random seed를 바꿔서 마치 cross validation처럼 총 5번의 시도에서 얻은 test scores들의 기대값을 구한다.
+- 각 seed는 사전에 고정되었다.
 
 ****
 # Experiment 👀
