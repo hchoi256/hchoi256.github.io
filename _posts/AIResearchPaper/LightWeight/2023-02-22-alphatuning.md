@@ -250,15 +250,7 @@ ACD로 이어지는 AlphaTuning 구조에서 scaling factor만 각기 다른 dow
 
 ****
 # Open Reivew 💗
-
-****
-# Discussion 🍟
-## Memory during Adaptation
-
-## Embedding Layers
-
-## Inference Speed
-
+TBD
 
 ****
 # Major Takeaways 😃
