@@ -139,10 +139,10 @@ Binary 양자화는 극단적인 lower precision을 취함으로써, 극강의 �
                 q 증가할수록, 정확도 상승 | g 증가할수록 압축률 손해
 
 - Weight vectors: $$w \in \mathbb{R}^g \approx \Sigma^{q}_{i=1}\alpha_i b_i$$.
-    - 1 $$q$$: the number of quantization bits.
-    - 2 $$\alpha \in \mathbb{R}$$ a scaling factor to be shared by $$g$$ weights.
-    - 3 $$b \in \{-1,+1\}^g$$: a binary vector.
-    - 4 $$g$$: (hyper-parameter) a group size or the number of weights sharing a common sacling factor.
+    - $$q$$: the number of quantization bits.
+    - $$\alpha \in \mathbb{R}$$ a scaling factor to be shared by $$g$$ weights.
+    - $$b \in \{-1,+1\}^g$$: a binary vector.
+    - $$g$$: (hyper-parameter) a group size or the number of weights sharing a common sacling factor.
 
 여기서 $$\alpha,\ B_i$$는 하기의 간단한 미분을 통한 수식 연산으로 도출할 수 있다.
 
