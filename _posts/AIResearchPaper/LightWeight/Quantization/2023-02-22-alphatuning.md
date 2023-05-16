@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "[논문분석] AlphaTuning: Quantization-Aware Parameter-Efficient Adaptation of Large-Scale Pre-Trained Language Models"
-categories: Others
+categories: AIPaperLightWeight
 tag: [Model Compression, AlphaTuning, Quantization, Pruning]
 toc: true
 toc_sticky: true
