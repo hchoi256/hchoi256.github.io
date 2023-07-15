@@ -2,7 +2,7 @@
 layout: single
 title: "[논문 분석] End-to-End Object Detection with Transformers (ECCV 2020)"
 categories: AIPaperCV
-tag: [Object Detection, Transformer]
+tag: [Computer Vision, Object Detection, Transformer]
 toc: true
 toc_sticky: true
 toc_label: "쭌스log"
@@ -17,27 +17,37 @@ sidebar:
 
 ****
 # 배경 🙌
-**Object detection**은 분류를 위한 cateogry box를 생성하는 과정이다.
+**Object detection**은 Classification과 Localization을 합친 것으로, 사진속 객체에 대해 클래스 분류와 bounding box 위치를 표현하는 것을 말한다.
 
-현대 detectors들은 *간접적인 방법*(hand-designed = 사전작업)으로 객체 탐지를 구현했다: anchors, non-maximal suppression, window centers, 대용량 proposals, etc.
+이전 객체탐지 방법들은 사진속 객체가 존재할 것 같은 후보영역을 차출하기 위해 *간접적인 방법*으로 객체 탐지를 구현했다.
+- Two-stage (속도 느림, 정확성 좋음):
+    - **RCNN, Fast RCNN**: Selective Search
+    - **Faster RCNN**: Sliding window, Anchor boxes, RPN
+- One-stage (속도 빠름, 정확성 나쁨):
+    - **YOLO**: grid division
+
+> Non-maximal suppression: 객체별 가장 높은 예측 확률을 보인 bounding box를 기준으로 중복되는 다른 boxes를 제거하는 기법.  
 
 > **Non-Maximum Suppression**
 >> ![image](https://user-images.githubusercontent.com/39285147/197414699-970639a6-076d-4b2b-b1de-763931c9082e.png)
+>>
 >> object detector가 예측한 bounding box 중에서 정확한 bounding box를 선택하도록 하는 기법
+>>
+>> 객체별 가장 높은 예측 확률을 보인 bounding box를 기준으로 중복되는 다른 boxes를 제거하는 기법. 
 
 이러한 간접적인 방법들은 *후처리*(오차 예측 및 제거)에 막대하게 영향을 받는다.
 
-> 오차: 실제값 - 예측값
-
 때문에 기존 모델들은 여러 가지 복잡한 예측 문제에 대한 객체 탐지 문제에서 한계를 나타낸다.
 
-이러한 간접적인 pipeline(과정)에서의 surrogate tasks를 간소화하기 위해 등장한 것이 **direct set prediction 방법**이다.
+이러한 간접적인 pipeline(과정)에서 정확한 결과를 낼 수 없어 NMS같은 추가적인 후처리의 힘을 빌리는 surrogate tasks를 간소화하기 위해 등장한 것이 **direct set prediction 방법**이다.
 
-> **Surrogate**: output이 정확히 측정될 수 없을 때, 대신 output 기준을 제공
+> **Surrogate**: output이 정확히 측정될 수 없을 때, 대신 output 기준을 제공한다.
+
+우리가 흔히 아는 집합(set)은 하나의 집합 안에 중복되는 요소가 없다는 것이 특징이다.
+
+Direct set prediction은 이러한 집합의 특성을 이용하여, 하나의 객체에 대해 단 하나의 bounding box만 매칭되는 것을 도와 중복되는 box의 생성을 회피하여 NMS 같은 후처리의 의존성에서 벗어난다.
 
 이번 논문 주제인 **DETR(DEtection TRansformer)**은 direct set prediction(bipartite matching loss) 방법과 Transformer(non-autoregressive)을 결합한 방법이다.
-
-상기 언급된 용어들에 대해 알아보자.
 
 ****
 # INTRODUCTION 👀
