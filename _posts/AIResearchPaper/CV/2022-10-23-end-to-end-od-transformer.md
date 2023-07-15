@@ -43,9 +43,11 @@ sidebar:
 
 > **Surrogate**: output이 정확히 측정될 수 없을 때, 대신 output 기준을 제공한다.
 
-우리가 흔히 아는 집합(set)은 하나의 집합 안에 중복되는 요소가 없다는 것이 특징이다.
+우리가 흔히 아는 집합(set)은 하나의 집합 안에 중복되는 요소가 없고 순서의 제약이 없는 것이 특징이다.
 
 Direct set prediction은 이러한 집합의 특성을 이용하여, 하나의 객체에 대해 단 하나의 bounding box만 매칭되는 것을 도와 중복되는 box의 생성을 회피하여 NMS 같은 후처리의 의존성에서 벗어난다.
+- 순서 제약 없음: 각 객체별 병렬성 보장
+- 중복 회피: 객체별 독립적인 하나의 bounding box 가짐.
 
 이번 논문 주제인 **DETR(DEtection TRansformer)**은 direct set prediction(bipartite matching loss) 방법과 Transformer(non-autoregressive)을 결합한 방법이다.
 
@@ -63,28 +65,33 @@ Direct set prediction은 이러한 집합의 특성을 이용하여, 하나의 �
 
 상기 이분 그래프에서, 좌측은 이분 그래프이지만 이분 매칭은 아니고 우측은 둘다 맞다.
 
-- ground truth boxes를 사용해 독립적 예측을 한다.
-    - no match: "no object"
-- uniquely assigns a prediction to a ground truth object
+- 중복 회피
+    - Transformer 학습 시, ground truth와 디코더의 인풋인 object query가 각각의 객체와 대응되는 독립적 예측을 가능케 한다.
+    - object query: 디코더 인풋으로 인코더 출력으로부터 정보를 받아 사진속 각 객체에 대한 클래스와 box 위치 정보를 학습한다.
+        - 디코더 인풋인 object qeury의 개수($N$)는 사전에 지정되는 하이퍼 파라미터로써 사진속에 존재할 것으로 생각되는 총 객체 개수보다 크게 잡는다(논문에서는 100개의 object query를 사용).
+- 순서 제약 없음
+    - uniquely assigns a prediction to a ground truth object
     - 객체에 대한 예측값 순열 불변(invariant) --> 객체별 parallellism 보장
         - 개별적으로 GT(ground truth) object와 예측 object에 대한 loss를 가지고 있어서 예측된 object의 순서에 상관이 없어 병렬화가 가능
-    - 반대로 기존 RNN 모델 = autoregressive decoding(object 순서 O) --> 객체별 parallellism 보장 X
-- set loss function(하기 참조)
 
 > **Gound-truth**
 >> ![image](https://user-images.githubusercontent.com/39285147/197421710-7405f615-8cfb-40b7-bd86-3ee8f7346a96.png)
+>>
 >> 데이터의 원본 혹은 실제 값 표현
 
-### Set loss function
-- performs bipartite matching between predicted and ground-truth objects.
-    - 다르게 말하면, 하나의 object에 대하여 각각 독립적으로 GT 및 예측값 이분 매칭 수행
-- [Hungarian algorithm](https://gazelle-and-cs.tistory.com/29)
+> 참고로 기존 RNN 모델은 autoregressive decoding 기반이라 object 순서가 존재해서 객체별 parallellism이 보장되지 않는다.
 
-> **Hungarian algorithm**
+### Set loss function
+- 이분매칭(bipartite matching)을 예측값과 GT값에 대해 수행한다.
+    - 예측값과 GT는 모두 (class, box 위치) 형식을 갖는다.
+        - box 위치는 (x,y,w,h) 형식으로 제공된다; x와 y는 box의 중앙이고, w와 h는 해당 box의 각각 너비와 높이이다.
+    - DETR 모델의 목적함수(Hungarian algorithm)로 사용된다.
+
+> [Hungarian algorithm](https://gazelle-and-cs.tistory.com/29)
+>
 >> 가중치가 있는 이분 그래프(weighted bitarted graph)에서 maximum weight matching을 찾기 위한 알고리즘
 
-### COCO
-- one of the most popular object detection datasets
+> **COCO**: one of the most popular object detection datasets
 
 ****
 # DETR Model ✒
