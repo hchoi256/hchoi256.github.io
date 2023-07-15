@@ -91,7 +91,7 @@ Direct set prediction은 이러한 집합의 특성을 이용하여, 하나의 �
 >
 >> 가중치가 있는 이분 그래프(weighted bitarted graph)에서 maximum weight matching을 찾기 위한 알고리즘
 
-> **COCO**: one of the most popular object detection datasets
+> **COCO**: one of the most popular object detection datasets.
 
 ****
 # DETR Model ✒
@@ -100,13 +100,12 @@ Direct set prediction은 이러한 집합의 특성을 이용하여, 하나의 �
 - extra-long training schedule
 - auxiliary decoding losses in the transformer
 
-> **자기회귀(AR; Autoregressive)**
->> 과거의 움직임에 기반 미래 예측
+> **자기회귀(AR; Autoregressive)**: 과거의 움직임에 기반 미래 예측.
 
 ## Set Prediction
 **Indirect Set Prediction**
 - multilabel classification (postprocessing)
-    - near-identical boxes 해결 어렵
+    - 사진속 객체가 애매하게 겹쳐있는 영역의 near-identical boxes들은 분류 문제 해결이 어렵다.
 
 **Direct Set Prediction**
 - postprocessing-free
@@ -116,17 +115,24 @@ Direct set prediction은 이러한 집합의 특성을 이용하여, 하나의 �
     - permutation-invariance
 
 ## Object Detection Set Prediction Loss
-![image](https://user-images.githubusercontent.com/39285147/197422840-8c8770b5-895b-4c82-b967-da083a62c4df.png)- bipartite matching loss + transformers (non-autoregressive) parallel decoding
+![image](https://user-images.githubusercontent.com/39285147/197422840-8c8770b5-895b-4c82-b967-da083a62c4df.png)
 
+- bipartite matching loss + transformers (non-autoregressive) parallel decoding
 - loss = 최적 bipartite matching(예측값 ~ GT)
-    - 최적 bipartite matching = 예측값 ~ 실제값 매칭 방법 중 최저 비용을 갖는 매칭
-    - Hungarian algorithm을 통해 효율적으로 찾을 수 있다
+    - Hungarian algorithm: 최적 bipartite matching을 탐색한다.
 
-> **Hungarian algorithm**
->> ![image](https://user-images.githubusercontent.com/39285147/197422872-acf77efd-3103-4008-921c-f62aa22a13fc.png)
+### Hungarian algorithm
+![image](https://user-images.githubusercontent.com/39285147/197422872-acf77efd-3103-4008-921c-f62aa22a13fc.png)
+- $\mathbb{1}_{\{c_i \neq \empty \}}$: 클래스 $c_i$가 존재하면 1, 아니면 0.
+- $\hat{p}_{\hat{\sigma}(i)}(c_i)$: 클래스 $c_i$을 예측할 확률.
+- $\mathcal{L}_{box}(b_i,\hat{b}_{\hat{\sigma}(i)})$: bounding box 손실값.
+    - $b_i$: i 번째 GT 정답값의 bounding box (x,y,w,h).
+    - $\hat{b}_{\hat{\sigma}(i)}$:  i번째 object query 예측값의 bounding box (x,y,w,h).
 
-> **Bounding box loss**![image](https://user-images.githubusercontent.com/39285147/197450096-d32373ac-9af3-4085-b473-60372b5f0406.png)
->> ![image](https://user-images.githubusercontent.com/39285147/197422932-1866e001-8086-4f89-a231-4582d8e304d2.png)
+#### Bounding box loss $\mathcal{L}_{box}$.
+![image](https://user-images.githubusercontent.com/39285147/197422932-1866e001-8086-4f89-a231-4582d8e304d2.png)
+- $L1$: l1 normalization.
+- $\lambda$: 하이퍼 파라미터
 
 > **IoU**
 >> ![image](https://user-images.githubusercontent.com/39285147/197422984-634e754a-c7db-47fd-9eaa-2523296a2057.png)
@@ -134,35 +140,43 @@ Direct set prediction은 이러한 집합의 특성을 이용하여, 하나의 �
 ## DETR Architecture
 ![image](https://user-images.githubusercontent.com/39285147/197422990-0d50e9ab-0866-40d2-9940-ff3ffb91fdde.png)
 
-## Backbone
+## 1) Backbone
 - feature extraction
+    - 각 객체에 대한 특징이 아닌 이미지 전체에 대한 특징 추출.
 
-## Transformer Encoder
-- feature maps 생성 과정
+## 2) Transformer Encoder
+- Encoder에서는 이미지 특징들 간의 상호 연관성과 위치 정보에 대한 문맥 정보 이해한다.
+- CNN 출력을 flatten하여 1차원의 Transformer 인코더 인풋 형식으로 맞춰준다.
 - 기존 transformer encoder에 **positional encoding** 추가
     - 덕분에 autoregressive와 다르게 인풋 순서 상관 안 써도됨
 
-## Transformer Decoder
-**기존 Transformer**
+## 3) Transformer Decoder
+**기존 Transformer Decoder**
 - autoregressive (output sequence를 ***하나하나*** 넣어주는 방식) 
 - pairwise interactions between elements in a sequence
 - duplicate predictions 제거 가능
 
-**새로운 Transformer**
-- ***한번에*** N개의 obejct를 병렬 예측
+**새로운 Transformer Decoder**
+- **한번에** $N$개의 obejct를 병렬 예측.
     - 1) Input embedding
-        - *object query(positional encoding)* 통해 표현
+        - *object query(positional encoding)* 통해 표현 (초기 랜덤값).
     - 2) N개의 object query는 디코더에 의해 output embedding으로 변환
     - 3) N개의 마지막 예측값들 산출
     - 4) self/encoder-decoder간 어텐션을 통해 각 object 간의 global 관계 학습
+        - self-attention: 각각의 object query가 서로 독립적으로 학습되도록 함.
+        - Encoder-Decoder Attention: 각각의 object query가 사진속 각각의 객체 정보를 학습한다. 
 
-## Prediction FFN
-- 최종 디텍션 예측
-- 3개의 perceptron, ReLU, linea projection으로 구성
+## 4) Prediction FFN
+- FFN = linear layer1(박스위치회귀) --> 활성화 함수 --> linear layer2(클래스 예측).
+- 최종 detection 예측; 바운딩 박스와 클래스 예측을 동시에 수행
 - Procedure
-    - 1) FFN --> 상대적인 중앙값 예측
-    - 2) linear layer --> softmax로 class 예측
+    - 1) **box 위치 예측**: FFN --> 상대적인 중앙값 예측
+    - 2) **클래스 예측**: linear layer --> softmax로 class 예측
         - 실제 object 외 class = ∅
+
+> FFN(Feed-Forward Network)은 일반적으로 신경망 구조에서 사용되는 개념으로, 두 개의 선형 변환(Linear Transformation) 레이어와 활성화 함수(Activation Function)로 구성됩니다. FFN은 입력값을 받아서 비선형 변환을 수행하고 출력값을 생성하는 역할을 합니다. FFN은 주로 특성 추출이나 비선형 매핑을 위해 사용되며, 여러 개의 히든 레이어를 가질 수 있습니다.
+
+> Linear Layer는 FFN의 한 종류로, 선형 변환(Linear Transformation)만 수행하는 레이어입니다. Linear Layer는 입력 벡터와 가중치 행렬 간의 행렬 곱셈 연산을 수행한 후, 편향(bias)을 더하고 활성화 함수를 적용하지 않고 그대로 출력합니다. Linear Layer는 입력 데이터에 대한 선형 변환을 수행하는 단순한 레이어입니다.
 
 ## Auxiliary decoding losses
 - 알맞은 개수의 object 예측 가능
@@ -170,19 +184,17 @@ Direct set prediction은 이러한 집합의 특성을 이용하여, 하나의 �
     - 모든 prediction FFN은 같은 파라미터를 사용
 - 다른 decoder layer의 input 정규화를 위해 layer norm 추가
 
-> **FFN**
->> simple feed forward network(FFN)
-
 ****
 # Experiments ✏
 
 ## 성능 비교: Faster R-CNN and RetinaNet
 ![image](https://user-images.githubusercontent.com/39285147/197423492-347a9b5f-f3d1-4555-b6b4-d3bb0679dc22.png)
 
-- Faster RCNN과 비슷한 성능
-
 $$AP: Average Precision$$
+
 $$AP_50: IoU > 50(correct)$$
+
+- DETR은 속도가 느린대신 정확도가 높은 Two-stage 방법인 Faster RCNN과도 심지어 비슷한 성능을 낸다.
 
 ****
 # 요약 ✔
