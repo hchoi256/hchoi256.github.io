@@ -26,8 +26,6 @@ sidebar:
 - One-stage (속도 빠름, 정확성 나쁨):
     - **YOLO**: grid division
 
-> Non-maximal suppression: 객체별 가장 높은 예측 확률을 보인 bounding box를 기준으로 중복되는 다른 boxes를 제거하는 기법.  
-
 > **Non-Maximum Suppression**
 >> ![image](https://user-images.githubusercontent.com/39285147/197414699-970639a6-076d-4b2b-b1de-763931c9082e.png)
 >>
@@ -68,7 +66,7 @@ Direct set prediction은 이러한 집합의 특성을 이용하여, 하나의 �
 - 중복 회피
     - Transformer 학습 시, ground truth와 디코더의 인풋인 object query가 각각의 객체와 대응되는 독립적 예측을 가능케 한다.
     - object query: 디코더 인풋으로 인코더 출력으로부터 정보를 받아 사진속 각 객체에 대한 클래스와 box 위치 정보를 학습한다.
-        - 디코더 인풋인 object qeury의 개수($N$)는 사전에 지정되는 하이퍼 파라미터로써 사진속에 존재할 것으로 생각되는 총 객체 개수보다 크게 잡는다(논문에서는 100개의 object query를 사용).
+        - 디코더 인풋인 object qeury의 개수($$N$$)는 사전에 지정되는 하이퍼 파라미터로써 사진속에 존재할 것으로 생각되는 총 객체 개수보다 크게 잡는다(논문에서는 100개의 object query를 사용).
 - 순서 제약 없음
     - uniquely assigns a prediction to a ground truth object
     - 객체에 대한 예측값 순열 불변(invariant) --> 객체별 parallellism 보장
@@ -110,7 +108,7 @@ Direct set prediction은 이러한 집합의 특성을 이용하여, 하나의 �
 **Direct Set Prediction**
 - postprocessing-free
     - *global inference schemes* model interactions between all predicted elements to avoid redundancy.
-- Auto-regressive sequence models (i.e., recurrent neural networks)
+- Non-autoregressive sequence models (i.e., recurrent neural networks)
     - bipartite matching loss            
     - permutation-invariance
 
@@ -123,16 +121,16 @@ Direct set prediction은 이러한 집합의 특성을 이용하여, 하나의 �
 
 ### Hungarian algorithm
 ![image](https://user-images.githubusercontent.com/39285147/197422872-acf77efd-3103-4008-921c-f62aa22a13fc.png)
-- $\mathbb{1}_{\{c_i \neq \empty \}}$: 클래스 $c_i$가 존재하면 1, 아니면 0.
-- $\hat{p}_{\hat{\sigma}(i)}(c_i)$: 클래스 $c_i$을 예측할 확률.
-- $\mathcal{L}_{box}(b_i,\hat{b}_{\hat{\sigma}(i)})$: bounding box 손실값.
-    - $b_i$: i 번째 GT 정답값의 bounding box (x,y,w,h).
-    - $\hat{b}_{\hat{\sigma}(i)}$:  i번째 object query 예측값의 bounding box (x,y,w,h).
+- $$\mathbb{1}_{\{c_i \neq \empty \}}$$: 클래스 $$c_i$$가 존재하면 1, 아니면 0.
+- $$\hat{p}_{\hat{\sigma}(i)}(c_i)$$: 클래스 $$c_i$$을 예측할 확률.
+- $$\mathcal{L}_{box}(b_i,\hat{b}_{\hat{\sigma}(i)})$$: bounding box 손실값.
+    - $$b_i$$: i 번째 GT 정답값의 bounding box (x,y,w,h).
+    - $$\hat{b}_{\hat{\sigma}(i)}$$:  i번째 object query 예측값의 bounding box (x,y,w,h).
 
-#### Bounding box loss $\mathcal{L}_{box}$.
+#### Bounding box loss $$\mathcal{L}_{box}$$.
 ![image](https://user-images.githubusercontent.com/39285147/197422932-1866e001-8086-4f89-a231-4582d8e304d2.png)
-- $L1$: l1 normalization.
-- $\lambda$: 하이퍼 파라미터
+- $$L1$$: l1 normalization.
+- $$\lambda$$: 하이퍼 파라미터
 
 > **IoU**
 >> ![image](https://user-images.githubusercontent.com/39285147/197422984-634e754a-c7db-47fd-9eaa-2523296a2057.png)
@@ -157,7 +155,7 @@ Direct set prediction은 이러한 집합의 특성을 이용하여, 하나의 �
 - duplicate predictions 제거 가능
 
 **새로운 Transformer Decoder**
-- **한번에** $N$개의 obejct를 병렬 예측.
+- **한번에** $$N$$개의 obejct를 병렬 예측.
     - 1) Input embedding
         - *object query(positional encoding)* 통해 표현 (초기 랜덤값).
     - 2) N개의 object query는 디코더에 의해 output embedding으로 변환
@@ -186,7 +184,6 @@ Direct set prediction은 이러한 집합의 특성을 이용하여, 하나의 �
 
 ****
 # Experiments ✏
-
 ## 성능 비교: Faster R-CNN and RetinaNet
 ![image](https://user-images.githubusercontent.com/39285147/197423492-347a9b5f-f3d1-4555-b6b4-d3bb0679dc22.png)
 
