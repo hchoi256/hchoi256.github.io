@@ -1,8 +1,8 @@
 ---
 layout: single
-title: "[논문 분석] RCNN"
+title: "[논문 분석] Fast RCNN"
 categories: AIPaperCV
-tag: [Computer Vision, Object Detection, RCNN]
+tag: [Computer Vision, Object Detection, Fast RCNN]
 toc: true
 toc_sticky: true
 toc_label: "쭌스log"
