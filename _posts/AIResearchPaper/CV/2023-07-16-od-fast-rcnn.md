@@ -15,8 +15,12 @@ sidebar:
 
 [**논문**](https://arxiv.org/abs/1311.2524)
 
+![image](https://github.com/hchoi256/ai-boot-camp/assets/39285147/5bcd93a8-6a4e-489b-ad8e-516fa960d025)
+
 ****
 # 한줄요약 ✔
+![image](https://github.com/hchoi256/ai-boot-camp/assets/39285147/5e742b19-1f41-4b5b-b0c8-81afd5cef645)
+
 - 인풋 이미지를 **CNN을 1회 적용**하여 특징맵 추출 후 selective search로 region proposals 진행. 
 - **RoI(Region of Interest)**: R-CNN과 달리 CNN 인풋으로 사용하기 위해 각 후보영역을 warping하는 과정 생략
 - **Multi-task Loss**: 모델을 개별 학습 시키지 않고 end-to-end로 한 번에 학습.
@@ -35,17 +39,44 @@ R-CNN 모델은 2000장의 region proposals를 CNN 모델에 입력시켜 각각
 ****
 # Proposed Method 🧿
 ## Fast-R-CNN 작동 방식
-1. **Selective Search**: region proposals 사전 추출
-2. **CNN**: 인풋 이미지를 CNN에 통과하여 feature map 획득
+1. [**Selective Search**](#selective-search): region proposals 사전 추출
+2. [**CNN**](#pre-trained-network): 인풋 이미지를 CNN에 통과하여 feature map 획득
 3. **RoI Projection**: 1에서 생성한 region proposals들을 feature map에 서브 샘플링 비율에 맞게 조정하여 projection.
-4. **RoI pooling layer**: 동일한 크기의 인풋을 받는 FNN의 인풋으로써 사용하기 위해 생성한 서로 다른 RoI를 동일한 고정 길이의 특징으로 변환.
+4. [**RoI pooling layer**](#roi-pooling-layer): 동일한 크기의 인풋을 받는 FNN의 인풋으로써 사용하기 위해 생성한 서로 다른 RoI를 동일한 고정 길이의 특징으로 변환.
 -  RoI 영역을 고정된 크기의 그리드로 분할하고, 각 그리드 셀 내에서 최댓값을 추출하여 피처맵을 생성합니다. 이렇게 추출된 최댓값들은 동일한 크기의 고정된 특징 벡터로 구성됩니다.
-5. **첫 번째 FC(Fully-Connected) 레이어**: 분류를 위한 FC 레이어, 활성화 함수 포함
-6. **두 번째 FC(Fully-Connected) 레이어**: 바운딩 박스 회귀를 위한 FC 레이어, 활성화 함수 포함
-7. 클래스 예측 (각 클래스의 확률)
-8. 바운딩 박스 회귀 (각 바운딩 박스의 좌표 조정 값)
+5. [FC Layers](#fc-layers)
+- **첫 번째 FC(Fully-Connected) 레이어**: 분류를 위한 FC 레이어, 활성화 함수 포함
+- **두 번째 FC(Fully-Connected) 레이어**: 바운딩 박스 회귀를 위한 FC 레이어, 활성화 함수 포함
+7. [클래스 예측 (각 클래스의 확률)](#class-prediction)
+8. [바운딩 박스 회귀 (각 바운딩 박스의 좌표 조정 값)](#bounding-box-regressor)
+9. [NMS](#non-maximum-supression)
+
+## Selective Search
+            Input : image
+            Process : Selective search
+            Output : 2000 region proposals 
+
+## Pre-trained Network
+            Input : 224x224x3 sized image
+            Process : feature extraction by VGG16
+            Output : 14x14x512 feature maps
+
+![image](https://github.com/hchoi256/ai-boot-camp/assets/39285147/586be0c5-1f2b-4711-833f-4ac4d5b71912)
+
+- Fast R-CNN은 피처맵 추출을 위해 VGG16 모델을 사용한다.
+    - VGG16의 마지막 Max polling layer $$\rightarrow$$ RoI pooling layer 교체
+    - VGG16의 마지막 fc layers를 class 예측과 box 회귀 결과를 리턴하도록 수정.
+    - VGG16가 image와 Region proposals라는 두 가지 입력을 갖도록 수정
+    - conv layer3까지의 가중치값은 고정(freeze)하고 fine tuning.
+        - 논문의 저자는 fc layer만 fine tuning했을 때보다 conv layer까지 포함시켜 학습시켰을 때 더 좋은 성능을 보인다.
+ 
+> R-CNN은 CNN부분에서 AlexNet를 사용했다.
 
 ## RoI Pooling Layer
+            Input : 14x14 sized 512 feature maps, 2000 region proposals
+            Process : RoI pooling
+            Output : 7x7x512 feature maps
+
 ![image](https://github.com/hchoi256/ai-boot-camp/assets/39285147/aee8c60d-4cd9-4bf0-8b9d-a315714502cd)
 
 Feature map에서 region proposals에 해당하는 관심 영역(Region of Interest)을 지정한 크기의 grid로 나눈 후 max pooling을 수행하는 방법이다.
@@ -58,16 +89,14 @@ Feature map에서 region proposals에 해당하는 관심 영역(Region of Inter
 - $$H$$와 $$W$$는 사전에 설정한 하이퍼 파라미터.
 4. Max pooling: 각 sub-window에서 최대값인 output을 연결하여 최종 output을 생성.
 
-## Pre-trained Network
-- Fast R-CNN은 VGG16 모델 사용
-    - VGG16의 마지막 Max polling layer $$\rightarrow$$ RoI pooling layer 교체
-    - VGG16의 마지막 fc layers를 class 예측과 box 회귀 결과를 리턴하도록 수정.
-    - VGG16가 image와 RoI라는 2가지 입력을 갖도록 수정
-
 ## Fine-tuning for Detection
 Fast R-CNN는 end-to-end 학습이기에 network의 모든 가중치를 학습할 수 있다.
 
 ### Hierarchical Sampling
+R-CNN 모델은 학습 시 region proposal이 서로 다른 이미지에서 추출되고, 이로 인해 학습 시 연산을 공유할 수 없다는 단점이 있다.
+
+이를 해결하고자 Hierarchical Sampling 방법으로 연산과 메모리 공유를 가능케한다.
+
 $$N$$개의 이미지를 sampling하고 각 이미지에서 $$R \over N$$개의 RoI를 sampling.
 - $$R$$: mini-batch size.
 
@@ -77,7 +106,7 @@ $$N$$개의 이미지를 sampling하고 각 이미지에서 $$R \over N$$개의 
 
 가령, $$N=1,R=128$$ 일 때, 이미지 당 128개의 RoI를 sampling.
 
-하지만, $$N=2 R=128$$는 이미지당 64개의 RoI가 sampling되고 RoI 연산량과 메모리가 그만큼 공유되기 때문에, $$N=1$$일 때보다 64배 빠르다.
+하지만, $$N=2,\ R=128$$는 이미지당 64개의 RoI가 sampling되고 RoI 연산량과 메모리가 그만큼 공유되기 때문에, $$N=1$$일 때보다 64배 빠르다.
 
 ### End-to-end 학습 가능
 이전 R-CNN에서는 SVM, bounding box regressor, network 총 3개의 학습을 별도로 진행해야 한다.
@@ -88,13 +117,31 @@ $$N$$개의 이미지를 sampling하고 각 이미지에서 $$R \over N$$개의 
 
 이를 위해 Fast R-CNN은 **Multi-task loss**를 활용한다.
 
+## FC Layers
+            Input : 7x7x512 sized feature map
+            Process : feature extraction by fc layers
+            Output : 4096 sized feature vector
+
+## Class Prediction
+            Input : 4096 sized feature vector
+            Process : class prediction by Classifier
+            Output : (K+1) sized vector(class score)
+
+## Bounding Box Regressor
+            Input : 4096 sized feature vector
+            Process : Detailed localization by Bounding box regressor
+            Output : (K+1) x 4 sized vector
+
 ## Multi-task Loss
+            Input : (K+1) sized vector(class score), (K+1) x 4 sized vector
+            Process : calculate loss by Multi-task loss function
+            Output : loss(Log loss + Smooth L1 loss)
+
 ![image](https://github.com/hchoi256/ai-boot-camp/assets/39285147/ab765f63-5e37-4ba9-ba6a-fb9c7a778397)
 
-
 - $$L_{cls}$$: class 예측 loss.
-    - $$p$$: 모델의 예측 클래스.
-    - $$u$$: true 객체 클래스; 배경 클래스는 $$u=0$$.
+    - $$p$$: $$(K+1)$$개의 모델의 예측 클래스 점수.
+    - $$u$$: 정답 객체 클래스 점수; 배경 클래스는 $$u=0$$.
 - $$L_{loc}$$: bounding box에 대한 loss으로 배경 클래스는 무시한다.
     - $$v$$: $$u$$ 클래스에 해당하는 true bounding box.
     - $$t^u$$: $$u$$ 클래스에 해당하는 bounding box regression offset.
