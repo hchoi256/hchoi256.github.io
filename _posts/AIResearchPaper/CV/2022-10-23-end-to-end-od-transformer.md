@@ -121,7 +121,7 @@ Direct set prediction은 이러한 집합의 특성을 이용하여, 하나의 �
 
 ### Hungarian algorithm
 ![image](https://user-images.githubusercontent.com/39285147/197422872-acf77efd-3103-4008-921c-f62aa22a13fc.png)
-- $$\mathbb{1}_{\{c_i \neq \empty \}}$$: 클래스 $$c_i$$가 존재하면 1, 아니면 0.
+- $$\mathbb{1}_{\{c_i \neq \emptyset \}}$$: 클래스 $$c_i$$가 존재하면 1, 아니면 0.
 - $$\hat{p}_{\hat{\sigma}(i)}(c_i)$$: 클래스 $$c_i$$을 예측할 확률.
 - $$\mathcal{L}_{box}(b_i,\hat{b}_{\hat{\sigma}(i)})$$: bounding box 손실값.
     - $$b_i$$: i 번째 GT 정답값의 bounding box (x,y,w,h).
