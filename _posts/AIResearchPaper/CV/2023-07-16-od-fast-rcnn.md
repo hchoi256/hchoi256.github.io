@@ -17,116 +17,101 @@ sidebar:
 
 ****
 # 한줄요약 ✔
-- Region proposals에 CNN을 적용. 
-- Labeled data가 부족할 때, 보조작업(auxiliary task)를 supervised pre-training과 뒤를 이은 domain-specific fine-tuning을 통해 상당한 성능 향상.
+- 인풋 이미지를 **CNN을 1회 적용**하여 특징맵 추출 후 selective search로 region proposals 진행. 
+- **RoI(Region of Interest)**: R-CNN과 달리 CNN 인풋으로 사용하기 위해 각 후보영역을 warping하는 과정 생략
+- **Multi-task Loss**: 모델을 개별 학습 시키지 않고 end-to-end로 한 번에 학습.
+    - 학습 및 detection 시간 크게 감소
 
 ****
-# Introduction 🙌
-R-CNN는 Regions with CNN features의 약자로, CNN과 Region proposals를 결합한 모델이다.
+# Introdcution 😉
+![image](https://github.com/hchoi256/ai-boot-camp/assets/39285147/a765f8d7-5c0a-4b24-9f55-dee3ce1780a3)
 
+R-CNN 모델은 2000장의 region proposals를 CNN 모델에 입력시켜 각각에 대하여 독립적으로 학습시기 때문에 많은 시간이 소요된다.
 
-****
-# Related Work 😉
+하지만, Fast R-CNN은 이러한 문제를 개선하여 단 1장의 이미지를 입력받아 CNN에 적용한 후, region proposals의 크기를 warp시킬 필요 없이 **RoI(Region of Interest) pooling**을 통해 고정된 크기의 feature vector를 fully connected layer에 전달한다.
 
-****
-# Problem Definition ✏
-                Given a large pre-trained language model
-
-                Return a quantized model
-
-                Such that it outperforms the performance of the original model in terms of inference time while retaining accuracy.
-
-****
-# Challenges and Main Idea💣
-**C1)**
-
-**C2)**
-
-**C3)**
-
-**Idea)**
+**Multi-task loss**를 사용하여 모델을 개별적으로 학습시킬 필요 없이 한 번에 학습시킵니다. 이를 통해 학습 및 detection 시간이 크게 감소한다.
 
 ****
 # Proposed Method 🧿
-## R-CNN 구조
-![image](https://github.com/hchoi256/ai-boot-camp/assets/39285147/c8f0b94b-e129-496e-8ee6-0f0bb245c2dd)
+## Fast-R-CNN 작동 방식
+1. **Selective Search**: region proposals 사전 추출
+2. **CNN**: 인풋 이미지를 CNN에 통과하여 feature map 획득
+3. **RoI Projection**: 1에서 생성한 region proposals들을 feature map에 서브 샘플링 비율에 맞게 조정하여 projection.
+4. **RoI pooling layer**: 동일한 크기의 인풋을 받는 FNN의 인풋으로써 사용하기 위해 생성한 서로 다른 RoI를 동일한 고정 길이의 특징으로 변환.
+-  RoI 영역을 고정된 크기의 그리드로 분할하고, 각 그리드 셀 내에서 최댓값을 추출하여 피처맵을 생성합니다. 이렇게 추출된 최댓값들은 동일한 크기의 고정된 특징 벡터로 구성됩니다.
+5. **첫 번째 FC(Fully-Connected) 레이어**: 분류를 위한 FC 레이어, 활성화 함수 포함
+6. **두 번째 FC(Fully-Connected) 레이어**: 바운딩 박스 회귀를 위한 FC 레이어, 활성화 함수 포함
+7. 클래스 예측 (각 클래스의 확률)
+8. 바운딩 박스 회귀 (각 바운딩 박스의 좌표 조정 값)
 
-1. 인풋 이미지.
-2. 약 2,000개의 region proposals를 추출 (**selective search**).
-3. Warping the regions to $$227 \times 227$$ (후보영역을 CNN 입력으로 넣기 위한 크기로 조정).
-4. CNN을 이용해 각각의 region proposal의 특징 추출.
-5. Linear SVMs를 이용해 각각의 label 분류.
+## RoI Pooling Layer
+![image](https://github.com/hchoi256/ai-boot-camp/assets/39285147/aee8c60d-4cd9-4bf0-8b9d-a315714502cd)
 
-## Region Proposals
-![image](https://github.com/hchoi256/ai-boot-camp/assets/39285147/c9c214ab-019c-472e-b156-d99795a89df2)
+Feature map에서 region proposals에 해당하는 관심 영역(Region of Interest)을 지정한 크기의 grid로 나눈 후 max pooling을 수행하는 방법이다.
 
-**Selective search** algorithm을 사용해 각 이미지에서 2,000장의 후보 영역을 찾는다.
+미리 지정한 크기의 sub-window에서 max pooling을 수행하여 region proposal의 크기가 서로 달라도 고정된 크기의 feature map 추출 가능하다.
 
-### Selective Search
-![image](https://github.com/hchoi256/ai-boot-camp/assets/39285147/5aef69c1-688c-468d-b45c-8860620dfd35)
+1. 입력 이미지가 CNN을 통과하여 feature map을 생성.
+2. Selective search로 얻어진 region proposal은 feature map에 projection되어 RoI를 생성.
+3. $$h \times w$$ 크기의 RoI는 $$h \over H$$ $$\times$$ $$w \over W$$ 크기의 sub-window로 분할.
+- $$H$$와 $$W$$는 사전에 설정한 하이퍼 파라미터.
+4. Max pooling: 각 sub-window에서 최대값인 output을 연결하여 최종 output을 생성.
 
-1. 색상, 질감, 영역크기 등을 이용해 non-objective segmentation을 수행 (사진에서 좌측).
-2. Bottom-up 방식으로 small segemented areas들을 합쳐 더 큰 segemented areas들을 만듬 (사진에서 우측).
-3. (2)의 작업을 반복하여 최종적으로 2,000개의 region proposal을 생성한다.
+## Pre-trained Network
+- Fast R-CNN은 VGG16 모델 사용
+    - VGG16의 마지막 Max polling layer $$\rightarrow$$ RoI pooling layer 교체
+    - VGG16의 마지막 fc layers를 class 예측과 box 회귀 결과를 리턴하도록 수정.
+    - VGG16가 image와 RoI라는 2가지 입력을 갖도록 수정
 
-## CNN
-![image](https://github.com/hchoi256/ai-boot-camp/assets/39285147/f181f1c4-bdda-4671-81b9-b556d6baa6d9)
+## Fine-tuning for Detection
+Fast R-CNN는 end-to-end 학습이기에 network의 모든 가중치를 학습할 수 있다.
 
-- Input: $$227 \times 227$$ 크기의 Region proposals 2,000개 
-- Output: 4,096-dimensional feature vector
+### Hierarchical Sampling
+$$N$$개의 이미지를 sampling하고 각 이미지에서 $$R \over N$$개의 RoI를 sampling.
+- $$R$$: mini-batch size.
 
-R-CNN의 CNN 구조는 pre-trained AlexNet를 따릅니다.
+동일한 이미지에서 RoI는 순전파와 역전파 과정에서 연산량과 메모리가 공유된다.
 
-이러한 R-CNN의 출력인 4096차원의 특징 벡터는 이미지의 내용을 잘 나타내지만, 이미지 내에 존재하는 객체의 클래스를 구분하는 데는 부족합니다.
+그리고 $$N$$을 작게 설정할 수록 mini-batch 연산량은 더욱 줄어든다.
 
-이것을 이후 **Domain-specific fine-tuning**을 통해 CNN을 재학습하여 객체의 클래스를 구분하는 작업을 추가 수행합니다.
+가령, $$N=1,R=128$$ 일 때, 이미지 당 128개의 RoI를 sampling.
 
-### Domain-specific fine-tuning
-![image](https://github.com/hchoi256/ai-boot-camp/assets/39285147/70d35e10-80e8-4444-bda2-24bc61de73e2)
+하지만, $$N=2 R=128$$는 이미지당 64개의 RoI가 sampling되고 RoI 연산량과 메모리가 그만큼 공유되기 때문에, $$N=1$$일 때보다 64배 빠르다.
 
-1. 인풋 이미지.
-2. 2,000장의 region proposals 생성
-3. 각 region proposal이 ground-truth box의 IoU(Intersection of Union)와 비교하여 IoU가 0.5보다 큰 경우 positive samples, 0.5보다 작은 경우 negative samples로 나눔.
-- Positive sample: 객체가 포함되어 있는 sample.
-- Negative sample: 객체가 포함되지 않은 배경 sample.
+### End-to-end 학습 가능
+이전 R-CNN에서는 SVM, bounding box regressor, network 총 3개의 학습을 별도로 진행해야 한다.
 
-> sample을 나누면, ground truth만 positive sample로 정의할때 보다 30배 많은 학습데이터를 얻을 수 있어서, 많은 데이터 활용을 통한 overfitting 방지가 가능.
+하지만, Fast R-CNN은 클래스 예측을 위한 SVM을 softmax layer로 대체하고 또 다른 output layer를 만들어 bounding box regressor를 한 가지 신경망으로 통합했다.
 
-4. 미니 배치 생성 (positive sample 32개 + negative sample 96개 = 128개의 이미지로 구성).
-5. 생성한 미니 배치를 이용해 fine-tuning 진행.
-- Pre-trained AlexNet의 마지막 softmax layer를 $$N+1$$-way classification 수행하도록 수정.
-    - $$N$$: R-CNN 데이터셋에 담긴 객체 종류의 개수.
-    - 1을 더하여 배경인지 여부 판단
-    - Fine-tuning 단계에서만 $$N+1$$로 수정된 softmax layer 사용.
+하여 신경망을 학습하면 softmax layer, bounding box regressor도 동시에 학습된다.
 
-> IoU
+이를 위해 Fast R-CNN은 **Multi-task loss**를 활용한다.
+
+## Multi-task Loss
+![image](https://github.com/hchoi256/ai-boot-camp/assets/39285147/ab765f63-5e37-4ba9-ba6a-fb9c7a778397)
+
+
+- $$L_{cls}$$: class 예측 loss.
+    - $$p$$: 모델의 예측 클래스.
+    - $$u$$: true 객체 클래스; 배경 클래스는 $$u=0$$.
+- $$L_{loc}$$: bounding box에 대한 loss으로 배경 클래스는 무시한다.
+    - $$v$$: $$u$$ 클래스에 해당하는 true bounding box.
+    - $$t^u$$: $$u$$ 클래스에 해당하는 bounding box regression offset.
+- $$\lambda$$: 두 task loss의 균형을 조절하는 하이퍼 파라미터.
+
+이 손실함수를 통해 하나의 네트워크에서 object class와 bounding box를 동시에 학습할 수 있다.
+
+> ![image](https://github.com/hchoi256/ai-boot-camp/assets/39285147/5b0e15ad-82f8-482f-ad3c-bc26658533ac)
 >
->> ![image](https://github.com/hchoi256/ai-boot-camp/assets/39285147/02a0a234-a97c-4abb-9891-7cdd8e6af496)
+>> L1 loss는 L2 loss보다 이상치에 덜 민감하다. L2 loss는 민감하여 기울기 폭발을 일으킬 수 있다.
 
-## Class and Box Prediction
-![image](https://github.com/hchoi256/ai-boot-camp/assets/39285147/3331bae2-e8fa-4684-99ac-ed77f50a4c7c)
+## Mini-batch Sampling
+SGD mini-batches는 가령 2개의 이미지에서 각 64개의 RoI를 sampling하여 총 128 mini-batch size를 이용한다.
 
-### Linear SVMs
-
-- Output: (class, confidence score)
-    - Confidence score: 해당 region proposal이 객체를 포함할 확률
-
-클래스 분류를 위한 SVM 모델을 학습하는 단계이다.
-
-### Bounding-box Regressor
-![image](https://github.com/hchoi256/ai-boot-camp/assets/39285147/dc8effd1-cca5-4147-b03d-ab186852dafe)
-
-Selective search 알고리즘을 통해 얻은 객체의 위치는 부정확할 수 있기 때문에, Bounding box regressor를 사용하여 객체의 위치를 조절한다.
-
-위에 <span style="color:red"> 빨간색 네모 박스 </span>는 예측된 box이고, 검정색은 ground-truth이다.
-
-각 (x,y,w,h) 별로 대응되는 $$d_{(x,y,w,h)}(p)$$ 를 예측값에 각각 곱하여 ground-truth 값으로 **회귀**하도록 학습한다.
-
-![image](https://github.com/hchoi256/ai-boot-camp/assets/39285147/22dc2ad3-9ea0-4f8b-8bbc-378082304e45)
-
-- $$G$$: ground-truth
-- $$P$$: prediction
-- $$x,y,w,h$$: x와 y는 영역의 center, w: width, 그리고 h: height.
+원래는 이미지당 2000개의 RoI가 발생하는데 하기 기준을 통해 64개의 RoI를 선별한다.
+- RoI의 25%: region proposal이 true bounding box와 IoU > 0.5 이상인 것에서 무작위 추출.
+- RoI의 75%: RoI는 $$0.5 > IoU > 0.1$$인 것에서 추출.
 
 ## Non Maximum Supression
 ![image](https://github.com/hchoi256/ai-boot-camp/assets/39285147/1faf4a1f-0c23-4643-abbc-67bb07ea8c8f)
@@ -143,8 +128,10 @@ R-CNN을 통해 얻게 되는 2000개의 bounding box를 전부 다 표시할 �
 ****
 # Conclusion ✨
 ## Strength
-- VOC 2012 데이터를 기준으로 기존의 방법들(OverFeat)보다 mAP(mean average precision)이 30%이상 향상된 보다 간단하고 확장 가능한 탐지 알고리즘.
-- Labeled data가 부족할 때, supervised pre-training과 뒤를 이은 domain-specific fine-tuning(fine-tuned AlexNet)을 통해 상당한 성능 향상.
+- R-CNN보다 높은 detection quality(mAP).
+- Multi-task loss를 사용해 single stage 학습 (end-to-end).
+    - End-to-end 학습에 따른 네트워크의 모든 layer들을 갱신(update)할 수 있다.
+- Feature caching을 위한 disk storage가 필요 없다.
 
 ## Weakness
 - 인풋 이미지 하나당 2,000개의 region proposal 추출하기 떄문에 학습 및 추론 속도가 느리다
