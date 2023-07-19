@@ -21,10 +21,12 @@ sidebar:
 # 한줄요약 ✔
 ![image](https://github.com/hchoi256/ai-boot-camp/assets/39285147/5e742b19-1f41-4b5b-b0c8-81afd5cef645)
 
-- 인풋 이미지를 **CNN을 1회 적용**하여 특징맵 추출 후 selective search로 region proposals 진행. 
-- **RoI(Region of Interest)**: R-CNN과 달리 CNN 인풋으로 사용하기 위해 각 후보영역을 warping하는 과정 생략
-- **Multi-task Loss**: 모델을 개별 학습 시키지 않고 end-to-end로 한 번에 학습.
-    - 학습 및 detection 시간 크게 감소
+- 전체 이미지를 우선 **CNN 1회 적용**하여 특징맵 추출 후, 해당 특징맵에서 selective search로 후보영역 추출.
+- **RoI(Region of Interest)**: R-CNN에서 CNN 인풋으로 사용하기 위해 각 후보영역을 warping하는 과정 생략.
+- **Multi-task Loss**: SVM과 Box Regressor를 따로 학습 시키지 않고 end-to-end로 한 번에 학습.
+    - 하지만, Selective search 과정은 모델 학습과 별개로 동작하기 떄문에, 완전한 end-to-end는 아님.
+
+> End-to-end 학습: 학습 및 detection 시간이 크게 감소되는 효과를 보인다.
 
 ****
 # Introdcution 😉
