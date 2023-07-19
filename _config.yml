@@ -106,7 +106,7 @@ analytics:
 author:
   name             : "쭌스🎄"
   avatar           : "/assets/images/echoi.jpg"
-  bio              : "I earned my BS degree in Computer Science and Data Science at the University of Wisconsin-Madison.\n\nI am broadly interested in **Computer Vision**, **3D Vision**, **Object Detection/Tracking**, and **Hyper-scale AI**. The main objective of my study is to build a reliable, efficient, and expansive AI/ML system for sustainable development."
+  bio              : "I earned my BS degree in Computer Science and Data Science at the University of Wisconsin-Madison.\n\nI am broadly interested in **Computer Vision**, **3D Vision**, **Object Detection/Tracking**, and **Model Compression**. The main objective of my study is to build a reliable, efficient, and expansive AI/ML system for sustainable development."
   # location         : "Madison"
   # email            : "hchoi256@wisc.edu"
   links:
