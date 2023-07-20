@@ -161,7 +161,6 @@ $$N=2$$ 일 때, CNN을 2번만 통과하면 되기 때문에, $$N=1$$ 일 때, 
 
 > ![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/9602e73c-3f67-46e1-8a21-77229c29e7b7)
 
-
 ## Mini-batch Sampling
 SGD mini-batches는 가령 2개의 이미지에서 각 64개의 RoI를 sampling하여 총 128 mini-batch size를 이용한다.
 
