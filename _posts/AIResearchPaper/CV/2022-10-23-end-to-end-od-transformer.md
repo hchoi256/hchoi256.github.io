@@ -145,7 +145,7 @@ Set loss를 최소화하는 것은 모델의 객체 감지 성능을 향상시�
     - 각 객체에 대한 특징이 아닌 이미지 전체에 대한 특징 추출.
 
 ## 2) Transformer Encoder
-- Encoder에서는 이미지 특징들 간의 **상호 연관성**과 **위치 정보에 대한 문맥 정보** 이해한다.
+- Encoder에서는 이미지 특징들 간의 **상호 연관성**과 **위치 정보에 대한 문맥 정보** 이해하여 객체를 구분한다.
     - 상호 연관성:
         - 강아지 사진에서 하나의 특징 벡터는 예를 들어 강아지의 눈에 해당할 수 있습니다. 이때, Encoder는 다른 특징 벡터와 함께 학습되면서, 강아지의 눈과 다른 특징들 간의 상호 연관성을 파악합니다. 예를 들어, 강아지의 눈, 코, 귀는 모두 강아지라는 클래스 객체를 예측한다는 점에서 모두 연관되어 있음을 학습할 수 있습니다.
     - 위치 정보:
@@ -156,20 +156,27 @@ Set loss를 최소화하는 것은 모델의 객체 감지 성능을 향상시�
 
 
 ## 3) Transformer Decoder
+![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/14330c56-d5d7-424e-9567-670d05cec198)
+
 **기존 Transformer Decoder**
-- autoregressive (output sequence를 ***하나하나*** 넣어주는 방식) 
-- pairwise interactions between elements in a sequence
-- duplicate predictions 제거 가능
+- Masked multi-head attention: autoregressive.
+    - masking을 통해 다음 token을 예측하는 autoregressive 방법
+- Pairwise interactions between elements in a sequence
+- Duplicate predictions 제거 가능
 
 **새로운 Transformer Decoder**
+- Multi-head attention: non-autoregressive.
+    - 입력된 이미지에 동시에 모든 객체의 위치를 예측하기 때문에 별도의 masking 과정을 필요로 하지 않습니다. 
 - **한번에** $$N$$개의 obejct를 병렬 예측.
-    - 1) Input embedding
-        - *object query(positional encoding)* 통해 표현 (초기 랜덤값).
-    - 2) N개의 object query는 디코더에 의해 output embedding으로 변환
-    - 3) N개의 마지막 예측값들 산출
-    - 4) self/encoder-decoder간 어텐션을 통해 각 object 간의 global 관계 학습
-        - self-attention: 각각의 object query가 서로 독립적으로 학습되도록 함.
-        - Encoder-Decoder Attention: 각각의 object query가 사진속 각각의 객체 정보를 학습한다. 
+    - Input embedding
+        - *object query(positional encoding)* 통해 표현 (초기 0 초기화).
+            - 각각의 object query는 하나의 객체를 예측하는 region proposal에 대응.
+    - $$N$$개의 object query는 디코더에 의해 output embedding으로 변환되어 이후 FFN의 인풋으로 들어감.    
+    - self/encoder-decoder간 어텐션을 통해 각 object 간의 global 관계 학습
+        - Multi-head self-attention: 각각의 object query가 서로 독립적으로 학습되도록 함.
+        - Multi-head Encoder-Decoder Attention: 각각의 object query가 사진속 각각의 객체 정보를 학습.
+            - **Query**: Decoder의 object query.
+            - **Key, Value**: Encoder 출력.
 
 ## 4) Prediction FFN
 - FFN = linear layer1(박스위치회귀) --> 활성화 함수 --> linear layer2(클래스 예측).
