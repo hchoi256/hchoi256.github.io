@@ -13,8 +13,6 @@ sidebar:
     nav: "docs"
 ---
 
-![image](https://user-images.githubusercontent.com/39285147/197411640-e6c3de0f-b4f3-4665-ae05-6a0b45c90bf3.png)
-
 [**논문**](https://link.springer.com/content/pdf/10.1007/978-3-030-58452-8_13.pdf)
 
 ****
@@ -93,10 +91,13 @@ Set loss를 최소화하는 것은 모델의 객체 감지 성능을 향상시�
 
 ****
 # DETR Model ✒
-- bipartite matching loss + transformers with (non-autoregressive) parallel decoding
-- **하나의 CNN를 Transformer 아키텍쳐와 병합** --> **직접 예측** 가능
-- extra-long training schedule
-- auxiliary decoding losses in the transformer
+![image](https://user-images.githubusercontent.com/39285147/197411640-e6c3de0f-b4f3-4665-ae05-6a0b45c90bf3.png)
+
+- Bipartite matching loss + transformers with (non-autoregressive) parallel decoding
+- **하나의 CNN를 Transformer 아키텍쳐와 병합** $$\rightarrow$$ **직접 예측** 가능.
+    - 직접 예측 가능: 입력으로 주어진 이미지나 텍스트를 모델에 주입하면, 모델이 각각의 클래스 레이블이나 텍스트의 번역 등을 직접적으로 예측할 수 있다는 것.
+- Extra-long training schedule
+- Auxiliary decoding losses in the transformer
 
 > **자기회귀(AR; Autoregressive)**: 과거의 움직임에 기반 미래 예측.
 
@@ -116,16 +117,16 @@ Set loss를 최소화하는 것은 모델의 객체 감지 성능을 향상시�
 ![image](https://user-images.githubusercontent.com/39285147/197422840-8c8770b5-895b-4c82-b967-da083a62c4df.png)
 
 - bipartite matching loss + transformers (non-autoregressive) parallel decoding
-- loss = 최적 bipartite matching(예측값 ~ GT)
-    - Hungarian algorithm: 최적 bipartite matching을 탐색한다.
+- $$\mathcal{L}_{match}$$: $$\mathcal{L}_{Hungarian}$$으로 구한 최적 bipartite matching(예측값 ~ GT).
+    - Hungarian algorithm: 최적 bipartite matching을 탐색.
 
 ### Hungarian algorithm
 ![image](https://user-images.githubusercontent.com/39285147/197422872-acf77efd-3103-4008-921c-f62aa22a13fc.png)
-- $$\mathbb{1}_{\{c_i \neq \emptyset \}}$$: 클래스 $$c_i$$가 존재하면 1, 아니면 0.
+- $$\mathbb{1}_{\{c_i \neq \emptyset \}}$$: 클래스 $$c_i$$가 존재하면 $$1$$, 아니면 $$0$$.
 - $$\hat{p}_{\hat{\sigma}(i)}(c_i)$$: 클래스 $$c_i$$을 예측할 확률.
 - $$\mathcal{L}_{box}(b_i,\hat{b}_{\hat{\sigma}(i)})$$: bounding box 손실값.
-    - $$b_i$$: i 번째 GT 정답값의 bounding box (x,y,w,h).
-    - $$\hat{b}_{\hat{\sigma}(i)}$$:  i번째 object query 예측값의 bounding box (x,y,w,h).
+    - $$b_i$$: i 번째 GT 정답값의 bounding box $$(x,y,w,h)$$.
+    - $$\hat{b}_{\hat{\sigma}(i)}$$:  i번째 object query 예측값의 bounding box $$(x,y,w,h)$$.
 
 #### Bounding box loss $$\mathcal{L}_{box}$$.
 ![image](https://user-images.githubusercontent.com/39285147/197422932-1866e001-8086-4f89-a231-4582d8e304d2.png)
@@ -135,7 +136,8 @@ Set loss를 최소화하는 것은 모델의 객체 감지 성능을 향상시�
 > **IoU**
 >> ![image](https://user-images.githubusercontent.com/39285147/197422984-634e754a-c7db-47fd-9eaa-2523296a2057.png)
 
-## DETR Architecture
+****
+# DETR Architecture
 ![image](https://user-images.githubusercontent.com/39285147/197422990-0d50e9ab-0866-40d2-9940-ff3ffb91fdde.png)
 
 ## 1) Backbone
