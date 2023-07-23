@@ -141,14 +141,19 @@ Set loss를 최소화하는 것은 모델의 객체 감지 성능을 향상시�
 ![image](https://user-images.githubusercontent.com/39285147/197422990-0d50e9ab-0866-40d2-9940-ff3ffb91fdde.png)
 
 ## 1) Backbone
-- feature extraction
+- Feature extraction
     - 각 객체에 대한 특징이 아닌 이미지 전체에 대한 특징 추출.
 
 ## 2) Transformer Encoder
-- Encoder에서는 이미지 특징들 간의 상호 연관성과 위치 정보에 대한 문맥 정보 이해한다.
+- Encoder에서는 이미지 특징들 간의 **상호 연관성**과 **위치 정보에 대한 문맥 정보** 이해한다.
+    - 상호 연관성:
+        - 강아지 사진에서 하나의 특징 벡터는 예를 들어 강아지의 눈에 해당할 수 있습니다. 이때, Encoder는 다른 특징 벡터와 함께 학습되면서, 강아지의 눈과 다른 특징들 간의 상호 연관성을 파악합니다. 예를 들어, 강아지의 눈, 코, 귀는 모두 강아지라는 클래스 객체를 예측한다는 점에서 모두 연관되어 있음을 학습할 수 있습니다.
+    - 위치 정보:
+        - Encoder는 이미지 내의 특징들이 위치 정보를 가지고 있다는 것을 인지합니다. 강아지 사진에서, 강아지의 눈이 강아지의 머리 부분에 위치하고, 강아지의 코가 강아지의 얼굴 중앙에 위치하는 것을 학습할 수 있습니다.
 - CNN 출력을 flatten하여 1차원의 Transformer 인코더 인풋 형식으로 맞춰준다.
 - 기존 transformer encoder에 **positional encoding** 추가
     - 덕분에 autoregressive와 다르게 인풋 순서 상관 안 써도됨
+
 
 ## 3) Transformer Decoder
 **기존 Transformer Decoder**
