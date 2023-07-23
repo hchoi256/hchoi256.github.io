@@ -26,26 +26,27 @@ sidebar:
 - One-stage (속도 빠름, 정확성 나쁨):
     - **YOLO**: grid division
 
-> **Non-Maximum Suppression**
->> ![image](https://user-images.githubusercontent.com/39285147/197414699-970639a6-076d-4b2b-b1de-763931c9082e.png)
->>
->> object detector가 예측한 bounding box 중에서 정확한 bounding box를 선택하도록 하는 기법
->>
->> 객체별 가장 높은 예측 확률을 보인 bounding box를 기준으로 중복되는 다른 boxes를 제거하는 기법. 
+## Non-Maximum Suppression (NMS)
+![image](https://user-images.githubusercontent.com/39285147/197414699-970639a6-076d-4b2b-b1de-763931c9082e.png)
 
-이러한 간접적인 방법들은 *후처리*(오차 예측 및 제거)에 막대하게 영향을 받는다.
+- Object detector가 예측한 bounding box 중에서 정확한 bounding box를 선택하도록 하는 후처리 기법.
+- 객체별 가장 높은 예측 확률을 보인 bounding box를 기준으로 중복되는 다른 boxes를 제거하는 후처리 기법. 
 
-때문에 기존 모델들은 여러 가지 복잡한 예측 문제에 대한 객체 탐지 문제에서 한계를 나타낸다.
+학습 단계에서 후처리 기법인 NMS를 사용하지 않고 모델을 훈련한다면, 모델이 겹치는 bounding box를 처리하는 방법을 학습할 수 없으며, 이는 최종적인 감지 성능에 영향을 미칠 수 있습니다.
 
-이러한 간접적인 pipeline(과정)에서 정확한 결과를 낼 수 없어 NMS같은 추가적인 후처리의 힘을 빌리는 surrogate tasks를 간소화하기 위해 등장한 것이 **direct set prediction 방법**이다.
+~~이러한 간접적인 방법들은 *후처리*(오차 예측 및 제거)에 막대하게 영향을 받는다.~~
+
+~~때문에 기존 모델들은 여러 가지 복잡한 예측 문제에 대한 객체 탐지 문제에서 한계를 나타낸다.~~
+
+이러한 간접적인 pipeline(과정)에서 정확한 결과를 낼 수 없어 NMS같은 추가적인 후처리의 힘을 빌리는 surrogate tasks를 대신하고자 등장한 것이 **direct set prediction 방법**이다.
 
 > **Surrogate**: output이 정확히 측정될 수 없을 때, 대신 output 기준을 제공한다.
 
 우리가 흔히 아는 집합(set)은 하나의 집합 안에 중복되는 요소가 없고 순서의 제약이 없는 것이 특징이다.
 
 Direct set prediction은 이러한 집합의 특성을 이용하여, 하나의 객체에 대해 단 하나의 bounding box만 매칭되는 것을 도와 중복되는 box의 생성을 회피하여 NMS 같은 후처리의 의존성에서 벗어난다.
-- 순서 제약 없음: 각 객체별 병렬성 보장
-- 중복 회피: 객체별 독립적인 하나의 bounding box 가짐.
+- **순서 제약 X**: 각 객체별 병렬성 보장
+- **중복 X**: 객체별 독립적인 하나의 bounding box 가짐.
 
 이번 논문 주제인 **DETR(DEtection TRansformer)**은 direct set prediction(bipartite matching loss) 방법과 Transformer(non-autoregressive)을 결합한 방법이다.
 
