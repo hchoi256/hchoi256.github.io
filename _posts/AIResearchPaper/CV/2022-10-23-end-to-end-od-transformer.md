@@ -80,17 +80,16 @@ Direct set prediction은 이러한 집합의 특성을 이용하여, 하나의 �
 
 > 참고로 기존 RNN 모델은 autoregressive decoding 기반이라 object 순서가 존재해서 객체별 parallellism이 보장되지 않는다.
 
-### Set loss function
-- 이분매칭(bipartite matching)을 예측값과 GT값에 대해 수행한다.
-    - 예측값과 GT는 모두 (class, box 위치) 형식을 갖는다.
-        - box 위치는 (x,y,w,h) 형식으로 제공된다; x와 y는 box의 중앙이고, w와 h는 해당 box의 각각 너비와 높이이다.
-    - DETR 모델의 목적함수(Hungarian algorithm)로 사용된다.
+## Set loss function
+Set loss function은 이분 매칭을 통해 매칭된 결과를 바탕으로 예측값과 Ground-truth 간의 차이를 측정하는 손실 함수입니다.
+- 예측값과 GT는 모두 $$(class,\ box\ 위치)$$ 형식을 갖는다.
+    - box 위치는 $$(x,y,w,h)$$ 형식으로 제공된다; $$x$$와 $$y$$는 box의 중앙이고, $$w$$와 $$h$$는 해당 box의 각각 너비와 높이이다.
 
-> [Hungarian algorithm](https://gazelle-and-cs.tistory.com/29)
->
->> 가중치가 있는 이분 그래프(weighted bitarted graph)에서 maximum weight matching을 찾기 위한 알고리즘
+이분 매칭으로 얻은 매칭 결과를 바탕으로 객체의 클래스 예측과 bounding box 예측에 대한 오차를 계산하며, 이를 종합하여 최종적인 Set loss를 계산합니다.
+- DETR 모델의 목적함수([Hungarian algorithm](https://gazelle-and-cs.tistory.com/29))로 사용된다.
+    - Hungarian algorithm: 가중치가 있는 이분 그래프(weighted bitarted graph)에서 maximum weight matching을 찾기 위한 알고리즘
 
-> **COCO**: one of the most popular object detection datasets.
+Set loss를 최소화하는 것은 모델의 객체 감지 성능을 향상시키는데 도움이 되며, 이를 위해 이분 매칭이 중요한 역할을 합니다.
 
 ****
 # DETR Model ✒
