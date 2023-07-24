@@ -1,27 +1,33 @@
 ---
 layout: single
-title: "[논문분석] "
-categories: Others
-tag: [Model Compression, Quantization, Pruning]
+title: "[논문 분석] Sparse DETR (ICLR 2022)"
+categories: AIPaperCV
+tag: [Computer Vision, Object Detection, DETR, Transformer]
 toc: true
 toc_sticky: true
 toc_label: "쭌스log"
-author_profile: false
+#author_profile: false
 header:
-    teaser: /assets/images/posts/qntzn.png
+    teaser: /assets/images/posts/od.png
 sidebar:
     nav: "docs"
 ---
 
-[논문링크]()
+<!-- <span style="color:blue"> ???? </span> -->
 
-<span style="color:blue"> ???? </span>
+[**논문**](https://arxiv.org/abs/2111.14330)
 
 ****
 # 한줄요약 ✔
 
 ****
-# Preliminaries 🍱
+# Background 🍱
+
+****
+# Introduction 🙌
+
+****
+# Related Work 😉
 
 ****
 # Problem Definition ✏
