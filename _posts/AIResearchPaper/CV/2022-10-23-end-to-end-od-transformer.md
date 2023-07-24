@@ -145,6 +145,8 @@ Set loss를 최소화하는 것은 모델의 객체 감지 성능을 향상시�
     - 각 객체에 대한 특징이 아닌 이미지 전체에 대한 특징 추출.
 
 ## 2) Transformer Encoder
+Encoder의 역할이 이미지의 전체 pixel들 중 같은 객체의 pixel들 사이에 높은 attention score를 부여하여 객체의 존재 여부와 형태를 파악한다.
+
 - Encoder에서는 이미지 특징들 간의 **상호 연관성**과 **위치 정보에 대한 문맥 정보** 이해하여 객체를 구분한다.
     - 상호 연관성:
         - 강아지 사진에서 하나의 특징 벡터는 예를 들어 강아지의 눈에 해당할 수 있습니다. 이때, Encoder는 다른 특징 벡터와 함께 학습되면서, 강아지의 눈과 다른 특징들 간의 상호 연관성을 파악합니다. 예를 들어, 강아지의 눈, 코, 귀는 모두 강아지라는 클래스 객체를 예측한다는 점에서 모두 연관되어 있음을 학습할 수 있습니다.
@@ -158,28 +160,35 @@ Set loss를 최소화하는 것은 모델의 객체 감지 성능을 향상시�
 ## 3) Transformer Decoder
 ![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/14330c56-d5d7-424e-9567-670d05cec198)
 
+Decoder의 기본적인 역할은 그 객체가 어떤 객체인지를 파악하는 데에 있습니다.
+
 **기존 Transformer Decoder**
 - Masked multi-head attention: autoregressive.
     - masking을 통해 다음 token을 예측하는 autoregressive 방법
-- Pairwise interactions between elements in a sequence
-- Duplicate predictions 제거 가능
 
 **새로운 Transformer Decoder**
+![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/daee7e49-fb68-42ae-a97b-95ad0e42d866)
+
 - Multi-head attention: non-autoregressive.
-    - 입력된 이미지에 동시에 모든 객체의 위치를 예측하기 때문에 별도의 masking 과정을 필요로 하지 않습니다. 
-- **한번에** $$N$$개의 obejct를 병렬 예측.
+    - 입력된 이미지에 동시에 모든 객체의 위치를 예측하기 때문에 별도의 masking 과정을 필요로 하지 않습니다.
+- **한번에** $$N$$개의 서로 다른 object query를 통해 각 obejct를 병렬 예측.
     - Input embedding
-        - *object query(positional encoding)* 통해 표현 (초기 0 초기화).
+        - *object query(= learned positional encoding)*.
             - 각각의 object query는 하나의 객체를 예측하는 region proposal에 대응.
-    - $$N$$개의 object query는 디코더에 의해 output embedding으로 변환되어 이후 FFN의 인풋으로 들어감.    
-    - self/encoder-decoder간 어텐션을 통해 각 object 간의 global 관계 학습
-        - Multi-head self-attention: 각각의 object query가 서로 독립적으로 학습되도록 함.
-        - Multi-head Encoder-Decoder Attention: 각각의 object query가 사진속 각각의 객체 정보를 학습.
-            - **Query**: Decoder의 object query.
-            - **Key, Value**: Encoder 출력.
+    - $$N$$개의 object query는 디코더에 의해 $$N$$개의 output embeddings으로 변환되어 이후 FFN의 인풋으로 들어감.
+- MSHA & cross attention을 통해 각 object query 간의 global 관계 학습한다.
+    - **Multi-head self-attention**: 각 object query 간의 상호 연관성을 학습하여 해당 객체 이해.
+        - object 끼리 비교하는 과정을 거쳐야 서로간의 공통점, 차이점을 비교하면서 해당 object에 대한 이해도가 높아질 수 밖에 없다.
+            - 강아지 클래스 객체 쿼리가 msha에서 강아지 다리가 4개이고, 닭 다리가 2개라는 상호 연관성을 학습하여 강아지라는 객체는 다리가 4개라는 점을 강조하며 강아지 객체를 보다 잘 이해하게 됨.
+        - Permutation-invariant
+    - **Multi-head Encoder-Decoder Attention**: 각 object query가 인코더 출력(image feature maps)과 무슨 관련 있는지 조사.
+        - 각각의 object query가 인코더에서 추출된 전역적인 object 정보(이미지 특성 맵)를 활용하여 상호 작용.
+            - 강아지 객체 쿼리는 cross attention을 통해 인코더 출력(image feature maps)과 상호작용하여 다리가 4개라는 특징을 이해하고, 닭 객체 쿼리는 다리가 2개라는 특징을 학습한다. 
+        - **Query**: Decoder의 object query.
+        - **Key, Value**: Encoder 출력.
 
 ## 4) Prediction FFN
-- FFN = linear layer1(박스위치회귀) --> 활성화 함수 --> linear layer2(클래스 예측).
+- FFN = linear layer1(박스위치회귀) $$\rightarrow$$ 활성화 함수 $$\rightarrow$$ linear layer2(클래스 예측).
 - 최종 detection 예측; 바운딩 박스와 클래스 예측을 동시에 수행
 - Procedure
     - 1) **box 위치 예측**: FFN --> 상대적인 중앙값 예측
