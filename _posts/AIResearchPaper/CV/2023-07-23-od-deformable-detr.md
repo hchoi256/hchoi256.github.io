@@ -42,7 +42,8 @@ sidebar:
 
 ## Deformable Convolution
 - 객체의 형태를 고려하여 feature maps들을 더 정확하게 추출하기 위한 기법입니다.
-    - **sparse meaningful locations** 현상 해결 가능
+    - **sparse spatial locations**을 통해 sparse meaningful locations 현상 해결 가능
+        - sparse spatial locations: 특정 이미지나 피처맵에서 일부 픽셀 또는 위치만을 선택하는 것을 의미합니다.
     - **element relation modeling**이 약함
         - 입력 이미지의 pixels들 간의 상대적인 관계 모델링
             - 객체의 위치, 크기, 클래스 등을 파악하는 데에 용이합니다.
