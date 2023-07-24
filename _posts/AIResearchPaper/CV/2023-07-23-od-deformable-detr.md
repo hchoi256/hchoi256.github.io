@@ -19,7 +19,7 @@ sidebar:
 
 ****
 # 한줄요약 ✔
-<!-- ![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/5eb07c0e-f8ec-464b-8e3b-27ac18dcb325) -->
+![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/5eb07c0e-f8ec-464b-8e3b-27ac18dcb325)
 
 - DETR 모델에서 Transformer 아키텍처의 한계 해결
     - slow convergence $$\rightarrow$$ **deformable attention**(key sampling points)로 해결.
