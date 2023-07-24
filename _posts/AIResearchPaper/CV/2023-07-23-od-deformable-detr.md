@@ -28,16 +28,16 @@ sidebar:
 # Preliminaries 🙌
 ## DETR 모델 한계
 - **느린 수렴 속도**
-    - DETR은 초기화 단계에서 feature maps의 모든 pixels에 대해 uniform attention weights를 부여합니다. 이는 모든 픽셀이 동일한 중요도를 가진다고 가정하는 것인데, 실제로는 객체가 존재하는 영역과 배경이나 노이즈가 있는 영역 등에 대해 다른 중요도를 가지는 것이 보통입니다. <span style="color:red"> 하여 객체의 위치를 다소 부정확하게 판단하게 되는 **sparse meaningful locations** 현상이 발생합니다 </span>.
+    - DETR은 초기화 단계에서 feature maps의 모든 pixels에 대해 uniform attention weights를 부여합니다. 이는 모든 픽셀이 동일한 중요도를 가진다고 가정하는 것인데, 실제로는 객체가 존재하는 영역과 배경이나 노이즈가 있는 영역 등에 대해 다른 중요도를 가지는 것이 보통입니다. <span style="color:orange"> 하여 객체의 위치를 다소 부정확하게 판단하게 되는 **sparse meaningful locations** 현상이 발생합니다 </span>.
     - Transformer 인코더에서 각 픽셀들은 서로 다른 픽셀들과의 attention weight를 계산한다.
         - Quadratic time complexity ($$N^2$$).
             - $$N$$: the number of pixels.
 - **작은 물체에 대한 객체 탐지 성능 저조**
     - 작은 물체 탐지를 위해 **high-resolution feature maps**가 중요합니다.
-        - <span style="color:red"> DETR은 Transformer 기반의 모델로 CNN 기반 모델보다 더 복잡한 구조를 가지고 있기 떄문에, 높은 해상도의 특징 맵을 처리하는데 더 많은 메모리와 계산량이 필요하게 됩니다. </span>
+        - <span style="color:orange"> DETR은 Transformer 기반의 모델로 CNN 기반 모델보다 더 복잡한 구조를 가지고 있기 떄문에, 높은 해상도의 특징 맵을 처리하는데 더 많은 메모리와 계산량이 필요하게 됩니다. </span>
     - 작은 물체 탐지를 위해 **multi-scale features** 활용이 중요합니다.
         - 작은 객체는 이미지에서 크기가 작고 미세한 구조를 가지는 경우가 많습니다. Multiscale 피처맵은 다양한 해상도를 가지며, 작은 객체를 더 잘 포착하기 위해 다양한 크기의 특징을 제공합니다.
-        - <span style="color:red"> DETR은 multi-scale features가 아닌 동일한 크기의 patch로 features를 생성합니다. </span>
+        - <span style="color:orange"> DETR은 multi-scale features가 아닌 동일한 크기의 patch로 features를 생성합니다. </span>
 
 
 ## Deformable Convolution
