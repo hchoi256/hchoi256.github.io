@@ -66,11 +66,11 @@ sidebar:
 # Challenges and Main Idea💣
 **C1)** 기존 DETR 모델을 학습 수렴 속도가 매우 더디다.
 
-<span style="color:blue"> **Idea)** **deformable attention module**은 모든 픽셀이 아닌, 특정 위치만을 선별하여 어텐션을 우선 적용합니다. </span>
+<span style="color:green"> **Idea)** **deformable attention module**은 모든 픽셀이 아닌, 특정 위치만을 선별하여 어텐션을 우선 적용합니다. </span>
 
 **C2)** 기존 DETR 모델은 작은 물체에 대한 object detection 성능이 저조하다.
 
-<span style="color:blue"> **Idea)** **multi-scale deformable attention module**은 다양한 크기의 feature maps를 활용하여 작은 물체를 적절히 탐지합니다. </span>
+<span style="color:green"> **Idea)** **multi-scale deformable attention module**은 다양한 크기의 feature maps를 활용하여 작은 물체를 적절히 탐지합니다. </span>
 
 ****
 # Proposed Method 🧿
