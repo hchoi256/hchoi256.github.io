@@ -193,7 +193,7 @@ Decoder의 기본적인 역할은 그 객체가 어떤 객체인지를 파악하
 - Procedure
     - 1) **box 위치 예측**: FFN $$\rightarrow$$ 상대적인 중앙값 예측
     - 2) **클래스 예측**: linear layer $$\rightarrow$$ softmax로 class 예측
-        - 실제 object 외 class = $$\empty$$.
+        - 실제 object 외 class = $$\emptyset$$.
 
 > FFN(Feed-Forward Network)은 일반적으로 신경망 구조에서 사용되는 개념으로, **두 개의 선형 변환(Linear Transformation) 레이어와 활성화 함수(Activation Function)로 구성**됩니다.
 
