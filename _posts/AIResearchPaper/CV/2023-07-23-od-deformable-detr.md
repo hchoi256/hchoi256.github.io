@@ -70,7 +70,8 @@ $$y(\textbf{p}_0)=\Sigma_{\textbf{p}_n \in \mathcal{R}} w(\textbf{p}_n) \cdot x(
 $$y(\textbf{p}_0)=\Sigma_{\textbf{p}_n \in \mathcal{R}} w(\textbf{p}_n) \cdot x(\textbf{p}_0+\textbf{p}_n+\bigtriangleup \textbf{p}_n)$$
 
 - $$\bigtriangleup p_n$$: $$p_n$$ 위치의 픽셀에 대한 **학습 가능한** offset입니다.
-- $$x(\textbf{p})=\Sigma_q G(\textbf{q},\textbf{p}) \cdot x(\textbf{q})$$.
+    - $$x(\textbf{p})=\Sigma_q G(\textbf{q},\textbf{p}) \cdot x(\textbf{q})$$.
+        - $$G(\textbf{q},\textbf{p})=g(q_x,p_x) \cdot g(q_y, p_y)$$.
 
 기존의 그리드 합성곱 연산($$a$$)과 다르게 입력 피처맵의 각 픽셀의 위치에 변형(deformation)을 가하여 다양한 형태($$b$$)의 convolution 연산을 수행합니다.
 
