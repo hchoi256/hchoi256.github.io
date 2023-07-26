@@ -60,6 +60,10 @@ $$y(\textbf{p}_0)=\Sigma_{\textbf{p}_n \in \mathcal{R}} w(\textbf{p}_n) \cdot x(
 
 **Deformable convolution**은 객체의 형태를 고려하여 feature maps들을 **더 정확하게** 추출하기 위한 기법입니다.
 
+상기 이미지에서 입력 피처맵으로 부터 두 가지 branch로 나뉘게 됩니다.
+- **Branch 1**: offset을 계산하는 conv layer.
+- **Branch 2**: offset 정보를 받아서 conv 연산을 수행합니다.
+
 ![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/a06b96b8-1c3e-4633-b9f4-bfbc05df1b7f)
 
 - **offset field** $$(2N,H,W)$$: 오프셋 필드는 입력 피처맵의 각 위치에 대응되는 값으로, 객체의 수용 영역을 조정하기 위해 사용됩니다.
@@ -72,10 +76,19 @@ $$y(\textbf{p}_0)=\Sigma_{\textbf{p}_n \in \mathcal{R}} w(\textbf{p}_n) \cdot x(
 
 - $$\bigtriangleup p_n$$: $$p_n$$ 위치의 픽셀에 대한 **학습 가능한** offset입니다.
     - $$x(\textbf{p})=\Sigma_q G(\textbf{q},\textbf{p}) \cdot x(\textbf{q})$$.
-        - $$G(\textbf{q},\textbf{p})=g(q_x,p_x) \cdot g(q_y, p_y)$$.
-        - **Bilinear interpolation**: $$g(a,b)=max(0,1-\left\lvert a-b \right\rvert)$$.
+        - **Bilinear interpolation**: $$G(\textbf{q},\textbf{p})=g(q_x,p_x) \cdot g(q_y, p_y)$$.
+        - $$g(a,b)=max(0,1-\left\lvert a-b \right\rvert)$$.
+
+1. 기존 입력 피처맵($$A$$)을 입력으로 **Convolution 레이어**를 통과한 출력 피처맵($$B$$)을 생성합니다.
+2. $$B$$와 Ground-truth를 비교하여 이동 벡터를 찾기 위해 **bilinear interpolation**을 사용합니다.
+3. 이동 벡터를 기존 입력 피처맵 $$A$$의 각 픽셀 위치에 더하여 **deformation**을 수행합니다.
+4. 이렇게 변형된 픽셀들과 대응되는 커널 위치의 픽셀들과의 합성곱 연산을 수행하여 각 위치마다 하나의 출력 픽셀을 뽑아냅니다.
 
 > **Bilinear Interpolation**은 입력 좌표값이 정수가 아닌 실수일 때 입력 좌표값에 대한 출력 값을 부드럽게 보정하기 위해 사용되는 보간 기법입니다. 입력값이 실수인 경우 출력 값 또한 실수이며, 해당 실수 위치로 이동한 후에 가장 가까운 정수형 픽셀의 값을 사용합니다. 이를 통해 Deformable Convolution에서는 위치 이동이 가능한 컨볼루션 연산을 보다 정확하고 유연하게 수행할 수 있습니다. 
+
+입력 피처맵(input feature map)을 굳이 Convolution 레이어를 통과시켜서 얻은 출력 피처맵을 사용하여 offset field를 학습하는 것은 **더 많은 고차원의 추상적인 정보를 활용하여 정확한 위치 조정을 가능케 하는데 있습니다**.
+
+<span style="color:orange"> 만약, 입력 피처맵 자체를 offset field의 입력으로 사용한다면, 학습 과정에서 offset field가 입력 피처맵과 유사한 모습으로 학습되어버릴 수 있으며, 이는 offset field가 올바른 위치 정보를 포착하지 못하게 되는 문제점을 야기합니다</span>.
 
 ![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/4f03adfd-273c-4e5f-97e8-a32eee87fd6c)
 
