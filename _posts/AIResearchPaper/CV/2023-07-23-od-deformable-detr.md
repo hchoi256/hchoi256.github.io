@@ -41,7 +41,6 @@ sidebar:
         - 작은 객체는 이미지에서 크기가 작고 미세한 구조를 가지는 경우가 많습니다. Multiscale 피처맵은 다양한 해상도를 가지며, 작은 객체를 더 잘 포착하기 위해 다양한 크기의 특징을 제공합니다.
         - <span style="color:orange"> DETR은 multi-scale features가 아닌 동일한 크기의 patch로 features를 생성합니다. </span>
 
-
 ## Deformable Convolution
 ![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/e4d20bee-4efd-435e-bed6-6fea054617c3)
 
@@ -83,7 +82,7 @@ $$y(\textbf{p}_0)=\Sigma_{\textbf{p}_n \in \mathcal{R}} w(\textbf{p}_n) \cdot x(
 - $$(a)$$: 기존 그리드 합성곱 연산.
 - $$(b),(c),(d)$$: $$(a)$$의 각 픽셀에 변형을 가한 deformation convolution.
 
-기존의 그리드 합성곱 연산($$a$$)과 다르게 입력 피처맵의 각 픽셀의 위치에 변형(deformation)을 가하여 다양한 형태($$b$$)의 convolution 연산을 수행하는 모습입니다.
+기존의 그리드 합성곱 연산($$a$$)과 다르게 입력 피처맵의 각 픽셀의 위치에 변형(deformation)을 가하여 다양한 형태$$(b)$$의 convolution 연산을 수행하는 모습입니다.
 
 상기 이미지에서 각 위치의 pixels들에 대해 filter를 적용할 때, 해당 위치를 중심으로 작은 offset $$\in \mathbb{R}$$을 부여하여 객체에 따라 적절한 수용 영역을 생성합니다.
 
