@@ -73,7 +73,7 @@ $$y(\textbf{p}_0)=\Sigma_{\textbf{p}_n \in \mathcal{R}} w(\textbf{p}_n) \cdot x(
 - $$\bigtriangleup p_n$$: $$p_n$$ 위치의 픽셀에 대한 **학습 가능한** offset입니다.
     - $$x(\textbf{p})=\Sigma_q G(\textbf{q},\textbf{p}) \cdot x(\textbf{q})$$.
         - $$G(\textbf{q},\textbf{p})=g(q_x,p_x) \cdot g(q_y, p_y)$$.
-            - **Bilinear interpolation**: $$g(a,b)=max(0,1-\left| a-b \right|)$$.
+        - $$g(a,b)=max(0,1-\left| a-b \right|)$$.
 
 > **Bilinear Interpolation**은 입력 좌표값이 정수가 아닌 실수일 때 입력 좌표값에 대한 출력 값을 부드럽게 보정하기 위해 사용되는 보간 기법입니다. 입력값이 실수인 경우 출력 값 또한 실수이며, 해당 실수 위치로 이동한 후에 가장 가까운 정수형 픽셀의 값을 사용합니다. 이를 통해 Deformable Convolution에서는 위치 이동이 가능한 컨볼루션 연산을 보다 정확하고 유연하게 수행할 수 있습니다. 
 
