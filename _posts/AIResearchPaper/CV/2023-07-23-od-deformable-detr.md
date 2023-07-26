@@ -45,21 +45,21 @@ sidebar:
 ## Deformable Convolution
 ![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/e4d20bee-4efd-435e-bed6-6fea054617c3)
 
-기존의 일반적인 합성곱(Convolution)은 고정된 커널을 사용하여 입력 피처맵과 합성곱을 수행하며, 이로 인해 모든 픽셀에 동일한 수용 영역이 적용됩니다.
-
 $$y(\textbf{p}_0)=\Sigma_{\textbf{p}_n \in \mathcal{R}} w(\textbf{p}_n) \cdot x(\textbf{p}_0+\textbf{p}_n)$$
 
 - $$p_0$$: 입력 피처맵의 타겟 수용 영역의 center 위치입니다.
 - $$\mathcal{R}$$: $$p_0$$의 수용 영역에 존재하는 각 픽셀 위치 방향 벡터입니다.
-    - $$(-1,-1),(-1,0),(-1,1),(0,-1),(0,0),(0,1),(1,-1),(1,0),(1,1)$$.
-- $$w()$$: 합성곱 연산을 적용하는 데 사용되는 입력 데이터와 커널 간의 가중치 값들의 집합입니다.
-- $$x()$$: 입력 피처맵에서 주어진 픽셀 위치에 저장된 값입니다.
+    - $$\mathcal{R}=\{(-1,-1),(-1,0),(-1,1),(0,-1),(0,0),(0,1),(1,-1),(1,0),(1,1)\}$$.
+- $$w(\cdot)$$: 합성곱 연산을 적용하는 데 사용되는 입력 데이터와 커널 간의 가중치 값들의 집합입니다.
+- $$x(\cdot)$$: 입력 피처맵에서 주어진 픽셀 위치에 저장된 값입니다.
+
+기존의 일반적인 합성곱(Convolution)은 고정된 커널을 사용하여 입력 피처맵과 합성곱을 수행하며, 이로 인해 모든 픽셀에 동일한 수용 영역이 적용됩니다.
 
 <span style="color:orange"> 하지만, 객체의 크기나 모양이 다양한 경우, 고정된 수용 영역으로는 객체를 정확하게 검출하는 데 어려움이 있을 수 있습니다 </span>.
 
 > **수용 영역(receptive field)**: 출력 레이어의 뉴런 하나에 영향을 미치는 입력 뉴런들의 공간 크기입니다.
 
-하여 **deformable convolution**은 객체의 형태를 고려하여 feature maps들을 **더 정확하게** 추출하기 위한 기법입니다.
+**Deformable convolution**은 객체의 형태를 고려하여 feature maps들을 **더 정확하게** 추출하기 위한 기법입니다.
 
 ![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/a06b96b8-1c3e-4633-b9f4-bfbc05df1b7f)
 
