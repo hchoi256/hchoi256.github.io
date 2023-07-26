@@ -75,12 +75,14 @@ $$y(\textbf{p}_0)=\Sigma_{\textbf{p}_n \in \mathcal{R}} w(\textbf{p}_n) \cdot x(
         - $$G(\textbf{q},\textbf{p})=g(q_x,p_x) \cdot g(q_y, p_y)$$.
         - $$g(a,b)=max(0,1-\left| a-b \right|)$$.
 
+**Bilinear interpolation**: 
+
 > **Bilinear Interpolation**은 입력 좌표값이 정수가 아닌 실수일 때 입력 좌표값에 대한 출력 값을 부드럽게 보정하기 위해 사용되는 보간 기법입니다. 입력값이 실수인 경우 출력 값 또한 실수이며, 해당 실수 위치로 이동한 후에 가장 가까운 정수형 픽셀의 값을 사용합니다. 이를 통해 Deformable Convolution에서는 위치 이동이 가능한 컨볼루션 연산을 보다 정확하고 유연하게 수행할 수 있습니다. 
 
 ![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/4f03adfd-273c-4e5f-97e8-a32eee87fd6c)
 
 - $$(a)$$: 기존 그리드 합성곱 연산.
-- $$(b),(c),(d)$$: $$(a)$$의 각 픽셀에 변형을 가한 deformation convolution.
+- $$(b),(c),(d)$$: 기존 수용 영역$$(a)$$의 각 픽셀에 변형을 가한 deformation convolution.
 
 기존의 그리드 합성곱 연산($$a$$)과 다르게 입력 피처맵의 각 픽셀의 위치에 변형(deformation)을 가하여 다양한 형태$$(b)$$의 convolution 연산을 수행하는 모습입니다.
 
@@ -88,9 +90,11 @@ $$y(\textbf{p}_0)=\Sigma_{\textbf{p}_n \in \mathcal{R}} w(\textbf{p}_n) \cdot x(
 
 ![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/f1f86c9e-8f88-4a8f-a735-5c8a51f1575f)
 
-하여 상기 이미지에서 작은 객체에는 더 작은 수용 영역을 적용하고, 큰 객체에는 더 큰 수용 영역을 적용하는 모습입니다.
+하여 **deformable convolution**을 통해 상기 이미지에서 작은 객체에는 더 작은 수용 영역을 적용하고, 큰 객체에는 더 큰 수용 영역을 적용하는 모습입니다.
 
 이를 통해, 객체의 비정형적인 형태를 더 잘 표현하고, 이미지의 미세한 구조를 더욱 정확하게 인식할 수 있게 됩니다.
+
+> Deformable convolution 논문은 Standard CNN의 **마지막 세 개의 레이어에 대해서만** deformable convolution를 적용한다고 합니다.
 
 ****
 # Problem Definition ✏
