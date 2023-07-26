@@ -96,9 +96,9 @@ $$y(\textbf{p}_0)=\Sigma_{\textbf{p}_n \in \mathcal{R}} w(\textbf{p}_n) \cdot x(
 # Problem Definition ✏
                 Given an Transformer-based model for object detection 
 
-                Return a compressed model
+                Return a more efficient model
 
-                Such that it outperforms the performance of the original model in terms of inference time while retaining accuracy.
+                Such that it outperforms the original model in terms of detecting small objects and inference time while maintaining accuracy.
 
 ****
 # Challenges and Main Idea💣
