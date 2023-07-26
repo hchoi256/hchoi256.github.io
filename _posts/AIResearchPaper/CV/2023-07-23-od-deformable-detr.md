@@ -19,6 +19,8 @@ sidebar:
 
 ****
 # 한줄요약 ✔
+![img](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/97d64f9d-c010-429b-94a5-64286fac5516)
+
 - DETR 모델에서 Transformer 아키텍처의 한계 해결
     - slow convergence $$\rightarrow$$ **deformable attention**(key sampling points)로 해결.
     - 작은 물체 객체 탐지 성능 저조 $$\rightarrow$$ **multi-scale features**로 해결.
@@ -72,13 +74,16 @@ $$y(\textbf{p}_0)=\Sigma_{\textbf{p}_n \in \mathcal{R}} w(\textbf{p}_n) \cdot x(
 - $$\bigtriangleup p_n$$: $$p_n$$ 위치의 픽셀에 대한 **학습 가능한** offset입니다.
     - $$x(\textbf{p})=\Sigma_q G(\textbf{q},\textbf{p}) \cdot x(\textbf{q})$$.
         - $$G(\textbf{q},\textbf{p})=g(q_x,p_x) \cdot g(q_y, p_y)$$.
+            - **Bilinear interpolation**: $$g(a,b)=max(0,1-|a-b|)$$.
 
-기존의 그리드 합성곱 연산($$a$$)과 다르게 입력 피처맵의 각 픽셀의 위치에 변형(deformation)을 가하여 다양한 형태($$b$$)의 convolution 연산을 수행합니다.
+> **Bilinear Interpolation**은 입력 좌표값이 정수가 아닌 실수일 때 입력 좌표값에 대한 출력 값을 부드럽게 보정하기 위해 사용되는 보간 기법입니다. 입력값이 실수인 경우 출력 값 또한 실수이며, 해당 실수 위치로 이동한 후에 가장 가까운 정수형 픽셀의 값을 사용합니다. 이를 통해 Deformable Convolution에서는 위치 이동이 가능한 컨볼루션 연산을 보다 정확하고 유연하게 수행할 수 있습니다. 
 
 ![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/4f03adfd-273c-4e5f-97e8-a32eee87fd6c)
 
 - $$(a)$$: 기존 그리드 합성곱 연산.
 - $$(b),(c),(d)$$: $$(a)$$의 각 픽셀에 변형을 가한 deformation convolution.
+
+기존의 그리드 합성곱 연산($$a$$)과 다르게 입력 피처맵의 각 픽셀의 위치에 변형(deformation)을 가하여 다양한 형태($$b$$)의 convolution 연산을 수행하는 모습입니다.
 
 상기 이미지에서 각 위치의 pixels들에 대해 filter를 적용할 때, 해당 위치를 중심으로 작은 offset $$\in \mathbb{R}$$을 부여하여 객체에 따라 적절한 수용 영역을 생성합니다.
 
