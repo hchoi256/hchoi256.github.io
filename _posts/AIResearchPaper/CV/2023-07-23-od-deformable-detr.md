@@ -41,15 +41,38 @@ sidebar:
 
 
 ## Deformable Convolution
+![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/e4d20bee-4efd-435e-bed6-6fea054617c3)
+
 기존의 일반적인 합성곱(Convolution)은 고정된 커널을 사용하여 입력 피처맵과 합성곱을 수행하며, 이로 인해 모든 픽셀에 동일한 수용 영역이 적용됩니다.
+
+$$y(\textbf{p}_0)=\Sigma_{\textbf{p}_n \in \mathcal{R}} w(\textbf{p}_n) \cdot x(\textbf{p}_0+\textbf{p}_n)$$
+
+- $$p_0$$: 입력 피처맵의 타겟 수용 영역의 center 위치입니다.
+- $$\mathcal{R}$$: $$p_0$$의 수용 영역에 존재하는 각 픽셀 위치 방향 벡터입니다.
+    - $$(-1,-1),(-1,0),(-1,1),(0,-1),(0,0),(0,1),(1,-1),(1,0),(1,1)$$.
+- $$w()$$: 합성곱 연산을 적용하는 데 사용되는 입력 데이터와 커널 간의 가중치 값들의 집합입니다.
+- $$x()$$: 입력 피처맵에서 주어진 픽셀 위치에 저장된 값입니다.
 
 <span style="color:orange"> 하지만, 객체의 크기나 모양이 다양한 경우, 고정된 수용 영역으로는 객체를 정확하게 검출하는 데 어려움이 있을 수 있습니다 </span>.
 
 > **수용 영역(receptive field)**: 출력 레이어의 뉴런 하나에 영향을 미치는 입력 뉴런들의 공간 크기입니다.
 
-![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/e4d20bee-4efd-435e-bed6-6fea054617c3)
+하여 **deformable convolution**은 객체의 형태를 고려하여 feature maps들을 **더 정확하게** 추출하기 위한 기법입니다.
 
-하여 **deformable convolution**은 객체의 형태를 고려하여 feature maps들을 **더 정확하게** 추출하기 위한 기법으로, 기존의 그리드 합성곱 연산($$a$$)과 다르게 입력 피처맵의 각 픽셀의 위치에 변형(deformation)을 가하여 다양한 형태($$b$$)의 convolution 연산을 수행합니다.
+![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/a06b96b8-1c3e-4633-b9f4-bfbc05df1b7f)
+
+- **offset field** ($$2N,H,W$$): 오프셋 필드는 입력 피처맵의 각 위치에 대응되는 값으로, 객체의 수용 영역을 조정하기 위해 사용됩니다.
+    - $$H,W$$: 각각 입력 피처맵의 높이 및 너비입니다.
+    - $$N$$: 커널 크기로, ($$3 \times 3$$) 커널에 대해 $$9$$라는 값을 가집니다.
+        - $$2N$$: 각 픽셀에 대해 x축/y축 이동 벡터값을 표현하기 위해 채널수는 2배가 됩니다.
+- **offset** ($$H,W$$): 입력 피처맵에서 수용 영역의 각 픽셀 영역에 대한 x축/y축 방향의 이동 벡터입니다.
+
+$$y(\textbf{p}_0)=\Sigma_{\textbf{p}_n \in \mathcal{R}} w(\textbf{p}_n) \cdot x(\textbf{p}_0+\textbf{p}_n+\bigtriangleup \textbf{p}_n)$$
+
+- $$\bigtriangleup p_n$$: $$p_n$$ 위치의 픽셀에 대한 **학습 가능한** offset입니다.
+- $$x(\textbf{p})=\Sigma_q G(\textbf{q},\textbf{p}) \cdot x(\textbf{q})$$.
+
+기존의 그리드 합성곱 연산($$a$$)과 다르게 입력 피처맵의 각 픽셀의 위치에 변형(deformation)을 가하여 다양한 형태($$b$$)의 convolution 연산을 수행합니다.
 
 ![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/4f03adfd-273c-4e5f-97e8-a32eee87fd6c)
 
@@ -57,28 +80,12 @@ sidebar:
 - $$(b),(c),(d)$$: $$(a)$$의 각 픽셀에 변형을 가한 deformation convolution.
 
 상기 이미지에서 각 위치의 pixels들에 대해 filter를 적용할 때, 해당 위치를 중심으로 작은 offset $$\in \mathbb{R}$$을 부여하여 객체에 따라 적절한 수용 영역을 생성합니다.
-- **offset field** ($$2N,H,W$$): 오프셋 필드는 입력 피처맵의 각 위치에 대응되는 값으로, 객체의 수용 영역을 조정하기 위해 사용됩니다.
-    - $$H,W$$: 각각 입력 피처맵의 높이 및 너비입니다.
-    - $$N$$: 커널 크기로, ($$3 \times 3$$) 커널에 대해 $$9$$라는 값을 가집니다.
-- **offset** ($$H,W$$): 입력 피처맵에서 수용 영역의 각 픽셀 영역에 대한 x축 혹은 y축 이동 벡터입니다.
 
 ![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/f1f86c9e-8f88-4a8f-a735-5c8a51f1575f)
 
 하여 상기 이미지에서 작은 객체에는 더 작은 수용 영역을 적용하고, 큰 객체에는 더 큰 수용 영역을 적용하는 모습입니다.
 
 이를 통해, 객체의 비정형적인 형태를 더 잘 표현하고, 이미지의 미세한 구조를 더욱 정확하게 인식할 수 있게 됩니다.
-
-
-![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/a06b96b8-1c3e-4633-b9f4-bfbc05df1b7f)
-
-
-- **sparse spatial locations**을 통해 sparse meaningful locations 현상 해결 가능
-    - sparse spatial locations: 특정 이미지나 피처맵에서 일부 픽셀 또는 위치만을 선택하는 것을 의미합니다.
-- **element relation modeling**이 약함
-    - 입력 이미지의 pixels들 간의 상대적인 관계 모델링
-        - 객체의 위치, 크기, 클래스 등을 파악하는 데에 용이합니다.
-
-> 기존의 일반적인 컨볼루션은 사각형 형태의 필터를 사용하여 이미지의 공간적인 특징을 인식하는데, 이는 일부 객체의 형태가 사각형이 아닌 **비정형적인 형태**일 때 문제가 될 수 있습니다.
 
 ****
 # Problem Definition ✏
@@ -101,6 +108,17 @@ sidebar:
 ****
 # Proposed Method 🧿
 ![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/5eb07c0e-f8ec-464b-8e3b-27ac18dcb325)
+
+
+### Deformation
+- **sparse spatial locations**을 통해 sparse meaningful locations 현상 해결 가능
+    - sparse spatial locations: 특정 이미지나 피처맵에서 일부 픽셀 또는 위치만을 선택하는 것을 의미합니다.
+- **element relation modeling**이 약함
+    - 입력 이미지의 pixels들 간의 상대적인 관계 모델링
+        - 객체의 위치, 크기, 클래스 등을 파악하는 데에 용이합니다.
+
+> 기존의 일반적인 컨볼루션은 사각형 형태의 필터를 사용하여 이미지의 공간적인 특징을 인식하는데, 이는 일부 객체의 형태가 사각형이 아닌 **비정형적인 형태**일 때 문제가 될 수 있습니다.
+
 
 ****
 # Experiment 👀
