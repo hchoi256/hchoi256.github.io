@@ -41,6 +41,17 @@ sidebar:
         - 작은 객체는 이미지에서 크기가 작고 미세한 구조를 가지는 경우가 많습니다. Multiscale 피처맵은 다양한 해상도를 가지며, 작은 객체를 더 잘 포착하기 위해 다양한 크기의 특징을 제공합니다.
         - <span style="color:orange"> DETR은 multi-scale features가 아닌 동일한 크기의 patch로 features를 생성합니다. </span>
 
+## Deformation
+- **sparse spatial locations**을 통해 sparse meaningful locations 현상 해결 가능
+    - sparse spatial locations: 특정 이미지나 피처맵에서 일부 픽셀 또는 위치만을 선택하는 것을 의미합니다.
+    - sparse meaningful locations: 적은 양의 의미있는 픽셀 또는 위치를 선택하는 것을 의미합니다. 
+- **element relation modeling**이 약함
+    - element relation modeling: 입력 이미지의 pixels들 간의 상대적인 관계 모델링입니다.
+        - 객체의 위치, 크기, 클래스 등을 파악하는 데에 용이합니다.
+    - Transformer는 self-attention을 통해 입력 시퀀스 간의 관계성 파악으로 element relation modeling을 잘하지만, deformable convolution
+
+> 기존의 일반적인 컨볼루션은 사각형 형태의 필터를 사용하여 이미지의 공간적인 특징을 인식하는데, 이는 일부 객체의 형태가 사각형이 아닌 **비정형적인 형태**일 때 문제가 될 수 있습니다.
+
 ## Deformable Convolution
 ![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/e4d20bee-4efd-435e-bed6-6fea054617c3)
 
@@ -60,6 +71,11 @@ $$y(\textbf{p}_0)=\Sigma_{\textbf{p}_n \in \mathcal{R}} w(\textbf{p}_n) \cdot x(
 
 **Deformable convolution**은 객체의 형태를 고려하여 feature maps들을 **더 정확하게** 추출하기 위한 기법입니다.
 
+1. 기존 입력 피처맵($$A$$)을 입력으로 **Convolution 레이어**를 통과한 출력 피처맵($$B$$)을 생성합니다.
+2. $$B$$와 Ground-truth를 비교하여 이동 벡터를 찾기 위해 **bilinear interpolation**을 사용합니다.
+3. 이동 벡터를 기존 입력 피처맵 $$A$$의 각 픽셀 위치에 더하여 **deformation**을 수행합니다.
+4. 이렇게 변형된 픽셀들과 대응되는 커널 위치의 픽셀들과의 합성곱 연산을 수행하여 각 위치마다 하나의 출력 픽셀을 뽑아냅니다.
+
 하기 이미지에서 입력 피처맵으로 부터 두 가지 branch로 나뉘게 됩니다.
 - **Branch 1**: offset을 계산하는 conv layer.
 - **Branch 2**: offset 정보를 받아서 conv 연산을 수행합니다.
@@ -78,11 +94,6 @@ $$y(\textbf{p}_0)=\Sigma_{\textbf{p}_n \in \mathcal{R}} w(\textbf{p}_n) \cdot x(
     - $$x(\textbf{p})=\Sigma_q G(\textbf{q},\textbf{p}) \cdot x(\textbf{q})$$.
         - **Bilinear interpolation**: $$G(\textbf{q},\textbf{p})=g(q_x,p_x) \cdot g(q_y, p_y)$$.
         - $$g(a,b)=max(0,1-\left\lvert a-b \right\rvert)$$.
-
-1. 기존 입력 피처맵($$A$$)을 입력으로 **Convolution 레이어**를 통과한 출력 피처맵($$B$$)을 생성합니다.
-2. $$B$$와 Ground-truth를 비교하여 이동 벡터를 찾기 위해 **bilinear interpolation**을 사용합니다.
-3. 이동 벡터를 기존 입력 피처맵 $$A$$의 각 픽셀 위치에 더하여 **deformation**을 수행합니다.
-4. 이렇게 변형된 픽셀들과 대응되는 커널 위치의 픽셀들과의 합성곱 연산을 수행하여 각 위치마다 하나의 출력 픽셀을 뽑아냅니다.
 
 > **Bilinear Interpolation**은 입력 좌표값이 정수가 아닌 실수일 때 입력 좌표값에 대한 출력 값을 부드럽게 보정하기 위해 사용되는 보간 기법입니다. 입력값이 실수인 경우 출력 값 또한 실수이며, 해당 실수 위치로 이동한 후에 가장 가까운 정수형 픽셀의 값을 사용합니다. 이를 통해 Deformable Convolution에서는 위치 이동이 가능한 컨볼루션 연산을 보다 정확하고 유연하게 수행할 수 있습니다. 
 
@@ -107,6 +118,21 @@ $$y(\textbf{p}_0)=\Sigma_{\textbf{p}_n \in \mathcal{R}} w(\textbf{p}_n) \cdot x(
 
 > Deformable convolution 논문은 Standard CNN의 **마지막 세 개의 레이어에 대해서만** deformable convolution를 적용한다고 합니다.
 
+## Multi-Head Attention in Transformers
+![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/6f1505c8-e4b5-4b72-adc4-2573a70aec3a)
+
+$$MultiHeadAttn(z_q,x)=\Sigma^M_{m=1} W_m (\Sigma_{k \in \Omega_k} A_{mqk} \cdot W^{\prime}_m x_k)$$
+
+- $$z_q$$: input feature of $$q^{th}$$ query.
+- $$x$$: input feature map (input feature of key elements).
+    - $$x_k$$: input feature map at $$k^{th}$$ key.
+- $$M$$: number of attention heads.
+- $$\Omega_k$$: the set of key elements.
+- $$A_{mqk}$$: attention weight of $$q^{th}$$ query to $$k^{th}$$ key at $$m^{th}$$ head.
+- $$W^{\prime}_m$$: input value projection matrix at $$m^{th}$$ head.
+- $$W_m$$: output projection matrix at $$m^{th}$$ head.
+
+
 ****
 # Problem Definition ✏
                 Given an Transformer-based model for object detection 
@@ -119,7 +145,7 @@ $$y(\textbf{p}_0)=\Sigma_{\textbf{p}_n \in \mathcal{R}} w(\textbf{p}_n) \cdot x(
 # Challenges and Main Idea💣
 **C1)** 기존 DETR 모델을 학습 수렴 속도가 매우 더디다.
 
-<span style="color:yellow"> **Idea)** **deformable attention module**은 모든 픽셀이 아닌, 특정 위치만을 선별하여 어텐션을 우선 적용합니다. </span>
+<span style="color:yellow"> **Idea)** **deformable attention module**은 모든 픽셀이 아닌, 특정 위치만을 선별하여 어텐션을 적용하여 학습 수렴 속도가 $$\times 10$$ 빠릅니다. </span>
 
 **C2)** 기존 DETR 모델은 작은 물체에 대한 object detection 성능이 저조하다.
 
@@ -128,16 +154,6 @@ $$y(\textbf{p}_0)=\Sigma_{\textbf{p}_n \in \mathcal{R}} w(\textbf{p}_n) \cdot x(
 ****
 # Proposed Method 🧿
 ![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/5eb07c0e-f8ec-464b-8e3b-27ac18dcb325)
-
-
-### Deformation
-- **sparse spatial locations**을 통해 sparse meaningful locations 현상 해결 가능
-    - sparse spatial locations: 특정 이미지나 피처맵에서 일부 픽셀 또는 위치만을 선택하는 것을 의미합니다.
-- **element relation modeling**이 약함
-    - 입력 이미지의 pixels들 간의 상대적인 관계 모델링
-        - 객체의 위치, 크기, 클래스 등을 파악하는 데에 용이합니다.
-
-> 기존의 일반적인 컨볼루션은 사각형 형태의 필터를 사용하여 이미지의 공간적인 특징을 인식하는데, 이는 일부 객체의 형태가 사각형이 아닌 **비정형적인 형태**일 때 문제가 될 수 있습니다.
 
 
 ****
