@@ -60,7 +60,7 @@ $$y(\textbf{p}_0)=\Sigma_{\textbf{p}_n \in \mathcal{R}} w(\textbf{p}_n) \cdot x(
 
 **Deformable convolution**은 객체의 형태를 고려하여 feature maps들을 **더 정확하게** 추출하기 위한 기법입니다.
 
-상기 이미지에서 입력 피처맵으로 부터 두 가지 branch로 나뉘게 됩니다.
+하기 이미지에서 입력 피처맵으로 부터 두 가지 branch로 나뉘게 됩니다.
 - **Branch 1**: offset을 계산하는 conv layer.
 - **Branch 2**: offset 정보를 받아서 conv 연산을 수행합니다.
 
