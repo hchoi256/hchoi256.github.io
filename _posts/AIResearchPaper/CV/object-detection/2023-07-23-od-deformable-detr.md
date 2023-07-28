@@ -42,13 +42,14 @@ sidebar:
         - <span style="color:orange"> DETR은 multi-scale features가 아닌 동일한 크기의 patch로 features를 생성합니다. </span>
 
 ## Deformation
-- **sparse spatial locations**을 통해 sparse meaningful locations 현상 해결 가능
+- <span style="color:skyblue"> **sparse spatial locations**을 통해 sparse meaningful locations 현상 해결 가능 </span>
     - sparse spatial locations: 특정 이미지나 피처맵에서 일부 픽셀 또는 위치만을 선택하는 것을 의미합니다.
     - sparse meaningful locations: 적은 양의 의미있는 픽셀 또는 위치를 선택하는 것을 의미합니다. 
-- **element relation modeling**이 약함
+- <span style="color:orange"> **element relation modeling**이 약함 </span>
     - element relation modeling: 입력 이미지의 pixels들 간의 상대적인 관계 모델링입니다.
         - 객체의 위치, 크기, 클래스 등을 파악하는 데에 용이합니다.
-    - Transformer는 self-attention을 통해 입력 시퀀스 간의 관계성 파악으로 element relation modeling을 잘하지만, deformable convolution
+    - Transformer는 **self-attention을 통해 입력 시퀀스 간의 관계성 파악**으로 element relation modeling을 잘합니다.
+    - Deformable 방식은 입력 시퀀스 간의 관계가 아닌 **주변 픽셀들의 locality**를 조사하기 때문에 element relation modeling이 약합니다.
 
 > 기존의 일반적인 컨볼루션은 사각형 형태의 필터를 사용하여 이미지의 공간적인 특징을 인식하는데, 이는 일부 객체의 형태가 사각형이 아닌 **비정형적인 형태**일 때 문제가 될 수 있습니다.
 
@@ -145,11 +146,11 @@ $$MultiHeadAttn(z_q,x)=\Sigma^M_{m=1} W_m (\Sigma_{k \in \Omega_k} A_{mqk} \cdot
 # Challenges and Main Idea💣
 **C1)** 기존 DETR 모델을 학습 수렴 속도가 매우 더디다.
 
-<span style="color:yellow"> **Idea)** **deformable attention module**은 모든 픽셀이 아닌, 특정 위치만을 선별하여 어텐션을 적용하여 학습 수렴 속도가 $$\times 10$$ 빠릅니다. </span>
+<span style="color:skyblue"> **Idea)** **deformable attention module**은 모든 픽셀이 아닌, 특정 위치만을 선별하여 어텐션을 적용하여 학습 수렴 속도가 $$\times 10$$ 빠릅니다. </span>
 
 **C2)** 기존 DETR 모델은 작은 물체에 대한 object detection 성능이 저조하다.
 
-<span style="color:yellow"> **Idea)** **multi-scale deformable attention module**은 다양한 크기의 feature maps를 활용하여 작은 물체를 적절히 탐지합니다. </span>
+<span style="color:skyblue"> **Idea)** **multi-scale deformable attention module**은 다양한 크기의 feature maps를 활용하여 작은 물체를 적절히 탐지합니다. </span>
 
 ****
 # Proposed Method 🧿
