@@ -47,7 +47,7 @@ sidebar:
 기존의 일반적인 컨볼루션은 사각형의 그리드 형태의 고정된 필터를 사용하여 이미지의 공간적인 특징을 인식하는데, 이는 일부 객체의 형태가 사각형이 아닌 **비정형적인 형태**일 때 문제가 될 수 있습니다.
 
 하여 입력 피처맵에 대해 deformation 방식을 적용하여 적응형 수용 영역을 생성합니다.
-- <span style="color:skyblue"> **sparse spatial locations**을 통해 sparse meaningful locations 현상 해결 가능 </span>
+- <span style="color:lightgreen"> **sparse spatial locations**을 통해 sparse meaningful locations 현상 해결 가능 </span>
     - sparse spatial locations: 특정 이미지나 피처맵에서 일부 픽셀 또는 위치만을 선택하는 것을 의미합니다.
     - sparse meaningful locations: 적은 양의 의미있는 픽셀 또는 위치를 선택하는 것을 의미합니다. 
 - <span style="color:orange"> **element relation modeling**이 약함 </span>
@@ -149,11 +149,11 @@ $$MultiHeadAttn(z_q,x)=\Sigma^M_{m=1} W_m (\Sigma_{k \in \Omega_k} A_{mqk} \cdot
 # Challenges and Main Idea💣
 **C1)** 기존 DETR 모델을 학습 수렴 속도가 매우 더디다.
 
-<span style="color:skyblue"> **Idea)** **deformable attention module**은 모든 픽셀이 아닌, 특정 위치만을 선별하여 어텐션을 적용하여 학습 수렴 속도가 $$\times 10$$ 빠릅니다. </span>
+<span style="color:lightgreen"> **Idea)** **deformable attention module**은 모든 픽셀이 아닌, 특정 위치만을 선별하여 어텐션을 적용하여 학습 수렴 속도가 $$\times 10$$ 빠릅니다. </span>
 
 **C2)** 기존 DETR 모델은 작은 물체에 대한 object detection 성능이 저조하다.
 
-<span style="color:skyblue"> **Idea)** **multi-scale deformable attention module**은 다양한 크기의 feature maps를 활용하여 작은 물체를 적절히 탐지합니다. </span>
+<span style="color:lightgreen"> **Idea)** **multi-scale deformable attention module**은 다양한 크기의 feature maps를 활용하여 작은 물체를 적절히 탐지합니다. </span>
 
 ****
 # Proposed Method 🧿
@@ -207,8 +207,8 @@ $$MSDeformAttn(z_q,\hat{p}_q,(x^l)^L_{l=1})=\Sigma^M_{m=1} W_m (\Sigma^L_{l=1} \
 
 ## 성능 향상
 저자는 성능 향상을 위해 두 가지 방법 **(1)Iterative Bounding Box Refinement**, **(2)Two-Stage Deformable DETR**을 추가로 사용합니다.
-- **Iterative Bounding Box Refinement**: 박스 좌표를 조금 보정해주는 auxiliary 레이어를 각 디코더 레이어에 추가하면 <span style="color:skyblue"> AP 점수가 기존 DETR에 비해 $$2$$ 정도 오릅니다 </span>. 
-- **Two-Stage Deformable DETR**: object query의 위치를 랜덤하게 초기화 하지 않고, Encoder를 따로 학습시켜서 얻은 출력을 바탕으로 객체가 존재하는 위치 부근에 초기화 시킵니다. 이를 통해 <span style="color:skyblue"> AP 점수가 기존 DETR에 비해 $$3$$ 정도 오릅니다 </span>.  
+- **Iterative Bounding Box Refinement**: 박스 좌표를 조금 보정해주는 auxiliary 레이어를 각 디코더 레이어에 추가하면 <span style="color:lightgreen"> AP 점수가 기존 DETR에 비해 $$2$$ 정도 오릅니다 </span>. 
+- **Two-Stage Deformable DETR**: object query의 위치를 랜덤하게 초기화 하지 않고, Encoder를 따로 학습시켜서 얻은 출력을 바탕으로 객체가 존재하는 위치 부근에 초기화 시킵니다. 이를 통해 <span style="color:lightgreen"> AP 점수가 기존 DETR에 비해 $$3$$ 정도 오릅니다 </span>.  
     - 인코더를 1차적으로 따로 학습시키기 때문에 Two-Stage 입니다.
 
 ****
