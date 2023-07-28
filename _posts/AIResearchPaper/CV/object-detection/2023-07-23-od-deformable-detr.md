@@ -236,7 +236,13 @@ NA
 ****
 # Conclusion ✨
 ## Strength
+- 학습 수렴 속도 $$\times 10$$ 가속.
+- 다양한 크기의 객체 탐지 능력 개선. 
+
 ## Weakness
+- Transformer 구조상 학습 데이터 많아야 성능이 잘 나옴.
+- object query 개수 고정값 사용.
+- sampling points 고정값 사용.
 
 ****
 # Reference
