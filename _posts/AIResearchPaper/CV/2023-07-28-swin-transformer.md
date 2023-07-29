@@ -288,12 +288,10 @@ NA
 # Discussion 🍟
 - Multi-Scale Feature Maps를 활용하면 더 성능이 오르지 않을까?
 - Cyclic Shift 보다 더 효과적인 알고리즘이 있을 것 같다.
-- 
 
 ****
 # Major Takeaways 😃
 - Local Window
-- 
 
 ****
 # Conclusion ✨
