@@ -32,7 +32,7 @@ sidebar:
 # Preliminaries 🙌
 ## DETR 모델 한계
 - **느린 수렴 속도**
-    - DETR은 초기화 단계에서 CNN이 출력한 하나의 feature map의 모든 pixels에 대해 uniform attention weights를 부여합니다. 이는 모든 픽셀이 동일한 중요도를 가진다고 가정하는 것인데, 실제로는 객체가 존재하는 영역과 배경이나 노이즈가 있는 영역 등에 대해 다른 중요도를 가지는 것이 보통입니다. <span style="color:orange"> 하여 객체의 위치를 다소 부정확하게 판단하게 되는 **sparse meaningful locations** 현상이 발생하고, 수렴하기 까지 더 많은 시간이 소요됩니다 </span>.
+    - DETR은 초기화 단계에서 CNN이 출력한 feature map의 모든 pixels에 대해 uniform attention weights를 부여합니다. 이는 모든 픽셀이 동일한 중요도를 가진다고 가정하는 것인데, 실제로는 객체가 존재하는 영역과 배경이나 노이즈가 있는 영역 등에 대해 다른 중요도를 가지는 것이 보통입니다. <span style="color:orange"> 하여 객체의 위치를 다소 부정확하게 판단하게 되는 **sparse meaningful locations** 현상이 발생하고, 수렴하기 까지 더 많은 시간이 소요됩니다 </span>.
     - DETR은 Transformer 인코더에서 각 픽셀들은 서로 다른 픽셀들과의 attention weight를 계산한다.
         - <span style="color:orange"> Quadratic time complexity ($$N^2$$) </span>.
             - $$N$$: the number of pixels.
@@ -92,14 +92,14 @@ $$y(\textbf{p}_0)=\Sigma_{\textbf{p}_n \in \mathcal{R}} w(\textbf{p}_n) \cdot x(
     - $$(H,W)$$: 각각 입력 피처맵의 높이 및 너비입니다.
     - $$N$$: 커널 크기로, ($$3 \times 3$$) 커널에 대해 $$9$$라는 값을 가집니다.
         - $$2N$$: 각 픽셀에 대해 $$x축/y축$$ 이동 벡터값을 표현하기 위해 채널수는 2배가 됩니다.
-- **offset** $$(H,W)$$: 입력 피처맵에서 수용 영역의 각 픽셀 영역에 대한 $$x축/y축$$ 방향의 이동 벡터입니다.
+- **offset** $$(H,W)$$: 입력 피처맵에서 수용 영역의 각 픽셀 영역에 대한 $$x$$축 및$$y$$축 방향의 이동 벡터입니다.
 
 $$y(\textbf{p}_0)=\Sigma_{\textbf{p}_n \in \mathcal{R}} w(\textbf{p}_n) \cdot x(\textbf{p}_0+\textbf{p}_n+\bigtriangleup \textbf{p}_n)$$
 
 - $$\bigtriangleup p_n$$: $$p_n$$ 위치의 픽셀에 대한 **학습 가능한** offset입니다.
-    - $$x(\textbf{p})=\Sigma_q G(\textbf{q},\textbf{p}) \cdot x(\textbf{q})$$.
-        - **Bilinear interpolation**: $$G(\textbf{q},\textbf{p})=g(q_x,p_x) \cdot g(q_y, p_y)$$.
-        - $$g(a,b)=max(0,1-\left\lvert a-b \right\rvert)$$.
+- $$x(\textbf{p})=\Sigma_q G(\textbf{q},\textbf{p}) \cdot x(\textbf{q})$$.
+    - **Bilinear interpolation**: $$G(\textbf{q},\textbf{p})=g(q_x,p_x) \cdot g(q_y, p_y)$$.
+    - $$g(a,b)=max(0,1-\left\lvert a-b \right\rvert)$$.
 
 입력 피처맵(input feature map)을 굳이 Convolution 레이어를 통과시켜서 얻은 출력 피처맵을 사용하여 offset field를 학습하는 것은 **더 많은 고차원의 추상적인 정보를 활용하여 정확한 위치 조정을 가능케 하는데 있습니다**.
 
