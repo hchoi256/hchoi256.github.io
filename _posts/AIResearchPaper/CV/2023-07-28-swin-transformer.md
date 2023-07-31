@@ -91,12 +91,14 @@ $$\Omega (W-MSA)=4hwC^2 + 2M^2 hwC$$
 
 - $$\Omega(MSA)$$: 기존 MSA의 계산 복잡도를 나타냅니다.
 - $$\Omega(W-MSA)$$: Swin Transformer에서 로컬 윈도우 기반의 계산 복잡도를 나타냅니다.
-- $$h$$: self-attention 헤드(heads)의 개수,
+- $$h$$: 패치의 가로 크기,
 - $$w$$: 패치의 가로 크기,
 - $$C$$: 패치 임베딩의 차원,
 - $$M$$: 로컬 윈도우 크기입니다.
 
 Swin Transformer에서는 기존 MSA와 비교하여 로컬 윈도우에 대해 선형 복잡도를 가지기 때문에, 윈도우 크기에 비례하여 계산 복잡도가 크게 증가하지 않습니다.
+
+
 
 ## Patch Merging
 ![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/9c75e864-ca74-4460-8dc7-aaeb0466d3ca)
@@ -118,6 +120,8 @@ Linear Reduction을 통해 다시 $$2C$$ 차원으로 축소하여 계산 복잡
 $$\hat{z}^l=W-MSA(LN(z^{l-1}))+z^{l-1}$$
 
 $$z^l=MLP(LN(\hat{z}^l))+\hat{z}^l$$
+
+$$W-MSA$$는 상기 이미지에서 $$Layer\ 1$$ 부분에 해당됩니다.
 
 하나의 Local Window 안에 존재하는 패치끼리 self attention을 수행합니다.
 
