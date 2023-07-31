@@ -91,7 +91,7 @@ $$y(\textbf{p}_0)=\Sigma_{\textbf{p}_n \in \mathcal{R}} w(\textbf{p}_n) \cdot x(
 - **offset field** $$(2N,H,W)$$: 오프셋 필드는 입력 피처맵의 각 위치에 대응되는 값으로, 객체의 수용 영역을 조정하기 위해 사용됩니다.
     - $$(H,W)$$: 각각 입력 피처맵의 높이 및 너비입니다.
     - $$N$$: 커널 크기로, ($$3 \times 3$$) 커널에 대해 $$9$$라는 값을 가집니다.
-        - $$2N$$: 각 픽셀에 대해 $$x축/y축$$ 이동 벡터값을 표현하기 위해 채널수는 2배가 됩니다.
+        - $$2N$$: 각 픽셀에 대해 $$x$$축과 $$y$$축의 이동 벡터값을 표현하기 위해 채널수는 2배가 됩니다.
 - **offset** $$(H,W)$$: 입력 피처맵에서 수용 영역의 각 픽셀 영역에 대한 $$x$$축 및$$y$$축 방향의 이동 벡터입니다.
 
 $$y(\textbf{p}_0)=\Sigma_{\textbf{p}_n \in \mathcal{R}} w(\textbf{p}_n) \cdot x(\textbf{p}_0+\textbf{p}_n+\bigtriangleup \textbf{p}_n)$$
