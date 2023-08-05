@@ -22,7 +22,7 @@ sidebar:
 ![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/eb28ad9a-8050-4057-8c5c-4ff82da474fd)
 
 - Deformable Convolution의 Offset 개념을 ViT의 Self-Attention에 적용한 Deformable Attention Module을 제안.
-- 기존 Swin Transformer(ICCV`21) 및 Deformable DETR(CoRL`21)과 달리 **Query Agnostic**한 형태로 Patch 개수보다 적은 Reference Points를 통해 Attention 연산.
+- 기존 Swin Transformer(ICCV'21) 및 Deformable DETR(CoRL'21)과 달리 **Query Agnostic**한 형태로 Patch 개수보다 적은 Reference Points를 통해 Attention 연산.
     - Query Agnostic: 모든 Query가 하이퍼 파라미터로 고정된 개수의 Reference Points를 공유하여 Offset을 업데이트합니다. 
 
 ****
@@ -84,29 +84,32 @@ Learnable Matrix는 학습 가능한 가중치 파라미터로, 여러 Query들 
 - Reference Points: 하이퍼 파라미터로 Patch 개수보다 적도록 Input Feature Map 상에 Uniform하게 생성됩니다.
 - $$\theta_{offset}$$: offset network.
 
-0. Input Feature Map $$x \in (B,C, H, W)$$을 마치 MSHA처럼 Channel-Wise하게 Group $$G$$ 단위로 $$x \in (B,G \times C, H, W)$$ 분할하여 Deformed Points의 다양성을 향상시킵니다.
+1) Input Feature Map $$x \in (B,C, H, W)$$을 마치 MSHA처럼 Channel-Wise하게 Group $$G$$ 단위로 $$x \in (B,G \times C, H, W)$$ 분할하여 Deformed Points의 다양성을 향상시킵니다.
 
 - Head의 개수 $$M$$은 $$G$$의 배수로 설정되어 각 Group이 다수의 attention head를 통해 연산될 수 있도록 합니다. 
 - 각 Group마다 shared subnetwork를 통해 offsets를 계산합니다.
 
-1. $$x$$에 대해 **Reference Points $$p \in (B \times G, H,W,2)$$를 Uniform하게 생성합니다**.
+2) $$x$$에 대해 **Reference Points $$p \in (B \times G, H,W,2)$$를 Uniform하게 생성합니다**.
 
 - $$p \in \mathbb{R}^{H_G \times W_G \times 2}$$.
     - $$H_G={H \over r}, W_G={W \over r}$$.
 - Reference Points: $$\{(0,0),...,(H_G-1,W_G-1)\}$$ 좌표값들을 $$[-1,+1]$$ 범위로 Normalization을 수행합니다.
     - Normalization 이후, $$(-1,-1)$$ 좌표는 top-left corner이 되게 됩니다.
 
+
+3) Input Feature Map을 $$W_q$$과 곱하여 **쿼리 $$q$$를 구합니다**.
+
 <span style="color:yellow"> $$q=xW_q$$ </span>
 
-2. Input Feature Map을 $$W_q$$과 곱하여 **쿼리 $$q$$를 구합니다**.
+4) 해당 쿼리 $$q$$를 Offset Network $$\theta_{offset}$$에 넣어서 Reference Points에 대한 **Offset Vector를 구합니다**.
 
 <span style="color:yellow">$$\bigtriangleup \textbf{p}=\theta_{offset}(q)$$ </span>
 
-3. 해당 쿼리 $$q$$를 Offset Network $$\theta_{offset}$$에 넣어서 Reference Points에 대한 **Offset Vector를 구합니다**.
+5) 해당 Offset Vector과 Reference Points들을 더하여 **Deformed Points(Sampling Points)를 구합니다**.
 
 <span style="color:yellow">$$\tilde{x}=\phi(x;p+\bigtriangleup p)$$ </span>
 
-4. 해당 Offset Vector과 Reference Points들을 더하여 **Deformed Points(Sampling Points)를 구합니다**.
+6) 해당 Deformed Points들은 실수값을 갖고 있기 때문에 **Bilinear Interpolation을 통해 알맞은 Sampled Features를 추출합니다**.
 
 <span style="color:yellow">$$\phi(z;(p_x,p_y))=\Sigma_{r_x,r_y}g(p_x,r_x) \cdot g(p_y,r_y) \cdot z[r_y,r_x,:]$$ </span>
 
@@ -114,11 +117,11 @@ Learnable Matrix는 학습 가능한 가중치 파라미터로, 여러 Query들 
 
 - $$r_x,r_y$$: indexes on $$z \in \mathbb{R}^{H \times W \times C}$$.
 
-5. 해당 Deformed Points들은 실수값을 갖고 있기 때문에 **Bilinear Interpolation을 통해 알맞은 Sampled Features를 추출합니다**.
+7) 해당 Sampled Features들을 각각 $$W_k,W_v$$와 곱하여 Deformed Key $$\tilde{k}$$와 Deformed Value $$\tilde{v}$$를 구합니다.
 
 <span style="color:yellow">$$\tilde{k}=\tilde{x}W_k,\tilde{v}=\tilde{x}W_v$$ </span>
 
-6. 해당 Sampled Features들을 각각 $$W_k,W_v$$와 곱하여 Deformed Key $$\tilde{k}$$와 Deformed Value $$\tilde{v}$$를 구합니다.
+8) Deformed Points로 부터 Swin Transformer에서 제시된 **Relative Position Bias Offsets을 동일한 방법으로 구하고, 최종 Attention 출력을 계산합니다**.
 
 <span style="color:yellow">$$z^m=\sigma({q^m (\tilde{k}^{m})^T \over \sqrt{d}}+\phi(\hat{B};R)W)\tilde{v}^m$$ </span>
 
@@ -126,10 +129,6 @@ Learnable Matrix는 학습 가능한 가중치 파라미터로, 여러 Query들 
 - $$\phi(\hat{B};R) \in \mathbb{R}^{HW \times H_G W_G}$$: Relative Position Bias Offset.
     - $$G$$: Group.
     - $$\hat{B}$$: Relative Position Bias.
-
-7. Deformed Points로 부터 Swin Transformer에서 제시된 **Relative Position Bias Offsets을 동일한 방법으로 구합니다**.
-
-8. 
 
 ## Offset Network
 ![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/43ce0b3d-86d8-4638-8063-416863e17e6e)
