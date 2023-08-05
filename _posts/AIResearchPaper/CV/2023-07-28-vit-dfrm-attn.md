@@ -84,6 +84,8 @@ Learnable Matrix는 학습 가능한 가중치 파라미터로, 여러 Query들 
 - Reference Points: 하이퍼 파라미터로 Patch 개수보다 적도록 Input Feature Map 상에 Uniform하게 생성됩니다.
 - $$\theta_{offset}$$: offset network.
 
+하기 Deformable Attention Module의 동작 과정을 살펴봅시다:
+
 1) Input Feature Map $$x \in (B,C, H, W)$$을 마치 MSHA처럼 Channel-Wise하게 Group $$G$$ 단위로 $$x \in (B,G \times C, H, W)$$ 분할하여 Deformed Points의 다양성을 향상시킵니다.
 
 - Head의 개수 $$M$$은 $$G$$의 배수로 설정되어 각 Group이 다수의 attention head를 통해 연산될 수 있도록 합니다. 
