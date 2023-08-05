@@ -168,8 +168,15 @@ $$MultiHeadAttn(z_q,p_q,x)=\Sigma^M_{m=1} W_m (\Sigma_{k \in \Omega_k} A_{mqk} \
 
 ![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/8dfc2a81-896a-41d3-8eff-84bb6f3cc1db)
 
-- Reference point: 현재 합성곱 연산이 진행되고 있는 타겟 픽셀.
-- Sampling points: 합성곱 연산에서 사용할 변형된 수용 영역 픽셀들
+- **Reference point**: 현재 Attention 연산이 진행되고 있는 타겟 픽셀.
+    - Encoder에서 reference point가 input query(=feature map의 모든 pixel)와 동일합니다.
+- **Sampling points**: Attention 연산에서 사용할 변형된 수용 영역 픽셀.
+
+1. Input Feature Map $$x$$의 특정 쿼리의 위치에서 독립적인 Linear Layer를 거칩니다.
+2. Query Feature $$x_q$$를 또 다른 Linear Layer를 통과시켜 **Sampling Offsets을 얻습니다**(Sampling Offsets의 개수는 하이퍼 파라미터).
+3. Sampling Offset과 Reference Point를 더하여 **Sampling Points들을 얻습니다**.
+4. Sampling Points들을 통해 **Feature들을 추출합니다** (그림에서 세로 블럭들).
+5. Query Feature를 또 다른 Linear Layer에 통과시켜 얻은 Attention Weight와 Feature를 **Aggregate하여 Value를 얻습니다**.
 
 기존 DETR의 self-attention처럼 모든 픽셀들에 대해 attention을 수행하는 것이 아니라, 특정 sampling points들에 대해서만 attention을 수행합니다.
 
@@ -243,6 +250,8 @@ NA
 - Transformer 구조상 학습 데이터 많아야 성능이 잘 나옴.
 - object query 개수 고정값 사용.
 - sampling points 고정값 사용.
+- **각 Query에 대해 독립적인 sampling points를 생성하는데, global attention 관점에서 모든 쿼리는 어느 정도 깊이의 네트워크에서 동일한 이미지 패턴 attention을 도출한다는 점에서 해당 과정은 불필요합니다.**
+    - 이후, ViT w/ Deformable Attention 논문이 나오게 된 배경.
 
 ****
 # Reference
