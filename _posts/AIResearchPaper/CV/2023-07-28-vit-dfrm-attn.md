@@ -84,20 +84,19 @@ Learnable Matrix는 학습 가능한 가중치 파라미터로, 여러 Query들 
 - Reference Points: 하이퍼 파라미터로 Patch 개수보다 적도록 Input Feature Map 상에 Uniform하게 생성됩니다.
 - $$\theta_{offset}$$: offset network.
 
-하기 Deformable Attention Module의 동작 과정을 살펴봅시다:
-
-1) Input Feature Map $$x \in (B,C, H, W)$$을 마치 MSHA처럼 Channel-Wise하게 Group $$G$$ 단위로 $$x \in (B,G \times C, H, W)$$ 분할하여 Deformed Points의 다양성을 향상시킵니다.
+## 동작 과정
+1) Input Feature Map $$x \in (B,C, H, W)$$을 마치 MSHA처럼 Channel-Wise하게 Group $$G$$ 단위로 $$x \in (B,G \times C, H, W) \rightarrow (B \times G, C, H,W)$$ 분할하여 **Deformed Points의 다양성을 향상시킵니다**.
 
 - Head의 개수 $$M$$은 $$G$$의 배수로 설정되어 각 Group이 다수의 attention head를 통해 연산될 수 있도록 합니다. 
 - 각 Group마다 shared subnetwork를 통해 offsets를 계산합니다.
 
-2) $$x$$에 대해 **Reference Points $$p \in (B \times G, H,W,2)$$를 Uniform하게 생성합니다**.
+2) $$x \in (B \times G, C, H,W)$$에 대해 **Reference Points $$p \in (B \times G, H_G,W_G,2)$$를 Uniform Grid $$((H,W) \rightarrow (H_G,W_G))$$로 생성하고 각 좌표를 $$[-1,1]$$ 범위로 Normalization 합니다**.
 
-- $$p \in \mathbb{R}^{H_G \times W_G \times 2}$$.
-    - $$H_G={H \over r}, W_G={W \over r}$$.
-- Reference Points: $$\{(0,0),...,(H_G-1,W_G-1)\}$$ 좌표값들을 $$[-1,+1]$$ 범위로 Normalization을 수행합니다.
+- $$H_G={H \over r}, W_G={W \over r}$$.
+    - $$r$$: a factor.
+- Reference Points: $$\{(0,0),...,(H_G-1,W_G-1)\}$$ 좌표들을 $$[-1,+1]$$ 범위로 Normalization을 수행합니다.
     - Normalization 이후, $$(-1,-1)$$ 좌표는 top-left corner이 되게 됩니다.
-
+    - 각 Reference Point 마다 $$2$$개의 $$x$$축과 $$y$$축 Sampling Offset을 가집니다.
 
 3) Input Feature Map을 $$W_q$$과 곱하여 **쿼리 $$q$$를 구합니다**.
 
