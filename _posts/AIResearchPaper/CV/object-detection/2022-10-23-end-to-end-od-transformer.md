@@ -279,3 +279,5 @@ DETR은 학습 속도가 느린대신 정확도가 높은 Two-stage 방법인 Fa
 [*Hungarian Algorithm*](https://gazelle-and-cs.tistory.com/29)
 
 [보람이 - DETR 논문 리뷰](https://powerofsummary.tistory.com/205)
+
+[Object Query](https://herbwood.tistory.com/26)
