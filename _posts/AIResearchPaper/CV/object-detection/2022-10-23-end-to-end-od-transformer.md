@@ -100,7 +100,7 @@ Set loss를 최소화하는 것은 모델의 객체 감지 성능을 향상시�
 ### Matching Cost
 ![image](https://user-images.githubusercontent.com/39285147/197422840-8c8770b5-895b-4c82-b967-da083a62c4df.png)
 
-<span style="color:yellow"> $$\mathcal{L}_{match}=-\hat{p}_{\hat{\sigma}(i)}(c_i)+\mathbb{1}_{c_i \neq \empty} \mathcal{L}_{box}(b_i,\hat{b}_{\hat{\sigma}(i)})$$ </span>
+<span style="color:yellow"> $$\mathcal{L}_{match}=-\hat{p}_{\hat{\sigma}(i)}(c_i)+\mathbb{1}_{c_i \neq \emptyset} \mathcal{L}_{box}(b_i,\hat{b}_{\hat{\sigma}(i)})$$ </span>
 
 $$\mathcal{L}_{match}$$는 Groud-Truth와 모델 예측 결과의 순열 중에서 최적의 조합쌍을 탐색합니다.
 
