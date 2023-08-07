@@ -174,11 +174,69 @@ Encoder는 입력으로 들어온 시퀀스들에 positional encoding을 적용�
 
 ## 3) Transformer Decoder
 ### Object Query
-Object query는 전체 이미지에 존재하는 각 객체를 하나씩 담당하게 되고, $$(query, positional\ encoding)$$ 형식을 띄고 있습니다.
+Object query는 **학습 가능한 Positional Encoding**으로써 전체 이미지에 존재하는 각 객체에 대한 위치 정보를 표현하게 됩니다.
 
-$$query$$는 초기값으로 0이 할당되지만, 각 object query가 self-attention에 의해 독립적으로 서로 다른 객체를 탐지하기 위해서 $$positional\ encoding$$의 랜덤으로 초기화됩니다.
+    class DETR(nn.Module):
+        def __init__(self, backbone, transformer, num_classes, num_queries, aux_loss=False):
+            self.query_embed = nn.Embedding(num_queries, hidden_dim)
+        
+        def forward(self, samples: NestedTensor):
+            self.transformer(self.input_proj(src), mask, self.query_embed.weight, pos[-1])[0]
 
-DETR 모델에서는 안전하게 COCO 데이터셋에서 한 이미지 당 존재하는 가장 많은 객체의 개수 보다 큰 값인 100개의 object query를 디코더에서 사용합니다.
+DETR 모델에서는 안전하게 COCO 데이터셋에서 한 이미지 당 존재하는 가장 많은 객체의 개수 보다 큰 값인 100개의 object query를 디코더에서 사용합니다 (`num_queries` $$=100$$).
+
+상기 코드에서 nn.Embedding으로 랜덤으로 초기화된 `query_embed`가 객체쿼리에 대한 학습 가능한 Embedding을 의미하게 되며, forward 함수에서 self.transformer를 invoke할 때, 실제 위치 인코딩 값을 담고 있는 `query_embed.weight`를 넘겨주게 됩니다.
+
+    class Transformer(nn.Module):
+        def forward(self, src, mask, query_embed, pos_embed):
+            tgt = torch.zeros_like(query_embed)
+
+    class TransformerDecoder(nn.Module):
+    def forward(self, tgt, memory,
+                    tgt_mask: Optional[Tensor] = None,
+                    memory_mask: Optional[Tensor] = None,
+                    tgt_key_padding_mask: Optional[Tensor] = None,
+                    memory_key_padding_mask: Optional[Tensor] = None,
+                    pos: Optional[Tensor] = None,
+                    query_pos: Optional[Tensor] = None):
+            for layer in self.layers:
+                output = layer(output, memory, tgt_mask=tgt_mask,
+                            memory_mask=memory_mask,
+                            tgt_key_padding_mask=tgt_key_padding_mask,
+                            memory_key_padding_mask=memory_key_padding_mask,
+                            pos=pos, query_pos=query_pos)
+
+상기 Transformer 클래스의 forward 함수에서 쿼리 `tgt`를 $$0$$으로 초기화합니다.
+
+인코더를 거친 후, 디코더의 각 레이어를 iterate하게 되는데, 이 때 `query_pos` 값은 `query_embed.weight`라는 해딩 객체 쿼리의 위치 인코딩을 의미하게 됩니다.
+
+    class TransformerDecoderLayer(nn.Module):
+    def with_pos_embed(self, tensor, pos: Optional[Tensor]):
+        return tensor if pos is None else tensor + pos
+    def forward_post(self, tgt, memory,
+                        tgt_mask: Optional[Tensor] = None,
+                        memory_mask: Optional[Tensor] = None,
+                        tgt_key_padding_mask: Optional[Tensor] = None,
+                        memory_key_padding_mask: Optional[Tensor] = None,
+                        pos: Optional[Tensor] = None,
+                        query_pos: Optional[Tensor] = None):
+        q = k = self.with_pos_embed(tgt, query_pos)
+        tgt2 = self.self_attn(q, k, value=tgt, attn_mask=tgt_mask,
+                            key_padding_mask=tgt_key_padding_mask)[0]
+        tgt = tgt + self.dropout1(tgt2)
+        tgt = self.norm1(tgt)
+        tgt2 = self.multihead_attn(query=self.with_pos_embed(tgt, query_pos),
+                                key=self.with_pos_embed(memory, pos),
+                                value=memory, attn_mask=memory_mask,
+                                key_padding_mask=memory_key_padding_mask)[0]
+        tgt = tgt + self.dropout2(tgt2)
+        tgt = self.norm2(tgt)
+        tgt2 = self.linear2(self.dropout(self.activation(self.linear1(tgt))))
+        tgt = tgt + self.dropout3(tgt2)
+        tgt = self.norm3(tgt)
+        return tgt
+            
+상기 디코더 레이어 클래스를 보면, forward 함수에서 self.with_pos_embed 함수에서 `tgt` 쿼리에 객체 쿼리의 위치 정보인 `query_pos`를 더하여 임베딩해주는 모습입니다.
 
 ### Decoder 구조
 ![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/14330c56-d5d7-424e-9567-670d05cec198)
