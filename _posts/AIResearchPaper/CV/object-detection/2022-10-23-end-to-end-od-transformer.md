@@ -97,7 +97,7 @@ Set loss를 최소화하는 것은 모델의 객체 감지 성능을 향상시�
     - permutation-invariance
 
 ## Object Detection Set Prediction Loss
-### Matching Cost $$\mathcal{L}_{match}$$
+### Matching Cost $$\mathcal{L}_{match}$$.
 ![image](https://user-images.githubusercontent.com/39285147/197422840-8c8770b5-895b-4c82-b967-da083a62c4df.png)
 
 <span style="color:yellow"> $$\mathcal{L}_{match}=-\hat{p}_{\hat{\sigma}(i)}(c_i)+\mathbb{1}_{c_i \neq \emptyset} \mathcal{L}_{box}(b_i,\hat{b}_{\hat{\sigma}(i)})$$ </span>
@@ -106,7 +106,7 @@ $$\mathcal{L}_{match}$$는 Groud-Truth와 모델 예측 결과의 순열 중에�
 
 이 Loss는 역전파 시 기울기가 흐르지 않으며, 단순히 최적의 조합쌍을 구하는 것에 목적이 있습니다.
 
-### Hungarian Algorithm $$\mathcal{L}_{hungarian}$$
+### Hungarian Algorithm $$\mathcal{L}_{hungarian}$$.
 ![image](https://user-images.githubusercontent.com/39285147/197422872-acf77efd-3103-4008-921c-f62aa22a13fc.png)
 - $$\mathbb{1}_{\{c_i \neq \emptyset \}}$$: 클래스 $$c_i$$가 존재하면 $$1$$, 아니면 $$0$$.
 - $$\hat{p}_{\hat{\sigma}(i)}(c_i)$$: 클래스 $$c_i$$을 예측할 확률.
