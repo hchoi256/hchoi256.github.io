@@ -195,6 +195,8 @@ $$MultiHeadAttn(z_q,p_q,x)=\Sigma^M_{m=1} W_m (\Sigma_{k \in \Omega_k} A_{mqk} \
 
 이 때 피처맵들의 크기가 다르기 때문에, 알맞게 각 피처맵에 대한 sampling point 픽셀 위치를 찾기 위해서 offset을 $$[0,1]$$ 범위로 scaling하는 normalization를 거치게 됩니다.
 
+이후, offset 값들을 각각의 피처 맵의 크기에 맞게 스케일링합니다.
+
 하여 상기 이미지처럼 각 크기의 피처맵에 대해 적절히 sampling points를 찾는 모습입니다.
 
 ## Multi-scale Deformable Attention
