@@ -210,9 +210,10 @@ $$MSDeformAttn(z_q,\hat{p}_q,(x^l)^L_{l=1})=\Sigma^M_{m=1} W_m (\Sigma^L_{l=1} \
 
 ![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/5eb07c0e-f8ec-464b-8e3b-27ac18dcb325)
 
-- 사용하는 특징맵의 개수$$(k)$$는 하이퍼 파라미터입니다.
-    - 상기 이미지에서는 $$k=4$$입니다.
-- 이전 레이어 층의 서로 다른 크기의 피처맵들로 부터의 sampilng points를 다음 층의 출력 픽셀 하나를 결정하기 위한 수용 영역으로 삼습니다.
+사용하는 특징맵의 개수$$(k)$$는 하이퍼 파라미터입니다.
+- 상기 이미지에서는 $$k=4$$입니다.
+
+이전 레이어 층의 서로 다른 크기의 피처맵들로 부터의 sampilng points를 다음 층의 출력 픽셀 하나를 결정하기 위한 수용 영역으로 삼습니다.
 
 ## 성능 향상
 저자는 성능 향상을 위해 두 가지 방법 **(1)Iterative Bounding Box Refinement**, **(2)Two-Stage Deformable DETR**을 추가로 사용합니다.
