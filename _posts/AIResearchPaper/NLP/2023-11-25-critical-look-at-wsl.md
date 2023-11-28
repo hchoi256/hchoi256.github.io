@@ -98,6 +98,36 @@ sidebar:
 - The goal of WSL algorithms is to obtain a model that generalizes well on $D_{test} ∼ D_c$ despite being trained on $D_w ∼ D_n$.
 - baseline: $RoBERTa-base$.
 
+## Datasets
+<img width="398" alt="image" src="https://github.com/hchoi256/FluidGPT4/assets/39285147/350b6671-c444-4632-9924-661c7169b57d">
+
+- eight datasets covering different NLP tasks in English
+
+## WSL baselines
+<img width="328" alt="image" src="https://github.com/hchoi256/FluidGPT4/assets/39285147/5d3e95e8-03cd-42a2-ada6-1f8169e304f6">
+
+- $FT_W$: standard fine-tuning approach for WSL.
+- $L2R$: meta-learning to determine the optimal weights for each noisy training sample.
+- $MLC$: meta-learning for the meta-model to correct the noisy labels.
+- $BOND$: noise-aware self-training framework designed for learning with weak annotations.
+- $COSINE$: self-training with contrastive regularization to improve noise robustness further.
+
+y축(*Relative performance improvement over weak labels*):
+
+$G_{\alpha}={(P_{\alpha}-P_{WL}) \over P_{WL}}$
+
+- $P_{\alpha}$: the performance achieved by weak labels.
+- $P_{WL}$: a certain WSL method.
+
+**⇒ Without clean validation samples, existing WSL approaches do not work.**
+
+<span style="color:yellow"> 과연 정말 clean data가 없으면 WSL 성능이 안 좋을 수밖에 없나? </span>.
+
+# Clean Data
+<img width="550" alt="image" src="https://github.com/hchoi256/FluidGPT4/assets/39285147/c67433e5-5337-4e9f-b603-47b9b668c619">
+
+**⇒ a small amount of clean validation samples may be sufficient for current WSL methods to achieve good performance**
+
 ****
 # Open Reivew 💗
 NA
