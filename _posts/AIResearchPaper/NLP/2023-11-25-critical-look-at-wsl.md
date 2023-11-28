@@ -15,8 +15,6 @@ sidebar:
 
 [논문링크](https://arxiv.org/pdf/2305.17442.pdf)
 
-<span style="color:lightgreen"> ???? </span>
-
 ****
 # 한줄요약 ✔
 - Weakly-supervised Learning은 주로 noisy labels가 많다.
@@ -78,7 +76,7 @@ sidebar:
 **Idea)** <span style="color:lightgreen"> 긍정적인 것에 부정적인 레이블을 강제하여 further tuning → 일반화 성능 향상 </span>
 
 ****
-# Proposed Method 🧿
+# Problem Definition ❤️
 **Given** a pre-trained model on $$D_w$$ ~ $$\mathcal{D}_n$$.
 
 **Return** a model.
@@ -86,8 +84,9 @@ sidebar:
 **Such that** it generalizes well on $$D_{test}$$ ~ $$\mathcal{D}_c$$.
 
 ****
-# Setup 👀
-## Formulation
+# Methodology 👀
+## Setup
+### Formulation
 - $$\mathcal{X}$$: feature.
 - $$\mathcal{Y}$$: label space.
   - $$\hat{y}_i$$: labels obtained from weak labeling sources; could be different from the GT label $$y_i$$.
@@ -98,13 +97,17 @@ sidebar:
 - The goal of WSL algorithms is to obtain a model that generalizes well on $$D_{test} ∼ D_c$$ despite being trained on $$D_w ∼ D_n$$.
 - baseline: $$RoBERTa-base$$.
 
-## Datasets
-<img width="398" alt="image" src="https://github.com/hchoi256/FluidGPT4/assets/39285147/350b6671-c444-4632-9924-661c7169b57d">
+### Datasets
+![image](https://github.com/hchoi256/FluidGPT4/assets/39285147/13c7d047-444a-4da0-9fd9-670d5829c44d)
+
+![image](https://github.com/hchoi256/FluidGPT4/assets/39285147/0cae22ca-7dde-4e3a-9c20-2a6fcabe3d61)
 
 - eight datasets covering different NLP tasks in English
 
-## WSL baselines
-<img width="328" alt="image" src="https://github.com/hchoi256/FluidGPT4/assets/39285147/5d3e95e8-03cd-42a2-ada6-1f8169e304f6">
+### WSL baselines
+![image](https://github.com/hchoi256/FluidGPT4/assets/39285147/050893f8-d90f-4373-a399-fb2ca54ee898)
+
+![image](https://github.com/hchoi256/FluidGPT4/assets/39285147/67cd8023-48e3-47fa-a0b4-4f5f14389fa0)
 
 - $$FT_W$$: standard fine-tuning approach for WSL.
 - $$L2R$$: meta-learning to determine the optimal weights for each noisy training sample.
@@ -123,14 +126,35 @@ $$G_{\alpha}={(P_{\alpha}-P_{WL}) \over P_{WL}}$$
 
 <span style="color:yellow"> 과연 정말 clean data가 없으면 WSL 성능이 안 좋을 수밖에 없나? </span>.
 
-# Clean Data
-<img width="550" alt="image" src="https://github.com/hchoi256/FluidGPT4/assets/39285147/c67433e5-5337-4e9f-b603-47b9b668c619">
+## Clean Data
+![image](https://github.com/hchoi256/FluidGPT4/assets/39285147/4f070174-8af0-470f-9f1b-3ba385c19417)
 
 **⇒ a small amount of clean validation samples may be sufficient for current WSL methods to achieve good performance**
 
-<img width="538" alt="image" src="https://github.com/hchoi256/FluidGPT4/assets/39285147/8495bb2a-4b8a-4e83-91e4-9e295c3f6e09">
+![image](https://github.com/hchoi256/FluidGPT4/assets/39285147/6f225540-919f-48fc-b944-7d4e1565ba14)
 
 **⇒ the advantage of using WSL approaches vanishes when we have as few as 10 clean samples per class**
+
+## Continuous Fine-tuning (CFT)
+![image](https://github.com/hchoi256/FluidGPT4/assets/39285147/bcb5b8d7-28cc-4abb-9c06-221989bdc101)
+
+- **CFT**
+  - In the first phase, we apply WSL approaches on the weakly labeled training set, using the clean data for validation.
+  - In the second phase, we take the model trained on the weakly labeled data as a starting point and continue to train it on the clean data.
+
+**⇒ the net benefit of using sophisticated WSL approaches may be significantly overestimated and impractical for real-world use cases.**
+
+- 그냥 FT 한 것만으로도 기존 WSL 방법들 상당한 성능 향상 (even when # clean data = low)
+- L2R의 Yelp 데이터셋 결과의 경우 CFT 이후 오히려 성능이 떨어진 모습인데, 이것은 L2R가 validation loss를 사용하여 파라미터를 업데이트하기 때문에 검증 샘플의 가치가 큰 영향을 주지 않았을지도..
+
+![image](https://github.com/hchoi256/FluidGPT4/assets/39285147/359d449e-8b30-4102-9b14-cc694bd02068)
+
+**⇒ Pre-training on more data clearly helps to overcome biases from weak labels.**
+- pre-training provides the model with an inductive bias to seek more general linguistic correlations instead of superficial correlations from the weak labels
+
+![image](https://github.com/hchoi256/FluidGPT4/assets/39285147/edfa6d2a-6d88-4b09-9070-337a4bed656c)
+
+**⇒ contradictory samples play a more important role here and at least a minimum set of contradictory samples are required for CFT to be beneficial**
 
 ****
 # Open Reivew 💗
@@ -147,7 +171,12 @@ NA
 ****
 # Conclusion ✨
 ## Strength
+- If a proposed WSL method requires extra clean data, such as for validation, then the simple FTW+CFT baseline should be included in evaluation to claim the real benefits gained by applying the method.
+
 ## Weakness
+- it may be possible to perform model selection by utilizing prior knowledge about the dataset
+- For low-resource languages where no PLMs are available, training may not be that effective
+- We have not extended our research to more diverse types of weak labels
 
 ****
 # Reference
