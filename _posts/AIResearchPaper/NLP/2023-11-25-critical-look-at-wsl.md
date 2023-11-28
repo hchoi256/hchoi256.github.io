@@ -152,7 +152,7 @@ $$G_{\alpha}={(P_{\alpha}-P_{WL}) \over P_{WL}}$$
 **⇒ Pre-training on more data clearly helps to overcome biases from weak labels.**
 - pre-training provides the model with an inductive bias to seek more general linguistic correlations instead of superficial correlations from the weak labels
 
-![image](https://github.com/hchoi256/FluidGPT4/assets/39285147/edfa6d2a-6d88-4b09-9070-337a4bed656c)
+![Alt text](image-1.png)
 
 **⇒ contradictory samples play a more important role here and at least a minimum set of contradictory samples are required for CFT to be beneficial**
 
