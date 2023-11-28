@@ -98,16 +98,16 @@ sidebar:
 - baseline: $$RoBERTa-base$$.
 
 ### Datasets
-![image](https://github.com/hchoi256/FluidGPT4/assets/39285147/13c7d047-444a-4da0-9fd9-670d5829c44d)
+![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/49678179-8970-4b82-b37f-4512e2011e37)
 
-![image](https://github.com/hchoi256/FluidGPT4/assets/39285147/0cae22ca-7dde-4e3a-9c20-2a6fcabe3d61)
+![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/62fdabd9-7077-4f7c-833e-3685d0f3229d)
 
 - eight datasets covering different NLP tasks in English
 
 ### WSL baselines
-![image](https://github.com/hchoi256/FluidGPT4/assets/39285147/050893f8-d90f-4373-a399-fb2ca54ee898)
+![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/554c8620-e38b-495e-a36a-b28b60a2571a)
 
-![image](https://github.com/hchoi256/FluidGPT4/assets/39285147/67cd8023-48e3-47fa-a0b4-4f5f14389fa0)
+![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/74975c44-6e64-46ac-9c81-fe3abe4f428b)
 
 - $$FT_W$$: standard fine-tuning approach for WSL.
 - $$L2R$$: meta-learning to determine the optimal weights for each noisy training sample.
@@ -127,16 +127,16 @@ $$G_{\alpha}={(P_{\alpha}-P_{WL}) \over P_{WL}}$$
 <span style="color:yellow"> 과연 정말 clean data가 없으면 WSL 성능이 안 좋을 수밖에 없나? </span>.
 
 ## Clean Data
-![image](https://github.com/hchoi256/FluidGPT4/assets/39285147/4f070174-8af0-470f-9f1b-3ba385c19417)
+![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/e141050b-eae2-40a9-a6cc-49ab6580f9d2)
 
 **⇒ a small amount of clean validation samples may be sufficient for current WSL methods to achieve good performance**
 
-![image](https://github.com/hchoi256/FluidGPT4/assets/39285147/6f225540-919f-48fc-b944-7d4e1565ba14)
+![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/675f3182-cc92-49b8-894f-20254ce3c29d)
 
 **⇒ the advantage of using WSL approaches vanishes when we have as few as 10 clean samples per class**
 
 ## Continuous Fine-tuning (CFT)
-![image](https://github.com/hchoi256/FluidGPT4/assets/39285147/bcb5b8d7-28cc-4abb-9c06-221989bdc101)
+![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/a6034902-43dc-4028-8ee0-c83a72599219)
 
 - **CFT**
   - In the first phase, we apply WSL approaches on the weakly labeled training set, using the clean data for validation.
@@ -147,12 +147,12 @@ $$G_{\alpha}={(P_{\alpha}-P_{WL}) \over P_{WL}}$$
 - 그냥 FT 한 것만으로도 기존 WSL 방법들 상당한 성능 향상 (even when # clean data = low)
 - L2R의 Yelp 데이터셋 결과의 경우 CFT 이후 오히려 성능이 떨어진 모습인데, 이것은 L2R가 validation loss를 사용하여 파라미터를 업데이트하기 때문에 검증 샘플의 가치가 큰 영향을 주지 않았을지도..
 
-![image](https://github.com/hchoi256/FluidGPT4/assets/39285147/359d449e-8b30-4102-9b14-cc694bd02068)
+![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/fb8c45c6-5c48-4887-9914-2959edf88873)
 
 **⇒ Pre-training on more data clearly helps to overcome biases from weak labels.**
 - pre-training provides the model with an inductive bias to seek more general linguistic correlations instead of superficial correlations from the weak labels
 
-![Alt text](image-1.png)
+![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/ef30d31e-ab38-4528-a989-31c7d9249168)
 
 **⇒ contradictory samples play a more important role here and at least a minimum set of contradictory samples are required for CFT to be beneficial**
 
