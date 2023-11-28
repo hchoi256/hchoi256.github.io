@@ -79,24 +79,24 @@ sidebar:
 
 ****
 # Proposed Method 🧿
-**Given** a pre-trained model on $D_w$ ~ $\mathcal{D}_n$.
+**Given** a pre-trained model on $$D_w$$ ~ $$\mathcal{D}_n$$.
 
 **Return** a model.
 
-**Such that** it generalizes well on $D_{test}$ ~ $\mathcal{D}_c$.
+**Such that** it generalizes well on $$D_{test}$$ ~ $$\mathcal{D}_c$$.
 
 ****
 # Setup 👀
 ## Formulation
-- $\mathcal{X}$: feature.
-- $\mathcal{Y}$: label space.
-  - $\hat{y}_i$: labels obtained from weak labeling sources; could be different from the GT label $y_i$.
-- $D={(x_i,y_i)}^N_{i=1}$.
-  - $D_c$: clean data distribution.
-  - $D_w$: weakly labeled dataset.
-  - $\mathcal{D}_n$: noisy distribution.
-- The goal of WSL algorithms is to obtain a model that generalizes well on $D_{test} ∼ D_c$ despite being trained on $D_w ∼ D_n$.
-- baseline: $RoBERTa-base$.
+- $$\mathcal{X}$$: feature.
+- $$\mathcal{Y}$$: label space.
+  - $$\hat{y}_i$$: labels obtained from weak labeling sources; could be different from the GT label $$y_i$$.
+- $$D={(x_i,y_i)}^N_{i=1}$$.
+  - $$D_c$$: clean data distribution.
+  - $$D_w$$: weakly labeled dataset.
+  - $$\mathcal{D}_n$$: noisy distribution.
+- The goal of WSL algorithms is to obtain a model that generalizes well on $$D_{test} ∼ D_c$$ despite being trained on $$D_w ∼ D_n$$.
+- baseline: $$RoBERTa-base$$.
 
 ## Datasets
 <img width="398" alt="image" src="https://github.com/hchoi256/FluidGPT4/assets/39285147/350b6671-c444-4632-9924-661c7169b57d">
@@ -106,18 +106,18 @@ sidebar:
 ## WSL baselines
 <img width="328" alt="image" src="https://github.com/hchoi256/FluidGPT4/assets/39285147/5d3e95e8-03cd-42a2-ada6-1f8169e304f6">
 
-- $FT_W$: standard fine-tuning approach for WSL.
-- $L2R$: meta-learning to determine the optimal weights for each noisy training sample.
-- $MLC$: meta-learning for the meta-model to correct the noisy labels.
-- $BOND$: noise-aware self-training framework designed for learning with weak annotations.
-- $COSINE$: self-training with contrastive regularization to improve noise robustness further.
+- $$FT_W$$: standard fine-tuning approach for WSL.
+- $$L2R$$: meta-learning to determine the optimal weights for each noisy training sample.
+- $$MLC$$: meta-learning for the meta-model to correct the noisy labels.
+- $$BOND$$: noise-aware self-training framework designed for learning with weak annotations.
+- $$COSINE$$: self-training with contrastive regularization to improve noise robustness further.
 
 y축(*Relative performance improvement over weak labels*):
 
-$G_{\alpha}={(P_{\alpha}-P_{WL}) \over P_{WL}}$
+$$G_{\alpha}={(P_{\alpha}-P_{WL}) \over P_{WL}}$$
 
-- $P_{\alpha}$: the performance achieved by weak labels.
-- $P_{WL}$: a certain WSL method.
+- $$P_{\alpha}$$: the performance achieved by weak labels.
+- $$P_{WL}$$: a certain WSL method.
 
 **⇒ Without clean validation samples, existing WSL approaches do not work.**
 
@@ -127,6 +127,10 @@ $G_{\alpha}={(P_{\alpha}-P_{WL}) \over P_{WL}}$
 <img width="550" alt="image" src="https://github.com/hchoi256/FluidGPT4/assets/39285147/c67433e5-5337-4e9f-b603-47b9b668c619">
 
 **⇒ a small amount of clean validation samples may be sufficient for current WSL methods to achieve good performance**
+
+<img width="538" alt="image" src="https://github.com/hchoi256/FluidGPT4/assets/39285147/8495bb2a-4b8a-4e83-91e4-9e295c3f6e09">
+
+**⇒ the advantage of using WSL approaches vanishes when we have as few as 10 clean samples per class**
 
 ****
 # Open Reivew 💗
