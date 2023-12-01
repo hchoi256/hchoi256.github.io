@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "[논문분석] Weaker Than You Think: A Critical Look at Weakly Supervised Learning"
+title: "[논문분석] Weaker Than You Think: A Critical Look at Weakly Supervised Learning (ACL 2023)"
 categories: AIPaperNLP
 tag: [NLP, Weakly-supervised Learning, Semi-supervised Learning]
 toc: true
