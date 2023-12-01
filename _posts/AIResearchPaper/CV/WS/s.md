@@ -13,27 +13,27 @@ sidebar:
     nav: "docs"
 ---
 
-<span style="color:sky"> [논문링크](https://www.sciencedirect.com/science/article/abs/pii/S0167865523000831)  </span>
+<span style="color:sky"> [논문링크](https://www.sciencedirect.com/science/article/abs/pii/S0167865523000831) </span>.
 
 ****
 # 한줄요약 ✔
 - The objective of classification training is not entirely consistent with that of localization.
     - Very low entropy might be important for classification, but less helpful for localization.
 - Sweet spot for localization with respect to entropy.
-    - new term to the loss function:
+    - new term to the loss function.
         - predicted class prob. vector가 uniform dist.에 닮게 만드는 정도를 조절 → uniform dist.는 각 클래스 예측 확률이 동일 (class 예측 불확실성 증가) → localization 성능 증가.
 
 ## Regularization
 $$\mathcal{L}(\theta):=(1-\gamma)\bold{H}(y,p_{\theta})-\gamma \bold{KL}(u \vert\vert p_{\theta})$$
 
-### Label smoothing (CVPR’15)
+### Label smoothing (CVPR'15)
 ![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/e1eef28d-5b11-4db4-8fd1-21d94c5b9013)
 
 - To avoid overfitting (i.e., Dropout, L2, data aug., etc.).
     - Introduces noise to the ground truth labels.
 - 상기 그림에서 target dist.(GT)가 soft labels처럼 변경되어 entropy가 증가한 모습이다. 이는 모델의 예측 분포가 서로 다른 클래스에 미량의 확률을 부여할 수 있기에 GT인 이 soft labels분포와 더 유사해질 수 있어서 모델 예측 결과인 output dist. 의 entropy는 더 낮다.
 
-### Confidence penalty (ICLR’17)
+### Confidence penalty (ICLR'17)
 $$\mathcal{L}(\theta)=\bold{H}(y,p_{\theta})-\lambda \bold{H}(p_{\theta})$$
 
 $$=\bold{H}(y,p_{\theta})-\lambda \bold{KL}(p_{\theta} \vert \vert u)$$
@@ -52,30 +52,33 @@ $$\bold{JSD}(p_{\theta} \vert \vert u) = \bold{KL}(u \vert \vert p_{\theta}) + \
 - 본 논문에서는 단순한 CAM이 아니라, 마치 Grad-CAM처럼 channel-wise하게 CNN 최종 layer의 attn. map을 Global Average Pooling (GAP)합니다.
 
 ## Others
-### Hide-and-Seek (HaS, ICCV’17)
+### Hide-and-Seek (HaS, ICCV'17)
 - 정의
     - a data augmentation that divides the images into rectangular patches and then hides the randomly selected patches during training.
     - 직접 가림.
 - 목적
     - the classification network might no longer see the most discriminative parts of the object, hence it can learn the less discriminative parts of the object as well.
 
-### CutMix (ICCV 19)
+### CutMix (ICCV'19)
 - 정의
     - a data augmentation technique that cuts and pastes a patch from an image into another image and blends the target labels according to the size of the patch.
     - target object에 다른 이미지에서 가져온 random patch를 덮어씌움.
 - 목적
-    - CutMix is known to improve WSOL performance [24], since the classification network can learn the non-discriminative parts of objects.
+    - CutMix is known to improve WSOL performance, since the classification network can learn the non-discriminative parts of objects.
 
-### Attention-based Dropout Layer (ADL, PAMI’21)
-- utilizes a self-attention mechanism to find the most discriminative part of the object during training.
-    - attached to each layer of the classification network, which hides or boosts the most discriminative part.
-- non-discriminative parts 걸러낸다는 명목에서 Dropout 별칭 사용.
+### Attention-based Dropout Layer (ADL, PAMI'21)
+- 정의
+    - utilizes a self-attention mechanism to find the most discriminative part of the object during training.
+        - attached to each layer of the classification network, which hides or boosts the most discriminative part.
+- Remark
+    - non-discriminative parts 걸러낸다는 명목에서 Dropout 별칭 사용.
 
-### Region-based Dropout Layer with Attention Prior (RDAP, PR’21)
-- utilizes the self-attention mechanism to find the most discriminative part.
-- unlike the ADL, RDAP hides the most discriminative part with a fixed-size square mask, which results in a more effective and robust improvement in WSOL.
-    - most discriminative parts를 가리고 학습하면서 전체 객체의 특성을 포함하는 상대적으로 less discriminative 부분에 대한 학습을 유도합니다.
-        - 간단한 예시로 설명하면, 만약 개를 분류하는 분류기가 얼굴 부분에 주로 주목했다면, AE를 사용하여 얼굴 부분을 지운다면 분류기는 다른 부분에 주목하게 됩니다. 이런식으로 모델은 물체의 다양한 특성을 고려하여 학습하게 되며, 이는 WSOL에서 전체 물체를 고려한 더 나은 지역화 성능으로 이어질 수 있습니다.
+### Region-based Dropout Layer with Attention Prior (RDAP, PR'21)
+- 정의
+    - utilizes the self-attention mechanism to find the most discriminative part.
+    - unlike the ADL, RDAP hides the most discriminative part with a fixed-size square mask, which results in a more effective and robust improvement in WSOL.
+        - most discriminative parts를 가리고 학습하면서 전체 객체의 특성을 포함하는 상대적으로 less discriminative 부분에 대한 학습을 유도합니다.
+            - 간단한 예시로 설명하면, 만약 개를 분류하는 분류기가 얼굴 부분에 주로 주목했다면, AE를 사용하여 얼굴 부분을 지운다면 분류기는 다른 부분에 주목하게 됩니다. 이런식으로 모델은 물체의 다양한 특성을 고려하여 학습하게 되며, 이는 WSOL에서 전체 물체를 고려한 더 나은 지역화 성능으로 이어질 수 있습니다.
 
 ## Cross Entropy
 $$H(p,q)=-\Sigma p(x) log q(x)$$
@@ -84,9 +87,9 @@ $$H(p,q)=-\Sigma p(x) log q(x)$$
     - $$p$$: the target distribution.
     - $$q$$: the approximation of the target distribution; prediction.
 
-**⇒ Very low entropy might be important for classification, but less helpful for localization**
+**=> Very low entropy might be important for classification, but less helpful for localization**.
 
-**⇒ The model with very high entropy (e.g., early stage in training) cannot produce informative CAM in terms of object location, which results in poor localization performance**
+**=> The model with very high entropy (e.g., early stage in training) cannot produce informative CAM in terms of object location, which results in poor localization performance**.
 
 ****
 # Preliminaries 🍱
@@ -99,9 +102,9 @@ $$H(p,q)=-\Sigma p(x) log q(x)$$
 
 ****
 # Challenges and Main Idea💣
-**C1)** <span style="color:orange"> WSOL 모델 성능을 높이기 위해 Classification performance를 희생해야 한다. </span>
+**C1)** <span style="color:orange"> WSOL 모델 성능을 높이기 위해 Classification performance를 희생해야 한다 </span>.
 
-**Idea)** <span style="color:lightgreen"> Entropy에 관해 regularization을 적용하여 localization과 classification 사이의 적절한 sweet point를 찾는다. </span>
+**Idea)** <span style="color:lightgreen"> Entropy에 관해 regularization을 적용하여 localization과 classification 사이의 적절한 sweet point를 찾는다 </span>.
 
 ****
 # Problem Definition ❤️
@@ -142,9 +145,9 @@ $$\mathcal{L}(\theta)=\bold{H}(y,p_{\theta})-\lambda \bold{KL}(u \vert \vert p_{
 - Metrics:
     - Top-1 localization acc. and GT-knownlocalization acc.
     - Datasets:
-        - CUB (w/o mask annotations) → $$IoU > 50%$$.
-        - OpenImages, Oxford (w/ mask annotations) → pixel-wise average precision (`PxAP`).
-        - PASCAL VOC 2012 (w/ mask annotations and multiple image classes) → `mPxAPmetric`.
+        - CUB (w/o mask annotations) $$\rightarrow$$ $$IoU > 50%$$.
+        - OpenImages, Oxford (w/ mask annotations) $$\rightarrow$$ pixel-wise average precision (`PxAP`).
+        - PASCAL VOC 2012 (w/ mask annotations and multiple image classes) $$\rightarrow$$ `mPxAPmetric`.
             - average `PxAP` of all classes.
 
 ## Quantitative Eval. Results
