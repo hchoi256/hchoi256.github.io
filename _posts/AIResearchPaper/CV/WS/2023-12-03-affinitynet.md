@@ -93,11 +93,11 @@ Such that $$\mathcal{S}$$ outweighs the segmentation performance of $$\mathcal{T
 ![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/fa4b29f7-35a9-4878-9de9-26475e2d1dca)
 
 1. CAM으로 background를 표현하는 feature maps $$M_c$$와 $$M_{bg}(x,y)$$ 추출.
-    1. <span style="color:yellow"> $$M_{bg}(x,y)=\{1-max_{c \in C} M_c(x,y)\}^{\alpha}$$; where $$M_c(x,y)=\bold{w}^T_c f^{cam}(x,y)$$ </span>.
+    1. <span style="color:yellow"> $$M_{bg}(x,y)=\{1-max_{c \in C} M_c(x,y)\}^{\alpha}$$; where $$M_c(x,y)=\bf{w}^T_c f^{cam}(x,y)$$ </span>.
         1. $$x,y$$: 픽셀 위치.
         2. $$C$$: class.
         3. $$f^{cam}$$: a feature vector before GAP.
-        4. $$\bold{w}_c$$: classification weights.
+        4. $$\bf{w}_c$$: classification weights.
         5. $$\alpha$$: background score 활성화 정도 조절.
         6. $$M_c$$: GAP 이후 얻은 CAM 출력.
 2. Object confident area 획득 과정:
