@@ -82,7 +82,7 @@ Such that $$\mathcal{S}$$ outweighs the segmentation performance of $$\mathcal{T
 ## AffinityNet
 ![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/dd086a36-10bd-4b39-b555-de7ee7850c39)
 
-$$W_{ij}=exp^{- \Vert f^{aff}(x_i,y_i)-f^{aff}(x_j,y_j) \Vert_1}$$
+<span style="color:yellow"> $$W_{ij}=exp^{- \Vert f^{aff}(x_i,y_i)-f^{aff}(x_j,y_j) \Vert_1}$$ </span>.
 
 - $$f^{aff}$$: feature map에서 $$x_i, y_i$$ 위치에 놓인 픽셀의 affinity score.
     - 상기 이미지의 학습 가능한 network를 통해 계산된다.
@@ -93,7 +93,7 @@ $$W_{ij}=exp^{- \Vert f^{aff}(x_i,y_i)-f^{aff}(x_j,y_j) \Vert_1}$$
 ![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/fa4b29f7-35a9-4878-9de9-26475e2d1dca)
 
 1. CAM으로 background를 표현하는 feature maps $$M_c$$와 $$M_{bg}(x,y)$$ 추출.
-    1. $$M_{bg}(x,y)=\{1-max_{c \in C} M_c(x,y)\}^{\alpha}$$; where $$M_c(x,y)=\bold{w}^T_c f^{cam}(x,y)$$.
+    1. <span style="color:yellow"> $$M_{bg}(x,y)=\{1-max_{c \in C} M_c(x,y)\}^{\alpha}$$; where $$M_c(x,y)=\bold{w}^T_c f^{cam}(x,y)$$ </span>.
         1. $$x,y$$: 픽셀 위치.
         2. $$C$$: class.
         3. $$f^{cam}$$: a feature vector before GAP.
@@ -111,21 +111,20 @@ $$W_{ij}=exp^{- \Vert f^{aff}(x_i,y_i)-f^{aff}(x_j,y_j) \Vert_1}$$
 ### Loss Function
 ![image](https://github.com/hchoi256/hchoi256.github.io/assets/39285147/b630a084-b2cb-4429-b10f-9c090bb8d900)
 
-$$\mathcal{L}=\mathcal{L}^+_{fg}+\mathcal{L}^+_{bg}+2\mathcal{L}^-$$
+<span style="color:yellow"> $$\mathcal{L}=\mathcal{L}^+_{fg}+\mathcal{L}^+_{bg}+2\mathcal{L}^-$$ </span>
 
 - $$\mathcal{L}^+_{fg}=-\frac{1}{\mathcal{P}^+_{fg}} \Sigma_{(i,j) \in \mathcal{P}^+_{fg}} log W_{ij}$$.
 - $$\mathcal{L}^+_{bg}=-\frac{1}{\mathcal{P}^+_{bg}} \Sigma_{(i,j) \in \mathcal{P}^+_{bg}} log W_{ij}$$.
 - $$\mathcal{L}^-=-\frac{1}{\mathcal{P}^-} \Sigma_{(i,j) \in \mathcal{P}^-} log (1-W_{ij})$$.
 
-$$\mathcal{P}=\{ (i,j) \vert d((x_i,y_i),(x_j,y_j)) < \gamma, \forall i \neq j \}$$
+<span style="color:yellow"> $$\mathcal{P}=\{ (i,j) \vert d((x_i,y_i),(x_j,y_j)) < \gamma, \forall i \neq j \}$$ </span>
 
 - $$\mathcal{P}^+=\{ (i,j) \vert (i,j) \in \mathcal{P}, W^*_{ij}=1$$.
     - $$W^*_{ij}=1$$: $$(i,i)$$ 과 $$(j,j)$$ 위치의 픽셀이 같은 label일 경우.
 - $$\mathcal{P}^-=\{ (i,j) \vert (i,j) \in \mathcal{P}, W^*_{ij}=0$$.
 
 ## CAM with AffinityNet
-
-$$vec(M^*_c)=T^t \cdot vec(M_c)$$
+<span style="color:yellow"> $$vec(M^*_c)=T^t \cdot vec(M_c)$$ </span>
 
 - $$t$$: number of iterations.
 - $$T=D^{-1} W^{\circ \beta}$$: Transition matrix.
@@ -159,4 +158,4 @@ NA
 
 ****
 # Reference
-https://joungheekim.github.io/2020/10/14/paper-review/
+https://velog.io/@kowoonho/%EB%85%BC%EB%AC%B8-%EB%A6%AC%EB%B7%B0-Learning-Pixel-level-Semantic-Affinity-with-Image-level-Supervision-for-Weakly-Supervised-Semantic-Segmentation
