@@ -117,6 +117,9 @@ Such that $$\mathcal{S}$$ outweighs the segmentation performance of $$\mathcal{T
 - $$\mathcal{L}^+_{bg}=-\frac{1}{\mathcal{P}^+_{bg}} \Sigma_{(i,j) \in \mathcal{P}^+_{bg}} log W_{ij}$$.
 - $$\mathcal{L}^-=-\frac{1}{\mathcal{P}^-} \Sigma_{(i,j) \in \mathcal{P}^-} log (1-W_{ij})$$.
 
+
+또한, 전체 손실 함수를 구성하는 $$\mathcal{P}$$ 는 다음과 같이 정의한다.
+
 <span style="color:yellow"> $$\mathcal{P}=\{ (i,j) \vert d((x_i,y_i),(x_j,y_j)) < \gamma, \forall i \neq j \}$$ </span>
 
 - $$\mathcal{P}^+=\{ (i,j) \vert (i,j) \in \mathcal{P}, W^*_{ij}=1$$.
