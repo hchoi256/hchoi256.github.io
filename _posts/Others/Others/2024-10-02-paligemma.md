@@ -40,10 +40,19 @@ It requires the following packages:
 
 ****
 # Testing
-
-### PaliGemma
+## PaliGemma
 The implementation based on PaliGemma achieves comparable results compared to the GPT-4o results reported in the paper.
 
+| Models   | I-HallA Score (Science)      | I-HallA Score (History)      | I-HallA Score† (Science)     | I-HallA Score† (History)    |
+|----------|------------------------------|------------------------------|------------------------------|-----------------------------|
+| SD v1.4  | 0.253                        | 0.435                        | 0.133                        | 0.010                       |
+| SD v1.5  | 0.209                        | 0.433                        | 0.130                        | 0.017                       |
+| SD v2.0  | 0.236                        | 0.440                        | 0.127                        | 0.020                       |
+| SD XL    | 0.298                        | 0.479                        | 0.177                        | 0.010                       |
+| DallE-3  | 0.561                        | 0.566                        | 0.127                        | 0.033                       |
+| Factual  | **0.756**                    | **0.773**                    | **0.317**                    | **0.333**                   |
+
+## GPT-4o
 | Models   | I-HallA Score (Science)      | I-HallA Score (History)      | I-HallA Score† (Science)     | I-HallA Score† (History)    |
 |----------|------------------------------|------------------------------|------------------------------|-----------------------------|
 | SD v1.4  | 0.353 ± 0.002                | 0.535 ± 0.013                | 0.033 ± 0.012                | 0.110 ± 0.010               |
@@ -53,7 +62,6 @@ The implementation based on PaliGemma achieves comparable results compared to th
 | DallE-3  | 0.661 ± 0.020                | 0.666 ± 0.003                | 0.227 ± 0.029                | 0.133 ± 0.031               |
 | Factual  | **0.856 ± 0.002**            | **0.873 ± 0.006**            | **0.517 ± 0.038**            | **0.533 ± 0.015**           |
 
-****
 # Citation
 
 ```bibtex
