@@ -34,9 +34,9 @@ This project is based on [PaliGemma](https://huggingface.co/docs/transformers/ma
 
 It requires the following packages:
 
-- python==3.10.0
-- transformers==4.45.1
-- numpy==1.26.3
+> python==3.10.0
+> transformers==4.45.1
+> numpy==1.26.3
 
 ****
 # Testing
@@ -67,7 +67,7 @@ The implementation based on PaliGemma achieves comparable results compared to th
 # Citation
 
 ```bibtex
-@inproceedings{wu2023baron,
+@inproceedings{ihalla,
     title={Evaluating Image Hallucination in Text-to-Image Generation with Question-Answering},
     author={Youngsun Lim, Hojun Choi, Pin-Yu Chen, Hyunjung Shim},
     year={2024},
