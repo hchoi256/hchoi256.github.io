@@ -35,7 +35,9 @@ This project is based on [PaliGemma](https://huggingface.co/docs/transformers/ma
 It requires the following packages:
 
 > python==3.10.0
+>
 > transformers==4.45.1
+>
 > numpy==1.26.3
 
 ****
