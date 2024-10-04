@@ -54,6 +54,7 @@ The implementation based on PaliGemma achieves comparable results compared to th
 
 
 ## GPT-4o
+
 | Models   | I-HallA Score (Science)      | I-HallA Score (History)      | I-HallA Score† (Science)     | I-HallA Score† (History)    |
 |----------|------------------------------|------------------------------|------------------------------|-----------------------------|
 | SD v1.4  | 0.353 ± 0.002                | 0.535 ± 0.013                | 0.033 ± 0.012                | 0.110 ± 0.010               |
