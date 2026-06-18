@@ -52,13 +52,8 @@
         {% endif %}
 
         {% if site.affiliation %}
-        <a class="affiliation-with-logo" href="{{ site.affiliation_link }}" rel="noopener">
+        <a href="{{ site.affiliation_link }}" rel="noopener">
           <autocolor>{{ site.affiliation }}</autocolor>
-          <img
-            class="kaist-affiliation-logo"
-            src="{{ '/assets/img/kaist.png' | relative_url }}"
-            alt="KAIST mascot"
-          />
         </a>
         <br>
         {% endif %}
