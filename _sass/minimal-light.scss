@@ -814,12 +814,12 @@ footer {
   padding: 0 !important;
 
   border: 0 !important;
-  border-top: 1px solid rgba(0, 102, 204, 0.28) !important;
+  border-top: 1px solid #d0d0d0 !important;
 }
 
 @media (prefers-color-scheme: dark) {
   .section-divider {
-    border-top-color: rgba(120, 180, 235, 0.38) !important;
+    border-top-color: #555555 !important;
   }
 }
 

@@ -40,17 +40,7 @@
   <div class="publication-content">
 
     <div class="publication-title">
-      {% if link.page %}
-      <a href="{{ link.page }}" target="_blank" rel="noopener noreferrer">
-        <papertitle>{{ link.title }}</papertitle>
-      </a>
-      {% elsif link.pdf %}
-      <a href="{{ link.pdf }}" target="_blank" rel="noopener noreferrer">
-        <papertitle>{{ link.title }}</papertitle>
-      </a>
-      {% else %}
       <papertitle>{{ link.title }}</papertitle>
-      {% endif %}
     </div>
 
     <div class="publication-authors">
