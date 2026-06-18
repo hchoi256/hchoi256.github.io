@@ -18,5 +18,6 @@ My research interests include **Multimodal Learning**, **Vision-Language Models*
 - <span style="color: darkorange;"><strong>[Award]</strong></span> Honored to have received the **Best Poster Award** at IPIU 2026.
 
 {% include_relative _includes/publications.md %}
+{% include_relative _includes/education.md %}
 <!-- 
 {% include_relative _includes/services.md %} -->
