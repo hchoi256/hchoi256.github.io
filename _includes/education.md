@@ -27,7 +27,7 @@
     </div>
     <div style="text-align: right; flex: 0 0 auto;">
       <div>Jan. 2017 – Dec. 2022</div>
-      <div style="color: #b31b1b; font-weight: 700;">GPA: 3.9/4.0</div>
+      <div>GPA: 3.9/4.0</div>
       <div style="color: #b31b1b; font-weight: 700;">Dean's List Recipient</div>
     </div>
   </div>
