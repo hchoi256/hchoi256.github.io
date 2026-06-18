@@ -595,3 +595,158 @@ footer {
   display:none;
   font-family: monospace;
 }
+
+/* =========================================================
+   Custom publication layout
+   ========================================================= */
+
+.publication-item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+/*
+ * Teaser container
+ *
+ * width와 height를 키우면 논문 이미지가 더 크게 표시됩니다.
+ */
+.publication-thumb {
+  position: relative;
+  flex: 0 0 225px;
+  width: 225px;
+  height: 145px;
+  background: #ffffff;
+  border-radius: 8px;
+}
+
+/*
+ * contain:
+ * 이미지 비율을 유지하면서 전체 이미지를 보여줍니다.
+ * cover로 바꾸면 공간은 꽉 차지만 이미지 일부가 잘립니다.
+ */
+.publication-teaser {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain !important;
+  object-position: center;
+  box-sizing: border-box;
+  padding: 4px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.18);
+}
+
+.publication-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.publication-title {
+  margin-bottom: 5px;
+  line-height: 1.35;
+}
+
+.publication-authors {
+  margin-bottom: 4px;
+  line-height: 1.45;
+}
+
+.publication-venue {
+  margin-bottom: 5px;
+  line-height: 1.4;
+}
+
+.publication-links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0 10px;
+  line-height: 1.5;
+}
+
+.publication-links a:not(:last-of-type)::after {
+  content: "";
+}
+
+/* Badge container */
+.publication-badges {
+  position: absolute;
+  top: 8px;
+  left: -7px;
+  z-index: 2;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+/* 기본 태그: 파란색 */
+.publication-badge {
+  display: inline-block;
+  min-width: 62px;
+  box-sizing: border-box;
+  padding: 4px 10px;
+
+  background: #043b73;
+  color: #ffffff;
+  border-radius: 4px;
+
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.1;
+  text-align: center;
+
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.22);
+}
+
+/* Conference: 빨간색 */
+.publication-badge--conference {
+  background: #b42318;
+  color: #ffffff;
+}
+
+/* Workshop: 초록색 */
+.publication-badge--workshop {
+  background: #2e7d32;
+  color: #ffffff;
+}
+
+/* 기본/arXiv/기타: 파란색 */
+.publication-badge--default {
+  background: #043b73;
+  color: #ffffff;
+}
+
+/* Oral, Spotlight 등의 표시 */
+.publication-note {
+  color: #b42318;
+  font-weight: 600;
+}
+
+/* Mobile */
+@media print, screen and (max-width: 600px) {
+  .publication-item {
+    display: block;
+    margin-bottom: 34px;
+  }
+
+  .publication-thumb {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+    margin-bottom: 14px;
+  }
+
+  .publication-teaser {
+    width: 100%;
+    height: 100%;
+  }
+
+  .publication-badges {
+    left: -5px;
+  }
+}

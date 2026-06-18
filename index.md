@@ -8,7 +8,7 @@ Hello. 👋
 
 I am a first-year Ph.D. student at KAIST AI, advised by Prof. Hyunjung (Kate) Shim. Before joining KAIST, I conducted research at the CAVH Research Group at the University of Wisconsin–Madison and the Data Mining Lab at Seoul National University. I also worked at FLUIZ and NAVER LABS under the supervision of Prof. Insik Shin and Dr. Jinhan Lee, respectively.
 
-My research interests include \textbf{Multimodal Learning}, \textbf{Vision-Language Models}, and \textbf{Agentic AI}.
+My research interests include **Multimodal Learning**, **Vision-Language Models**, and **Agentic AI**.
 
 ## News
 
