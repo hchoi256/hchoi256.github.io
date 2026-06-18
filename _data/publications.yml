@@ -1,22 +1,43 @@
 main:
+  - title: "Open-Vocabulary BEV Segmentation with 3D-Aware Geometric Constraints"
+    authors: "<strong>Hojun Choi</strong>, Seulbin Hwang, Dae Jung Kim, Kisung Kim, Hyunjung Shim, and Jinhan Lee"
+    conference_short: "ECCV"
+    conference: "European Conference on Computer Vision <strong>(ECCV)</strong>, 2026."
+    image: "./assets/img/teasers/ovbevseg.png"
 
-  - title: Continual Learning for Abdominal Multi-Organ and Tumor Segmentation
-    authors: Yixiao Zhang, Xinyi Li, Huimiao Chen, Alan Yuille, <strong>Yaoyao Liu*</strong>, Zongwei Zhou* (*Corresponding authors)
-    conference_short: MICCAI
-    conference: International Conference on Medical Image Computing and Computer-Assisted Intervention <strong>(MICCAI)</strong>, 2023.
-    pdf: https://arxiv.org/pdf/2306.00988.pdf
-    code: https://github.com/MrGiovanni/ContinualLearning
-    bibtex: https://bib.yliu.me/MICCAI23.txt
-    image: ./assets/img/teaser_example_2.png
-    notes: Early Accept
+  - title: "CoT-PL: Chain-of-Thought Pseudo-Labeling for Open-Vocabulary Object Detection"
+    authors: "<strong>Hojun Choi</strong>, Youngsun Lim, Jaeyo Shin, and Hyunjung Shim"
+    conference_short: "ECCV"
+    conference: "2nd Workshop on Multimodal Spatial Intelligence @ CVPR <strong>(CVPRW)</strong>, 2026.<br>European Conference on Computer Vision <strong>(ECCV)</strong>, 2026."
+    image: "./assets/img/teasers/cotpl.png"
 
-  - title: "Mnemonics Training: Multi-Class Incremental Learning without Forgetting"
-    authors: <strong>Yaoyao Liu</strong>, Yuting Su, An-An Liu, Bernt Schiele, Qianru Sun
-    conference_short: CVPR
-    conference: IEEE/CVF Conference on Computer Vision and Pattern Recognition <strong>(CVPR)</strong>, 2020.
-    pdf: https://arxiv.org/pdf/2002.10211.pdf
-    code: https://github.com/yaoyao-liu/class-incremental-learning/tree/main/mnemonics-training
-    page: https://class-il.mpi-inf.mpg.de/mnemonics/
-    bibtex: https://class-il.mpi-inf.mpg.de/mnemonics/
-    notes: Oral Presentation
-    image: ./assets/img/teaser_example.png
+  - title: "SUPER-AD: Semantic Uncertainty-aware Planning for End-to-End Robust Autonomous Driving"
+    authors: "Wonjeong Ryu, Seungjun Yu, Seokha Moon, <strong>Hojun Choi</strong>, Junsung Park, Jinkyu Kim, and Hyunjung Shim"
+    conference_short: "arXiv"
+    conference: "arXiv, 2025."
+    image: "./assets/img/teasers/superad.png"
+
+  - title: "Evaluating Image Hallucination in Text-to-Image Generation with Question-Answering"
+    authors: "Youngsun Lim<sup>*</sup>, <strong>Hojun Choi<sup>*</sup></strong>, and Hyunjung Shim <span style='font-size: 0.9em;'>(<sup>*</sup>Equal contribution)</span>"
+    conference_short: "AAAI"
+    conference: "AAAI Conference on Artificial Intelligence <strong>(AAAI)</strong>, 2025."
+    image: "./assets/img/teasers/ihalla.png"
+    notes: "Oral Presentation"
+
+  - title: "Sampling Bag of Views for Open-Vocabulary Object Detection"
+    authors: "<strong>Hojun Choi</strong>, Junsuk Choe, and Hyunjung Shim"
+    conference_short: "arXiv"
+    conference: "arXiv, 2024."
+    image: "./assets/img/teasers/bov.png"
+
+  - title: "MobileGPT: Augmenting LLM with Human-like App Memory for Mobile Task Automation"
+    authors: "Sunjae Lee, Junyoung Choi, Jungjae Lee, Munim Hasan Wasi, <strong>Hojun Choi</strong>, Steven Y. Ko, Sangeun Oh, and Insik Shin"
+    conference_short: "MobiCom"
+    conference: "ACM International Conference on Mobile Computing and Networking <strong>(MobiCom)</strong>, 2024."
+    image: "./assets/img/teasers/memodroid.png"
+
+  - title: "Accurate Retraining-free Pruning for Pre-trained Encoder-based Language Models"
+    authors: "Seungcheol Park, <strong>Hojun Choi</strong>, and U Kang"
+    conference_short: "ICLR"
+    conference: "International Conference on Learning Representations <strong>(ICLR)</strong>, 2024."
+    image: "./assets/img/teasers/kprune.png"
