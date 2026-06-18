@@ -2,8 +2,8 @@
 
 ## Awards
 
-- **Best Poster Award**, Image Processing and Image Understanding (IPIU), 2026
-- **Oral Presentation**, Image Processing and Image Understanding (IPIU), 2025
-- **Top 10%**, Autonomous Sensor Antenna Prediction Competition, LG AI Research, 2022
-- **Honorable Mention**, UPL Hackathon, 2022
-- **Dean's List Recipient**, University of Wisconsin–Madison, Every Semester Attended
+- <strong style="color: darkorange;">Best Poster Award</strong>, Image Processing and Image Understanding (IPIU), 2026
+- <strong style="color: darkorange;">Oral Presentation</strong>, Image Processing and Image Understanding (IPIU), 2025
+- <strong style="color: darkorange;">Top 10%</strong>, Autonomous Sensor Antenna Prediction Competition, LG AI Research, 2022
+- <strong style="color: darkorange;">Honorable Mention</strong>, UPL Hackathon, 2022
+- <strong style="color: darkorange;">Dean&#39;s List Recipient</strong>, University of Wisconsin–Madison, Every Semester Attended
