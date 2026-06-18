@@ -880,3 +880,12 @@ footer {
     margin-top: 2px;
   }
 }
+
+/* =========================================================
+   Square profile avatar
+   ========================================================= */
+
+.image.avatar,
+.image.avatar img {
+  border-radius: 0 !important;
+}
