@@ -800,3 +800,83 @@ footer {
     font-size: 9px;
   }
 }
+
+/* =========================================================
+   Section dividers
+   ========================================================= */
+
+.section-divider {
+  display: block !important;
+  width: 100% !important;
+  height: 0 !important;
+
+  margin: 30px 0 18px !important;
+  padding: 0 !important;
+
+  border: 0 !important;
+  border-top: 1px solid rgba(0, 102, 204, 0.28) !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .section-divider {
+    border-top-color: rgba(120, 180, 235, 0.38) !important;
+  }
+}
+
+/* =========================================================
+   Research experience
+   ========================================================= */
+
+.experience-item {
+  margin-bottom: 24px;
+}
+
+.experience-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.experience-organization {
+  margin-left: 8px;
+  color: #0066cc;
+  font-weight: 600;
+}
+
+.experience-date {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.experience-location {
+  margin-top: 2px;
+  color: #666666;
+}
+
+.experience-details {
+  margin-top: 8px;
+  margin-bottom: 0;
+  padding-left: 1.25em;
+}
+
+.experience-details li {
+  margin-bottom: 4px;
+}
+
+@media print, screen and (max-width: 600px) {
+  .experience-header {
+    display: block;
+  }
+
+  .experience-organization {
+    display: block;
+    margin-left: 0;
+    margin-top: 2px;
+  }
+
+  .experience-date {
+    display: block;
+    margin-top: 2px;
+  }
+}

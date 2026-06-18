@@ -1,3 +1,5 @@
+<hr class="section-divider">
+
 ## Education
 
 <div style="margin-bottom: 1.2em;">

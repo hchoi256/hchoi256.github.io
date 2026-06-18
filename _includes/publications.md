@@ -1,3 +1,5 @@
+<hr class="section-divider">
+
 ## Publications
 
 <div class="publications-list">
