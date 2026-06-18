@@ -27,15 +27,15 @@ main:
   - title: >-
       SUPER-AD: Semantic Uncertainty-aware Planning for End-to-End Robust Autonomous Driving
     authors: Wonjeong Ryu, Seungjun Yu, Seokha Moon, <strong><u>Hojun Choi</u></strong>, Junsung Park, Jinkyu Kim, and Hyunjung Shim
-    conference_short: arXiv
+    conference_short: Preprint
     tag_type: default
-    conference: arXiv, 2025.
+    conference: Preprint, 2025.
     pdf: https://arxiv.org/pdf/2511.22865
     bibtex: https://arxiv.org/bibtex/2511.22865
     image: ./assets/img/teasers/superad.png
 
   - title: Evaluating Image Hallucination in Text-to-Image Generation with Question-Answering
-    authors: Youngsun Lim<sup>*</sup>, <strong><u>Hojun Choi</u><sup>*</sup></strong>, and Hyunjung Shim (<sup>*</sup>Equal contribution)
+    authors: Youngsun Lim*, <strong><u>Hojun Choi</u></strong>*, and Hyunjung Shim (*Equal contribution)
     conference_short: AAAI
     tag_type: conference
     conference: >-
@@ -49,9 +49,9 @@ main:
 
   - title: Sampling Bag of Views for Open-Vocabulary Object Detection
     authors: <strong><u>Hojun Choi</u></strong>, Junsuk Choe, and Hyunjung Shim
-    conference_short: arXiv
+    conference_short: Preprint
     tag_type: default
-    conference: arXiv, 2024.
+    conference: Preprint, 2024.
     pdf: https://arxiv.org/pdf/2412.18273
     bibtex: https://arxiv.org/bibtex/2412.18273
     image: ./assets/img/teasers/bov.png
