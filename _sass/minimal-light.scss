@@ -889,3 +889,32 @@ footer {
 .image.avatar img {
   border-radius: 0 !important;
 }
+
+/* =========================================================
+   Slightly larger square profile avatar
+   ========================================================= */
+
+#header .image.avatar {
+  width: 9.25em !important;
+}
+
+.image.avatar img {
+  width: 150px !important;
+  max-width: 100%;
+  height: auto;
+  padding: 12px !important;
+  box-sizing: border-box;
+  border-radius: 0 !important;
+}
+
+@media print, screen and (max-width: 960px) {
+  .image.avatar img {
+    width: 130px !important;
+  }
+}
+
+@media print, screen and (max-width: 480px) {
+  .image.avatar img {
+    width: 110px !important;
+  }
+}
