@@ -599,35 +599,34 @@ footer {
 /* =========================================================
    Custom publication layout
    ========================================================= */
+
 .publication-item {
   display: flex;
   align-items: flex-start;
   gap: 18px;
-  margin-bottom: 28px;
+  margin-bottom: 27px;
 }
 
 /*
- * Teaser가 들어가는 공간은 항상 150 x 90으로 고정됩니다.
- * 논문 그림 자체는 비율을 유지하면서 이 공간 안에 전부 표시됩니다.
+ * Reference처럼 teaser 영역을 작게 고정합니다.
  */
 .publication-thumb {
   position: relative;
 
   flex: 0 0 150px;
   width: 150px;
-  height: 90px;
+  height: 88px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  overflow: visible;
   background: transparent;
 }
 
 /*
- * width와 height를 강제로 100%로 만들지 않습니다.
- * 가로로 긴 그림과 세로로 긴 그림 모두 잘리지 않습니다.
+ * 이미지 비율을 유지하며 150 x 88 영역 안에 전부 표시합니다.
+ * 잘리거나 늘어나지 않습니다.
  */
 .publication-teaser {
   display: block;
@@ -636,13 +635,13 @@ footer {
   height: auto !important;
 
   max-width: 150px !important;
-  max-height: 90px !important;
+  max-height: 88px !important;
 
   object-fit: contain !important;
   object-position: center;
 
-  margin: 0;
   padding: 0;
+  margin: 0;
 
   background: #ffffff;
   border-radius: 7px;
@@ -661,7 +660,7 @@ footer {
 
 .publication-authors {
   margin-bottom: 4px;
-  line-height: 1.45;
+  line-height: 1.4;
 }
 
 .publication-venue {
@@ -671,17 +670,20 @@ footer {
 
 .publication-links {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: 4px 10px;
+  flex-wrap: wrap;
+  gap: 3px 10px;
   line-height: 1.5;
 }
 
-/* Teaser 위 학회 태그 */
+/* =========================================================
+   Teaser badges
+   ========================================================= */
+
 .publication-badges {
   position: absolute;
-  top: 5px;
-  left: -6px;
+  top: 4px;
+  left: -7px;
   z-index: 2;
 
   display: flex;
@@ -692,8 +694,8 @@ footer {
 
 .publication-badge {
   display: inline-block;
-  min-width: 55px;
   box-sizing: border-box;
+  min-width: 54px;
 
   padding: 3px 8px;
   border-radius: 3px;
@@ -701,7 +703,7 @@ footer {
   background: #043b73;
   color: #ffffff !important;
 
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
   line-height: 1.1;
   text-align: center;
@@ -719,63 +721,60 @@ footer {
   background: #2e7d32;
 }
 
-/* arXiv 및 기타 기본 태그: 파란색 */
+/* arXiv 및 기본: 파란색 */
 .publication-badge--default {
   background: #043b73;
 }
 
-.publication-note {
-  color: #b42318;
+/* =========================================================
+   Venue text colors
+   ========================================================= */
+
+.venue-conference {
+  color: #b42318 !important;
   font-weight: 600;
 }
 
-/* News 태그 색상 */
-.news-conference {
-  color: #0066cc !important;
-  font-weight: 700 !important;
+.venue-workshop {
+  color: #2e7d32 !important;
+  font-weight: 600;
 }
 
-.news-workshop {
-  color: forestgreen !important;
-  font-weight: 700 !important;
+.venue-default {
+  color: #043b73 !important;
+  font-weight: 600;
 }
 
-.news-award {
-  color: darkorange !important;
-  font-weight: 700 !important;
+.publication-note {
+  color: #b42318 !important;
+  font-weight: 600;
 }
 
 /*
- * 모바일에서도 이미지가 화면 전체 크기로 커지지 않도록
- * 좌측 teaser + 우측 설명 구조를 유지합니다.
+ * 모바일에서도 teaser를 화면 전체 너비로 키우지 않습니다.
  */
 @media print, screen and (max-width: 600px) {
   .publication-item {
     display: flex;
     align-items: flex-start;
-    gap: 12px;
-    margin-bottom: 26px;
+    gap: 11px;
+    margin-bottom: 25px;
   }
 
   .publication-thumb {
-    flex: 0 0 115px;
-    width: 115px;
-    height: 72px;
+    flex: 0 0 108px;
+    width: 108px;
+    height: 68px;
   }
 
   .publication-teaser {
-    max-width: 115px !important;
-    max-height: 72px !important;
-  }
-
-  .publication-badges {
-    top: 4px;
-    left: -5px;
+    max-width: 108px !important;
+    max-height: 68px !important;
   }
 
   .publication-badge {
-    min-width: 48px;
-    padding: 3px 6px;
-    font-size: 10px;
+    min-width: 44px;
+    padding: 3px 5px;
+    font-size: 9px;
   }
 }
