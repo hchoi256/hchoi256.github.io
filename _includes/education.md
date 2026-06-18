@@ -19,11 +19,16 @@
 </div>
 
 <div style="margin-bottom: 1.1em;">
-  <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 1em; flex-wrap: wrap;">
-    <strong>University of Wisconsin–Madison</strong>
-    <span>Jan. 2017 – Dec. 2022</span>
+  <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 1em; flex-wrap: nowrap;">
+    <div>
+      <strong>University of Wisconsin–Madison</strong>
+      <div>B.S. in Computer Science</div>
+      <div>B.S. in Data Science</div>
+    </div>
+    <div style="text-align: right; flex: 0 0 auto;">
+      <div>Jan. 2017 – Dec. 2022</div>
+      <div style="color: #b31b1b; font-weight: 700;">GPA: 3.9/4.0</div>
+      <div style="color: #b31b1b; font-weight: 700;">Dean's List Recipient</div>
+    </div>
   </div>
-  <div>B.S. in Computer Science</div>
-  <div>B.S. in Data Science</div>
-  <div><span style="color: #b31b1b; font-weight: 700;">GPA: 3.9/4.0</span></div>
 </div>
