@@ -1,76 +1,75 @@
 main:
 
-* title: Open-Vocabulary BEV Segmentation with 3D-Aware Geometric Constraints
-  authors: <strong>Hojun Choi</strong>, Seulbin Hwang, Dae Jung Kim, Kisung Kim, Hyunjung Shim, and Jinhan Lee
-  conference_short: ECCV
-  tag_type: conference
-  conference: European Conference on Computer Vision <strong class="venue-conference">(ECCV)</strong>, 2026.
-  image: ./assets/img/teasers/ovbevseg.png
+  - title: Open-Vocabulary BEV Segmentation with 3D-Aware Geometric Constraints
+    authors: <strong>Hojun Choi</strong>, Seulbin Hwang, Dae Jung Kim, Kisung Kim, Hyunjung Shim, and Jinhan Lee
+    conference_short: ECCV
+    tag_type: conference
+    conference: European Conference on Computer Vision <strong class="venue-conference">(ECCV)</strong>, 2026.
+    image: ./assets/img/teasers/ovbevseg.png
 
-* title: >-
-  CoT-PL: Chain-of-Thought Pseudo-Labeling for Open-Vocabulary Object Detection
-  authors: <strong>Hojun Choi</strong>, Youngsun Lim, Jaeyo Shin, and Hyunjung Shim
-  conference_short: ECCV
-  badges:
-
-  * text: ECCV
-    type: conference
-  * text: CVPRW
-    type: workshop
+  - title: >-
+      CoT-PL: Chain-of-Thought Pseudo-Labeling for Open-Vocabulary Object Detection
+    authors: <strong>Hojun Choi</strong>, Youngsun Lim, Jaeyo Shin, and Hyunjung Shim
+    conference_short: ECCV
+    badges:
+      - text: ECCV
+        type: conference
+      - text: CVPRW
+        type: workshop
     conference: 2nd Workshop on Multimodal Spatial Intelligence @ CVPR <strong class="venue-workshop">(CVPRW)</strong>, 2026.<br>European Conference on Computer Vision <strong class="venue-conference">(ECCV)</strong>, 2026.
     pdf: https://arxiv.org/pdf/2510.14792
     code: https://github.com/hchoi256/cotpl
     bibtex: https://github.com/hchoi256/cotpl#citation
     image: ./assets/img/teasers/cotpl.png
 
-* title: >-
-  SUPER-AD: Semantic Uncertainty-aware Planning for End-to-End Robust Autonomous Driving
-  authors: Wonjeong Ryu, Seungjun Yu, Seokha Moon, <strong>Hojun Choi</strong>, Junsung Park, Jinkyu Kim, and Hyunjung Shim
-  conference_short: arXiv
-  tag_type: default
-  conference: arXiv, 2025.
-  pdf: https://arxiv.org/pdf/2511.22865
-  bibtex: https://arxiv.org/bibtex/2511.22865
-  image: ./assets/img/teasers/superad.png
+  - title: >-
+      SUPER-AD: Semantic Uncertainty-aware Planning for End-to-End Robust Autonomous Driving
+    authors: Wonjeong Ryu, Seungjun Yu, Seokha Moon, <strong>Hojun Choi</strong>, Junsung Park, Jinkyu Kim, and Hyunjung Shim
+    conference_short: arXiv
+    tag_type: default
+    conference: arXiv, 2025.
+    pdf: https://arxiv.org/pdf/2511.22865
+    bibtex: https://arxiv.org/bibtex/2511.22865
+    image: ./assets/img/teasers/superad.png
 
-* title: Evaluating Image Hallucination in Text-to-Image Generation with Question-Answering
-  authors: Youngsun Lim<sup>*</sup>, <strong>Hojun Choi<sup>*</sup></strong>, and Hyunjung Shim (<sup>*</sup>Equal contribution)
-  conference_short: AAAI
-  tag_type: conference
-  conference: AAAI Conference on Artificial Intelligence <strong class="venue-conference">(AAAI)</strong>, 2025.
-  pdf: https://arxiv.org/pdf/2409.12784
-  code: https://github.com/kaist-cvml/I-HallA-v1.0
-  page: https://sgt-lim.github.io/I-HallA/
-  bibtex: https://github.com/kaist-cvml/I-HallA-v1.0#citation
-  image: ./assets/img/teasers/ihalla.png
-  notes: Oral Presentation
+  - title: Evaluating Image Hallucination in Text-to-Image Generation with Question-Answering
+    authors: Youngsun Lim<sup>*</sup>, <strong>Hojun Choi<sup>*</sup></strong>, and Hyunjung Shim (<sup>*</sup>Equal contribution)
+    conference_short: AAAI
+    tag_type: conference
+    conference: AAAI Conference on Artificial Intelligence <strong class="venue-conference">(AAAI)</strong>, 2025.
+    pdf: https://arxiv.org/pdf/2409.12784
+    code: https://github.com/kaist-cvml/I-HallA-v1.0
+    page: https://sgt-lim.github.io/I-HallA/
+    bibtex: https://github.com/kaist-cvml/I-HallA-v1.0#citation
+    image: ./assets/img/teasers/ihalla.png
+    notes: Oral Presentation
 
-* title: Sampling Bag of Views for Open-Vocabulary Object Detection
-  authors: <strong>Hojun Choi</strong>, Junsuk Choe, and Hyunjung Shim
-  conference_short: arXiv
-  tag_type: default
-  conference: arXiv, 2024.
-  pdf: https://arxiv.org/pdf/2412.18273
-  bibtex: https://arxiv.org/bibtex/2412.18273
-  image: ./assets/img/teasers/bov.png
+  - title: Sampling Bag of Views for Open-Vocabulary Object Detection
+    authors: <strong>Hojun Choi</strong>, Junsuk Choe, and Hyunjung Shim
+    conference_short: arXiv
+    tag_type: default
+    conference: arXiv, 2024.
+    pdf: https://arxiv.org/pdf/2412.18273
+    bibtex: https://arxiv.org/bibtex/2412.18273
+    image: ./assets/img/teasers/bov.png
 
-* title: >-
-  MobileGPT: Augmenting LLM with Human-like App Memory for Mobile Task Automation
-  authors: Sunjae Lee, Junyoung Choi, Jungjae Lee, Munim Hasan Wasi, <strong>Hojun Choi</strong>, Steven Y. Ko, Sangeun Oh, and Insik Shin
-  conference_short: MobiCom
-  tag_type: conference
-  conference: ACM International Conference on Mobile Computing and Networking <strong class="venue-conference">(MobiCom)</strong>, 2024.
-  pdf: https://arxiv.org/pdf/2312.03003
-  code: https://github.com/mobilegptsys/MobileGPT
-  bibtex: https://dblp.org/rec/conf/mobicom/LeeCLWCKOS24.bib
-  image: ./assets/img/teasers/memodroid.png
+  - title: >-
+      MobileGPT: Augmenting LLM with Human-like App Memory for Mobile Task Automation
+    authors: Sunjae Lee, Junyoung Choi, Jungjae Lee, Munim Hasan Wasi, <strong>Hojun Choi</strong>, Steven Y. Ko, Sangeun Oh, and Insik Shin
+    conference_short: MobiCom
+    tag_type: conference
+    conference: ACM International Conference on Mobile Computing and Networking <strong class="venue-conference">(MobiCom)</strong>, 2024.
+    pdf: https://arxiv.org/pdf/2312.03003
+    code: https://github.com/mobilegptsys/MobileGPT
+    bibtex: https://dblp.org/rec/conf/mobicom/LeeCLWCKOS24.bib
+    image: ./assets/img/teasers/memodroid.png
 
-* title: Accurate Retraining-free Pruning for Pre-trained Encoder-based Language Models
-  authors: Seungcheol Park, <strong>Hojun Choi</strong>, and U Kang
-  conference_short: ICLR
-  tag_type: conference
-  conference: International Conference on Learning Representations <strong class="venue-conference">(ICLR)</strong>, 2024.
-  pdf: https://proceedings.iclr.cc/paper_files/paper/2024/file/45fc8e1c55df116b23488f3cdb2fc642-Paper-Conference.pdf
-  code: https://github.com/snudm-starlab/K-prune
-  bibtex: https://github.com/snudm-starlab/K-prune#reference
-  image: ./assets/img/teasers/kprune.png
+  - title: Accurate Retraining-free Pruning for Pre-trained Encoder-based Language Models
+    authors: Seungcheol Park, <strong>Hojun Choi</strong>, and U Kang
+    conference_short: ICLR
+    tag_type: conference
+    conference: International Conference on Learning Representations <strong class="venue-conference">(ICLR)</strong>, 2024.
+    pdf: https://proceedings.iclr.cc/paper_files/paper/2024/file/45fc8e1c55df116b23488f3cdb2fc642-Paper-Conference.pdf
+    code: https://github.com/snudm-starlab/K-prune
+    bibtex: https://github.com/snudm-starlab/K-prune#reference
+    image: ./assets/img/teasers/kprune.png
