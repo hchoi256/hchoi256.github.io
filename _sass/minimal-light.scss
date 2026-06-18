@@ -597,212 +597,206 @@ footer {
 }
 
 /* =========================================================
-Publication layout
-========================================================= */
+   Publication layout
+   ========================================================= */
 
 .publication-item {
-display: flex;
-align-items: flex-start;
-gap: 16px;
-margin-bottom: 28px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 28px;
 }
 
-/* 고정된 작은 teaser 영역 */
 .publication-thumb {
-position: relative;
+  position: relative;
 
-flex: 0 0 135px;
-width: 135px;
-min-width: 135px;
-max-width: 135px;
+  flex: 0 0 135px;
+  width: 135px;
+  min-width: 135px;
+  max-width: 135px;
 
-height: 80px;
-min-height: 80px;
-max-height: 80px;
+  height: 80px;
+  min-height: 80px;
+  max-height: 80px;
 
-display: flex;
-align-items: center;
-justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-overflow: visible;
-background: transparent;
+  overflow: visible;
+  background: transparent;
 }
 
-/* 이미지 전체를 비율 유지하며 표시 */
 .publication-teaser {
-display: block;
+  display: block;
 
-width: 135px !important;
-height: 80px !important;
-max-width: 135px !important;
-max-height: 80px !important;
+  width: 135px !important;
+  height: 80px !important;
+  max-width: 135px !important;
+  max-height: 80px !important;
 
-object-fit: contain !important;
-object-position: center !important;
+  object-fit: contain !important;
+  object-position: center !important;
 
-margin: 0 !important;
-padding: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
 
-background: #ffffff;
-border-radius: 6px;
-box-shadow: 1px 3px 7px rgba(0, 0, 0, 0.18);
+  background: #ffffff;
+  border-radius: 6px;
+  box-shadow: 1px 3px 7px rgba(0, 0, 0, 0.18);
 }
 
 .publication-content {
-flex: 1;
-min-width: 0;
+  flex: 1;
+  min-width: 0;
 }
 
 .publication-title {
-margin-bottom: 5px;
-line-height: 1.35;
+  margin-bottom: 5px;
+  line-height: 1.35;
 }
 
 .publication-authors {
-margin-bottom: 4px;
-line-height: 1.4;
+  margin-bottom: 4px;
+  line-height: 1.4;
 }
 
 .publication-venue {
-margin-bottom: 5px;
-line-height: 1.4;
-color: inherit;
+  margin-bottom: 5px;
+  line-height: 1.4;
+  color: inherit;
 }
 
 .publication-links {
-display: flex;
-align-items: center;
-flex-wrap: wrap;
-gap: 3px 10px;
-line-height: 1.5;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 3px 10px;
+  line-height: 1.5;
 }
 
-/* =========================================================
-Venue acronym colors
-========================================================= */
-
-/* ECCV, AAAI, ICLR, MobiCom 등 */
-.publication-venue .venue-conference {
-color: #0066cc !important;
-font-weight: 700 !important;
-}
-
-/* CVPRW 등 */
-.publication-venue .venue-workshop {
-color: forestgreen !important;
-font-weight: 700 !important;
-}
-
-/* =========================================================
-Teaser badges
-========================================================= */
-
-.publication-badges {
-position: absolute;
-top: 4px;
-left: -7px;
-z-index: 10;
-
-display: flex;
-flex-direction: column;
-align-items: flex-start;
-gap: 3px;
-}
-
-.publication-badge {
-display: inline-block;
-box-sizing: border-box;
-
-min-width: 51px;
-padding: 3px 7px;
-
-border: 1px solid #b8c2cc;
-border-radius: 3px;
-
-background: #ffffff;
-color: #003b64 !important;
-
-font-size: 10px;
-font-weight: 700;
-line-height: 1.1;
-text-align: center;
-
-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.20);
-}
-
-/* 정규 학회 badge: 파란색 */
-.publication-badge--conference {
-background: #0066cc !important;
-color: #ffffff !important;
-border-color: #0066cc !important;
-}
-
-/* Workshop badge: 초록색 */
-.publication-badge--workshop {
-background: forestgreen !important;
-color: #ffffff !important;
-border-color: forestgreen !important;
-}
-
-/* arXiv 및 기타 기본 badge: 흰색 */
-.publication-badge--default {
-background: #ffffff !important;
-color: #003b64 !important;
-border-color: #b8c2cc !important;
-}
-
-.publication-note {
-color: #b42318;
-font-weight: 600;
-}
-
-/* 모바일 */
-@media print, screen and (max-width: 600px) {
-.publication-item {
-gap: 10px;
-margin-bottom: 24px;
-}
-
-.publication-thumb {
-flex: 0 0 100px;
-width: 100px;
-min-width: 100px;
-max-width: 100px;
-
-height: 62px;
-min-height: 62px;
-max-height: 62px;
-}
-
-.publication-teaser {
-width: 100px !important;
-height: 62px !important;
-max-width: 100px !important;
-max-height: 62px !important;
-}
-
-.publication-badge {
-min-width: 42px;
-padding: 3px 5px;
-font-size: 9px;
-}
-}
-
-/* =========================================================
-   News label colors
-   ========================================================= */
-
-.news-conference {
+/* Full conference/workshop names, including acronym in parentheses */
+.publication-venue .venue-conference,
+.publication-venue .venue-conference strong {
   color: #0066cc !important;
   font-weight: 700 !important;
 }
 
-.news-workshop {
+.publication-venue .venue-workshop,
+.publication-venue .venue-workshop strong {
   color: forestgreen !important;
   font-weight: 700 !important;
 }
 
-.news-award {
+/* =========================================================
+   Teaser badges
+   ========================================================= */
+
+.publication-badges {
+  position: absolute;
+  top: 4px;
+  left: -7px;
+  z-index: 10;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+}
+
+.publication-badge {
+  display: inline-block;
+  box-sizing: border-box;
+
+  min-width: 51px;
+  padding: 3px 7px;
+
+  border: 1px solid #737b83;
+  border-radius: 3px;
+
+  background: #6c757d;
+  color: #ffffff !important;
+
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.1;
+  text-align: center;
+
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.20);
+}
+
+/* Conference: blue */
+.publication-badge--conference {
+  background: #0066cc !important;
+  color: #ffffff !important;
+  border-color: #0066cc !important;
+}
+
+/* Workshop: green */
+.publication-badge--workshop {
+  background: forestgreen !important;
+  color: #ffffff !important;
+  border-color: forestgreen !important;
+}
+
+/* arXiv and other default entries: gray */
+.publication-badge--default {
+  background: #6c757d !important;
+  color: #ffffff !important;
+  border-color: #737b83 !important;
+}
+
+.publication-note {
+  color: #b42318;
+  font-weight: 600;
+}
+
+/* News label fallback classes */
+.news-conference,
+.news-conference strong {
+  color: #0066cc !important;
+  font-weight: 700 !important;
+}
+
+.news-workshop,
+.news-workshop strong {
+  color: forestgreen !important;
+  font-weight: 700 !important;
+}
+
+.news-award,
+.news-award strong {
   color: darkorange !important;
   font-weight: 700 !important;
+}
+
+@media print, screen and (max-width: 600px) {
+  .publication-item {
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .publication-thumb {
+    flex: 0 0 100px;
+    width: 100px;
+    min-width: 100px;
+    max-width: 100px;
+
+    height: 62px;
+    min-height: 62px;
+    max-height: 62px;
+  }
+
+  .publication-teaser {
+    width: 100px !important;
+    height: 62px !important;
+    max-width: 100px !important;
+    max-height: 62px !important;
+  }
+
+  .publication-badge {
+    min-width: 42px;
+    padding: 3px 5px;
+    font-size: 9px;
+  }
 }
