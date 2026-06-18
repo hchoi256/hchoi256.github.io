@@ -604,7 +604,7 @@ footer {
   display: flex;
   align-items: flex-start;
   gap: 16px;
-  margin-bottom: 28px;
+  margin-bottom: 34px;
 }
 
 .publication-thumb {
@@ -773,7 +773,7 @@ footer {
 @media print, screen and (max-width: 600px) {
   .publication-item {
     gap: 10px;
-    margin-bottom: 24px;
+    margin-bottom: 28px;
   }
 
   .publication-thumb {
