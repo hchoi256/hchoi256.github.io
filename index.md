@@ -12,10 +12,10 @@ My research interests include **Multimodal Learning**, **Vision-Language Models*
 
 ## News
 
-- <span style="color: blue;"><strong>[Conference]</strong></span> Our paper, **"Open-Vocabulary BEV Segmentation with 3D-Aware Geometric Constraints,"** has been accepted to ECCV 2026.
-- <span style="color: blue;"><strong>[Conference]</strong></span> Our paper, **"CoT-PL: Chain-of-Thought Pseudo-Labeling for Open-Vocabulary Object Detection,"** has been accepted to ECCV 2026.
-- <span style="color: forestgreen;"><strong>[Workshop]</strong></span> Our paper, **"CoT-PL: Chain-of-Thought Pseudo-Labeling for Open-Vocabulary Object Detection,"** has been accepted to the 2nd Workshop on Multimodal Spatial Intelligence at CVPR 2026.
-- <span style="color: darkorange;"><strong>[Award]</strong></span> Honored to have received the **Best Poster Award** at IPIU 2026.
+- <strong class="news-conference">[Conference]</strong> Our paper, **"Open-Vocabulary BEV Segmentation with 3D-Aware Geometric Constraints,"** has been accepted to ECCV 2026.
+- <strong class="news-conference">[Conference]</strong> Our paper, **"CoT-PL: Chain-of-Thought Pseudo-Labeling for Open-Vocabulary Object Detection,"** has been accepted to ECCV 2026.
+- <strong class="news-workshop">[Workshop]</strong> Our paper, **"CoT-PL: Chain-of-Thought Pseudo-Labeling for Open-Vocabulary Object Detection,"** has been accepted to the 2nd Workshop on Multimodal Spatial Intelligence at CVPR 2026.
+- <strong class="news-award">[Award]</strong> Honored to have received the **Best Poster Award** at IPIU 2026.
 
 {% include_relative _includes/publications.md %}
 {% include_relative _includes/education.md %}

@@ -599,44 +599,54 @@ footer {
 /* =========================================================
    Custom publication layout
    ========================================================= */
-
 .publication-item {
   display: flex;
-  align-items: center;
-  gap: 20px;
-  margin-bottom: 30px;
+  align-items: flex-start;
+  gap: 18px;
+  margin-bottom: 28px;
 }
 
 /*
- * Teaser container
- *
- * width와 height를 키우면 논문 이미지가 더 크게 표시됩니다.
+ * Teaser가 들어가는 공간은 항상 150 x 90으로 고정됩니다.
+ * 논문 그림 자체는 비율을 유지하면서 이 공간 안에 전부 표시됩니다.
  */
 .publication-thumb {
   position: relative;
-  flex: 0 0 225px;
-  width: 225px;
-  height: 145px;
-  background: #ffffff;
-  border-radius: 8px;
+
+  flex: 0 0 150px;
+  width: 150px;
+  height: 90px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: visible;
+  background: transparent;
 }
 
 /*
- * contain:
- * 이미지 비율을 유지하면서 전체 이미지를 보여줍니다.
- * cover로 바꾸면 공간은 꽉 차지만 이미지 일부가 잘립니다.
+ * width와 height를 강제로 100%로 만들지 않습니다.
+ * 가로로 긴 그림과 세로로 긴 그림 모두 잘리지 않습니다.
  */
 .publication-teaser {
   display: block;
-  width: 100%;
-  height: 100%;
+
+  width: auto !important;
+  height: auto !important;
+
+  max-width: 150px !important;
+  max-height: 90px !important;
+
   object-fit: contain !important;
   object-position: center;
-  box-sizing: border-box;
-  padding: 4px;
+
+  margin: 0;
+  padding: 0;
+
   background: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.18);
+  border-radius: 7px;
+  box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.18);
 }
 
 .publication-content {
@@ -661,92 +671,111 @@ footer {
 
 .publication-links {
   display: flex;
-  align-items: center;
   flex-wrap: wrap;
-  gap: 0 10px;
+  align-items: center;
+  gap: 4px 10px;
   line-height: 1.5;
 }
 
-.publication-links a:not(:last-of-type)::after {
-  content: "";
-}
-
-/* Badge container */
+/* Teaser 위 학회 태그 */
 .publication-badges {
   position: absolute;
-  top: 8px;
-  left: -7px;
+  top: 5px;
+  left: -6px;
   z-index: 2;
 
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 4px;
+  gap: 3px;
 }
 
-/* 기본 태그: 파란색 */
 .publication-badge {
   display: inline-block;
-  min-width: 62px;
+  min-width: 55px;
   box-sizing: border-box;
-  padding: 4px 10px;
+
+  padding: 3px 8px;
+  border-radius: 3px;
 
   background: #043b73;
-  color: #ffffff;
-  border-radius: 4px;
+  color: #ffffff !important;
 
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   line-height: 1.1;
   text-align: center;
 
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.20);
 }
 
 /* Conference: 빨간색 */
 .publication-badge--conference {
   background: #b42318;
-  color: #ffffff;
 }
 
 /* Workshop: 초록색 */
 .publication-badge--workshop {
   background: #2e7d32;
-  color: #ffffff;
 }
 
-/* 기본/arXiv/기타: 파란색 */
+/* arXiv 및 기타 기본 태그: 파란색 */
 .publication-badge--default {
   background: #043b73;
-  color: #ffffff;
 }
 
-/* Oral, Spotlight 등의 표시 */
 .publication-note {
   color: #b42318;
   font-weight: 600;
 }
 
-/* Mobile */
+/* News 태그 색상 */
+.news-conference {
+  color: #0066cc !important;
+  font-weight: 700 !important;
+}
+
+.news-workshop {
+  color: forestgreen !important;
+  font-weight: 700 !important;
+}
+
+.news-award {
+  color: darkorange !important;
+  font-weight: 700 !important;
+}
+
+/*
+ * 모바일에서도 이미지가 화면 전체 크기로 커지지 않도록
+ * 좌측 teaser + 우측 설명 구조를 유지합니다.
+ */
 @media print, screen and (max-width: 600px) {
   .publication-item {
-    display: block;
-    margin-bottom: 34px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 26px;
   }
 
   .publication-thumb {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 16 / 10;
-    margin-bottom: 14px;
+    flex: 0 0 115px;
+    width: 115px;
+    height: 72px;
   }
 
   .publication-teaser {
-    width: 100%;
-    height: 100%;
+    max-width: 115px !important;
+    max-height: 72px !important;
   }
 
   .publication-badges {
+    top: 4px;
     left: -5px;
+  }
+
+  .publication-badge {
+    min-width: 48px;
+    padding: 3px 6px;
+    font-size: 10px;
   }
 }
