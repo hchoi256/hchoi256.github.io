@@ -778,3 +778,185 @@ footer {
     font-size: 9px;
   }
 }
+
+/* =========================================================
+   Final publication overrides
+   ========================================================= */
+
+/* 1. 논문 teaser 영역을 작게 고정 */
+.publication-item {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 18px !important;
+  margin-bottom: 28px !important;
+}
+
+.publication-thumb {
+  position: relative !important;
+
+  flex: 0 0 150px !important;
+  width: 150px !important;
+  min-width: 150px !important;
+  max-width: 150px !important;
+
+  height: 90px !important;
+  min-height: 90px !important;
+  max-height: 90px !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  overflow: visible !important;
+  background: transparent !important;
+}
+
+/* teaser 칸 안에서 이미지 전체가 비율을 유지하며 보이도록 */
+.publication-teaser {
+  display: block !important;
+
+  width: 150px !important;
+  height: 90px !important;
+  max-width: 150px !important;
+  max-height: 90px !important;
+
+  object-fit: contain !important;
+  object-position: center !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  background: #ffffff !important;
+  border-radius: 7px !important;
+  box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.18) !important;
+}
+
+.publication-content {
+  flex: 1 !important;
+  min-width: 0 !important;
+}
+
+.publication-title {
+  margin-bottom: 5px !important;
+  line-height: 1.35 !important;
+}
+
+.publication-authors {
+  margin-bottom: 4px !important;
+  line-height: 1.4 !important;
+}
+
+.publication-venue {
+  margin-bottom: 5px !important;
+  line-height: 1.4 !important;
+}
+
+.publication-links {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 3px 10px !important;
+}
+
+/* 2. 논문 venue 글자 색상 */
+
+/* 정규 학회: 파란색 */
+.venue-conference {
+  color: #0066cc !important;
+  font-weight: 600 !important;
+}
+
+/* 워크샵: 초록색 */
+.venue-workshop {
+  color: forestgreen !important;
+  font-weight: 600 !important;
+}
+
+/* 3. Teaser badge 위치 */
+.publication-badges {
+  position: absolute !important;
+  top: 5px !important;
+  left: -8px !important;
+  z-index: 10 !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 3px !important;
+}
+
+/* 4. 기본 badge: 흰색 */
+.publication-badge {
+  display: inline-block !important;
+  box-sizing: border-box !important;
+
+  min-width: 55px !important;
+  padding: 4px 8px !important;
+
+  background: #ffffff !important;
+  color: #003b64 !important;
+
+  border: 1px solid #b8c2cc !important;
+  border-radius: 4px !important;
+
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  line-height: 1.1 !important;
+  text-align: center !important;
+
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.20) !important;
+}
+
+/* 정규 학회 badge: 파란색 */
+.publication-badge--conference {
+  background: #0066cc !important;
+  color: #ffffff !important;
+  border-color: #0066cc !important;
+}
+
+/* 워크샵 badge: 초록색 */
+.publication-badge--workshop {
+  background: forestgreen !important;
+  color: #ffffff !important;
+  border-color: forestgreen !important;
+}
+
+/* arXiv 및 기본 badge: 흰색 */
+.publication-badge--default {
+  background: #ffffff !important;
+  color: #003b64 !important;
+  border-color: #b8c2cc !important;
+}
+
+/* 모바일에서도 teaser를 크게 만들지 않음 */
+@media print, screen and (max-width: 600px) {
+  .publication-item {
+    display: flex !important;
+    gap: 11px !important;
+    margin-bottom: 25px !important;
+  }
+
+  .publication-thumb {
+    flex: 0 0 105px !important;
+    width: 105px !important;
+    min-width: 105px !important;
+    max-width: 105px !important;
+
+    height: 66px !important;
+    min-height: 66px !important;
+    max-height: 66px !important;
+  }
+
+  .publication-teaser {
+    width: 105px !important;
+    height: 66px !important;
+    max-width: 105px !important;
+    max-height: 66px !important;
+  }
+
+  .publication-badge {
+    min-width: 44px !important;
+    padding: 3px 5px !important;
+    font-size: 9px !important;
+  }
+}

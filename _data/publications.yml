@@ -1,3 +1,4 @@
+```
 main:
 
   - title: Open-Vocabulary BEV Segmentation with 3D-Aware Geometric Constraints
@@ -27,7 +28,7 @@ main:
     authors: Wonjeong Ryu, Seungjun Yu, Seokha Moon, <strong>Hojun Choi</strong>, Junsung Park, Jinkyu Kim, and Hyunjung Shim
     conference_short: arXiv
     tag_type: default
-    conference: <span class="venue-default">arXiv, 2025.</span>
+    conference: arXiv, 2025.
     pdf: https://arxiv.org/pdf/2511.22865
     bibtex: https://arxiv.org/bibtex/2511.22865
     image: ./assets/img/teasers/superad.png
@@ -48,7 +49,7 @@ main:
     authors: <strong>Hojun Choi</strong>, Junsuk Choe, and Hyunjung Shim
     conference_short: arXiv
     tag_type: default
-    conference: <span class="venue-default">arXiv, 2024.</span>
+    conference: arXiv, 2024.
     pdf: https://arxiv.org/pdf/2412.18273
     bibtex: https://arxiv.org/bibtex/2412.18273
     image: ./assets/img/teasers/bov.png
@@ -73,3 +74,4 @@ main:
     code: https://github.com/snudm-starlab/K-prune
     bibtex: https://github.com/snudm-starlab/K-prune#reference
     image: ./assets/img/teasers/kprune.png
+```
