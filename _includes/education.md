@@ -8,6 +8,7 @@
     <span>Jan. 2026 – Present</span>
   </div>
   <div>Ph.D. in Artificial Intelligence</div>
+  <div>Advisor: Prof. Hyunjung (Kate) Shim</div>
 </div>
 
 <div style="margin-bottom: 1.1em;">
@@ -16,6 +17,7 @@
     <span>Jan. 2024 – Dec. 2025</span>
   </div>
   <div>M.S. in Artificial Intelligence</div>
+  <div>Advisor: Prof. Hyunjung (Kate) Shim</div>
 </div>
 
 <div style="margin-bottom: 1.1em;">
