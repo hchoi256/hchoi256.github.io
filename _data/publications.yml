@@ -9,7 +9,7 @@ main:
     image: ./assets/img/teasers/ovbevseg.png
 
   - title: >-
-      CoT-PL: Chain-of-Thought Pseudo-Labeling for Open-Vocabulary Object Detection
+      MSPL: Multi-Step Pseudo-Labeling for Open-Vocabulary Object Detection
     authors: <strong><u>Hojun Choi</u></strong>, Youngsun Lim, Jaeyo Shin, and Hyunjung Shim
     conference_short: ECCV
     badges:
@@ -20,9 +20,9 @@ main:
     conference: >-
       <span style="color: forestgreen !important; font-weight: 700 !important;">2nd Workshop on Multimodal Spatial Intelligence @ CVPR (CVPRW)</span>, 2026.<br><span style="color: #0066cc !important; font-weight: 700 !important;">European Conference on Computer Vision (ECCV)</span>, 2026.
     pdf: https://arxiv.org/pdf/2510.14792
-    code: https://github.com/hchoi256/cotpl
-    bibtex: https://github.com/hchoi256/cotpl#citation
-    image: ./assets/img/teasers/cotpl.png
+    code: https://github.com/hchoi256/mspl
+    bibtex: https://github.com/hchoi256/mspl#citation
+    image: ./assets/img/teasers/mspl.png
 
   - title: >-
       SUPER-AD: Semantic Uncertainty-aware Planning for End-to-End Robust Autonomous Driving
