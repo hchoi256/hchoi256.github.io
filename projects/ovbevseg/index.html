@@ -151,6 +151,11 @@
       margin: 1rem auto 1rem;
     }
 
+    .lang-image {
+      width: 60%;
+      max-width: 620px;
+    }
+
     .results-wrap {
       margin-top: 1.25rem;
     }
@@ -278,6 +283,11 @@
       .paper-table {
         font-size: 0.78rem;
       }
+
+      .lang-image {
+        width: 100%;
+        max-width: 100%;
+      }
     }
   </style>
 </head>
@@ -322,13 +332,6 @@
               <a href="./static/pdfs/ovbevseg.pdf" class="project-link" target="_blank" rel="noopener noreferrer">
                 <img src="/assets/img/paper.png" alt="">
                 <span>Paper</span>
-              </a>
-            </span>
-
-            <span class="link-block">
-              <a href="https://github.com/hchoi256/ovbevseg" class="project-link" target="_blank" rel="noopener noreferrer">
-                <img src="/assets/img/github.png" alt="">
-                <span>Code</span>
               </a>
             </span>
 
@@ -379,7 +382,7 @@
       OVBEVSeg consists of three progressive modules. First, <strong>Pseudo-BEV Labeling (PBL)</strong> establishes 2D–BEV correspondences by projecting unsupervised 3D object boxes into image and BEV spaces, then assigns open-vocabulary labels using object-centric CLIP embeddings. Second, <strong>BEV-Aware 3D Gaussian Splatting (BAGS)</strong> optimizes 3D Gaussians with image, depth, and BEV occupancy constraints so that the recovered geometry remains consistent in both camera and top-down views. Third, <strong>BEV-Aware Gaussian Distillation (BAGD)</strong> transfers this high-fidelity geometry into a feed-forward student model for efficient online inference.
     </p>
 
-    <img src="./static/images/lang.png" class="paper-image" alt="Language-aware OVBEVSeg extension">
+    <img src="./static/images/lang.png" class="paper-image lang-image" alt="Language-aware OVBEVSeg extension">
 
     <p class="figure-text">
       The framework also supports language-aware 3D scene understanding. By linking image masks, CLIP image embeddings, and BEV masks through the 2D–BEV correspondence set, OVBEVSeg can propagate open-vocabulary semantics into BEV space. For language-embedded BAGS, a disentanglement distillation objective preserves category-level distinctions among semantically similar vehicle subclasses, enabling consistent language grounding across image, BEV, and 3D Gaussian representations.
