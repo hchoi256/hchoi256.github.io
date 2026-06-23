@@ -1,0 +1,96 @@
+---
+layout: default
+---
+
+<div class="project-page">
+
+  <header class="project-header">
+    <h1 class="project-title">{{ page.title }}</h1>
+
+    {% if page.authors %}
+      <p class="project-authors">{{ page.authors }}</p>
+    {% endif %}
+
+    {% if page.affiliations %}
+      <p class="project-affiliations">{{ page.affiliations }}</p>
+    {% endif %}
+
+    {% if page.venue %}
+      <p class="project-venue"><strong>{{ page.venue }}</strong></p>
+    {% endif %}
+
+    <p class="project-links">
+      {% if page.paper %}
+        <a href="{{ page.paper }}" target="_blank" rel="noopener noreferrer">Paper</a>
+      {% endif %}
+
+      {% if page.code %}
+        <a href="{{ page.code }}" target="_blank" rel="noopener noreferrer">Code</a>
+      {% endif %}
+
+      {% if page.arxiv %}
+        <a href="{{ page.arxiv }}" target="_blank" rel="noopener noreferrer">arXiv</a>
+      {% endif %}
+
+      {% if page.bibtex %}
+        <a href="{{ page.bibtex }}" target="_blank" rel="noopener noreferrer">BibTeX</a>
+      {% endif %}
+    </p>
+  </header>
+
+  <article class="project-content">
+    {{ content }}
+  </article>
+
+</div>
+
+<style>
+.project-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 16px;
+}
+
+.project-header {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.project-title {
+  font-size: 2.1rem;
+  line-height: 1.25;
+  margin-bottom: 16px;
+}
+
+.project-authors,
+.project-affiliations,
+.project-venue {
+  margin: 6px 0;
+}
+
+.project-links {
+  margin-top: 20px;
+}
+
+.project-links a {
+  display: inline-block;
+  margin: 4px 6px;
+  padding: 6px 12px;
+  border: 1px solid #444;
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+.project-content img {
+  max-width: 100%;
+  display: block;
+  margin: 24px auto;
+}
+
+.project-content pre {
+  overflow-x: auto;
+  padding: 16px;
+  background: #f6f8fa;
+  border-radius: 6px;
+}
+</style>

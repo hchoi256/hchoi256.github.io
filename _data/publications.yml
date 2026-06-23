@@ -21,6 +21,7 @@ main:
       <span style="color: forestgreen !important; font-weight: 700 !important;">2nd Workshop on Multimodal Spatial Intelligence @ CVPR (CVPRW)</span>, 2026.<br><span style="color: #0066cc !important; font-weight: 700 !important;">European Conference on Computer Vision (ECCV)</span>, 2026.
     pdf: https://arxiv.org/pdf/2510.14792
     code: https://github.com/hchoi256/mspl
+    page: /projects/mspl/
     bibtex: https://github.com/hchoi256/mspl#citation
     image: ./assets/img/teasers/mspl.png
 
