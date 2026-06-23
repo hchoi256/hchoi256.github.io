@@ -1,0 +1,37 @@
+# {{ page.title }}
+
+{% if page.authors %}
+
+{{ page.authors }}
+
+{% endif %}
+
+{% if page.affiliations %}
+
+{{ page.affiliations }}
+
+{% endif %}
+
+{% if page.paper %}
+[Paper]({{ page.paper }})
+{% endif %}
+
+{% if page.video %}
+[Video]({{ page.video }})
+{% endif %}
+
+{% if page.code %}
+[Code]({{ page.code }})
+{% endif %}
+
+{% if page.openreview %}
+[OpenReview]({{ page.openreview }})
+{% endif %}
+
+{% if page.data %}
+[Data]({{ page.data }})
+{% endif %}
+
+{{ content }}
+
+Website template borrowed from [NeRFies](https://github.com/nerfies/nerfies.github.io).
