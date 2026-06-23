@@ -2,11 +2,11 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <meta name="description" content="MSPL: Multi-Step Pseudo-Labeling for Open-Vocabulary Object Detection">
-  <meta name="keywords" content="MSPL, Open-Vocabulary Object Detection, Pseudo-Labeling">
+  <meta name="description" content="OVBEVSeg: Open-Vocabulary BEV Segmentation with 3D-Aware Geometric Constraints">
+  <meta name="keywords" content="OVBEVSeg, Open-Vocabulary BEV Segmentation, BEV Perception, 3D Gaussian Splatting, Autonomous Driving">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>MSPL: Multi-Step Pseudo-Labeling for Open-Vocabulary Object Detection</title>
+  <title>OVBEVSeg: Open-Vocabulary BEV Segmentation with 3D-Aware Geometric Constraints</title>
   <link rel="icon" type="image/png" href="/assets/img/favicon.png">
 
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
@@ -14,26 +14,28 @@
 
   <style>
     :root {
-      --mspl-dark: #1f2937;
-      --mspl-blue: #2563eb;
-      --mspl-blue-soft: #eff6ff;
-      --mspl-border: #e5e7eb;
-      --mspl-text: #374151;
-      --mspl-muted: #6b7280;
-      --mspl-gold: #fff4cc;
-      --mspl-gray: #9ca3af;
+      --main-dark: #1f2937;
+      --main-blue: #2563eb;
+      --main-blue-soft: #eff6ff;
+      --main-border: #e5e7eb;
+      --main-text: #374151;
+      --main-muted: #6b7280;
+      --main-gold: #fff4cc;
+      --main-green: #16803c;
+      --main-red: #b91c1c;
+      --main-gray: #9ca3af;
     }
 
     body {
       font-family: 'Noto Sans', sans-serif;
-      color: var(--mspl-text);
+      color: var(--main-text);
       background: #ffffff;
     }
 
     .publication-title {
       font-family: 'Google Sans', sans-serif;
       line-height: 1.12;
-      color: var(--mspl-dark);
+      color: var(--main-dark);
       font-weight: 700;
     }
 
@@ -43,7 +45,7 @@
     }
 
     .publication-authors a {
-      color: var(--mspl-blue) !important;
+      color: var(--main-blue) !important;
       text-decoration: none;
     }
 
@@ -76,8 +78,16 @@
       letter-spacing: 0.02em;
     }
 
+    .author-notes {
+      margin-top: 0.75rem;
+      color: var(--main-muted);
+      font-size: 0.95rem;
+      line-height: 1.55;
+      font-family: 'Google Sans', sans-serif;
+    }
+
     .publication-links {
-      margin-top: 1.35rem;
+      margin-top: 1.15rem;
     }
 
     .link-block {
@@ -126,16 +136,17 @@
 
     .section-title {
       font-family: 'Google Sans', sans-serif;
-      color: var(--mspl-dark);
+      color: var(--main-dark);
       font-weight: 700;
       margin-bottom: 1rem;
     }
 
     .abstract,
-    .section-copy {
+    .section-copy,
+    .figure-text {
       font-size: 1.04rem;
       line-height: 1.75;
-      color: var(--mspl-text);
+      color: var(--main-text);
       text-align: justify;
     }
 
@@ -143,33 +154,22 @@
       width: 100%;
       display: block;
       border-radius: 12px;
-      border: 1px solid var(--mspl-border);
+      border: 1px solid var(--main-border);
       box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
       margin: 1rem auto 1rem;
     }
 
-    .figure-text {
-      font-size: 1.02rem;
-      line-height: 1.72;
-      color: var(--mspl-text);
-      margin-top: 0.85rem;
-      margin-bottom: 0.25rem;
-      text-align: justify;
+    .lang-image {
+      width: 60%;
+      max-width: 620px;
     }
 
     .results-wrap {
       margin-top: 1.25rem;
     }
 
-    .results-grid {
-      display: grid;
-      grid-template-columns: 0.41fr 0.59fr;
-      gap: 1rem;
-      align-items: start;
-    }
-
     .table-card {
-      border: 1px solid var(--mspl-border);
+      border: 1px solid var(--main-border);
       border-radius: 16px;
       background: #ffffff;
       padding: 0.75rem;
@@ -180,22 +180,22 @@
     .table-title {
       font-family: 'Google Sans', sans-serif;
       font-weight: 700;
-      color: var(--mspl-dark);
-      margin-bottom: 0.4rem;
+      color: var(--main-dark);
+      margin-bottom: 0.5rem;
       font-size: 1rem;
     }
 
     .paper-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.78rem;
+      font-size: 0.74rem;
       line-height: 1.25;
       white-space: nowrap;
     }
 
     .paper-table th,
     .paper-table td {
-      padding: 0.28rem 0.38rem;
+      padding: 0.28rem 0.34rem;
       border-bottom: 1px solid #eef2f7;
       vertical-align: middle;
       text-align: center;
@@ -214,8 +214,8 @@
     }
 
     .paper-table tr.group-row td {
-      text-align: center !important;
-      font-weight: 600;
+      text-align: left !important;
+      font-weight: 700;
       color: #374151;
       background: #f8fafc;
       border-bottom: 1px solid #d1d5db;
@@ -226,16 +226,28 @@
     }
 
     .paper-table tr.ours td {
-      background: var(--mspl-gold);
+      background: var(--main-gold);
+      font-weight: 700;
+    }
+
+    .delta-pos {
+      color: var(--main-green);
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
+    .delta-neg {
+      color: var(--main-red);
+      font-size: 0.72rem;
       font-weight: 700;
     }
 
     .metric-muted {
-      color: var(--mspl-gray);
+      color: var(--main-gray);
     }
 
     .table-note {
-      color: var(--mspl-muted);
+      color: var(--main-muted);
       font-size: 0.95rem;
       text-align: center;
       line-height: 1.5;
@@ -245,7 +257,7 @@
     pre {
       border-radius: 12px;
       background: #f8fafc !important;
-      border: 1px solid var(--mspl-border);
+      border: 1px solid var(--main-border);
       color: #111827;
       padding: 1.25rem;
       overflow-x: auto;
@@ -262,17 +274,7 @@
       background: #f9fafb;
       padding: 2rem 1.5rem;
       margin-top: 2rem;
-      color: var(--mspl-muted);
-    }
-
-    @media screen and (max-width: 1024px) {
-      .results-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .paper-table {
-        font-size: 0.84rem;
-      }
+      color: var(--main-muted);
     }
 
     @media screen and (max-width: 768px) {
@@ -284,6 +286,15 @@
       .section-copy,
       .figure-text {
         text-align: left;
+      }
+
+      .paper-table {
+        font-size: 0.78rem;
+      }
+
+      .lang-image {
+        width: 100%;
+        max-width: 100%;
       }
     }
   </style>
@@ -298,46 +309,42 @@
         <div class="column has-text-centered">
 
           <h1 class="title is-1 publication-title">
-            MSPL: Multi-Step Pseudo-Labeling for<br class="is-hidden-mobile">
-            Open-Vocabulary Object Detection
+            Open-Vocabulary BEV Segmentation with<br class="is-hidden-mobile">
+            3D-Aware Geometric Constraints
           </h1>
 
           <div class="is-size-5 publication-authors">
             <span class="author-block">
-              <a href="https://hchoi256.github.io/" target="_blank" rel="noopener noreferrer">Hojun Choi</a><sup>1</sup>,
+              <a href="https://hchoi256.github.io/" target="_blank" rel="noopener noreferrer">Hojun Choi</a><sup>1,*</sup>,
             </span>
+            <span class="author-block"><a href="https://openreview.net/profile?id=~Seulbin_Hwang1" target="_blank" rel="noopener noreferrer">Seulbin Hwang</a><sup>2</sup>,</span>
+            <span class="author-block"><a href="https://openreview.net/profile?id=~Dae_Jung_Kim1" target="_blank" rel="noopener noreferrer">Dae Jung Kim</a><sup>2</sup>,</span>
+            <span class="author-block"><a href="https://openreview.net/profile?id=~Kisung_Kim1" target="_blank" rel="noopener noreferrer">Kisung Kim</a><sup>2</sup>,</span>
             <span class="author-block">
-              <a href="https://sgt-lim.github.io/" target="_blank" rel="noopener noreferrer">Youngsun Lim</a><sup>2</sup>,
+              <a href="https://kaist-cvml.github.io/" target="_blank" rel="noopener noreferrer">Hyunjung Shim</a><sup>1,†</sup>,
             </span>
-            <span class="author-block">
-              <a href="https://scholar.google.com/citations?user=UbZM7nQAAAAJ&hl=en&oi=ao" target="_blank" rel="noopener noreferrer">Jaeyo Shin</a><sup>1</sup>,
-            </span>
-            <span class="author-block">
-              <a href="https://kaist-cvml.github.io/" target="_blank" rel="noopener noreferrer">Hyunjung Shim</a><sup>1</sup>
-            </span>
+            <span class="author-block"><a href="https://openreview.net/profile?id=~Jinhan_Lee1" target="_blank" rel="noopener noreferrer">Jinhan Lee</a><sup>2,†</sup></span>
           </div>
 
           <div class="is-size-5 publication-authors">
             <span class="author-block"><sup>1</sup>KAIST AI</span>
-            <span class="author-block"><sup>2</sup>Boston University</span>
+            <span class="author-block"><sup>2</sup><a href="https://www.naverlabs.com/" target="_blank" rel="noopener noreferrer">NAVER LABS</a></span>
           </div>
 
           <div class="publication-venue">
             <span class="venue-badge">ECCV 2026</span>
           </div>
 
+          <div class="author-notes">
+            <div><sup>*</sup>Work done during an internship at NAVER LABS.</div>
+            <div><sup>†</sup>Co-corresponding authors.</div>
+          </div>
+
           <div class="publication-links">
             <span class="link-block">
-              <a href="./static/pdfs/mspl.pdf" class="project-link" target="_blank" rel="noopener noreferrer">
+              <a href="./static/pdfs/ovbevseg.pdf" class="project-link" target="_blank" rel="noopener noreferrer">
                 <img src="/assets/img/paper.png" alt="">
                 <span>Paper</span>
-              </a>
-            </span>
-
-            <span class="link-block">
-              <a href="https://github.com/hchoi256/mspl" class="project-link" target="_blank" rel="noopener noreferrer">
-                <img src="/assets/img/github.png" alt="">
-                <span>Code</span>
               </a>
             </span>
 
@@ -357,19 +364,10 @@
 
 <section class="section">
   <div class="container is-max-desktop">
-    <img src="./static/images/teaser.png" class="paper-image" alt="MSPL teaser">
-    <p class="figure-text">
-      MSPL builds an offline-to-online pipeline for open-vocabulary object detection. Offline, it turns foundational segmentation outputs into reliable open-vocabulary pseudo-labels through three-step reasoning. Online, these labels, region descriptions, and foreground/background decisions supervise detector training so that the model can detect base classes, novel classes, and objects that are otherwise unlabeled in the original training set.
-    </p>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container is-max-desktop">
     <h2 class="title is-3 section-title">Abstract</h2>
     <div class="content">
       <p class="abstract">
-        Open-vocabulary object detection (OVD) aims to recognize and localize object categories beyond the training set. Recent approaches leverage vision-language models to generate pseudo-labels using image-text alignment, allowing detectors to generalize to unseen classes without explicit supervision. However, these methods depend heavily on single-step image-text matching, neglecting the intermediate reasoning steps crucial for interpreting semantically complex visual contexts, such as crowding or occlusion. In this paper, we introduce <strong>MSPL</strong>, a framework that incorporates multi-step visual reasoning into the pseudo-labeling process for OVD. It decomposes complex scene understanding into three interpretable steps—object localization, category recognition, and background grounding—where these intermediate reasoning states serve as rich supervision sources. Extensive experiments on standard OVD evaluation protocols demonstrate that MSPL achieves state-of-the-art performance with superior pseudo-labeling efficiency, outperforming the strong baseline by 9.4 AP<sub>50</sub> for novel classes on OV-COCO and improving box and mask AP<sub>r</sub> by 3.2 and 2.2, respectively, on OV-LVIS.
+        Bird’s-eye view (BEV) perception fuses multi-camera images into a unified top-down representation for autonomous driving. Despite recent progress, state-of-the-art methods remain confined to closed-set scenarios, making them vulnerable to unpredictable real-world environments. We introduce <strong>open-vocabulary BEV segmentation (OVBS)</strong>, which leverages vision-language models to recognize categories beyond the training set while maintaining precise BEV perception and real-time efficiency. To address the 3D geometric inconsistency caused by ill-posed 2D-to-BEV lifting, we propose <strong>OVBEVSeg</strong>, a geometry-aware framework that uses 3D constraints across pseudo-BEV labeling, BEV-aware 3D Gaussian splatting, and BEV-aware Gaussian distillation. On nuScenes, OVBEVSeg achieves state-of-the-art OVBS performance, improving novel-class recognition while retaining competitive memory usage and real-time speed.
       </p>
     </div>
   </div>
@@ -379,9 +377,10 @@
   <div class="container is-max-desktop">
     <h2 class="title is-3 section-title">Intro</h2>
 
-    <img src="./static/images/limit.png" class="paper-image" alt="Limitations of single-step pseudo-labeling">
+    <img src="./static/images/limit.png" class="paper-image" alt="Limitations of 2D-OV-then-BEV pseudo-labeling">
+
     <p class="figure-text">
-      Existing pseudo-labeling methods often reduce novel-class discovery to a single image-text matching step. This can assign labels from surrounding context rather than region-specific evidence, miss objects that are absent from captions, and absorb unlabeled or occluded objects into the background. MSPL addresses these failure modes by explicitly separating localization, recognition, and background grounding instead of compressing the whole scene into one matching step.
+      Existing BEV perception pipelines typically assume a closed set of semantic categories, while real driving scenes contain unseen objects such as trucks, strollers, and wheelchairs. A direct open-vocabulary extension—detecting objects in 2D and then lifting them into BEV—remains brittle because sparse-view 2D-to-3D unprojection amplifies localization and semantic errors. OVBEVSeg instead reverses the direction of reasoning: reliable 3D structure is projected into 2D and BEV to create geometrically consistent open-vocabulary supervision.
     </p>
   </div>
 </section>
@@ -390,14 +389,16 @@
   <div class="container is-max-desktop">
     <h2 class="title is-3 section-title">Method</h2>
 
-    <img src="./static/images/offline.png" class="paper-image" alt="Offline MSPL pseudo-label generation">
+    <img src="./static/images/main.png" class="paper-image" alt="OVBEVSeg framework">
+
     <p class="figure-text">
-      In the offline stage, MSPL first obtains object-level region proposals and modulates visual context so the target region remains clear while distracting non-target areas are attenuated. A multimodal LLM then reasons over each candidate in three steps: verifying whether an object exists, assigning an open-vocabulary category with a region-level description, and deciding whether the predicted concept is foreground or background. The retained pseudo-labels become semantic anchors for training.
+      OVBEVSeg consists of three progressive modules. First, <strong>Pseudo-BEV Labeling (PBL)</strong> establishes 2D–BEV correspondences by projecting unsupervised 3D object boxes into image and BEV spaces, then assigns open-vocabulary labels using object-centric CLIP embeddings. Second, <strong>BEV-Aware 3D Gaussian Splatting (BAGS)</strong> optimizes 3D Gaussians with image, depth, and BEV occupancy constraints so that the recovered geometry remains consistent in both camera and top-down views. Third, <strong>BEV-Aware Gaussian Distillation (BAGD)</strong> transfers this high-fidelity geometry into a feed-forward student model for efficient online inference.
     </p>
 
-    <img src="./static/images/online.png" class="paper-image" alt="Online MSPL training framework">
+    <img src="./static/images/lang.png" class="paper-image lang-image" alt="Language-aware OVBEVSeg extension">
+
     <p class="figure-text">
-      In the online stage, MSPL uses the offline annotations only as training supervision. Pseudo-labels expand the open-vocabulary base set, region-level descriptions provide fine-grained language supervision through Region-Text Alignment, and background concepts serve as negatives for Contrastive Background Learning. This design improves feature disentanglement while avoiding inference-time dependency on pseudo-labels.
+      The framework also supports language-aware 3D scene understanding. By linking image masks, CLIP image embeddings, and BEV masks through the 2D–BEV correspondence set, OVBEVSeg can propagate open-vocabulary semantics into BEV space. For language-embedded BAGS, a disentanglement distillation objective preserves category-level distinctions among semantically similar vehicle subclasses, enabling consistent language grounding across image, BEV, and 3D Gaussian representations.
     </p>
   </div>
 </section>
@@ -405,99 +406,212 @@
 <section class="section">
   <div class="container is-max-desktop">
     <h2 class="title is-3 section-title">Results</h2>
+
     <div class="content">
       <p class="section-copy">
-        MSPL achieves strong performance on standard open-vocabulary detection benchmarks. On OV-COCO, it improves novel-class detection with both RN50 and RN50×4 backbones under pseudo-annotation supervision. The highlighted rows show that MSPL reaches 43.4 AP<sup>N</sup><sub>50</sub> with RN50 and 47.8 AP<sup>N</sup><sub>50</sub> with RN50×4, while preserving competitive base-class performance.
+        OVBEVSeg is evaluated on the nuScenes validation set under the multi-class OVBS setting. Without using novel-class ground-truth labels, it substantially improves novel-class IoU over prior BEV segmentation models, while preserving real-time efficiency. Compared with the GaussianLSS baseline, OVBEVSeg improves the mean IoU by +6.6 points; compared with the previous SOTA model TaDe, it improves the mean IoU by +5.7 points.
       </p>
     </div>
 
     <div class="results-wrap">
-      <div class="results-grid">
-        <div class="table-card">
-          <div class="table-title">Instance labels in C<sub>B</sub> only</div>
-          <table class="paper-table">
-            <thead>
-              <tr>
-                <th>Methods</th>
-                <th>Backbone</th>
-                <th>AP<sup>N</sup><sub>50</sub></th>
-                <th class="metric-muted">AP<sup>B</sup><sub>50</sub></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="group-row">
-                <td colspan="4">Instance labels in C<sub>B</sub> (CLIP Supervision)</td>
-              </tr>
-              <tr><td>ViLD-ens</td><td>RN50 (24M)</td><td>27.6</td><td class="metric-muted">51.3</td></tr>
-              <tr><td>BARON</td><td>RN50 (24M)</td><td>34.0</td><td class="metric-muted">60.4</td></tr>
-              <tr><td>CORA</td><td>RN50 (24M)</td><td>35.1</td><td class="metric-muted">35.4</td></tr>
-              <tr><td>BIND</td><td>ViT-B/16 (86M)</td><td>36.3</td><td class="metric-muted">50.2</td></tr>
-              <tr><td>CLIP-Self</td><td>ViT-B/16 (86M)</td><td>37.6</td><td class="metric-muted">-</td></tr>
-              <tr><td>LBP</td><td>RN50 (24M)</td><td>37.8</td><td class="metric-muted">58.7</td></tr>
-              <tr><td>CCKT-Det</td><td>RN50 (24M)</td><td>38.0</td><td class="metric-muted">35.0</td></tr>
-              <tr><td>CAKE</td><td>RN50 (24M)</td><td>38.2</td><td class="metric-muted">-</td></tr>
-              <tr><td>OV-DQUO</td><td>RN50 (24M)</td><td>39.2</td><td class="metric-muted">-</td></tr>
-              <tr><td>DeCo-DETR</td><td>RN50 (24M)</td><td>41.3</td><td class="metric-muted">-</td></tr>
-              <tr class="separator"><td>BIND</td><td>ViT-L/16 (307M)</td><td>41.5</td><td class="metric-muted">54.8</td></tr>
-              <tr><td>CCKT-Det</td><td>SwinB (88M)</td><td>41.9</td><td class="metric-muted">40.9</td></tr>
-              <tr><td>CORA+</td><td>RN50×4 (87M)</td><td>43.4</td><td class="metric-muted">43.8</td></tr>
-              <tr><td>CLIP-Self</td><td>ViT-L/14 (307M)</td><td>44.3</td><td class="metric-muted">-</td></tr>
-              <tr><td>OV-DQUO</td><td>RN50×4 (87M)</td><td>45.6</td><td class="metric-muted">-</td></tr>
-            </tbody>
-          </table>
-        </div>
+      <div class="table-card">
+        <div class="table-title">Comparison of OVBS in the multi-class setting on nuScenes validation</div>
+        <table class="paper-table">
+          <thead>
+            <tr>
+              <th rowspan="2">Method</th>
+              <th rowspan="2">Memory<br>(MiB) ↓</th>
+              <th rowspan="2">FPS ↑</th>
+              <th colspan="3">Novel (IoU) ↑</th>
+              <th colspan="5">Base (IoU) ↑</th>
+              <th rowspan="2">Mean<br>IoU ↑</th>
+            </tr>
+            <tr>
+              <th>truck</th>
+              <th>bus</th>
+              <th>motorcycle</th>
+              <th>car</th>
+              <th>trailer</th>
+              <th>construction<br>vehicle</th>
+              <th>pedestrian</th>
+              <th>bicycle</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><i>Fully Supervised</i><sup>†</sup></td>
+              <td>33.0</td>
+              <td>80.2</td>
+              <td>29.7</td>
+              <td>38.4</td>
+              <td>10.4</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+            </tr>
 
-        <div class="table-card">
-          <div class="table-title">Extra caption datasets, weak labels, or pseudo labels</div>
-          <table class="paper-table">
-            <thead>
-              <tr>
-                <th>Methods</th>
-                <th>Supervision</th>
-                <th>Backbone</th>
-                <th>AP<sup>N</sup><sub>50</sub></th>
-                <th class="metric-muted">AP<sup>B</sup><sub>50</sub></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="group-row">
-                <td colspan="5">Extra caption datasets, Weak/Pseudo Labels in C<sub>B</sub> ∪ C<sub>N</sub></td>
-              </tr>
-              <tr><td>Detic</td><td>IN21K &amp; CC3M</td><td>RN50 (24M)</td><td>27.8</td><td class="metric-muted">42.0</td></tr>
-              <tr><td>OV-DETR</td><td>Pseudo annotations</td><td>RN50 (24M)</td><td>29.4</td><td class="metric-muted">52.7</td></tr>
-              <tr><td>CoDet</td><td>CC3M &amp; COCO Caption</td><td>RN50 (24M)</td><td>30.6</td><td class="metric-muted">46.4</td></tr>
-              <tr><td>PB-OVD</td><td>COCO Caption</td><td>RN50 (24M)</td><td>30.8</td><td class="metric-muted">46.4</td></tr>
-              <tr><td>VL-PLM</td><td>Pseudo annotations</td><td>RN50 (24M)</td><td>34.4</td><td class="metric-muted">60.2</td></tr>
-              <tr><td>RegionCLIP</td><td>CC3M</td><td>RN50 (24M)</td><td>35.2</td><td class="metric-muted">57.6</td></tr>
-              <tr><td>OC-OVD</td><td>COCO Caption</td><td>RN50 (24M)</td><td>36.6</td><td class="metric-muted">49.4</td></tr>
-              <tr><td>SAS-Det</td><td>COCO Caption</td><td>RN50 (24M)</td><td>37.4</td><td class="metric-muted">58.5</td></tr>
-              <tr><td>DITO</td><td>LAION-2B</td><td>ViT-B/16 (86M)</td><td>36.6</td><td class="metric-muted">48.8</td></tr>
-              <tr><td>LP-OVOD</td><td>Pseudo annotations</td><td>RN50 (24M)</td><td>40.5</td><td class="metric-muted">60.5</td></tr>
-              <tr class="ours"><td>MSPL (Ours)</td><td>Pseudo annotations</td><td>RN50 (24M)</td><td>43.4</td><td>58.9</td></tr>
-              <tr class="separator"><td>CFM-ViT</td><td>LAION-2B</td><td>ViT-L/16 (307M)</td><td>34.3</td><td class="metric-muted">46.4</td></tr>
-              <tr><td>RegionCLIP</td><td>CC3M</td><td>RN50×4 (87M)</td><td>39.3</td><td class="metric-muted">61.6</td></tr>
-              <tr><td>DITO</td><td>DataComp-1B</td><td>ViT-L/16 (307M)</td><td>40.2</td><td class="metric-muted">54.6</td></tr>
-              <tr><td>CORA+</td><td>COCO Caption</td><td>RN50×4 (87M)</td><td>43.1</td><td class="metric-muted">56.2</td></tr>
-              <tr class="ours"><td>MSPL (Ours)</td><td>Pseudo annotations</td><td>RN50×4 (87M)</td><td>47.8</td><td>60.9</td></tr>
-            </tbody>
-          </table>
-        </div>
+            <tr class="separator group-row">
+              <td colspan="12"><i>OVBS</i></td>
+            </tr>
+
+            <tr>
+              <td>VED<sup>†</sup></td>
+              <td>-</td>
+              <td>-</td>
+              <td>0.0</td>
+              <td>0.0</td>
+              <td>0.0</td>
+              <td>7.4</td>
+              <td>0.0</td>
+              <td>0.0</td>
+              <td>0.0</td>
+              <td>0.0</td>
+              <td>0.9</td>
+            </tr>
+            <tr>
+              <td>VPN<sup>†</sup></td>
+              <td>-</td>
+              <td>-</td>
+              <td>0.0</td>
+              <td>0.0</td>
+              <td>0.0</td>
+              <td>16.6</td>
+              <td>4.9</td>
+              <td>7.1</td>
+              <td>0.0</td>
+              <td>4.4</td>
+              <td>4.1</td>
+            </tr>
+            <tr>
+              <td>PON<sup>†</sup></td>
+              <td>38.6</td>
+              <td>43.8</td>
+              <td>0.0</td>
+              <td>0.0</td>
+              <td>0.0</td>
+              <td>24.7</td>
+              <td>16.6</td>
+              <td><u>12.3</u></td>
+              <td>8.2</td>
+              <td>9.4</td>
+              <td>8.9</td>
+            </tr>
+            <tr>
+              <td>DiffBEV<sup>†</sup></td>
+              <td>-</td>
+              <td>-</td>
+              <td>0.0</td>
+              <td>0.0</td>
+              <td>0.0</td>
+              <td>38.9</td>
+              <td>21.1</td>
+              <td>8.4</td>
+              <td>9.6</td>
+              <td><u>13.2</u></td>
+              <td>11.4</td>
+            </tr>
+            <tr>
+              <td>GaussianLSS<sup>†</sup></td>
+              <td>33.0</td>
+              <td>80.2</td>
+              <td>0.0</td>
+              <td>0.0</td>
+              <td>0.0</td>
+              <td>40.0</td>
+              <td>25.1</td>
+              <td>11.6</td>
+              <td><u>14.4</u></td>
+              <td>10.4</td>
+              <td>12.7</td>
+            </tr>
+            <tr>
+              <td>TaDe<sup>†</sup></td>
+              <td>41.5</td>
+              <td>51.4</td>
+              <td>0.0</td>
+              <td>0.0</td>
+              <td>0.0</td>
+              <td><strong>42.8</strong></td>
+              <td><u>26.3</u></td>
+              <td>11.4</td>
+              <td>14.0</td>
+              <td><strong>14.2</strong></td>
+              <td><u>13.6</u></td>
+            </tr>
+            <tr class="ours">
+              <td>OVBEVSeg (Ours)<sup>†</sup></td>
+              <td>32.4</td>
+              <td>79.6</td>
+              <td>19.0</td>
+              <td>20.3</td>
+              <td>6.6</td>
+              <td><u>41.8</u></td>
+              <td>26.9</td>
+              <td>13.1</td>
+              <td>15.0</td>
+              <td>12.0</td>
+              <td>19.3</td>
+            </tr>
+            <tr>
+              <td>Δ<sub>B</sub></td>
+              <td></td>
+              <td></td>
+              <td class="delta-pos">(+19.0)</td>
+              <td class="delta-pos">(+20.3)</td>
+              <td class="delta-pos">(+6.6)</td>
+              <td class="delta-pos">(+1.8)</td>
+              <td class="delta-pos">(+1.8)</td>
+              <td class="delta-pos">(+1.5)</td>
+              <td class="delta-pos">(+0.6)</td>
+              <td class="delta-pos">(+1.6)</td>
+              <td class="delta-pos">(+6.6)</td>
+            </tr>
+            <tr>
+              <td>Δ<sub>S</sub></td>
+              <td></td>
+              <td></td>
+              <td class="delta-pos">(+19.0)</td>
+              <td class="delta-pos">(+20.3)</td>
+              <td class="delta-pos">(+6.6)</td>
+              <td class="delta-neg">(-1.0)</td>
+              <td class="delta-pos">(+0.6)</td>
+              <td class="delta-pos">(+1.7)</td>
+              <td class="delta-pos">(+1.0)</td>
+              <td class="delta-neg">(-2.2)</td>
+              <td class="delta-pos">(+5.7)</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
       <p class="table-note">
-        Main results on OV-COCO. Rows highlighted in yellow denote MSPL.
+        † denotes visibility filtering. Δ<sub>B</sub> and Δ<sub>S</sub> denote relative improvements over GaussianLSS and TaDe, respectively.
       </p>
     </div>
 
+    <img src="./static/images/qual.png" class="paper-image" alt="OVBEVSeg qualitative results">
+
+    <p class="figure-text">
+      Qualitative results show that OVBEVSeg detects novel-class objects that are missed by closed-set baselines and produces sharper BEV boundaries. By enforcing 3D geometric consistency, BAGS reduces distorted or scattered BEV renderings from vanilla 3DGS and provides cleaner supervision for the online model.
+    </p>
+
+    <img src="./static/images/langbags.png" class="paper-image" alt="Language-embedded BAGS results">
+
+    <p class="figure-text">
+      Language-embedded BAGS extends OVBEVSeg beyond standard BEV segmentation toward open-world 3D scene understanding. It embeds language-aware features into 3D Gaussians and preserves consistent projections across image and BEV views, supporting scalable multimodal auto-labeling in autonomous driving scenes.
+    </p>
   </div>
 </section>
 
 <section class="section" id="bibtex">
   <div class="container is-max-desktop">
     <h2 class="title is-3 section-title">BibTeX</h2>
-    <pre><code>@inproceedings{choi2026mspl,
-  title     = {MSPL: Multi-Step Pseudo-Labeling for Open-Vocabulary Object Detection},
-  author    = {Choi, Hojun and Lim, Youngsun and Shin, Jaeyo and Shim, Hyunjung},
+    <pre><code>@inproceedings{choi2026ovbevseg,
+  title     = {Open-Vocabulary BEV Segmentation with 3D-Aware Geometric Constraints},
+  author    = {Choi, Hojun and Hwang, Seulbin and Kim, Dae Jung and Kim, Kisung and Shim, Hyunjung and Lee, Jinhan},
   booktitle = {European Conference on Computer Vision},
   year      = {2026}
 }</code></pre>
