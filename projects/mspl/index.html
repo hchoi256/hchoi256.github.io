@@ -1,311 +1,107 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="utf-8">
+  <meta name="description" content="MSPL: Multi-Step Pseudo-Labeling for Open-Vocabulary Object Detection">
+  <meta name="keywords" content="MSPL, Open-Vocabulary Object Detection, Pseudo-Labeling, MLLM, SAM, Region-Text Alignment, Contrastive Background Learning">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  
-  <!-- Primary Meta Tags -->
-  <!-- TODO: Replace with your paper title and author names -->
-  <meta name="title" content="PAPER_TITLE - AUTHOR_NAMES">
-  <!-- TODO: Write a compelling 150-160 character description of your research -->
-  <meta name="description" content="BRIEF_DESCRIPTION_OF_YOUR_RESEARCH_CONTRIBUTION_AND_FINDINGS">
-  <!-- TODO: Add 5-10 relevant keywords for your research area -->
-  <meta name="keywords" content="KEYWORD1, KEYWORD2, KEYWORD3, machine learning, computer vision, AI">
-  <!-- TODO: List all authors -->
-  <meta name="author" content="FIRST_AUTHOR_NAME, SECOND_AUTHOR_NAME">
-  <meta name="robots" content="index, follow">
-  <meta name="language" content="English">
-  
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="article">
-  <!-- TODO: Replace with your institution or lab name -->
-  <meta property="og:site_name" content="INSTITUTION_OR_LAB_NAME">
-  <!-- TODO: Same as paper title above -->
-  <meta property="og:title" content="PAPER_TITLE">
-  <!-- TODO: Same as description above -->
-  <meta property="og:description" content="BRIEF_DESCRIPTION_OF_YOUR_RESEARCH_CONTRIBUTION_AND_FINDINGS">
-  <!-- TODO: Replace with your actual website URL -->
-  <meta property="og:url" content="https://YOUR_DOMAIN.com/YOUR_PROJECT_PAGE">
-  <!-- TODO: Create a 1200x630px preview image and update path -->
-  <meta property="og:image" content="https://YOUR_DOMAIN.com/static/images/social_preview.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="PAPER_TITLE - Research Preview">
-  <meta property="article:published_time" content="2024-01-01T00:00:00.000Z">
-  <meta property="article:author" content="FIRST_AUTHOR_NAME">
-  <meta property="article:section" content="Research">
-  <meta property="article:tag" content="KEYWORD1">
-  <meta property="article:tag" content="KEYWORD2">
+  <title>MSPL: Multi-Step Pseudo-Labeling for Open-Vocabulary Object Detection</title>
 
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <!-- TODO: Replace with your lab/institution Twitter handle -->
-  <meta name="twitter:site" content="@YOUR_TWITTER_HANDLE">
-  <!-- TODO: Replace with first author's Twitter handle -->
-  <meta name="twitter:creator" content="@AUTHOR_TWITTER_HANDLE">
-  <!-- TODO: Same as paper title above -->
-  <meta name="twitter:title" content="PAPER_TITLE">
-  <!-- TODO: Same as description above -->
-  <meta name="twitter:description" content="BRIEF_DESCRIPTION_OF_YOUR_RESEARCH_CONTRIBUTION_AND_FINDINGS">
-  <!-- TODO: Same as social preview image above -->
-  <meta name="twitter:image" content="https://YOUR_DOMAIN.com/static/images/social_preview.png">
-  <meta name="twitter:image:alt" content="PAPER_TITLE - Research Preview">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
 
-  <!-- Academic/Research Specific -->
-  <meta name="citation_title" content="PAPER_TITLE">
-  <meta name="citation_author" content="FIRST_AUTHOR_LAST, FIRST_AUTHOR_FIRST">
-  <meta name="citation_author" content="SECOND_AUTHOR_LAST, SECOND_AUTHOR_FIRST">
-  <meta name="citation_publication_date" content="2024">
-  <meta name="citation_conference_title" content="CONFERENCE_NAME">
-  <meta name="citation_pdf_url" content="https://YOUR_DOMAIN.com/static/pdfs/paper.pdf">
-  
-  <!-- Additional SEO -->
-  <meta name="theme-color" content="#2563eb">
-  <meta name="msapplication-TileColor" content="#2563eb">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  
-  <!-- Preconnect for performance -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://ajax.googleapis.com">
-  <link rel="preconnect" href="https://documentcloud.adobe.com">
-  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <style>
+    :root {
+      --mspl-dark: #1f2937;
+      --mspl-blue: #2563eb;
+      --mspl-soft-blue: #eff6ff;
+      --mspl-border: #e5e7eb;
+      --mspl-text: #374151;
+      --mspl-muted: #6b7280;
+    }
+    body { font-family: 'Noto Sans', sans-serif; color: var(--mspl-text); background: #fff; }
+    .publication-title { font-family: 'Google Sans', sans-serif; line-height: 1.12; color: var(--mspl-dark); font-weight: 700; }
+    .publication-authors { font-family: 'Google Sans', sans-serif; margin-top: 1rem; }
+    .publication-authors a { color: var(--mspl-blue) !important; text-decoration: none; }
+    .publication-authors a:hover { text-decoration: underline; }
+    .author-block { display: inline-block; margin: 0 0.2rem; }
+    .publication-venue { margin-top: 0.7rem; color: var(--mspl-muted); font-weight: 600; }
+    .publication-links { margin-top: 1.25rem; }
+    .link-block { display: inline-block; margin: 0.25rem; }
+    .hero-body { padding-top: 3rem; padding-bottom: 1.5rem; }
+    .section { padding-top: 2rem; padding-bottom: 2rem; }
+    .content h2, .content h3 { font-family: 'Google Sans', sans-serif; color: var(--mspl-dark); font-weight: 700; }
+    .teaser { margin-top: 1rem; border-radius: 14px; box-shadow: 0 10px 28px rgba(15, 23, 42, 0.12); }
+    .caption { color: var(--mspl-muted); font-size: 0.95rem; text-align: center; margin-top: 0.75rem; line-height: 1.5; }
+    .highlight-box, .pipeline-card, .metric-card { border: 1px solid var(--mspl-border); border-radius: 16px; background: #fff; height: 100%; }
+    .highlight-box { padding: 1.25rem; background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%); }
+    .highlight-box .icon { color: var(--mspl-blue); margin-bottom: 0.5rem; }
+    .pipeline-card { padding: 1.25rem; }
+    .pipeline-tag { display: inline-block; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.02em; color: var(--mspl-blue); background: var(--mspl-soft-blue); border-radius: 999px; padding: 0.25rem 0.7rem; margin-bottom: 0.7rem; }
+    .metric-card { padding: 1.15rem 1rem; text-align: center; }
+    .metric-number { font-family: 'Google Sans', sans-serif; font-size: 2rem; font-weight: 700; color: var(--mspl-blue); line-height: 1.1; }
+    .metric-label { color: var(--mspl-muted); font-size: 0.92rem; margin-top: 0.35rem; }
+    .paper-image { border-radius: 12px; border: 1px solid var(--mspl-border); box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08); margin-top: 1rem; margin-bottom: 0.5rem; }
+    .abstract { font-size: 1.04rem; line-height: 1.75; text-align: justify; }
+    .tag-list { margin-top: 1rem; }
+    .tag-list .tag { margin: 0.15rem; }
+    pre { border-radius: 12px; background: #f8fafc !important; border: 1px solid var(--mspl-border); color: #111827; padding: 1.25rem; overflow-x: auto; white-space: pre; }
+    code { color: inherit; background: transparent; font-size: 0.92rem; }
+    .footer { background: #f9fafb; padding: 2rem 1.5rem; margin-top: 2rem; color: var(--mspl-muted); }
+    .todo-note { border-left: 4px solid var(--mspl-blue); background: var(--mspl-soft-blue); padding: 0.9rem 1rem; border-radius: 10px; margin-top: 1rem; color: #1e3a8a; font-size: 0.95rem; }
 
-
-  <!-- TODO: Replace with your paper title and authors -->
-  <title>PAPER_TITLE - AUTHOR_NAMES | Academic Research</title>
-  
-  <!-- Favicon and App Icons -->
-  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
-  <link rel="apple-touch-icon" href="static/images/favicon.ico">
-  
-  <!-- Critical CSS - Load synchronously -->
-  <link rel="stylesheet" href="static/css/bulma.min.css">
-  <link rel="stylesheet" href="static/css/index.css">
-  
-  <!-- Non-critical CSS - Load asynchronously -->
-  <link rel="preload" href="static/css/bulma-carousel.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="static/css/bulma-slider.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="static/css/fontawesome.all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  
-  <!-- Fallback for browsers that don't support preload -->
-  <noscript>
-    <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
-    <link rel="stylesheet" href="static/css/bulma-slider.min.css">
-    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  </noscript>
-  
-  <!-- Fonts - Optimized loading -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  
-  <!-- Defer non-critical JavaScript -->
-  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script defer src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
-  <script defer src="static/js/fontawesome.all.min.js"></script>
-  <script defer src="static/js/bulma-carousel.min.js"></script>
-  <script defer src="static/js/bulma-slider.min.js"></script>
-  <script defer src="static/js/index.js"></script>
-  
-  <!-- Structured Data for Academic Papers -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "ScholarlyArticle",
-    "headline": "PAPER_TITLE",
-    "description": "BRIEF_DESCRIPTION_OF_YOUR_RESEARCH_CONTRIBUTION_AND_FINDINGS",
-    "author": [
-      {
-        "@type": "Person",
-        "name": "FIRST_AUTHOR_NAME",
-        "affiliation": {
-          "@type": "Organization",
-          "name": "INSTITUTION_NAME"
-        }
-      },
-      {
-        "@type": "Person",
-        "name": "SECOND_AUTHOR_NAME",
-        "affiliation": {
-          "@type": "Organization",
-          "name": "INSTITUTION_NAME"
-        }
-      }
-    ],
-    "datePublished": "2024-01-01",
-    "publisher": {
-      "@type": "Organization",
-      "name": "CONFERENCE_OR_JOURNAL_NAME"
-    },
-    "url": "https://YOUR_DOMAIN.com/YOUR_PROJECT_PAGE",
-    "image": "https://YOUR_DOMAIN.com/static/images/social_preview.png",
-    "keywords": ["KEYWORD1", "KEYWORD2", "KEYWORD3", "machine learning", "computer vision"],
-    "abstract": "FULL_ABSTRACT_TEXT_HERE",
-    "citation": "BIBTEX_CITATION_HERE",
-    "isAccessibleForFree": true,
-    "license": "https://creativecommons.org/licenses/by/4.0/",
-    "mainEntity": {
-      "@type": "WebPage",
-      "@id": "https://YOUR_DOMAIN.com/YOUR_PROJECT_PAGE"
-    },
-    "about": [
-      {
-        "@type": "Thing",
-        "name": "RESEARCH_AREA_1"
-      },
-      {
-        "@type": "Thing", 
-        "name": "RESEARCH_AREA_2"
-      }
-    ]
-  }
-  </script>
-  
-  <!-- Website/Organization Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "INSTITUTION_OR_LAB_NAME",
-    "url": "https://YOUR_INSTITUTION_WEBSITE.com",
-    "logo": "https://YOUR_DOMAIN.com/static/images/favicon.ico",
-    "sameAs": [
-      "https://twitter.com/YOUR_TWITTER_HANDLE",
-      "https://github.com/YOUR_GITHUB_USERNAME"
-    ]
-  }
-  </script>
+    .results-wrap { margin-top: 1.5rem; }
+    .results-grid { display: grid; grid-template-columns: 0.41fr 0.59fr; gap: 1rem; align-items: start; }
+    .table-card { border: 1px solid var(--mspl-border); border-radius: 16px; background: #fff; padding: 0.75rem; box-shadow: 0 8px 22px rgba(15,23,42,0.06); overflow-x: auto; }
+    .table-title { font-family: 'Google Sans', sans-serif; font-weight: 700; color: var(--mspl-dark); margin-bottom: 0.4rem; font-size: 1rem; }
+    .paper-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; line-height: 1.25; white-space: nowrap; }
+    .paper-table th, .paper-table td { padding: 0.28rem 0.38rem; border-bottom: 1px solid #eef2f7; vertical-align: middle; text-align: center; }
+    .paper-table th:first-child, .paper-table td:first-child { text-align: left; }
+    .paper-table thead th { color: #111827; border-top: 2px solid #111827; border-bottom: 1.5px solid #111827; font-weight: 700; }
+    .paper-table tr.group-row td { text-align: center !important; font-weight: 600; color: #374151; background: #f8fafc; border-bottom: 1px solid #d1d5db; }
+    .paper-table tr.separator td { border-top: 1px dashed #9ca3af; }
+    .paper-table tr.ours td { background: #fff4cc; font-weight: 700; }
+    .metric-muted { color: #9ca3af; }
+    .pdf-figure { width: 100%; height: 430px; border: 1px solid var(--mspl-border); border-radius: 14px; box-shadow: 0 8px 22px rgba(15,23,42,0.08); background: #fff; margin-top: 1rem; }
+    @media screen and (max-width: 1024px) { .results-grid { grid-template-columns: 1fr; } .paper-table { font-size: 0.84rem; } }
+    @media screen and (max-width: 768px) { .publication-title { font-size: 1.85rem !important; } .abstract { text-align: left; } .metric-number { font-size: 1.65rem; } }
+  </style>
 </head>
+
 <body>
-
-
-  <!-- Scroll to Top Button -->
-  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top">
-    <i class="fas fa-chevron-up"></i>
-  </button>
-
-  <!-- More Works Dropdown -->
-  <div class="more-works-container">
-    <button class="more-works-btn" onclick="toggleMoreWorks()" title="View More Works from Our Lab">
-      <i class="fas fa-flask"></i>
-      More Works
-      <i class="fas fa-chevron-down dropdown-arrow"></i>
-    </button>
-    <div class="more-works-dropdown" id="moreWorksDropdown">
-      <div class="dropdown-header">
-        <h4>More Works from Our Lab</h4>
-        <button class="close-btn" onclick="toggleMoreWorks()">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-      <div class="works-list">
-        <!-- TODO: Replace with your lab's related works -->
-        <a href="https://arxiv.org/abs/PAPER_ID_1" class="work-item" target="_blank">
-          <div class="work-info">
-            <!-- TODO: Replace with actual paper title -->
-            <h5>Paper Title 1</h5>
-            <!-- TODO: Replace with brief description -->
-            <p>Brief description of the work and its main contribution.</p>
-            <!-- TODO: Replace with venue and year -->
-            <span class="work-venue">Conference/Journal 2024</span>
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">
+            MSPL: Multi-Step Pseudo-Labeling for<br class="is-hidden-mobile">
+            Open-Vocabulary Object Detection
+          </h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><a href="https://hchoi256.github.io/" target="_blank" rel="noopener noreferrer">Hojun Choi</a><sup>1</sup>,</span>
+            <span class="author-block">Youngsun Lim<sup>2</sup>,</span>
+            <span class="author-block">Jaeyo Shin<sup>1</sup>,</span>
+            <span class="author-block">Hyunjung Shim<sup>1</sup></span>
           </div>
-          <i class="fas fa-external-link-alt"></i>
-        </a>
-        <!-- TODO: Add more related works or remove extra items -->
-        <a href="https://arxiv.org/abs/PAPER_ID_2" class="work-item" target="_blank">
-          <div class="work-info">
-            <h5>Paper Title 2</h5>
-            <p>Brief description of the work and its main contribution.</p>
-            <span class="work-venue">Conference/Journal 2023</span>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>KAIST AI</span>
+            <span class="author-block"><sup>2</sup>Boston University</span>
           </div>
-          <i class="fas fa-external-link-alt"></i>
-        </a>
-        <a href="https://arxiv.org/abs/PAPER_ID_3" class="work-item" target="_blank">
-          <div class="work-info">
-            <h5>Paper Title 3</h5>
-            <p>Brief description of the work and its main contribution.</p>
-            <span class="work-venue">Conference/Journal 2023</span>
+          <div class="publication-venue">arXiv preprint, 2026</div>
+          <div class="publication-links">
+            <span class="link-block"><a href="./static/pdfs/mspl.pdf" class="external-link button is-normal is-rounded is-dark" target="_blank" rel="noopener noreferrer"><span class="icon"><i class="fas fa-file-pdf"></i></span><span>Paper</span></a></span>
+            <!-- TODO: replace # with the new arXiv URL after the resubmission is live. -->
+            <span class="link-block"><a href="#" class="external-link button is-normal is-rounded is-dark" target="_blank" rel="noopener noreferrer"><span class="icon"><i class="fas fa-file-alt"></i></span><span>arXiv</span></a></span>
+            <span class="link-block"><a href="https://github.com/hchoi256/mspl" class="external-link button is-normal is-rounded is-dark" target="_blank" rel="noopener noreferrer"><span class="icon"><i class="fab fa-github"></i></span><span>Code</span></a></span>
+            <span class="link-block"><a href="#bibtex" class="external-link button is-normal is-rounded is-dark"><span class="icon"><i class="fas fa-quote-right"></i></span><span>BibTeX</span></a></span>
           </div>
-          <i class="fas fa-external-link-alt"></i>
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <main id="main-content">
-  <section class="hero">
-    <div class="hero-body">
-      <div class="container is-max-desktop">
-        <div class="columns is-centered">
-          <div class="column has-text-centered">
-            <!-- TODO: Replace with your paper title -->
-            <h1 class="title is-1 publication-title">Academic Project Page</h1>
-            <div class="is-size-5 publication-authors">
-              <!-- TODO: Replace with your paper authors and their personal links -->
-              <span class="author-block">
-                <a href="FIRST AUTHOR PERSONAL LINK" target="_blank">First Author</a><sup>*</sup>,</span>
-                <span class="author-block">
-                  <a href="SECOND AUTHOR PERSONAL LINK" target="_blank">Second Author</a><sup>*</sup>,</span>
-                  <span class="author-block">
-                    <a href="THIRD AUTHOR PERSONAL LINK" target="_blank">Third Author</a>
-                  </span>
-                  </div>
-
-                  <div class="is-size-5 publication-authors">
-                    <!-- TODO: Replace with your institution and conference/journal info -->
-                    <span class="author-block">Institution Name<br>Conference name and year</span>
-                    <!-- TODO: Remove this line if no equal contribution -->
-                    <span class="eql-cntrb"><small><br><sup>*</sup>Indicates Equal Contribution</small></span>
-                  </div>
-
-                  <div class="column has-text-centered">
-                    <div class="publication-links">
-                         <!-- TODO: Update with your arXiv paper ID -->
-                      <span class="link-block">
-                        <a href="https://arxiv.org/pdf/<ARXIV PAPER ID>.pdf" target="_blank"
-                        class="external-link button is-normal is-rounded is-dark">
-                        <span class="icon">
-                          <i class="fas fa-file-pdf"></i>
-                        </span>
-                        <span>Paper</span>
-                      </a>
-                    </span>
-
-                    <!-- TODO: Add your supplementary material PDF or remove this section -->
-                    <span class="link-block">
-                      <a href="static/pdfs/supplementary_material.pdf" target="_blank"
-                      class="external-link button is-normal is-rounded is-dark">
-                      <span class="icon">
-                        <i class="fas fa-file-pdf"></i>
-                      </span>
-                      <span>Supplementary</span>
-                    </a>
-                  </span>
-
-                  <!-- TODO: Replace with your GitHub repository URL -->
-                  <span class="link-block">
-                    <a href="https://github.com/YOUR REPO HERE" target="_blank"
-                    class="external-link button is-normal is-rounded is-dark">
-                    <span class="icon">
-                      <i class="fab fa-github"></i>
-                    </span>
-                    <span>Code</span>
-                  </a>
-                </span>
-
-                <!-- TODO: Update with your arXiv paper ID -->
-                <span class="link-block">
-                  <a href="https://arxiv.org/abs/<ARXIV PAPER ID>" target="_blank"
-                  class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                    <i class="ai ai-arxiv"></i>
-                  </span>
-                  <span>arXiv</span>
-                </a>
-              </span>
-            </div>
+          <div class="tag-list">
+            <span class="tag is-info is-light">Open-Vocabulary Detection</span>
+            <span class="tag is-info is-light">Pseudo-Labeling</span>
+            <span class="tag is-info is-light">MLLM Reasoning</span>
+            <span class="tag is-info is-light">SAM</span>
           </div>
         </div>
       </div>
@@ -313,208 +109,187 @@
   </div>
 </section>
 
-
-<!-- Teaser video-->
-<section class="hero teaser">
+<section class="section">
   <div class="container is-max-desktop">
-    <div class="hero-body">
-      <!-- TODO: Replace with your teaser video -->
-      <video poster="" id="tree" autoplay controls muted loop height="100%" preload="metadata">
-        <!-- TODO: Add your video file path here -->
-        <source src="static/videos/banner_video.mp4" type="video/mp4">
-      </video>
-      <!-- TODO: Replace with your video description -->
-      <h2 class="subtitle has-text-centered">
-        Aliquam vitae elit ullamcorper tellus egestas pellentesque. Ut lacus tellus, maximus vel lectus at, placerat pretium mi. Maecenas dignissim tincidunt vestibulum. Sed consequat hendrerit nisl ut maximus. 
-      </h2>
-    </div>
+    <img src="./static/images/teaser.png" class="teaser" alt="MSPL overview teaser">
+    <p class="caption">MSPL generates robust open-vocabulary pseudo-labels through offline multi-step reasoning, then uses the resulting labels, region descriptions, and background concepts as supervision for online detector training.</p>
   </div>
 </section>
-<!-- End teaser video -->
 
-<!-- Paper abstract -->
-<section class="section hero is-light">
+<section class="section">
   <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-justified">
-          <!-- TODO: Replace with your paper abstract -->
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ullamcorper tellus sed ante aliquam tempus. Etiam porttitor urna feugiat nibh elementum, et tempor dolor mattis. Donec accumsan enim augue, a vulputate nisi sodales sit amet. Proin bibendum ex eget mauris cursus euismod nec et nibh. Maecenas ac gravida ante, nec cursus dui. Vivamus purus nibh, placerat ac purus eget, sagittis vestibulum metus. Sed vestibulum bibendum lectus gravida commodo. Pellentesque auctor leo vitae sagittis suscipit.
-          </p>
-        </div>
-      </div>
+    <div class="content">
+      <h2 class="title is-3">Abstract</h2>
+      <p class="abstract">
+        Open-vocabulary object detection (OVD) aims to recognize and localize object categories beyond the training set. Recent approaches leverage vision-language models to generate pseudo-labels using image-text alignment, allowing detectors to generalize to unseen classes without explicit supervision. However, these methods depend heavily on single-step image-text matching, neglecting the intermediate reasoning steps crucial for interpreting semantically complex visual contexts, such as crowding or occlusion. In this paper, we introduce <strong>MSPL</strong>, a framework that incorporates multi-step visual reasoning into the pseudo-labeling process for OVD. It decomposes complex scene understanding into three interpretable steps—object localization, category recognition, and background grounding—where these intermediate reasoning states serve as rich supervision sources. Extensive experiments on standard OVD evaluation protocols demonstrate that MSPL achieves state-of-the-art performance with superior pseudo-labeling efficiency, outperforming the strong baseline by <strong>9.4 AP<sub>50</sub></strong> for novel classes on OV-COCO and improving box and mask AP<sub>r</sub> by <strong>3.2</strong> and <strong>2.2</strong>, respectively, on OV-LVIS.
+      </p>
     </div>
   </div>
 </section>
-<!-- End paper abstract -->
 
-
-<!-- Image carousel -->
-<section class="hero is-small">
-  <div class="hero-body">
-    <div class="container">
-      <div id="results-carousel" class="carousel results-carousel">
-       <div class="item">
-        <!-- TODO: Replace with your research result images -->
-        <img src="static/images/carousel1.jpg" alt="First research result visualization" loading="lazy"/>
-        <!-- TODO: Replace with description of this result -->
-        <h2 class="subtitle has-text-centered">
-          First image description.
-        </h2>
-      </div>
-      <div class="item">
-        <!-- Your image here -->
-        <img src="static/images/carousel2.jpg" alt="Second research result visualization" loading="lazy"/>
-        <h2 class="subtitle has-text-centered">
-          Second image description.
-        </h2>
-      </div>
-      <div class="item">
-        <!-- Your image here -->
-        <img src="static/images/carousel3.jpg" alt="Third research result visualization" loading="lazy"/>
-        <h2 class="subtitle has-text-centered">
-         Third image description.
-       </h2>
-     </div>
-     <div class="item">
-      <!-- Your image here -->
-      <img src="static/images/carousel4.jpg" alt="Fourth research result visualization" loading="lazy"/>
-      <h2 class="subtitle has-text-centered">
-        Fourth image description.
-      </h2>
-    </div>
-  </div>
-</div>
-</div>
-</section>
-<!-- End image carousel -->
-
-
-
-
-<!-- Youtube video -->
-<section class="hero is-small is-light">
-  <div class="hero-body">
-    <div class="container">
-      <!-- Paper video. -->
-      <h2 class="title is-3">Video Presentation</h2>
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
-          
-          <div class="publication-video">
-            <!-- TODO: Replace with your YouTube video ID -->
-            <iframe src="https://www.youtube.com/embed/JkaxUblCGz0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-          </div>
-        </div>
-      </div>
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">Highlights</h2>
+    <div class="columns is-variable is-4">
+      <div class="column"><div class="highlight-box"><div class="icon is-large"><i class="fas fa-layer-group fa-2x"></i></div><h3 class="title is-5">Multi-Step Pseudo-Labeling</h3><p>MSPL decomposes pseudo-label generation into object verification, category recognition, and background grounding, avoiding brittle single-step image-text matching in crowded or occluded scenes.</p></div></div>
+      <div class="column"><div class="highlight-box"><div class="icon is-large"><i class="fas fa-comment-slash fa-2x"></i></div><h3 class="title is-5">Caption-Free Discovery</h3><p>Instead of relying on caption-derived candidate categories, MSPL uses MLLM-based zero-shot reasoning over object-level regions to discover fine-grained foreground objects.</p></div></div>
+      <div class="column"><div class="highlight-box"><div class="icon is-large"><i class="fas fa-compress-arrows-alt fa-2x"></i></div><h3 class="title is-5">RTA + CBL Supervision</h3><p>Region-Text Alignment uses region-level descriptions, while Contrastive Background Learning explicitly separates foreground object features from background concepts.</p></div></div>
     </div>
   </div>
 </section>
-<!-- End youtube video -->
 
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">Method Overview</h2>
+    <div class="columns is-variable is-5">
+      <div class="column"><div class="pipeline-card"><span class="pipeline-tag">Stage 1: Offline</span><h3 class="title is-4">Three-Step Pseudo-Label Generation</h3><p>MSPL first obtains object-level regions using foundational segmentation, then applies structured MLLM prompting to verify valid objects, assign open-vocabulary categories with region descriptions, and identify background concepts. The resulting semantic anchors are consolidated with base-class annotations for detector training.</p></div></div>
+      <div class="column"><div class="pipeline-card"><span class="pipeline-tag">Stage 2: Online</span><h3 class="title is-4">Contrastive OVD Training</h3><p>The online detector learns from pseudo-labels, region descriptions, and background concepts through three modules: open-vocabulary pseudo-label supervision, Region-Text Alignment, and Contrastive Background Learning. Pseudo-labels are used only during training and discarded at inference.</p></div></div>
+    </div>
+    <img src="./static/images/offline.png" class="paper-image" alt="Offline MSPL pseudo-label generation">
+    <p class="caption">Offline MSPL: foundational segmentation and MLLM reasoning are combined into a structured three-step pseudo-labeling process.</p>
+    <img src="./static/images/online.png" class="paper-image" alt="Online MSPL training framework">
+    <p class="caption">Online MSPL: multi-step supervision trains an open-vocabulary detector using semantic anchors, region-level descriptions, and contrastive background learning.</p>
+  </div>
+</section>
 
-<!-- Video carousel -->
-<section class="hero is-small">
-  <div class="hero-body">
-    <div class="container">
-      <h2 class="title is-3">Another Carousel</h2>
-      <div id="results-carousel" class="carousel results-carousel">
-        <div class="item item-video1">
-          <!-- TODO: Add poster image for better preview -->
-          <video poster="" id="video1" controls muted loop height="100%" preload="metadata">
-            <!-- Your video file here -->
-            <source src="static/videos/carousel1.mp4" type="video/mp4">
-          </video>
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">Results</h2>
+    <div class="columns is-variable is-3">
+      <div class="column"><div class="metric-card"><div class="metric-number">43.4</div><div class="metric-label">OV-COCO AP<sup>N</sup><sub>50</sub><br>RN50</div></div></div>
+      <div class="column"><div class="metric-card"><div class="metric-number">47.8</div><div class="metric-label">OV-COCO AP<sup>N</sup><sub>50</sub><br>RN50×4</div></div></div>
+      <div class="column"><div class="metric-card"><div class="metric-number">26.4</div><div class="metric-label">OV-LVIS Detection<br>AP<sub>r</sub></div></div></div>
+      <div class="column"><div class="metric-card"><div class="metric-number">24.8</div><div class="metric-label">OV-LVIS Segmentation<br>AP<sub>r</sub></div></div></div>
+    </div>
+    <div class="columns is-variable is-3" style="margin-top: 0.5rem;">
+      <div class="column"><div class="metric-card"><div class="metric-number">+9.4</div><div class="metric-label">AP<sub>50</sub> gain over baseline<br>on OV-COCO novel classes</div></div></div>
+      <div class="column"><div class="metric-card"><div class="metric-number">0.43s</div><div class="metric-label">Pseudo-labeling time<br>per image</div></div></div>
+      <div class="column"><div class="metric-card"><div class="metric-number">637K</div><div class="metric-label">Pseudo annotations<br>with Qwen2</div></div></div>
+      <div class="column"><div class="metric-card"><div class="metric-number">86.0%</div><div class="metric-label">Soft hit on OV-COCO<br>novel classes</div></div></div>
+    </div>
+    <div class="results-wrap">
+      <h3 class="title is-4">Main Results on OV-COCO</h3>
+      <p>
+        Methods are grouped by additional supervision beyond <i>C</i><sub>B</sub> instance labels.
+        <i>C</i><sub>N</sub> denotes novel classes.
+      </p>
+
+      <div class="results-grid">
+        <div class="table-card">
+          <div class="table-title">Instance labels in C<sub>B</sub> only</div>
+          <table class="paper-table">
+            <thead>
+              <tr>
+                <th>Methods</th>
+                <th>Backbone</th>
+                <th>AP<sup>N</sup><sub>50</sub></th>
+                <th class="metric-muted">AP<sup>B</sup><sub>50</sub></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="group-row"><td colspan="4">Instance labels in C<sub>B</sub> (CLIP Supervision)</td></tr>
+              <tr><td>ViLD-ens</td><td>RN50 (24M)</td><td>27.6</td><td class="metric-muted">51.3</td></tr>
+              <tr><td>BARON</td><td>RN50 (24M)</td><td>34.0</td><td class="metric-muted">60.4</td></tr>
+              <tr><td>CORA</td><td>RN50 (24M)</td><td>35.1</td><td class="metric-muted">35.4</td></tr>
+              <tr><td>BIND</td><td>ViT-B/16 (86M)</td><td>36.3</td><td class="metric-muted">50.2</td></tr>
+              <tr><td>CLIP-Self</td><td>ViT-B/16 (86M)</td><td>37.6</td><td class="metric-muted">-</td></tr>
+              <tr><td>LBP</td><td>RN50 (24M)</td><td>37.8</td><td class="metric-muted">58.7</td></tr>
+              <tr><td>CCKT-Det</td><td>RN50 (24M)</td><td>38.0</td><td class="metric-muted">35.0</td></tr>
+              <tr><td>CAKE</td><td>RN50 (24M)</td><td>38.2</td><td class="metric-muted">-</td></tr>
+              <tr><td>OV-DQUO</td><td>RN50 (24M)</td><td>39.2</td><td class="metric-muted">-</td></tr>
+              <tr><td>DeCo-DETR</td><td>RN50 (24M)</td><td>41.3</td><td class="metric-muted">-</td></tr>
+              <tr class="separator"><td>BIND</td><td>ViT-L/16 (307M)</td><td>41.5</td><td class="metric-muted">54.8</td></tr>
+              <tr><td>CCKT-Det</td><td>SwinB (88M)</td><td>41.9</td><td class="metric-muted">40.9</td></tr>
+              <tr><td>CORA+</td><td>RN50×4 (87M)</td><td>43.4</td><td class="metric-muted">43.8</td></tr>
+              <tr><td>CLIP-Self</td><td>ViT-L/14 (307M)</td><td>44.3</td><td class="metric-muted">-</td></tr>
+              <tr><td>OV-DQUO</td><td>RN50×4 (87M)</td><td>45.6</td><td class="metric-muted">-</td></tr>
+            </tbody>
+          </table>
         </div>
-        <div class="item item-video2">
-          <!-- TODO: Add poster image for better preview -->
-          <video poster="" id="video2" controls muted loop height="100%" preload="metadata">
-            <!-- Your video file here -->
-            <source src="static/videos/carousel2.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-video3">
-          <!-- TODO: Add poster image for better preview -->
-          <video poster="" id="video3" controls muted loop height="100%" preload="metadata">
-            <!-- Your video file here -->
-            <source src="static/videos/carousel3.mp4" type="video/mp4">
-          </video>
+
+        <div class="table-card">
+          <div class="table-title">Extra caption datasets, weak labels, or pseudo labels</div>
+          <table class="paper-table">
+            <thead>
+              <tr>
+                <th>Methods</th>
+                <th>Supervision</th>
+                <th>Backbone</th>
+                <th>AP<sup>N</sup><sub>50</sub></th>
+                <th class="metric-muted">AP<sup>B</sup><sub>50</sub></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="group-row"><td colspan="5">Extra caption datasets, Weak/Pseudo Labels in C<sub>B</sub> ∪ C<sub>N</sub></td></tr>
+              <tr><td>Detic</td><td>IN21K &amp; CC3M</td><td>RN50 (24M)</td><td>27.8</td><td class="metric-muted">42.0</td></tr>
+              <tr><td>OV-DETR</td><td>Pseudo annotations</td><td>RN50 (24M)</td><td>29.4</td><td class="metric-muted">52.7</td></tr>
+              <tr><td>CoDet</td><td>CC3M &amp; COCO Caption</td><td>RN50 (24M)</td><td>30.6</td><td class="metric-muted">46.4</td></tr>
+              <tr><td>PB-OVD</td><td>COCO Caption</td><td>RN50 (24M)</td><td>30.8</td><td class="metric-muted">46.4</td></tr>
+              <tr><td>VL-PLM</td><td>Pseudo annotations</td><td>RN50 (24M)</td><td>34.4</td><td class="metric-muted">60.2</td></tr>
+              <tr><td>RegionCLIP</td><td>CC3M</td><td>RN50 (24M)</td><td>35.2</td><td class="metric-muted">57.6</td></tr>
+              <tr><td>OC-OVD</td><td>COCO Caption</td><td>RN50 (24M)</td><td>36.6</td><td class="metric-muted">49.4</td></tr>
+              <tr><td>SAS-Det</td><td>COCO Caption</td><td>RN50 (24M)</td><td>37.4</td><td class="metric-muted">58.5</td></tr>
+              <tr><td>DITO</td><td>LAION-2B</td><td>ViT-B/16 (86M)</td><td>36.6</td><td class="metric-muted">48.8</td></tr>
+              <tr><td>LP-OVOD</td><td>Pseudo annotations</td><td>RN50 (24M)</td><td>40.5</td><td class="metric-muted">60.5</td></tr>
+              <tr class="ours"><td>MSPL (Ours)</td><td>Pseudo annotations</td><td>RN50 (24M)</td><td>43.4</td><td>58.9</td></tr>
+              <tr class="separator"><td>CFM-ViT</td><td>LAION-2B</td><td>ViT-L/16 (307M)</td><td>34.3</td><td class="metric-muted">46.4</td></tr>
+              <tr><td>RegionCLIP</td><td>CC3M</td><td>RN50×4 (87M)</td><td>39.3</td><td class="metric-muted">61.6</td></tr>
+              <tr><td>DITO</td><td>DataComp-1B</td><td>ViT-L/16 (307M)</td><td>40.2</td><td class="metric-muted">54.6</td></tr>
+              <tr><td>CORA+</td><td>COCO Caption</td><td>RN50×4 (87M)</td><td>43.1</td><td class="metric-muted">56.2</td></tr>
+              <tr class="ours"><td>MSPL (Ours)</td><td>Pseudo annotations</td><td>RN50×4 (87M)</td><td>47.8</td><td>60.9</td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
+
+      <p class="caption">
+        Results on OV-COCO. MSPL achieves 43.4 AP<sup>N</sup><sub>50</sub> with RN50
+        and 47.8 AP<sup>N</sup><sub>50</sub> with RN50×4 under pseudo-annotation supervision.
+      </p>
     </div>
   </div>
 </section>
-<!-- End video carousel -->
 
-
-
-
-
-
-<!-- Paper poster -->
-<section class="hero is-small is-light">
-  <div class="hero-body">
-    <div class="container">
-      <h2 class="title">Poster</h2>
-
-      <!-- TODO: Replace with your poster PDF -->
-      <iframe  src="static/pdfs/sample.pdf" width="100%" height="550">
-          </iframe>
-        
-      </div>
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">Motivation: Limits of Single-Step Pseudo-Labeling</h2>
+    <div class="content">
+      <p>
+        Single-step pseudo-labeling can fail in complex scenes due to context-biased labels,
+        caption-dependent category discovery, and background collapse. MSPL addresses these
+        limitations by decomposing pseudo-labeling into multiple reasoning stages.
+      </p>
     </div>
-  </section>
-<!--End paper poster -->
+    <img
+      src="./static/images/limit.png"
+      class="paper-image"
+      alt="Limitations of single-step pseudo-labeling">
+    <p class="caption">
+      Challenges in pseudo-labeling for complex scenes: noisy pseudo boxes, caption dependency,
+      background collapse, and pseudo-label quality comparisons.
+    </p>
+  </div>
+</section>
 
-
-
-<!--BibTex citation -->
-  <section class="section" id="BibTeX">
-    <div class="container is-max-desktop content">
-      <div class="bibtex-header">
-        <h2 class="title">BibTeX</h2>
-        <button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX to clipboard">
-          <i class="fas fa-copy"></i>
-          <span class="copy-text">Copy</span>
-        </button>
-      </div>
-      <pre id="bibtex-code"><code>@article{YourPaperKey2024,
-  title={Your Paper Title Here},
-  author={First Author and Second Author and Third Author},
-  journal={Conference/Journal Name},
-  year={2024},
-  url={https://your-domain.com/your-project-page}
+<section class="section" id="bibtex">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">Citation</h2>
+    <pre><code>@article{choi2026mspl,
+  title   = {MSPL: Multi-Step Pseudo-Labeling for Open-Vocabulary Object Detection},
+  author  = {Choi, Hojun and Lim, Youngsun and Shin, Jaeyo and Shim, Hyunjung},
+  journal = {arXiv preprint arXiv:XXXX.XXXXX},
+  year    = {2026}
 }</code></pre>
-    </div>
+    <div class="todo-note">After the arXiv resubmission is live, replace <code>XXXX.XXXXX</code> and the arXiv button URL with the final arXiv identifier.</div>
+  </div>
 </section>
-<!--End BibTex citation -->
 
-
-  <footer class="footer">
-  <div class="container">
-    <div class="columns is-centered">
-      <div class="column is-8">
-        <div class="content">
-
-          <p>
-            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
-            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
-            Commons Attribution-ShareAlike 4.0 International License</a>.
-          </p>
-
-        </div>
-      </div>
+<footer class="footer">
+  <div class="container is-max-desktop">
+    <div class="content has-text-centered">
+      <p>This website is adapted from the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener noreferrer">Academic Project Page Template</a>.</p>
     </div>
   </div>
 </footer>
-
-<!-- Statcounter tracking code -->
-  
-<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
-
-    <!-- End of Statcounter Code -->
-
-  </body>
-  </html>
+</body>
+</html>
