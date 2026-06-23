@@ -3,9 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="description" content="MSPL: Multi-Step Pseudo-Labeling for Open-Vocabulary Object Detection">
-  <meta name="keywords" content="MSPL, Open-Vocabulary Object Detection, Pseudo-Labeling, MLLM, SAM, Region-Text Alignment, Contrastive Background Learning">
+  <meta name="keywords" content="MSPL, Open-Vocabulary Object Detection, Pseudo-Labeling">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <title>MSPL: Multi-Step Pseudo-Labeling for Open-Vocabulary Object Detection</title>
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png">
 
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
   <link rel="stylesheet" href="./static/css/bulma.min.css">
@@ -15,94 +17,271 @@
     :root {
       --mspl-dark: #1f2937;
       --mspl-blue: #2563eb;
-      --mspl-soft-blue: #eff6ff;
       --mspl-border: #e5e7eb;
       --mspl-text: #374151;
       --mspl-muted: #6b7280;
+      --mspl-gold: #fff4cc;
+      --mspl-gray: #9ca3af;
     }
-    body { font-family: 'Noto Sans', sans-serif; color: var(--mspl-text); background: #fff; }
-    .publication-title { font-family: 'Google Sans', sans-serif; line-height: 1.12; color: var(--mspl-dark); font-weight: 700; }
-    .publication-authors { font-family: 'Google Sans', sans-serif; margin-top: 1rem; }
-    .publication-authors a { color: var(--mspl-blue) !important; text-decoration: none; }
-    .publication-authors a:hover { text-decoration: underline; }
-    .author-block { display: inline-block; margin: 0 0.2rem; }
-    .publication-venue { margin-top: 0.7rem; color: var(--mspl-muted); font-weight: 600; }
-    .publication-links { margin-top: 1.25rem; }
-    .link-block { display: inline-block; margin: 0.25rem; }
-    .hero-body { padding-top: 3rem; padding-bottom: 1.5rem; }
-    .section { padding-top: 2rem; padding-bottom: 2rem; }
-    .content h2, .content h3 { font-family: 'Google Sans', sans-serif; color: var(--mspl-dark); font-weight: 700; }
-    .teaser { margin-top: 1rem; border-radius: 14px; box-shadow: 0 10px 28px rgba(15, 23, 42, 0.12); }
-    .caption { color: var(--mspl-muted); font-size: 0.95rem; text-align: center; margin-top: 0.75rem; line-height: 1.5; }
-    .highlight-box, .pipeline-card, .metric-card { border: 1px solid var(--mspl-border); border-radius: 16px; background: #fff; height: 100%; }
-    .highlight-box { padding: 1.25rem; background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%); }
-    .highlight-box .icon { color: var(--mspl-blue); margin-bottom: 0.5rem; }
-    .pipeline-card { padding: 1.25rem; }
-    .pipeline-tag { display: inline-block; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.02em; color: var(--mspl-blue); background: var(--mspl-soft-blue); border-radius: 999px; padding: 0.25rem 0.7rem; margin-bottom: 0.7rem; }
-    .metric-card { padding: 1.15rem 1rem; text-align: center; }
-    .metric-number { font-family: 'Google Sans', sans-serif; font-size: 2rem; font-weight: 700; color: var(--mspl-blue); line-height: 1.1; }
-    .metric-label { color: var(--mspl-muted); font-size: 0.92rem; margin-top: 0.35rem; }
-    .paper-image { border-radius: 12px; border: 1px solid var(--mspl-border); box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08); margin-top: 1rem; margin-bottom: 0.5rem; }
-    .abstract { font-size: 1.04rem; line-height: 1.75; text-align: justify; }
-    .tag-list { margin-top: 1rem; }
-    .tag-list .tag { margin: 0.15rem; }
-    pre { border-radius: 12px; background: #f8fafc !important; border: 1px solid var(--mspl-border); color: #111827; padding: 1.25rem; overflow-x: auto; white-space: pre; }
-    code { color: inherit; background: transparent; font-size: 0.92rem; }
-    .footer { background: #f9fafb; padding: 2rem 1.5rem; margin-top: 2rem; color: var(--mspl-muted); }
-    .todo-note { border-left: 4px solid var(--mspl-blue); background: var(--mspl-soft-blue); padding: 0.9rem 1rem; border-radius: 10px; margin-top: 1rem; color: #1e3a8a; font-size: 0.95rem; }
 
-    .results-wrap { margin-top: 1.5rem; }
-    .results-grid { display: grid; grid-template-columns: 0.41fr 0.59fr; gap: 1rem; align-items: start; }
-    .table-card { border: 1px solid var(--mspl-border); border-radius: 16px; background: #fff; padding: 0.75rem; box-shadow: 0 8px 22px rgba(15,23,42,0.06); overflow-x: auto; }
-    .table-title { font-family: 'Google Sans', sans-serif; font-weight: 700; color: var(--mspl-dark); margin-bottom: 0.4rem; font-size: 1rem; }
-    .paper-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; line-height: 1.25; white-space: nowrap; }
-    .paper-table th, .paper-table td { padding: 0.28rem 0.38rem; border-bottom: 1px solid #eef2f7; vertical-align: middle; text-align: center; }
-    .paper-table th:first-child, .paper-table td:first-child { text-align: left; }
-    .paper-table thead th { color: #111827; border-top: 2px solid #111827; border-bottom: 1.5px solid #111827; font-weight: 700; }
-    .paper-table tr.group-row td { text-align: center !important; font-weight: 600; color: #374151; background: #f8fafc; border-bottom: 1px solid #d1d5db; }
-    .paper-table tr.separator td { border-top: 1px dashed #9ca3af; }
-    .paper-table tr.ours td { background: #fff4cc; font-weight: 700; }
-    .metric-muted { color: #9ca3af; }
-    .pdf-figure { width: 100%; height: 430px; border: 1px solid var(--mspl-border); border-radius: 14px; box-shadow: 0 8px 22px rgba(15,23,42,0.08); background: #fff; margin-top: 1rem; }
-    @media screen and (max-width: 1024px) { .results-grid { grid-template-columns: 1fr; } .paper-table { font-size: 0.84rem; } }
-    @media screen and (max-width: 768px) { .publication-title { font-size: 1.85rem !important; } .abstract { text-align: left; } .metric-number { font-size: 1.65rem; } }
+    body {
+      font-family: 'Noto Sans', sans-serif;
+      color: var(--mspl-text);
+      background: #ffffff;
+    }
+
+    .publication-title {
+      font-family: 'Google Sans', sans-serif;
+      line-height: 1.12;
+      color: var(--mspl-dark);
+      font-weight: 700;
+    }
+
+    .publication-authors {
+      font-family: 'Google Sans', sans-serif;
+      margin-top: 1rem;
+    }
+
+    .publication-authors a {
+      color: var(--mspl-blue) !important;
+      text-decoration: none;
+    }
+
+    .publication-authors a:hover {
+      text-decoration: underline;
+    }
+
+    .author-block {
+      display: inline-block;
+      margin: 0 0.18rem;
+    }
+
+    .publication-venue {
+      margin-top: 0.7rem;
+      color: var(--mspl-muted);
+      font-weight: 600;
+    }
+
+    .publication-links {
+      margin-top: 1.25rem;
+    }
+
+    .link-block {
+      display: inline-block;
+      margin: 0.25rem;
+    }
+
+    .hero-body {
+      padding-top: 3rem;
+      padding-bottom: 1.5rem;
+    }
+
+    .section {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
+
+    .section-title {
+      font-family: 'Google Sans', sans-serif;
+      color: var(--mspl-dark);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .tbd {
+      font-size: 1.04rem;
+      line-height: 1.75;
+      color: var(--mspl-text);
+    }
+
+    .paper-image {
+      width: 100%;
+      display: block;
+      border-radius: 12px;
+      border: 1px solid var(--mspl-border);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
+      margin: 1rem auto 0.5rem;
+    }
+
+    .results-wrap {
+      margin-top: 1.25rem;
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: 0.41fr 0.59fr;
+      gap: 1rem;
+      align-items: start;
+    }
+
+    .table-card {
+      border: 1px solid var(--mspl-border);
+      border-radius: 16px;
+      background: #ffffff;
+      padding: 0.75rem;
+      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+      overflow-x: auto;
+    }
+
+    .table-title {
+      font-family: 'Google Sans', sans-serif;
+      font-weight: 700;
+      color: var(--mspl-dark);
+      margin-bottom: 0.4rem;
+      font-size: 1rem;
+    }
+
+    .paper-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+      line-height: 1.25;
+      white-space: nowrap;
+    }
+
+    .paper-table th,
+    .paper-table td {
+      padding: 0.28rem 0.38rem;
+      border-bottom: 1px solid #eef2f7;
+      vertical-align: middle;
+      text-align: center;
+    }
+
+    .paper-table th:first-child,
+    .paper-table td:first-child {
+      text-align: left;
+    }
+
+    .paper-table thead th {
+      color: #111827;
+      border-top: 2px solid #111827;
+      border-bottom: 1.5px solid #111827;
+      font-weight: 700;
+    }
+
+    .paper-table tr.group-row td {
+      text-align: center !important;
+      font-weight: 600;
+      color: #374151;
+      background: #f8fafc;
+      border-bottom: 1px solid #d1d5db;
+    }
+
+    .paper-table tr.separator td {
+      border-top: 1px dashed #9ca3af;
+    }
+
+    .paper-table tr.ours td {
+      background: var(--mspl-gold);
+      font-weight: 700;
+    }
+
+    .metric-muted {
+      color: var(--mspl-gray);
+    }
+
+    pre {
+      border-radius: 12px;
+      background: #f8fafc !important;
+      border: 1px solid var(--mspl-border);
+      color: #111827;
+      padding: 1.25rem;
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    code {
+      color: inherit;
+      background: transparent;
+      font-size: 0.92rem;
+    }
+
+    .footer {
+      background: #f9fafb;
+      padding: 2rem 1.5rem;
+      margin-top: 2rem;
+      color: var(--mspl-muted);
+    }
+
+    @media screen and (max-width: 1024px) {
+      .results-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .paper-table {
+        font-size: 0.84rem;
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      .publication-title {
+        font-size: 1.85rem !important;
+      }
+    }
   </style>
 </head>
 
 <body>
+
 <section class="hero">
   <div class="hero-body">
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
+
           <h1 class="title is-1 publication-title">
             MSPL: Multi-Step Pseudo-Labeling for<br class="is-hidden-mobile">
             Open-Vocabulary Object Detection
           </h1>
+
           <div class="is-size-5 publication-authors">
-            <span class="author-block"><a href="https://hchoi256.github.io/" target="_blank" rel="noopener noreferrer">Hojun Choi</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://hchoi256.github.io/" target="_blank" rel="noopener noreferrer">Hojun Choi</a><sup>1</sup>,
+            </span>
             <span class="author-block">Youngsun Lim<sup>2</sup>,</span>
             <span class="author-block">Jaeyo Shin<sup>1</sup>,</span>
             <span class="author-block">Hyunjung Shim<sup>1</sup></span>
           </div>
+
           <div class="is-size-5 publication-authors">
             <span class="author-block"><sup>1</sup>KAIST AI</span>
             <span class="author-block"><sup>2</sup>Boston University</span>
           </div>
-          <div class="publication-venue">arXiv preprint, 2026</div>
+
+          <div class="publication-venue">
+            ECCV 2026
+          </div>
+
           <div class="publication-links">
-            <span class="link-block"><a href="./static/pdfs/mspl.pdf" class="external-link button is-normal is-rounded is-dark" target="_blank" rel="noopener noreferrer"><span class="icon"><i class="fas fa-file-pdf"></i></span><span>Paper</span></a></span>
-            <!-- TODO: replace # with the new arXiv URL after the resubmission is live. -->
-            <span class="link-block"><a href="#" class="external-link button is-normal is-rounded is-dark" target="_blank" rel="noopener noreferrer"><span class="icon"><i class="fas fa-file-alt"></i></span><span>arXiv</span></a></span>
-            <span class="link-block"><a href="https://github.com/hchoi256/mspl" class="external-link button is-normal is-rounded is-dark" target="_blank" rel="noopener noreferrer"><span class="icon"><i class="fab fa-github"></i></span><span>Code</span></a></span>
-            <span class="link-block"><a href="#bibtex" class="external-link button is-normal is-rounded is-dark"><span class="icon"><i class="fas fa-quote-right"></i></span><span>BibTeX</span></a></span>
+            <span class="link-block">
+              <a href="./static/pdfs/mspl.pdf" class="external-link button is-normal is-rounded is-dark" target="_blank" rel="noopener noreferrer">
+                <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                <span>Paper</span>
+              </a>
+            </span>
+
+            <span class="link-block">
+              <a href="#" class="external-link button is-normal is-rounded is-dark" target="_blank" rel="noopener noreferrer">
+                <span class="icon"><i class="fas fa-file-alt"></i></span>
+                <span>arXiv</span>
+              </a>
+            </span>
+
+            <span class="link-block">
+              <a href="https://github.com/hchoi256/mspl" class="external-link button is-normal is-rounded is-dark" target="_blank" rel="noopener noreferrer">
+                <span class="icon"><i class="fab fa-github"></i></span>
+                <span>Code</span>
+              </a>
+            </span>
+
+            <span class="link-block">
+              <a href="#bibtex" class="external-link button is-normal is-rounded is-dark">
+                <span class="icon"><i class="fas fa-quote-right"></i></span>
+                <span>BibTeX</span>
+              </a>
+            </span>
           </div>
-          <div class="tag-list">
-            <span class="tag is-info is-light">Open-Vocabulary Detection</span>
-            <span class="tag is-info is-light">Pseudo-Labeling</span>
-            <span class="tag is-info is-light">MLLM Reasoning</span>
-            <span class="tag is-info is-light">SAM</span>
-          </div>
+
         </div>
       </div>
     </div>
@@ -111,69 +290,42 @@
 
 <section class="section">
   <div class="container is-max-desktop">
-    <img src="./static/images/teaser.png" class="teaser" alt="MSPL overview teaser">
-    <p class="caption">MSPL generates robust open-vocabulary pseudo-labels through offline multi-step reasoning, then uses the resulting labels, region descriptions, and background concepts as supervision for online detector training.</p>
+    <img src="./static/images/teaser.png" class="paper-image" alt="MSPL teaser">
   </div>
 </section>
 
 <section class="section">
   <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">Intro</h2>
     <div class="content">
-      <h2 class="title is-3">Abstract</h2>
-      <p class="abstract">
-        Open-vocabulary object detection (OVD) aims to recognize and localize object categories beyond the training set. Recent approaches leverage vision-language models to generate pseudo-labels using image-text alignment, allowing detectors to generalize to unseen classes without explicit supervision. However, these methods depend heavily on single-step image-text matching, neglecting the intermediate reasoning steps crucial for interpreting semantically complex visual contexts, such as crowding or occlusion. In this paper, we introduce <strong>MSPL</strong>, a framework that incorporates multi-step visual reasoning into the pseudo-labeling process for OVD. It decomposes complex scene understanding into three interpretable steps—object localization, category recognition, and background grounding—where these intermediate reasoning states serve as rich supervision sources. Extensive experiments on standard OVD evaluation protocols demonstrate that MSPL achieves state-of-the-art performance with superior pseudo-labeling efficiency, outperforming the strong baseline by <strong>9.4 AP<sub>50</sub></strong> for novel classes on OV-COCO and improving box and mask AP<sub>r</sub> by <strong>3.2</strong> and <strong>2.2</strong>, respectively, on OV-LVIS.
-      </p>
+      <p class="tbd">TBD</p>
     </div>
+
+    <img src="./static/images/limit.png" class="paper-image" alt="Limitations of single-step pseudo-labeling">
   </div>
 </section>
 
 <section class="section">
   <div class="container is-max-desktop">
-    <h2 class="title is-3">Highlights</h2>
-    <div class="columns is-variable is-4">
-      <div class="column"><div class="highlight-box"><div class="icon is-large"><i class="fas fa-layer-group fa-2x"></i></div><h3 class="title is-5">Multi-Step Pseudo-Labeling</h3><p>MSPL decomposes pseudo-label generation into object verification, category recognition, and background grounding, avoiding brittle single-step image-text matching in crowded or occluded scenes.</p></div></div>
-      <div class="column"><div class="highlight-box"><div class="icon is-large"><i class="fas fa-comment-slash fa-2x"></i></div><h3 class="title is-5">Caption-Free Discovery</h3><p>Instead of relying on caption-derived candidate categories, MSPL uses MLLM-based zero-shot reasoning over object-level regions to discover fine-grained foreground objects.</p></div></div>
-      <div class="column"><div class="highlight-box"><div class="icon is-large"><i class="fas fa-compress-arrows-alt fa-2x"></i></div><h3 class="title is-5">RTA + CBL Supervision</h3><p>Region-Text Alignment uses region-level descriptions, while Contrastive Background Learning explicitly separates foreground object features from background concepts.</p></div></div>
+    <h2 class="title is-3 section-title">Method</h2>
+    <div class="content">
+      <p class="tbd">TBD</p>
     </div>
-  </div>
-</section>
 
-<section class="section">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3">Method Overview</h2>
-    <div class="columns is-variable is-5">
-      <div class="column"><div class="pipeline-card"><span class="pipeline-tag">Stage 1: Offline</span><h3 class="title is-4">Three-Step Pseudo-Label Generation</h3><p>MSPL first obtains object-level regions using foundational segmentation, then applies structured MLLM prompting to verify valid objects, assign open-vocabulary categories with region descriptions, and identify background concepts. The resulting semantic anchors are consolidated with base-class annotations for detector training.</p></div></div>
-      <div class="column"><div class="pipeline-card"><span class="pipeline-tag">Stage 2: Online</span><h3 class="title is-4">Contrastive OVD Training</h3><p>The online detector learns from pseudo-labels, region descriptions, and background concepts through three modules: open-vocabulary pseudo-label supervision, Region-Text Alignment, and Contrastive Background Learning. Pseudo-labels are used only during training and discarded at inference.</p></div></div>
-    </div>
     <img src="./static/images/offline.png" class="paper-image" alt="Offline MSPL pseudo-label generation">
-    <p class="caption">Offline MSPL: foundational segmentation and MLLM reasoning are combined into a structured three-step pseudo-labeling process.</p>
+
     <img src="./static/images/online.png" class="paper-image" alt="Online MSPL training framework">
-    <p class="caption">Online MSPL: multi-step supervision trains an open-vocabulary detector using semantic anchors, region-level descriptions, and contrastive background learning.</p>
   </div>
 </section>
 
 <section class="section">
   <div class="container is-max-desktop">
-    <h2 class="title is-3">Results</h2>
-    <div class="columns is-variable is-3">
-      <div class="column"><div class="metric-card"><div class="metric-number">43.4</div><div class="metric-label">OV-COCO AP<sup>N</sup><sub>50</sub><br>RN50</div></div></div>
-      <div class="column"><div class="metric-card"><div class="metric-number">47.8</div><div class="metric-label">OV-COCO AP<sup>N</sup><sub>50</sub><br>RN50×4</div></div></div>
-      <div class="column"><div class="metric-card"><div class="metric-number">26.4</div><div class="metric-label">OV-LVIS Detection<br>AP<sub>r</sub></div></div></div>
-      <div class="column"><div class="metric-card"><div class="metric-number">24.8</div><div class="metric-label">OV-LVIS Segmentation<br>AP<sub>r</sub></div></div></div>
+    <h2 class="title is-3 section-title">Results</h2>
+    <div class="content">
+      <p class="tbd">TBD</p>
     </div>
-    <div class="columns is-variable is-3" style="margin-top: 0.5rem;">
-      <div class="column"><div class="metric-card"><div class="metric-number">+9.4</div><div class="metric-label">AP<sub>50</sub> gain over baseline<br>on OV-COCO novel classes</div></div></div>
-      <div class="column"><div class="metric-card"><div class="metric-number">0.43s</div><div class="metric-label">Pseudo-labeling time<br>per image</div></div></div>
-      <div class="column"><div class="metric-card"><div class="metric-number">637K</div><div class="metric-label">Pseudo annotations<br>with Qwen2</div></div></div>
-      <div class="column"><div class="metric-card"><div class="metric-number">86.0%</div><div class="metric-label">Soft hit on OV-COCO<br>novel classes</div></div></div>
-    </div>
-    <div class="results-wrap">
-      <h3 class="title is-4">Main Results on OV-COCO</h3>
-      <p>
-        Methods are grouped by additional supervision beyond <i>C</i><sub>B</sub> instance labels.
-        <i>C</i><sub>N</sub> denotes novel classes.
-      </p>
 
+    <div class="results-wrap">
       <div class="results-grid">
         <div class="table-card">
           <div class="table-title">Instance labels in C<sub>B</sub> only</div>
@@ -187,7 +339,9 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="group-row"><td colspan="4">Instance labels in C<sub>B</sub> (CLIP Supervision)</td></tr>
+              <tr class="group-row">
+                <td colspan="4">Instance labels in C<sub>B</sub> (CLIP Supervision)</td>
+              </tr>
               <tr><td>ViLD-ens</td><td>RN50 (24M)</td><td>27.6</td><td class="metric-muted">51.3</td></tr>
               <tr><td>BARON</td><td>RN50 (24M)</td><td>34.0</td><td class="metric-muted">60.4</td></tr>
               <tr><td>CORA</td><td>RN50 (24M)</td><td>35.1</td><td class="metric-muted">35.4</td></tr>
@@ -220,7 +374,9 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="group-row"><td colspan="5">Extra caption datasets, Weak/Pseudo Labels in C<sub>B</sub> ∪ C<sub>N</sub></td></tr>
+              <tr class="group-row">
+                <td colspan="5">Extra caption datasets, Weak/Pseudo Labels in C<sub>B</sub> ∪ C<sub>N</sub></td>
+              </tr>
               <tr><td>Detic</td><td>IN21K &amp; CC3M</td><td>RN50 (24M)</td><td>27.8</td><td class="metric-muted">42.0</td></tr>
               <tr><td>OV-DETR</td><td>Pseudo annotations</td><td>RN50 (24M)</td><td>29.4</td><td class="metric-muted">52.7</td></tr>
               <tr><td>CoDet</td><td>CC3M &amp; COCO Caption</td><td>RN50 (24M)</td><td>30.6</td><td class="metric-muted">46.4</td></tr>
@@ -241,55 +397,35 @@
           </table>
         </div>
       </div>
-
-      <p class="caption">
-        Results on OV-COCO. MSPL achieves 43.4 AP<sup>N</sup><sub>50</sub> with RN50
-        and 47.8 AP<sup>N</sup><sub>50</sub> with RN50×4 under pseudo-annotation supervision.
-      </p>
     </div>
-  </div>
-</section>
 
-<section class="section">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3">Motivation: Limits of Single-Step Pseudo-Labeling</h2>
-    <div class="content">
-      <p>
-        Single-step pseudo-labeling can fail in complex scenes due to context-biased labels,
-        caption-dependent category discovery, and background collapse. MSPL addresses these
-        limitations by decomposing pseudo-labeling into multiple reasoning stages.
-      </p>
-    </div>
-    <img
-      src="./static/images/limit.png"
-      class="paper-image"
-      alt="Limitations of single-step pseudo-labeling">
-    <p class="caption">
-      Challenges in pseudo-labeling for complex scenes: noisy pseudo boxes, caption dependency,
-      background collapse, and pseudo-label quality comparisons.
-    </p>
   </div>
 </section>
 
 <section class="section" id="bibtex">
   <div class="container is-max-desktop">
-    <h2 class="title is-3">Citation</h2>
-    <pre><code>@article{choi2026mspl,
-  title   = {MSPL: Multi-Step Pseudo-Labeling for Open-Vocabulary Object Detection},
-  author  = {Choi, Hojun and Lim, Youngsun and Shin, Jaeyo and Shim, Hyunjung},
-  journal = {arXiv preprint arXiv:XXXX.XXXXX},
-  year    = {2026}
+    <h2 class="title is-3 section-title">BibTeX</h2>
+    <pre><code>@inproceedings{choi2026mspl,
+  title     = {MSPL: Multi-Step Pseudo-Labeling for Open-Vocabulary Object Detection},
+  author    = {Choi, Hojun and Lim, Youngsun and Shin, Jaeyo and Shim, Hyunjung},
+  booktitle = {European Conference on Computer Vision},
+  year      = {2026}
 }</code></pre>
-    <div class="todo-note">After the arXiv resubmission is live, replace <code>XXXX.XXXXX</code> and the arXiv button URL with the final arXiv identifier.</div>
   </div>
 </section>
 
 <footer class="footer">
   <div class="container is-max-desktop">
     <div class="content has-text-centered">
-      <p>This website is adapted from the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener noreferrer">Academic Project Page Template</a>.</p>
+      <p>
+        This website is adapted from the
+        <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener noreferrer">
+          Academic Project Page Template
+        </a>.
+      </p>
     </div>
   </div>
 </footer>
+
 </body>
 </html>
