@@ -61,7 +61,7 @@
       {% endif %}
 
       {% if link.page %}
-      <a href="{{ link.page }}" target="_blank" rel="noopener noreferrer">Project Page</a>
+      <a href="{{ link.page }}" target="_blank" rel="noopener noreferrer">Project</a>
       {% endif %}
 
       {% if link.bibtex %}
