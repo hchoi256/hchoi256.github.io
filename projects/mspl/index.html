@@ -56,20 +56,49 @@
     }
 
     .publication-venue {
-      margin-top: 1rem;
+      margin-top: 1.15rem;
     }
 
     .venue-badge {
-      display: inline-block;
-      padding: 0.45rem 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.42rem 0.9rem 0.42rem 0.55rem;
       border-radius: 999px;
-      background: var(--mspl-blue);
-      color: #ffffff;
+      background: linear-gradient(135deg, #f8fbff 0%, #eef6ff 100%);
+      border: 1px solid #bfdbfe;
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.12);
       font-family: 'Google Sans', sans-serif;
-      font-size: 1.05rem;
+    }
+
+    .venue-badge::before {
+      content: "✓";
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.45rem;
+      height: 1.45rem;
+      border-radius: 999px;
+      background: #2563eb;
+      color: #ffffff;
+      font-size: 0.85rem;
       font-weight: 700;
+      line-height: 1;
+    }
+
+    .venue-kicker {
+      color: #64748b;
+      font-size: 0.86rem;
+      font-weight: 600;
       letter-spacing: 0.02em;
-      box-shadow: 0 8px 18px rgba(37, 99, 235, 0.22);
+      text-transform: uppercase;
+    }
+
+    .venue-name {
+      color: #1d4ed8;
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: 0.01em;
     }
 
     .publication-links {
@@ -137,6 +166,24 @@
       font-size: 1.04rem;
       line-height: 1.75;
       color: var(--mspl-text);
+    }
+
+    .section-copy {
+      font-size: 1.04rem;
+      line-height: 1.75;
+      color: var(--mspl-text);
+    }
+
+    .section-copy p {
+      margin-bottom: 0.85rem;
+    }
+
+    .caption {
+      color: var(--mspl-muted);
+      font-size: 0.95rem;
+      text-align: center;
+      line-height: 1.5;
+      margin-top: 0.75rem;
     }
 
     .paper-image {
@@ -287,13 +334,15 @@
             <span class="author-block">
               <a href="https://hchoi256.github.io/" target="_blank" rel="noopener noreferrer">Hojun Choi</a><sup>1</sup>,
             </span>
-              <a href="https://sgt-lim.github.io/" target="_blank" rel="noopener noreferrer">Youngsun Lim</a><sup>1</sup>,
+            <span class="author-block">
+              <a href="https://sgt-lim.github.io/" target="_blank" rel="noopener noreferrer">Youngsun Lim</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
               <a href="https://scholar.google.com/citations?user=UbZM7nQAAAAJ&hl=en&oi=ao" target="_blank" rel="noopener noreferrer">Jaeyo Shin</a><sup>1</sup>,
-              <a href="https://kaist-cvml.github.io/" target="_blank" rel="noopener noreferrer">Hyunjung Shim</a><sup>1</sup>,
-
-            <span class="author-block">Youngsun Lim<sup>2</sup>,</span>
-            <span class="author-block">Jaeyo Shin<sup>1</sup>,</span>
-            <span class="author-block">Hyunjung Shim<sup>1</sup></span>
+            </span>
+            <span class="author-block">
+              <a href="https://kaist-cvml.github.io/" target="_blank" rel="noopener noreferrer">Hyunjung Shim</a><sup>1</sup>
+            </span>
           </div>
 
           <div class="is-size-5 publication-authors">
@@ -302,7 +351,7 @@
           </div>
 
           <div class="publication-venue">
-            <span class="venue-badge">ECCV 2026</span>
+            <span class="venue-badge"><span class="venue-kicker">Accepted to</span><span class="venue-name">ECCV 2026</span></span>
           </div>
 
           <div class="publication-links">
@@ -337,6 +386,7 @@
 <section class="section">
   <div class="container is-max-desktop">
     <img src="./static/images/teaser.png" class="paper-image" alt="MSPL teaser">
+    <p class="caption">Overview of MSPL: offline multi-step pseudo-label generation and online open-vocabulary detector training.</p>
   </div>
 </section>
 
@@ -354,32 +404,50 @@
 <section class="section">
   <div class="container is-max-desktop">
     <h2 class="title is-3 section-title">Intro</h2>
-    <div class="content">
-      <p class="tbd">TBD</p>
+    <div class="content section-copy">
+      <p>
+        Open-vocabulary detectors are expected to recognize novel categories using only base-class annotations. Recent pseudo-labeling approaches automate novel-class supervision with vision-language models, but they often rely on single-step image-text matching.
+      </p>
+      <p>
+        This single-step assignment becomes fragile in complex scenes: labels can be biased by surrounding context, objects missing from captions remain undiscovered, and unlabeled or occluded objects may collapse into the background. MSPL addresses these issues by turning pseudo-labeling into an explicit multi-step reasoning process.
+      </p>
     </div>
 
     <img src="./static/images/limit.png" class="paper-image" alt="Limitations of single-step pseudo-labeling">
+    <p class="caption">Single-step pseudo-labeling can suffer from noisy boxes, caption dependency, and background collapse in crowded or occluded scenes.</p>
   </div>
 </section>
 
 <section class="section">
   <div class="container is-max-desktop">
     <h2 class="title is-3 section-title">Method</h2>
-    <div class="content">
-      <p class="tbd">TBD</p>
+    <div class="content section-copy">
+      <p>
+        MSPL separates pseudo-label generation from detector training. In the offline stage, object-level regions are verified, assigned open-vocabulary labels, and grounded as foreground or background through structured MLLM reasoning.
+      </p>
+      <p>
+        In the online stage, the detector learns from the resulting pseudo-labels, region-level descriptions, and background concepts. Region-Text Alignment improves semantic supervision, while Contrastive Background Learning helps separate foreground objects from background embeddings.
+      </p>
     </div>
 
     <img src="./static/images/offline.png" class="paper-image" alt="Offline MSPL pseudo-label generation">
+    <p class="caption">Offline stage: MSPL generates refined pseudo-labels through object verification, category recognition, and background grounding.</p>
 
     <img src="./static/images/online.png" class="paper-image" alt="Online MSPL training framework">
+    <p class="caption">Online stage: multi-step supervision is used for open-vocabulary detector training and discarded at inference.</p>
   </div>
 </section>
 
 <section class="section">
   <div class="container is-max-desktop">
     <h2 class="title is-3 section-title">Results</h2>
-    <div class="content">
-      <p class="tbd">TBD</p>
+    <div class="content section-copy">
+      <p>
+        MSPL achieves strong open-vocabulary detection performance on standard OVD benchmarks. On OV-COCO, it reaches 43.4 AP<sup>N</sup><sub>50</sub> with RN50 and 47.8 AP<sup>N</sup><sub>50</sub> with RN50×4 under pseudo-annotation supervision.
+      </p>
+      <p>
+        On OV-LVIS, MSPL improves rare-category detection and segmentation, showing that multi-step pseudo-label supervision scales to large-vocabulary settings.
+      </p>
     </div>
 
     <div class="results-wrap">
@@ -456,6 +524,7 @@
       </div>
     </div>
 
+    <p class="caption">Main results on OV-COCO. Rows highlighted in yellow denote MSPL.</p>
   </div>
 </section>
 
