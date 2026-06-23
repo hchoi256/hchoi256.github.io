@@ -16,6 +16,7 @@
     :root {
       --mspl-dark: #1f2937;
       --mspl-blue: #2563eb;
+      --mspl-blue-soft: #eff6ff;
       --mspl-border: #e5e7eb;
       --mspl-text: #374151;
       --mspl-muted: #6b7280;
@@ -56,49 +57,23 @@
     }
 
     .publication-venue {
-      margin-top: 1.15rem;
+      margin-top: 1.05rem;
     }
 
     .venue-badge {
       display: inline-flex;
       align-items: center;
-      gap: 0.55rem;
-      padding: 0.42rem 0.9rem 0.42rem 0.55rem;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #f8fbff 0%, #eef6ff 100%);
-      border: 1px solid #bfdbfe;
-      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.12);
-      font-family: 'Google Sans', sans-serif;
-    }
-
-    .venue-badge::before {
-      content: "✓";
-      display: inline-flex;
-      align-items: center;
       justify-content: center;
-      width: 1.45rem;
-      height: 1.45rem;
+      padding: 0.42rem 1.05rem;
       border-radius: 999px;
-      background: #2563eb;
-      color: #ffffff;
-      font-size: 0.85rem;
-      font-weight: 700;
-      line-height: 1;
-    }
-
-    .venue-kicker {
-      color: #64748b;
-      font-size: 0.86rem;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-    }
-
-    .venue-name {
       color: #1d4ed8;
+      background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
+      border: 1px solid #bfdbfe;
+      box-shadow: 0 8px 18px rgba(37, 99, 235, 0.12);
+      font-family: 'Google Sans', sans-serif;
       font-size: 1.05rem;
       font-weight: 800;
-      letter-spacing: 0.01em;
+      letter-spacing: 0.02em;
     }
 
     .publication-links {
@@ -156,34 +131,12 @@
       margin-bottom: 1rem;
     }
 
-    .abstract {
-      font-size: 1.04rem;
-      line-height: 1.75;
-      text-align: justify;
-    }
-
-    .tbd {
-      font-size: 1.04rem;
-      line-height: 1.75;
-      color: var(--mspl-text);
-    }
-
+    .abstract,
     .section-copy {
       font-size: 1.04rem;
       line-height: 1.75;
       color: var(--mspl-text);
-    }
-
-    .section-copy p {
-      margin-bottom: 0.85rem;
-    }
-
-    .caption {
-      color: var(--mspl-muted);
-      font-size: 0.95rem;
-      text-align: center;
-      line-height: 1.5;
-      margin-top: 0.75rem;
+      text-align: justify;
     }
 
     .paper-image {
@@ -192,7 +145,16 @@
       border-radius: 12px;
       border: 1px solid var(--mspl-border);
       box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
-      margin: 1rem auto 0.5rem;
+      margin: 1rem auto 1rem;
+    }
+
+    .figure-text {
+      font-size: 1.02rem;
+      line-height: 1.72;
+      color: var(--mspl-text);
+      margin-top: 0.85rem;
+      margin-bottom: 0.25rem;
+      text-align: justify;
     }
 
     .results-wrap {
@@ -272,6 +234,14 @@
       color: var(--mspl-gray);
     }
 
+    .table-note {
+      color: var(--mspl-muted);
+      font-size: 0.95rem;
+      text-align: center;
+      line-height: 1.5;
+      margin-top: 0.75rem;
+    }
+
     pre {
       border-radius: 12px;
       background: #f8fafc !important;
@@ -310,7 +280,9 @@
         font-size: 1.85rem !important;
       }
 
-      .abstract {
+      .abstract,
+      .section-copy,
+      .figure-text {
         text-align: left;
       }
     }
@@ -351,7 +323,7 @@
           </div>
 
           <div class="publication-venue">
-            <span class="venue-badge"><span class="venue-kicker">Accepted to</span><span class="venue-name">ECCV 2026</span></span>
+            <span class="venue-badge">ECCV 2026</span>
           </div>
 
           <div class="publication-links">
@@ -386,7 +358,9 @@
 <section class="section">
   <div class="container is-max-desktop">
     <img src="./static/images/teaser.png" class="paper-image" alt="MSPL teaser">
-    <p class="caption">Overview of MSPL: offline multi-step pseudo-label generation and online open-vocabulary detector training.</p>
+    <p class="figure-text">
+      MSPL builds an offline-to-online pipeline for open-vocabulary object detection. Offline, it turns foundational segmentation outputs into reliable open-vocabulary pseudo-labels through three-step reasoning. Online, these labels, region descriptions, and foreground/background decisions supervise detector training so that the model can detect base classes, novel classes, and objects that are otherwise unlabeled in the original training set.
+    </p>
   </div>
 </section>
 
@@ -404,49 +378,36 @@
 <section class="section">
   <div class="container is-max-desktop">
     <h2 class="title is-3 section-title">Intro</h2>
-    <div class="content section-copy">
-      <p>
-        Open-vocabulary detectors are expected to recognize novel categories using only base-class annotations. Recent pseudo-labeling approaches automate novel-class supervision with vision-language models, but they often rely on single-step image-text matching.
-      </p>
-      <p>
-        This single-step assignment becomes fragile in complex scenes: labels can be biased by surrounding context, objects missing from captions remain undiscovered, and unlabeled or occluded objects may collapse into the background. MSPL addresses these issues by turning pseudo-labeling into an explicit multi-step reasoning process.
-      </p>
-    </div>
 
     <img src="./static/images/limit.png" class="paper-image" alt="Limitations of single-step pseudo-labeling">
-    <p class="caption">Single-step pseudo-labeling can suffer from noisy boxes, caption dependency, and background collapse in crowded or occluded scenes.</p>
+    <p class="figure-text">
+      Existing pseudo-labeling methods often reduce novel-class discovery to a single image-text matching step. This can assign labels from surrounding context rather than region-specific evidence, miss objects that are absent from captions, and absorb unlabeled or occluded objects into the background. MSPL addresses these failure modes by explicitly separating localization, recognition, and background grounding instead of compressing the whole scene into one matching step.
+    </p>
   </div>
 </section>
 
 <section class="section">
   <div class="container is-max-desktop">
     <h2 class="title is-3 section-title">Method</h2>
-    <div class="content section-copy">
-      <p>
-        MSPL separates pseudo-label generation from detector training. In the offline stage, object-level regions are verified, assigned open-vocabulary labels, and grounded as foreground or background through structured MLLM reasoning.
-      </p>
-      <p>
-        In the online stage, the detector learns from the resulting pseudo-labels, region-level descriptions, and background concepts. Region-Text Alignment improves semantic supervision, while Contrastive Background Learning helps separate foreground objects from background embeddings.
-      </p>
-    </div>
 
     <img src="./static/images/offline.png" class="paper-image" alt="Offline MSPL pseudo-label generation">
-    <p class="caption">Offline stage: MSPL generates refined pseudo-labels through object verification, category recognition, and background grounding.</p>
+    <p class="figure-text">
+      In the offline stage, MSPL first obtains object-level region proposals and modulates visual context so the target region remains clear while distracting non-target areas are attenuated. A multimodal LLM then reasons over each candidate in three steps: verifying whether an object exists, assigning an open-vocabulary category with a region-level description, and deciding whether the predicted concept is foreground or background. The retained pseudo-labels become semantic anchors for training.
+    </p>
 
     <img src="./static/images/online.png" class="paper-image" alt="Online MSPL training framework">
-    <p class="caption">Online stage: multi-step supervision is used for open-vocabulary detector training and discarded at inference.</p>
+    <p class="figure-text">
+      In the online stage, MSPL uses the offline annotations only as training supervision. Pseudo-labels expand the open-vocabulary base set, region-level descriptions provide fine-grained language supervision through Region-Text Alignment, and background concepts serve as negatives for Contrastive Background Learning. This design improves feature disentanglement while avoiding inference-time dependency on pseudo-labels.
+    </p>
   </div>
 </section>
 
 <section class="section">
   <div class="container is-max-desktop">
     <h2 class="title is-3 section-title">Results</h2>
-    <div class="content section-copy">
-      <p>
-        MSPL achieves strong open-vocabulary detection performance on standard OVD benchmarks. On OV-COCO, it reaches 43.4 AP<sup>N</sup><sub>50</sub> with RN50 and 47.8 AP<sup>N</sup><sub>50</sub> with RN50×4 under pseudo-annotation supervision.
-      </p>
-      <p>
-        On OV-LVIS, MSPL improves rare-category detection and segmentation, showing that multi-step pseudo-label supervision scales to large-vocabulary settings.
+    <div class="content">
+      <p class="section-copy">
+        MSPL achieves strong performance on standard open-vocabulary detection benchmarks. On OV-COCO, it improves novel-class detection with both RN50 and RN50×4 backbones under pseudo-annotation supervision. The highlighted rows show that MSPL reaches 43.4 AP<sup>N</sup><sub>50</sub> with RN50 and 47.8 AP<sup>N</sup><sub>50</sub> with RN50×4, while preserving competitive base-class performance.
       </p>
     </div>
 
@@ -522,9 +483,12 @@
           </table>
         </div>
       </div>
+
+      <p class="table-note">
+        Main results on OV-COCO. Rows highlighted in yellow denote MSPL.
+      </p>
     </div>
 
-    <p class="caption">Main results on OV-COCO. Rows highlighted in yellow denote MSPL.</p>
   </div>
 </section>
 
