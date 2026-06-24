@@ -150,6 +150,18 @@
       text-align: justify;
     }
 
+    .abstract-card {
+      background: #f8fafc;
+      border: 1px solid var(--main-border);
+      border-radius: 16px;
+      padding: 1.35rem 1.5rem;
+      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.04);
+    }
+
+    .abstract-card .abstract {
+      margin-bottom: 0;
+    }
+
     .paper-image {
       width: 100%;
       display: block;
@@ -365,7 +377,7 @@
 <section class="section">
   <div class="container is-max-desktop">
     <h2 class="title is-3 section-title">Abstract</h2>
-    <div class="content">
+    <div class="content abstract-card">
       <p class="abstract">
         Bird’s-eye view (BEV) perception fuses multi-camera images into a unified top-down representation for autonomous driving. Despite recent progress, state-of-the-art methods remain confined to closed-set scenarios, making them vulnerable to unpredictable real-world environments. We introduce <strong>open-vocabulary BEV segmentation (OVBS)</strong>, which leverages vision-language models to recognize categories beyond the training set while maintaining precise BEV perception and real-time efficiency. To address the 3D geometric inconsistency caused by ill-posed 2D-to-BEV lifting, we propose <strong>OVBEVSeg</strong>, a geometry-aware framework that uses 3D constraints across pseudo-BEV labeling, BEV-aware 3D Gaussian splatting, and BEV-aware Gaussian distillation. On nuScenes, OVBEVSeg achieves state-of-the-art OVBS performance, improving novel-class recognition while retaining competitive memory usage and real-time speed.
       </p>
