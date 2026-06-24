@@ -363,7 +363,7 @@
 
           <div class="publication-links">
             <span class="link-block">
-              <a href="./static/pdfs/ovbevseg.pdf" class="project-link" target="_blank" rel="noopener noreferrer">
+              <a href="https://arxiv.org/abs/2606.24353" class="project-link" target="_blank" rel="noopener noreferrer">
                 <img src="/assets/img/paper.png" alt="">
                 <span>Paper</span>
               </a>
@@ -388,7 +388,7 @@
     <h2 class="title is-3 section-title">Abstract</h2>
     <div class="content">
       <p class="abstract">
-        Bird’s-eye view (BEV) perception fuses multi-camera images into a unified top-down representation for autonomous driving. Despite recent progress, state-of-the-art methods remain confined to closed-set scenarios, making them vulnerable to unpredictable real-world environments. We introduce <strong>open-vocabulary BEV segmentation (OVBS)</strong>, which leverages vision-language models to recognize categories beyond the training set while maintaining precise BEV perception and real-time efficiency. To address the 3D geometric inconsistency caused by ill-posed 2D-to-BEV lifting, we propose <strong>OVBEVSeg</strong>, a geometry-aware framework that uses 3D constraints across pseudo-BEV labeling, BEV-aware 3D Gaussian splatting, and BEV-aware Gaussian distillation. On nuScenes, OVBEVSeg achieves state-of-the-art OVBS performance, improving novel-class recognition while retaining competitive memory usage and real-time speed.
+        Bird's-eye view (BEV) perception fuses multi-camera images into a unified top-down representation for autonomous driving. Despite recent progress, state-of-the-art methods remain confined to closed-set scenarios, making them vulnerable to unpredictable real-world environments. In this work, we introduce <strong>open-vocabulary BEV segmentation (OVBS)</strong>, which leverages vision-language models (VLMs) to recognize categories beyond the training set while maintaining precise BEV perception and real-time efficiency. A key challenge in OVBS lies in the 3D geometric inconsistency inherent in the ill-posed lifting of 2D VLM semantics into BEV. To address this, we propose <strong>OVBEVSeg</strong>, a geometry-aware OVBS framework that enhances efficient Gaussian splatting (GS)-based unprojection by leveraging robust 3D geometric constraints across three progressive stages: (1) 2D-to-BEV pseudo-labeling via reliable 3D projection for OV generalization; (2) joint 2D–BEV per-scene optimization with BEV structural constraints for 3D geometric consistency; and (3) 3D geometric distillation for efficiency. On the nuScenes dataset, OVBEVSeg achieves state-of-the-art performance, outperforming closed-set methods by 15.3 mIoU on unseen categories. Remarkably, despite being entirely label-free, it remains competitive with self- and semi-supervised baselines trained with up to 40% of ground-truth annotations. Furthermore, it achieves 2.5× faster inference with only 0.22× the memory consumption of projection-based methods.
       </p>
     </div>
   </div>
@@ -630,11 +630,14 @@
 <section class="section" id="bibtex">
   <div class="container is-max-desktop">
     <h2 class="title is-3 section-title">BibTeX</h2>
-    <pre><code>@inproceedings{choi2026ovbevseg,
-  title     = {Open-Vocabulary BEV Segmentation with 3D-Aware Geometric Constraints},
-  author    = {Choi, Hojun and Hwang, Seulbin and Kim, Dae Jung and Kim, Kisung and Shim, Hyunjung and Lee, Jinhan},
-  booktitle = {European Conference on Computer Vision},
-  year      = {2026}
+    <pre><code>@misc{choi2026openvocabularybevsegmentation3daware,
+      title={Open-Vocabulary BEV Segmentation with 3D-Aware Geometric Constraints}, 
+      author={Hojun Choi and Seulbin Hwang and Dae Jung Kim and Kisung Kim and Hyunjung Shim and Jinhan Lee},
+      year={2026},
+      eprint={2606.24353},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2606.24353}, 
 }</code></pre>
   </div>
 </section>

@@ -53,7 +53,7 @@
 
     <div class="publication-links">
       {% if link.pdf %}
-      <a href="{{ link.pdf }}" target="_blank" rel="noopener noreferrer">PDF</a>
+      <a href="{{ link.pdf }}" target="_blank" rel="noopener noreferrer">Paper</a>
       {% endif %}
 
       {% if link.code %}
@@ -61,7 +61,7 @@
       {% endif %}
 
       {% if link.page %}
-      <a href="{{ link.page }}" target="_blank" rel="noopener noreferrer">Project</a>
+      <a href="{{ link.page }}" target="_blank" rel="noopener noreferrer">Project Page</a>
       {% endif %}
 
       {% if link.bibtex %}
