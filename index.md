@@ -41,6 +41,7 @@ My research interests include **Multimodal Learning**, **Vision-Language Models*
 
 ## News
 
+- <strong style="color: #504b4c !important; font-weight: 700 !important;">[Preprint]</strong> Our new paper, **"MBA: Multimodal Benchmark and Agents for Real-World Business Ideation,"** has been released.
 - <strong style="color: #0066cc !important; font-weight: 700 !important;">[Conference]</strong> Our paper, **"Open-Vocabulary BEV Segmentation with 3D-Aware Geometric Constraints,"** has been accepted to ECCV 2026.
 - <strong style="color: #0066cc !important; font-weight: 700 !important;">[Conference]</strong> Our paper, **"MSPL: Multi-Step Pseudo-Labeling for Open-Vocabulary Object Detection,"** has been accepted to ECCV 2026.
 - <strong style="color: forestgreen !important; font-weight: 700 !important;">[Workshop]</strong> Our paper, **"CoT-PL: Chain-of-Thought Pseudo-Labeling for Open-Vocabulary Object Detection,"** has been accepted to the 2nd Workshop on Multimodal Spatial Intelligence at CVPR 2026.

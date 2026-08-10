@@ -541,8 +541,12 @@
             <span class="author-block">
               <a href="https://hchoi256.github.io/" target="_blank" rel="noopener noreferrer">Hojun Choi</a><sup>1</sup>,
             </span>
-            <span class="author-block">Jaeyo Shin<sup>1</sup>,</span>
-            <span class="author-block">Suin Lee<sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?hl=en&user=UbZM7nQAAAAJ" target="_blank" rel="noopener noreferrer">Jaeyo Shin</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://adios42.github.io/" target="_blank" rel="noopener noreferrer">Suin Lee</a><sup>1</sup>,
+            </span>
             <span class="author-block">
               <a href="https://kaist-cvml.github.io/" target="_blank" rel="noopener noreferrer">Hyunjung Shim</a><sup>1†</sup>
             </span>
@@ -577,7 +581,7 @@
 
             <span class="link-block">
               <a href="https://huggingface.co/hchoi256/mba" class="project-link" target="_blank" rel="noopener noreferrer">
-                <img src="/assets/img/huggingface.png" alt="">
+                <img src="/assets/img/hugging-face.png" alt="">
                 <span>Dataset</span>
               </a>
             </span>
@@ -601,7 +605,7 @@
     <h2 class="title is-3 section-title">Abstract</h2>
     <div class="content">
       <p class="abstract">
-        Real-world business ideation is inherently multimodal: useful opportunities often emerge from visual details, physical contexts, and market evidence that cannot be fully captured by text alone. We introduce <strong>MBA-Bench</strong>, the first benchmark for training and evaluating multimodal business ideation agents, comprising 30K image–caption–question–idea samples across six visually grounded domains. Each sample combines an image, caption, domain, retrieval query, business question, and market evidence to support evidence-augmented idea generation. Building on MBA-Bench, we propose <strong>MBA-b</strong> and <strong>MBA-k</strong>, two agents for blind and known evaluation settings. Both agents are trained with LoRA-based supervised fine-tuning followed by GRPO using creativity and feasibility rewards; MBA-k additionally optimizes the six disclosed business evaluation criteria. Across MBA-Bench, MBA-b and MBA-k substantially outperform caption-only and multimodal baselines, demonstrating that multimodal agents can generate business ideas that are both creative and viable.
+        Agentic systems powered by large language models (LLMs) have opened new opportunities for business ideation. Yet existing approaches remain confined to a text-only paradigm, despite the inherently multimodal nature of real-world contexts. We thus introduce MBA-Bench, the first multimodal benchmark for training and evaluating business ideation agents, comprising 30K samples across six domains, each domain characterized by distinct visual cues not fully conveyed by text alone. Concretely, we automatically caption images and employ GPT-4o to generate five reference ideas for each of three business questions through retrieval query generation, market evidence retrieval, and evidence-augmented synthesis. Following prior work, we evaluate agents across six business-oriented criteria using MLLM-as-a-Judge. To consider settings where criteria are hidden or disclosed, we present MBA-b and MBA-k for blind and known, respectively. We train both with two novel reward objectives---creativity and feasibility---while MBA-k further optimizes the six disclosed criteria for eight in total. Both are trained via LoRA-based supervised fine-tuning followed by group relative policy optimization with these setting-specific rewards. For extensive experiments on MBA-Bench, we set up two baselines accommodating either captions only or multimodal inputs, with the latter nearing closed-source performance on several metrics. MBA-b and MBA-k outperform caption baselines by 53.6\% and 67.3\%, and multimodal baselines by 16.9\% and 27.4\%, respectively.
       </p>
     </div>
   </div>
@@ -628,7 +632,7 @@
       </div>
       <div class="stat-card">
         <div class="stat-number">8</div>
-        <div class="stat-label">training / evaluation objectives</div>
+        <div class="stat-label">training / evaluation reward objectives</div>
       </div>
       <div class="stat-card">
         <div class="stat-number">2</div>
@@ -751,51 +755,6 @@
         </table>
       </div>
     </div>
-
-    <div class="example-carousel" id="mba-example-carousel" aria-label="MBA-Bench domain example carousel">
-      <button class="carousel-button prev" type="button" aria-label="Previous domain example">‹</button>
-      <div class="carousel-track">
-        <div class="carousel-slide">
-          <div class="domain-slide-label">General</div>
-          <img src="./static/images/mba-general.png" alt="MBA-Bench General domain example">
-        </div>
-        <div class="carousel-slide">
-          <div class="domain-slide-label">Spatial Layout</div>
-          <img src="./static/images/mba-spatial.png" alt="MBA-Bench Spatial Layout domain example">
-        </div>
-        <div class="carousel-slide">
-          <div class="domain-slide-label">Crowding</div>
-          <img src="./static/images/mba-crowd.png" alt="MBA-Bench Crowding domain example">
-        </div>
-        <div class="carousel-slide">
-          <div class="domain-slide-label">Visual Condition</div>
-          <img src="./static/images/mba-visual.png" alt="MBA-Bench Visual Condition domain example">
-        </div>
-        <div class="carousel-slide">
-          <div class="domain-slide-label">Shape &amp; Texture</div>
-          <img src="./static/images/mba-shape.png" alt="MBA-Bench Shape and Texture domain example">
-        </div>
-        <div class="carousel-slide">
-          <div class="domain-slide-label">Technical Features</div>
-          <img src="./static/images/mba-tech.png" alt="MBA-Bench Technical Features domain example">
-        </div>
-      </div>
-      <button class="carousel-button next" type="button" aria-label="Next domain example">›</button>
-    </div>
-
-    <div class="carousel-dots" aria-label="MBA-Bench domain example navigation">
-      <button class="carousel-dot active" type="button" aria-label="General example"></button>
-      <button class="carousel-dot" type="button" aria-label="Spatial Layout example"></button>
-      <button class="carousel-dot" type="button" aria-label="Crowding example"></button>
-      <button class="carousel-dot" type="button" aria-label="Visual Condition example"></button>
-      <button class="carousel-dot" type="button" aria-label="Shape and Texture example"></button>
-      <button class="carousel-dot" type="button" aria-label="Technical Features example"></button>
-    </div>
-
-    <p class="figure-caption">
-      Representative MBA-Bench examples, one from each visual domain. Drag or swipe horizontally to browse.
-    </p>
-  </div>
 </section>
 
 <section class="section">
@@ -974,11 +933,55 @@
       </p>
     </div>
 
-    <img src="./static/images/mba_distribution.png" class="paper-image wide-image" alt="Image-level score distributions">
+    <img src="./static/images/mba_boxplot.png" class="paper-image wide-image" alt="Normalized image-level score box plots across six evaluation metrics">
 
     <p class="figure-caption">
-      Recommended image: Figure 5, showing image-level score distributions across six PBIG metrics.
+      Image-level score distributions across six business-oriented metrics. This box plot replaces the previous distribution figure.
     </p>
+    <div class="example-carousel" id="mba-example-carousel" aria-label="MBA-Bench domain example carousel">
+      <button class="carousel-button prev" type="button" aria-label="Previous domain example">‹</button>
+      <div class="carousel-track">
+        <div class="carousel-slide">
+          <div class="domain-slide-label">General</div>
+          <img src="./static/images/mba-general.png" alt="MBA-Bench General domain example">
+        </div>
+        <div class="carousel-slide">
+          <div class="domain-slide-label">Spatial Layout</div>
+          <img src="./static/images/mba-spatial.png" alt="MBA-Bench Spatial Layout domain example">
+        </div>
+        <div class="carousel-slide">
+          <div class="domain-slide-label">Crowding</div>
+          <img src="./static/images/mba-crowd.png" alt="MBA-Bench Crowding domain example">
+        </div>
+        <div class="carousel-slide">
+          <div class="domain-slide-label">Visual Condition</div>
+          <img src="./static/images/mba-visual.png" alt="MBA-Bench Visual Condition domain example">
+        </div>
+        <div class="carousel-slide">
+          <div class="domain-slide-label">Shape &amp; Texture</div>
+          <img src="./static/images/mba-shape.png" alt="MBA-Bench Shape and Texture domain example">
+        </div>
+        <div class="carousel-slide">
+          <div class="domain-slide-label">Technical Features</div>
+          <img src="./static/images/mba-tech.png" alt="MBA-Bench Technical Features domain example">
+        </div>
+      </div>
+      <button class="carousel-button next" type="button" aria-label="Next domain example">›</button>
+    </div>
+
+    <div class="carousel-dots" aria-label="MBA-Bench domain example navigation">
+      <button class="carousel-dot active" type="button" aria-label="General example"></button>
+      <button class="carousel-dot" type="button" aria-label="Spatial Layout example"></button>
+      <button class="carousel-dot" type="button" aria-label="Crowding example"></button>
+      <button class="carousel-dot" type="button" aria-label="Visual Condition example"></button>
+      <button class="carousel-dot" type="button" aria-label="Shape and Texture example"></button>
+      <button class="carousel-dot" type="button" aria-label="Technical Features example"></button>
+    </div>
+
+    <p class="figure-caption">
+      Representative MBA-Bench examples, one from each visual domain. Drag or swipe horizontally to browse.
+    </p>
+  </div>
   </div>
 </section>
 
