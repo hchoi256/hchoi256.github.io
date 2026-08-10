@@ -1,5 +1,16 @@
 main:
 
+  - title: >-
+      MBA: Multimodal Benchmark and Agents for Real-World Business Ideation
+    authors: <strong><u>Hojun Choi</u></strong>, Jaeyo Shin, Suin Lee, and Hyunjung Shim,
+    conference_short: Preprint
+    tag_type: default
+    conference: Preprint, 2026.
+    # pdf: 
+    code: https://github.com/hchoi256/MBA
+    # bibtex: 
+    image: ./assets/img/teasers/mba.png
+
   - title: Open-Vocabulary BEV Segmentation with 3D-Aware Geometric Constraints
     authors: <strong><u>Hojun Choi</u></strong>, Seulbin Hwang, Dae Jung Kim, Kisung Kim, Hyunjung Shim, and Jinhan Lee
     conference_short: ECCV
@@ -7,7 +18,6 @@ main:
     conference: >-
       <span style="color: #0066cc !important; font-weight: 700 !important;">European Conference on Computer Vision (ECCV)</span>, 2026.
     pdf: https://arxiv.org/abs/2606.24353
-    # code: https://github.com/hchoi256/mspl
     page: https://hchoi256.github.io/projects/ovbevseg/
     bibtex: https://hchoi256.github.io/projects/ovbevseg/#bibtex
     image: ./assets/img/teasers/ovbevseg.png

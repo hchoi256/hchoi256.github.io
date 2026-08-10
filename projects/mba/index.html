@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="MBA: Multimodal Benchmark and Agents for Real-World Business Ideation">
+  <meta name="keywords" content="MBA, MBA-Bench, Multimodal Business Ideation, Agentic AI, MLLM, Benchmark, GRPO, LoRA">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>MBA: Multimodal Benchmark and Agents for Real-World Business Ideation</title>
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+
+  <style>
+    :root {
+      --main-dark: #1f2937;
+      --main-blue: #2563eb;
+      --main-blue-soft: #eff6ff;
+      --main-border: #e5e7eb;
+      --main-text: #374151;
+      --main-muted: #6b7280;
+      --main-gold: #fff4cc;
+      --main-green: #16803c;
+      --main-red: #b91c1c;
+      --main-gray: #9ca3af;
+      --main-purple: #7c3aed;
+      --main-orange: #f97316;
+    }
+
+    body {
+      font-family: 'Noto Sans', sans-serif;
+      color: var(--main-text);
+      background: #ffffff;
+    }
+
+    .publication-title {
+      font-family: 'Google Sans', sans-serif;
+      line-height: 1.12;
+      color: var(--main-dark);
+      font-weight: 700;
+    }
+
+    .publication-authors {
+      font-family: 'Google Sans', sans-serif;
+      margin-top: 1rem;
+    }
+
+    .publication-authors a {
+      color: var(--main-blue) !important;
+      text-decoration: none;
+    }
+
+    .publication-authors a:hover {
+      text-decoration: underline;
+    }
+
+    .author-block {
+      display: inline-block;
+      margin: 0 0.18rem;
+    }
+
+    .publication-venue {
+      margin-top: 1.05rem;
+    }
+
+    .venue-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.42rem 1.05rem;
+      border-radius: 999px;
+      color: #1d4ed8;
+      background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
+      border: 1px solid #bfdbfe;
+      box-shadow: 0 8px 18px rgba(37, 99, 235, 0.12);
+      font-family: 'Google Sans', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+    .author-notes {
+      margin-top: 0.75rem;
+      color: var(--main-muted);
+      font-size: 0.95rem;
+      line-height: 1.55;
+      font-family: 'Google Sans', sans-serif;
+    }
+
+    .publication-links {
+      margin-top: 1.15rem;
+    }
+
+    .link-block {
+      display: inline-block;
+      margin: 0.25rem;
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.48rem 0.95rem;
+      border-radius: 999px;
+      background: #111827;
+      color: #ffffff !important;
+      font-family: 'Google Sans', sans-serif;
+      font-size: 0.98rem;
+      font-weight: 600;
+      text-decoration: none;
+      line-height: 1;
+    }
+
+    .project-link:hover {
+      color: #ffffff !important;
+      text-decoration: none;
+      background: #000000;
+    }
+
+    .project-link img {
+      width: 18px;
+      height: 18px;
+      object-fit: contain;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .hero-body {
+      padding-top: 3rem;
+      padding-bottom: 1.5rem;
+    }
+
+    .section {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
+
+    .section-title {
+      font-family: 'Google Sans', sans-serif;
+      color: var(--main-dark);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .abstract,
+    .section-copy,
+    .figure-text {
+      font-size: 1.04rem;
+      line-height: 1.75;
+      color: var(--main-text);
+      text-align: justify;
+    }
+
+    .abstract-section {
+      background: #f5f5f5;
+      margin-top: 1rem;
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+    }
+
+    .abstract-section .section-title {
+      text-align: center;
+    }
+
+    .abstract-section .content {
+      max-width: 780px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .abstract-section .abstract {
+      margin-bottom: 0;
+    }
+
+    .paper-image {
+      width: 100%;
+      display: block;
+      border-radius: 12px;
+      border: 1px solid var(--main-border);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
+      margin: 1rem auto 1rem;
+    }
+
+    .wide-image {
+      max-width: 960px;
+    }
+
+    .medium-image {
+      max-width: 780px;
+    }
+
+    .small-image {
+      max-width: 640px;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.9rem;
+      margin: 1.4rem 0 0.8rem;
+    }
+
+    .stat-card {
+      border: 1px solid var(--main-border);
+      border-radius: 14px;
+      padding: 1rem;
+      background: #ffffff;
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.04);
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: 'Google Sans', sans-serif;
+      font-weight: 800;
+      font-size: 1.45rem;
+      color: var(--main-blue);
+      line-height: 1.1;
+    }
+
+    .stat-label {
+      margin-top: 0.35rem;
+      color: var(--main-muted);
+      font-size: 0.92rem;
+      line-height: 1.35;
+    }
+
+    .highlight-box {
+      border-left: 4px solid var(--main-blue);
+      background: var(--main-blue-soft);
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+      margin: 1.25rem 0;
+      line-height: 1.65;
+    }
+
+    .two-column {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 1.2rem;
+    }
+
+    .info-card {
+      border: 1px solid var(--main-border);
+      border-radius: 16px;
+      background: #ffffff;
+      padding: 1rem 1.1rem;
+      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.05);
+    }
+
+    .info-card h3 {
+      font-family: 'Google Sans', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--main-dark);
+      margin-bottom: 0.55rem;
+    }
+
+    .info-card p,
+    .info-card li {
+      font-size: 0.98rem;
+      line-height: 1.65;
+      color: var(--main-text);
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-top: 0.8rem;
+    }
+
+    .soft-tag {
+      display: inline-block;
+      padding: 0.25rem 0.62rem;
+      border-radius: 999px;
+      background: #f3f4f6;
+      color: #374151;
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+
+    .example-carousel {
+      position: relative;
+      margin: 1.1rem auto 1rem;
+      max-width: 900px;
+      border-radius: 16px;
+      border: 1px solid var(--main-border);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
+      background: #ffffff;
+      overflow: hidden;
+      user-select: none;
+      touch-action: pan-y;
+    }
+
+    .carousel-track {
+      display: flex;
+      width: 100%;
+      transition: transform 0.28s ease;
+      cursor: grab;
+    }
+
+    .carousel-track.dragging {
+      transition: none;
+      cursor: grabbing;
+    }
+
+
+    .domain-slide-label {
+      position: absolute;
+      top: 0.85rem;
+      left: 0.85rem;
+      z-index: 3;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(17, 24, 39, 0.78);
+      color: #ffffff;
+      font-family: 'Google Sans', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.16);
+      pointer-events: none;
+    }
+
+    .carousel-slide {
+      position: relative;
+      min-width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
+    }
+
+    .carousel-slide img {
+      display: block;
+      width: 100%;
+      height: auto;
+      pointer-events: none;
+    }
+
+    .carousel-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 2.4rem;
+      height: 2.4rem;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(17, 24, 39, 0.72);
+      color: #ffffff;
+      font-size: 1.35rem;
+      font-weight: 800;
+      line-height: 1;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .carousel-button:hover {
+      background: rgba(17, 24, 39, 0.9);
+    }
+
+    .carousel-button.prev {
+      left: 0.8rem;
+    }
+
+    .carousel-button.next {
+      right: 0.8rem;
+    }
+
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.45rem;
+      margin: 0.75rem 0 0.2rem;
+    }
+
+    .carousel-dot {
+      width: 0.55rem;
+      height: 0.55rem;
+      border: 0;
+      border-radius: 999px;
+      background: #d1d5db;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .carousel-dot.active {
+      background: var(--main-blue);
+    }
+
+    .results-wrap {
+      margin-top: 1.25rem;
+    }
+
+    .table-card {
+      border: 1px solid var(--main-border);
+      border-radius: 16px;
+      background: #ffffff;
+      padding: 0.75rem;
+      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+      overflow-x: auto;
+    }
+
+    .table-title {
+      font-family: 'Google Sans', sans-serif;
+      font-weight: 700;
+      color: var(--main-dark);
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+    }
+
+    .paper-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.76rem;
+      line-height: 1.25;
+      white-space: nowrap;
+    }
+
+    .paper-table th,
+    .paper-table td {
+      padding: 0.32rem 0.38rem;
+      border-bottom: 1px solid #eef2f7;
+      vertical-align: middle;
+      text-align: center;
+    }
+
+    .paper-table th:first-child,
+    .paper-table td:first-child {
+      text-align: left;
+    }
+
+    .paper-table thead th {
+      color: #111827;
+      border-top: 2px solid #111827;
+      border-bottom: 1.5px solid #111827;
+      font-weight: 700;
+    }
+
+    .paper-table tr.group-row td {
+      text-align: left !important;
+      font-weight: 700;
+      color: #374151;
+      background: #f8fafc;
+      border-bottom: 1px solid #d1d5db;
+    }
+
+    .paper-table tr.ours td {
+      background: var(--main-gold);
+      font-weight: 700;
+    }
+
+    .best {
+      color: var(--main-red);
+      font-weight: 800;
+    }
+
+    .table-note {
+      color: var(--main-muted);
+      font-size: 0.95rem;
+      text-align: center;
+      line-height: 1.5;
+      margin-top: 0.75rem;
+    }
+
+    .figure-caption {
+      color: var(--main-muted);
+      font-size: 0.95rem;
+      text-align: center;
+      line-height: 1.55;
+      margin: 0.2rem auto 1.2rem;
+      max-width: 780px;
+    }
+
+    pre {
+      border-radius: 12px;
+      background: #f8fafc !important;
+      border: 1px solid var(--main-border);
+      color: #111827;
+      padding: 1.25rem;
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    code {
+      color: inherit;
+      background: transparent;
+      font-size: 0.92rem;
+    }
+
+    .footer {
+      background: #f9fafb;
+      padding: 2rem 1.5rem;
+      margin-top: 2rem;
+      color: var(--main-muted);
+    }
+
+    @media screen and (max-width: 768px) {
+      .publication-title {
+        font-size: 1.85rem !important;
+      }
+
+      .abstract,
+      .section-copy,
+      .figure-text {
+        text-align: left;
+      }
+
+      .paper-table {
+        font-size: 0.78rem;
+      }
+
+      .stat-grid,
+      .two-column {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+
+          <h1 class="title is-1 publication-title">
+            MBA: Multimodal Benchmark and Agents for<br class="is-hidden-mobile">
+            Real-World Business Ideation
+          </h1>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://hchoi256.github.io/" target="_blank" rel="noopener noreferrer">Hojun Choi</a><sup>1</sup>,
+            </span>
+            <span class="author-block">Jaeyo Shin<sup>1</sup>,</span>
+            <span class="author-block">Suin Lee<sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://kaist-cvml.github.io/" target="_blank" rel="noopener noreferrer">Hyunjung Shim</a><sup>1†</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>KAIST AI</span>
+          </div>
+
+          <div class="publication-venue">
+            <span class="venue-badge">Preprint</span>
+          </div>
+
+          <div class="author-notes">
+            <div><sup>†</sup>Corresponding author.</div>
+          </div>
+
+          <div class="publication-links">
+            <span class="link-block">
+              <a href="./static/pdfs/mba.pdf" class="project-link" target="_blank" rel="noopener noreferrer">
+                <img src="/assets/img/paper.png" alt="">
+                <span>Paper</span>
+              </a>
+            </span>
+
+            <span class="link-block">
+              <a href="https://github.com/hchoi256/MBA" class="project-link" target="_blank" rel="noopener noreferrer">
+                <img src="/assets/img/github.png" alt="">
+                <span>Code</span>
+              </a>
+            </span>
+
+            <span class="link-block">
+              <a href="https://huggingface.co/hchoi256/mba" class="project-link" target="_blank" rel="noopener noreferrer">
+                <img src="/assets/img/huggingface.png" alt="">
+                <span>Dataset</span>
+              </a>
+            </span>
+
+            <span class="link-block">
+              <a href="#bibtex" class="project-link">
+                <img src="/assets/img/bibtex.png" alt="">
+                <span>BibTeX</span>
+              </a>
+            </span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section abstract-section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">Abstract</h2>
+    <div class="content">
+      <p class="abstract">
+        Real-world business ideation is inherently multimodal: useful opportunities often emerge from visual details, physical contexts, and market evidence that cannot be fully captured by text alone. We introduce <strong>MBA-Bench</strong>, the first benchmark for training and evaluating multimodal business ideation agents, comprising 30K image–caption–question–idea samples across six visually grounded domains. Each sample combines an image, caption, domain, retrieval query, business question, and market evidence to support evidence-augmented idea generation. Building on MBA-Bench, we propose <strong>MBA-b</strong> and <strong>MBA-k</strong>, two agents for blind and known evaluation settings. Both agents are trained with LoRA-based supervised fine-tuning followed by GRPO using creativity and feasibility rewards; MBA-k additionally optimizes the six disclosed business evaluation criteria. Across MBA-Bench, MBA-b and MBA-k substantially outperform caption-only and multimodal baselines, demonstrating that multimodal agents can generate business ideas that are both creative and viable.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">Overview</h2>
+
+    <img src="./static/images/mba_overview.png" class="paper-image wide-image" alt="MBA overview">
+
+    <p class="figure-text">
+      MBA reframes business ideation as a multimodal agentic task. Instead of relying only on patent text or manually written prompts, MBA-Bench starts from real-world images, captions, domain labels, business questions, and retrieved market evidence. The resulting benchmark evaluates whether an agent can generate ideas that are specific, technically valid, innovative, competitively differentiated, aligned with user needs, and scalable in market size.
+    </p>
+
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-number">30K</div>
+        <div class="stat-label">image–caption–question–idea samples</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">6</div>
+        <div class="stat-label">visually grounded domains</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">8</div>
+        <div class="stat-label">training / evaluation objectives</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">2</div>
+        <div class="stat-label">MBA agents: blind and known</div>
+      </div>
+    </div>
+
+    <div class="tag-row">
+      <span class="soft-tag">General</span>
+      <span class="soft-tag">Spatial Layout</span>
+      <span class="soft-tag">Crowding</span>
+      <span class="soft-tag">Visual Condition</span>
+      <span class="soft-tag">Shape &amp; Texture</span>
+      <span class="soft-tag">Technical Features</span>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">Why Multimodal Business Ideation?</h2>
+
+    <p class="section-copy">
+      Existing business ideation pipelines are largely text-in, text-out systems. This assumption is restrictive because many real-world business opportunities depend on visual context: layouts, crowding, defects, material patterns, interface structure, and other details that captions often omit or flatten. MBA-Bench directly tests this gap by evaluating agents on image-grounded prompts rather than purely textual descriptions.
+    </p>
+
+    <img src="./static/images/mba_mismatch.png" class="paper-image medium-image" alt="Cross-modal mismatch examples">
+
+    <p class="figure-caption">
+      Recommended image: Figure 7, showing cross-modal mismatch between visual details and text captions.
+    </p>
+
+    <div class="highlight-box">
+      <strong>Key motivation.</strong>
+      Captions provide useful summaries, but they can miss fine-grained visual cues that shape distinctive business opportunities. MBA therefore keeps the image in the loop and evaluates agents in a truly multimodal setting.
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">MBA-Bench</h2>
+
+    <p class="section-copy">
+      MBA-Bench is constructed from 2K image–caption pairs spanning six domains. For each sample, a three-step retrieval-augmented ideation protocol extracts visual queries, retrieves market evidence through web search, and synthesizes reference business ideas across three high-level question types: cost efficiency, technology, and user experience.
+    </p>
+
+    <div class="results-wrap">
+      <div class="table-card">
+        <div class="table-title">MBA-Bench Dataset Statistics</div>
+        <table class="paper-table">
+          <thead>
+            <tr>
+              <th>Domain</th>
+              <th>Source Dataset</th>
+              <th>Images</th>
+              <th>Captions</th>
+              <th>Business Questions</th>
+              <th>Reference Ideas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>General</td>
+              <td>ADE20K</td>
+              <td>500</td>
+              <td>500</td>
+              <td>1,500</td>
+              <td>7,500</td>
+            </tr>
+            <tr>
+              <td>Spatial Layout</td>
+              <td>RICO</td>
+              <td>350</td>
+              <td>350</td>
+              <td>1,050</td>
+              <td>5,250</td>
+            </tr>
+            <tr>
+              <td>Crowding</td>
+              <td>COCO</td>
+              <td>350</td>
+              <td>350</td>
+              <td>1,050</td>
+              <td>5,250</td>
+            </tr>
+            <tr>
+              <td>Visual Condition</td>
+              <td>VisA</td>
+              <td>350</td>
+              <td>350</td>
+              <td>1,050</td>
+              <td>5,250</td>
+            </tr>
+            <tr>
+              <td>Shape &amp; Texture</td>
+              <td>DTD</td>
+              <td>350</td>
+              <td>350</td>
+              <td>1,050</td>
+              <td>5,250</td>
+            </tr>
+            <tr>
+              <td>Technical Features</td>
+              <td>DeepPCB</td>
+              <td>100</td>
+              <td>100</td>
+              <td>300</td>
+              <td>1,500</td>
+            </tr>
+            <tr class="ours">
+              <td>Total</td>
+              <td>-</td>
+              <td>2,000</td>
+              <td>2,000</td>
+              <td>6,000</td>
+              <td>30,000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="example-carousel" id="mba-example-carousel" aria-label="MBA-Bench domain example carousel">
+      <button class="carousel-button prev" type="button" aria-label="Previous domain example">‹</button>
+      <div class="carousel-track">
+        <div class="carousel-slide">
+          <div class="domain-slide-label">General</div>
+          <img src="./static/images/mba-general.png" alt="MBA-Bench General domain example">
+        </div>
+        <div class="carousel-slide">
+          <div class="domain-slide-label">Spatial Layout</div>
+          <img src="./static/images/mba-spatial.png" alt="MBA-Bench Spatial Layout domain example">
+        </div>
+        <div class="carousel-slide">
+          <div class="domain-slide-label">Crowding</div>
+          <img src="./static/images/mba-crowd.png" alt="MBA-Bench Crowding domain example">
+        </div>
+        <div class="carousel-slide">
+          <div class="domain-slide-label">Visual Condition</div>
+          <img src="./static/images/mba-visual.png" alt="MBA-Bench Visual Condition domain example">
+        </div>
+        <div class="carousel-slide">
+          <div class="domain-slide-label">Shape &amp; Texture</div>
+          <img src="./static/images/mba-shape.png" alt="MBA-Bench Shape and Texture domain example">
+        </div>
+        <div class="carousel-slide">
+          <div class="domain-slide-label">Technical Features</div>
+          <img src="./static/images/mba-tech.png" alt="MBA-Bench Technical Features domain example">
+        </div>
+      </div>
+      <button class="carousel-button next" type="button" aria-label="Next domain example">›</button>
+    </div>
+
+    <div class="carousel-dots" aria-label="MBA-Bench domain example navigation">
+      <button class="carousel-dot active" type="button" aria-label="General example"></button>
+      <button class="carousel-dot" type="button" aria-label="Spatial Layout example"></button>
+      <button class="carousel-dot" type="button" aria-label="Crowding example"></button>
+      <button class="carousel-dot" type="button" aria-label="Visual Condition example"></button>
+      <button class="carousel-dot" type="button" aria-label="Shape and Texture example"></button>
+      <button class="carousel-dot" type="button" aria-label="Technical Features example"></button>
+    </div>
+
+    <p class="figure-caption">
+      Representative MBA-Bench examples, one from each visual domain. Drag or swipe horizontally to browse.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">MBA Agents</h2>
+
+    <img src="./static/images/mba_pipeline.png" class="paper-image wide-image" alt="MBA training pipeline">
+
+    <p class="figure-text">
+      MBA trains task-specialized multimodal agents in two stages. First, an open-source MLLM is adapted with LoRA-based supervised fine-tuning on MBA-Bench question–idea pairs. Second, the SFT checkpoint is refined with GRPO using setting-specific ranking rewards. MBA-b targets a blind setting where only task-general creativity and feasibility rewards are available. MBA-k targets a known setting and additionally optimizes the six disclosed business-oriented criteria.
+    </p>
+
+    <div class="two-column">
+      <div class="info-card">
+        <h3>MBA-b: Blind Evaluation Setting</h3>
+        <p>
+          MBA-b assumes that the downstream evaluation rubric is not disclosed. It therefore optimizes two general objectives: creativity, which measures novelty relative to reference ideas, and feasibility, which grounds market relevance and factuality using MBA-Library.
+        </p>
+      </div>
+      <div class="info-card">
+        <h3>MBA-k: Known Evaluation Setting</h3>
+        <p>
+          MBA-k assumes that the six evaluation metrics are known. In addition to creativity and feasibility, it optimizes specificity, technical validity, innovativeness, competitive advantage, need validity, and market size.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">Results</h2>
+
+    <p class="section-copy">
+      MBA-b and MBA-k outperform caption-only and multimodal baselines on MBA-Bench. MBA-b improves over caption and multimodal baselines by 53.6% and 16.9%, respectively, while MBA-k improves by 67.3% and 27.4%. The results indicate that multimodal training and setting-specific reward optimization can improve both creativity-related and feasibility-related aspects of business ideation.
+    </p>
+
+    <img src="./static/images/mba_results_radar.png" class="paper-image wide-image" alt="Domain-wise benchmark results">
+
+    <p class="figure-caption">
+      Recommended image: Figure 2, showing domain-wise results across six business-oriented metrics.
+    </p>
+
+    <div class="results-wrap">
+      <div class="table-card">
+        <div class="table-title">Benchmark Results on MBA-Bench Test Set</div>
+        <table class="paper-table">
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>Spec. ↑</th>
+              <th>T.V. ↑</th>
+              <th>Innov. ↑</th>
+              <th>C.A. ↑</th>
+              <th>N.V. ↑</th>
+              <th>M.S. ↑</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="group-row">
+              <td colspan="7">Closed-source MLLMs</td>
+            </tr>
+            <tr>
+              <td>GPT-4o</td>
+              <td>3.51</td>
+              <td>3.04</td>
+              <td>3.04</td>
+              <td>2.79</td>
+              <td>2.27</td>
+              <td>2.05</td>
+            </tr>
+            <tr>
+              <td>GPT-5 mini</td>
+              <td><strong>4.00</strong></td>
+              <td>3.07</td>
+              <td>3.59</td>
+              <td>3.00</td>
+              <td>2.77</td>
+              <td>2.07</td>
+            </tr>
+            <tr>
+              <td>GPT-5</td>
+              <td>3.99</td>
+              <td>3.08</td>
+              <td>3.97</td>
+              <td>3.27</td>
+              <td>2.44</td>
+              <td>2.10</td>
+            </tr>
+            <tr>
+              <td>Claude-Sonnet-4.6</td>
+              <td>3.88</td>
+              <td><strong>3.16</strong></td>
+              <td>3.78</td>
+              <td>3.24</td>
+              <td>2.58</td>
+              <td>2.16</td>
+            </tr>
+            <tr>
+              <td>Gemini-3.1-pro-preview</td>
+              <td><strong>4.00</strong></td>
+              <td>3.04</td>
+              <td>3.98</td>
+              <td>3.01</td>
+              <td><strong>2.97</strong></td>
+              <td>2.35</td>
+            </tr>
+
+            <tr class="group-row">
+              <td colspan="7">Open-source MLLMs</td>
+            </tr>
+            <tr>
+              <td>LLaVA-OneVision-Qwen2-7B</td>
+              <td>3.39</td>
+              <td>2.99</td>
+              <td>3.17</td>
+              <td>2.91</td>
+              <td>2.33</td>
+              <td>2.15</td>
+            </tr>
+            <tr>
+              <td>InternVL2.5-8B</td>
+              <td>3.62</td>
+              <td>3.01</td>
+              <td>3.19</td>
+              <td>2.95</td>
+              <td>2.39</td>
+              <td>2.12</td>
+            </tr>
+            <tr>
+              <td>Qwen2.5-VL-7B-Instruct</td>
+              <td>3.60</td>
+              <td>3.06</td>
+              <td>3.15</td>
+              <td>2.62</td>
+              <td>2.32</td>
+              <td>1.94</td>
+            </tr>
+
+            <tr class="group-row">
+              <td colspan="7">MBA Agents</td>
+            </tr>
+            <tr>
+              <td>MBA-7B-SFT (Ours)</td>
+              <td>3.68</td>
+              <td>3.09</td>
+              <td>3.22</td>
+              <td>2.57</td>
+              <td>2.31</td>
+              <td>1.99</td>
+            </tr>
+            <tr class="ours">
+              <td>MBA-b-7B (Ours)</td>
+              <td>3.64</td>
+              <td>3.12</td>
+              <td>3.98</td>
+              <td>3.19</td>
+              <td>2.38</td>
+              <td>2.08</td>
+            </tr>
+            <tr class="ours">
+              <td>MBA-k-7B (Ours)</td>
+              <td>3.99</td>
+              <td>3.00</td>
+              <td><span class="best">4.00</span></td>
+              <td><span class="best">3.32</span></td>
+              <td>2.94</td>
+              <td><span class="best">2.75</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="table-note">
+        Spec.: Specificity; T.V.: Technical Validity; Innov.: Innovativeness; C.A.: Competitive Advantage; N.V.: Need Validity; M.S.: Market Size.
+      </p>
+    </div>
+
+    <img src="./static/images/mba_distribution.png" class="paper-image wide-image" alt="Image-level score distributions">
+
+    <p class="figure-caption">
+      Recommended image: Figure 5, showing image-level score distributions across six PBIG metrics.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">Takeaways</h2>
+
+    <div class="two-column">
+      <div class="info-card">
+        <h3>Multimodal inputs matter</h3>
+        <p>
+          Caption-only baselines miss image-specific cues, while multimodal inputs provide a stronger foundation for ideation in domains such as crowding, visual condition, shape and texture, spatial layout, and technical features.
+        </p>
+      </div>
+      <div class="info-card">
+        <h3>Reward design matters</h3>
+        <p>
+          SFT improves feasibility-related metrics, while GRPO with creativity and feasibility rewards improves originality and differentiation. MBA-k further benefits from optimizing the disclosed evaluation rubric.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="bibtex">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">BibTeX</h2>
+    <pre><code>@misc{choi2026mba,
+  title        = {MBA: Multimodal Benchmark and Agents for Real-World Business Ideation},
+  author       = {Choi, Hojun and Shin, Jaeyo and Lee, Suin and Shim, Hyunjung},
+  year         = {2026},
+  note         = {Preprint},
+  url          = {https://github.com/hchoi256/MBA}
+}</code></pre>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container is-max-desktop">
+    <div class="content has-text-centered">
+      <p>
+        This website is adapted from the
+        <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener noreferrer">
+          Academic Project Page Template
+        </a>.
+      </p>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+  (function () {
+    const carousel = document.getElementById('mba-example-carousel');
+    if (!carousel) return;
+
+    const track = carousel.querySelector('.carousel-track');
+    const slides = Array.from(carousel.querySelectorAll('.carousel-slide'));
+    const prev = carousel.querySelector('.carousel-button.prev');
+    const next = carousel.querySelector('.carousel-button.next');
+    const dots = Array.from(document.querySelectorAll('.carousel-dot'));
+
+    let index = 0;
+    let startX = 0;
+    let currentX = 0;
+    let isDragging = false;
+
+    function updateCarousel() {
+      track.style.transform = `translateX(${-index * 100}%)`;
+      dots.forEach((dot, dotIndex) => {
+        dot.classList.toggle('active', dotIndex === index);
+      });
+    }
+
+    function goTo(newIndex) {
+      index = Math.max(0, Math.min(slides.length - 1, newIndex));
+      updateCarousel();
+    }
+
+    prev.addEventListener('click', () => goTo(index - 1));
+    next.addEventListener('click', () => goTo(index + 1));
+
+    dots.forEach((dot, dotIndex) => {
+      dot.addEventListener('click', () => goTo(dotIndex));
+    });
+
+    track.addEventListener('pointerdown', (event) => {
+      isDragging = true;
+      startX = event.clientX;
+      currentX = startX;
+      track.classList.add('dragging');
+      track.setPointerCapture(event.pointerId);
+    });
+
+    track.addEventListener('pointermove', (event) => {
+      if (!isDragging) return;
+      currentX = event.clientX;
+      const delta = currentX - startX;
+      const width = carousel.clientWidth || 1;
+      const offsetPercent = (delta / width) * 100;
+      track.style.transform = `translateX(${(-index * 100) + offsetPercent}%)`;
+    });
+
+    function endDrag() {
+      if (!isDragging) return;
+      isDragging = false;
+      track.classList.remove('dragging');
+
+      const delta = currentX - startX;
+      const threshold = Math.max(60, carousel.clientWidth * 0.12);
+
+      if (delta > threshold) {
+        goTo(index - 1);
+      } else if (delta < -threshold) {
+        goTo(index + 1);
+      } else {
+        updateCarousel();
+      }
+    }
+
+    track.addEventListener('pointerup', endDrag);
+    track.addEventListener('pointercancel', endDrag);
+    track.addEventListener('pointerleave', endDrag);
+
+    updateCarousel();
+  })();
+</script>
+
+</body>
+</html>
