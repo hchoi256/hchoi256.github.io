@@ -6,10 +6,10 @@ main:
     conference_short: Preprint
     tag_type: default
     conference: Preprint, 2026.
-    # pdf: 
+    pdf: https://arxiv.org/abs/2608.11616
     page: https://hchoi256.github.io/projects/mba/
     code: https://github.com/hchoi256/MBA
-    # bibtex: 
+    bibtex: 
     image: ./assets/img/teasers/mba.png
 
   - title: Open-Vocabulary BEV Segmentation with 3D-Aware Geometric Constraints
