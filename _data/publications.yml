@@ -6,6 +6,7 @@ main:
     conference_short: Preprint
     tag_type: default
     conference: Preprint, 2026.
+    demo: https://huggingface.co/spaces/hchoi256/mba-business-ideation-agent
     pdf: https://arxiv.org/abs/2608.11616
     page: https://hchoi256.github.io/projects/mba/
     code: https://github.com/hchoi256/MBA
