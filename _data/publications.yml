@@ -2,8 +2,8 @@ main:
 
   - title: >-
       MBA: Multimodal Benchmark and Agents for Real-World Business Ideation
-    authors: <strong><u>Hojun Choi</u></strong>, Jaeyo Shin, Suin Lee, and Hyunjung Shim†,
-    special_note: '<a href="https://huggingface.co/papers/2608.11616" target="_blank" rel="noopener noreferrer">🤗 Hugging Face Daily Paper</a>'
+    authors: <strong><u>Hojun Choi</u></strong>, Jaeyo Shin, Suin Lee, and Hyunjung Shim<sup>†</sup>,
+    special_note: '<a href="https://huggingface.co/papers/2608.11616" target="_blank" rel="noopener noreferrer">🤗 HuggingFace Daily Paper</a>'
     conference_short: Preprint
     tag_type: default
     conference: Preprint, 2026.
@@ -15,7 +15,7 @@ main:
     image: ./assets/img/teasers/mba.png
 
   - title: Open-Vocabulary BEV Segmentation with 3D-Aware Geometric Constraints
-    authors: <strong><u>Hojun Choi</u></strong>, Seulbin Hwang, Dae Jung Kim, Kisung Kim, Hyunjung Shim†, and Jinhan Lee†
+    authors: <strong><u>Hojun Choi</u></strong>, Seulbin Hwang, Dae Jung Kim, Kisung Kim, Hyunjung Shim<sup>†</sup>, and Jinhan Lee<sup>†</sup>
     conference_short: ECCV
     tag_type: conference
     conference: >-
@@ -27,7 +27,7 @@ main:
 
   - title: >-
       MSPL: Multi-Step Pseudo-Labeling for Open-Vocabulary Object Detection
-    authors: <strong><u>Hojun Choi</u></strong>, Youngsun Lim, Jaeyo Shin, and Hyunjung Shim†
+    authors: <strong><u>Hojun Choi</u></strong>, Youngsun Lim, Jaeyo Shin, and Hyunjung Shim<sup>†</sup>
     conference_short: ECCV
     badges:
       - text: ECCV
@@ -44,7 +44,7 @@ main:
 
   - title: >-
       SUPER-AD: Semantic Uncertainty-aware Planning for End-to-End Robust Autonomous Driving
-    authors: Wonjeong Ryu, Seungjun Yu, Seokha Moon, <strong><u>Hojun Choi</u></strong>, Junsung Park, Jinkyu Kim, and Hyunjung Shim†
+    authors: Wonjeong Ryu, Seungjun Yu, Seokha Moon, <strong><u>Hojun Choi</u></strong>, Junsung Park, Jinkyu Kim, and Hyunjung Shim<sup>†</sup>
     conference_short: Preprint
     tag_type: default
     conference: Preprint, 2025.
@@ -53,7 +53,7 @@ main:
     image: ./assets/img/teasers/superad.png
 
   - title: Evaluating Image Hallucination in Text-to-Image Generation with Question-Answering
-    authors: Youngsun Lim*, <strong><u>Hojun Choi</u></strong>*, and Hyunjung Shim† (*Equal contribution)
+    authors: Youngsun Lim*, <strong><u>Hojun Choi</u></strong>*, and Hyunjung Shim<sup>†</sup> (*Equal contribution)
     conference_short: AAAI
     tag_type: conference
     conference: >-
@@ -66,7 +66,7 @@ main:
     notes: Oral Presentation
 
   - title: Sampling Bag of Views for Open-Vocabulary Object Detection
-    authors: <strong><u>Hojun Choi</u></strong>, Junsuk Choe, and Hyunjung Shim†
+    authors: <strong><u>Hojun Choi</u></strong>, Junsuk Choe, and Hyunjung Shim<sup>†</sup>
     conference_short: Preprint
     tag_type: default
     conference: Preprint, 2024.
@@ -76,7 +76,7 @@ main:
 
   - title: >-
       MobileGPT: Augmenting LLM with Human-like App Memory for Mobile Task Automation
-    authors: Sunjae Lee, Junyoung Choi, Jungjae Lee, Munim Hasan Wasi, <strong><u>Hojun Choi</u></strong>, Steven Y. Ko, Sangeun Oh†, and Insik Shin†
+    authors: Sunjae Lee, Junyoung Choi, Jungjae Lee, Munim Hasan Wasi, <strong><u>Hojun Choi</u></strong>, Steven Y. Ko, Sangeun Oh<sup>†</sup>, and Insik Shin<sup>†</sup>
     conference_short: MobiCom
     tag_type: conference
     conference: >-
@@ -87,7 +87,7 @@ main:
     image: ./assets/img/teasers/memodroid.png
 
   - title: Accurate Retraining-free Pruning for Pre-trained Encoder-based Language Models
-    authors: Seungcheol Park, <strong><u>Hojun Choi</u></strong>, and U Kang†
+    authors: Seungcheol Park, <strong><u>Hojun Choi</u></strong>, and U Kang<sup>†</sup>
     conference_short: ICLR
     tag_type: conference
     conference: >-

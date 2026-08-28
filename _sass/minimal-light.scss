@@ -922,7 +922,18 @@ footer {
 .publication-special-note {
   margin-top: 2px;
   margin-bottom: 4px;
-  color: #f97316;
+  color: #f97316 !important;
   font-size: 13px;
   font-weight: 700;
+}
+
+.publication-special-note a {
+  color: #f97316 !important;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.publication-special-note a:hover {
+  color: #ea580c !important;
+  text-decoration: underline;
 }
