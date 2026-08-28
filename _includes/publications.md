@@ -47,17 +47,19 @@
       {{ link.authors }}
     </div>
 
+    {% if link.special_note %}
+    <div class="publication-special-note">
+      {{ link.special_note }}
+    </div>
+    {% endif %}
+
     <div class="publication-venue">
       {{ link.conference }}
     </div>
 
     <div class="publication-links">
-      {% if link.demo %}
-      <a href="{{ link.demo }}" target="_blank" rel="noopener noreferrer">Demo</a>
-      {% endif %}
-
       {% if link.pdf %}
-      <a href="{{ link.pdf }}" target="_blank" rel="noopener noreferrer">Paper</a>
+      <a href="{{ link.pdf }}" target="_blank" rel="noopener noreferrer">PDF</a>
       {% endif %}
 
       {% if link.code %}
