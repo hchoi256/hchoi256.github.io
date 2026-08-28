@@ -58,8 +58,12 @@
     </div>
 
     <div class="publication-links">
+      {% if link.demo %}
+      <a href="{{ link.demo }}" target="_blank" rel="noopener noreferrer">Demo</a>
+      {% endif %}
+
       {% if link.pdf %}
-      <a href="{{ link.pdf }}" target="_blank" rel="noopener noreferrer">PDF</a>
+      <a href="{{ link.pdf }}" target="_blank" rel="noopener noreferrer">Paper</a>
       {% endif %}
 
       {% if link.code %}
