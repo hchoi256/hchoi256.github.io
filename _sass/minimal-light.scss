@@ -937,3 +937,39 @@ footer {
   color: #ea580c !important;
   text-decoration: underline;
 }
+
+/* =========================================================
+   Publication author superscript and special-note link color
+   ========================================================= */
+
+.publication-authors sup {
+  font-size: 0.62em !important;
+  line-height: 0 !important;
+  vertical-align: super !important;
+  position: relative;
+  top: -0.05em;
+}
+
+.publication-item .publication-special-note,
+.publication-special-note {
+  margin-top: 2px;
+  margin-bottom: 4px;
+  color: #f97316 !important;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.publication-item .publication-special-note a,
+.publication-item .publication-special-note a:visited,
+.publication-special-note a,
+.publication-special-note a:visited {
+  color: #f97316 !important;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.publication-item .publication-special-note a:hover,
+.publication-special-note a:hover {
+  color: #ea580c !important;
+  text-decoration: underline;
+}

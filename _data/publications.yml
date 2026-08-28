@@ -2,8 +2,8 @@ main:
 
   - title: >-
       MBA: Multimodal Benchmark and Agents for Real-World Business Ideation
-    authors: <strong><u>Hojun Choi</u></strong>, Jaeyo Shin, Suin Lee, and Hyunjung Shim<sup>†</sup>,
-    special_note: '<a href="https://huggingface.co/papers/2608.11616" target="_blank" rel="noopener noreferrer">🤗 HuggingFace Daily Paper</a>'
+    authors: <strong><u>Hojun Choi</u></strong>, Jaeyo Shin, Suin Lee, and Hyunjung Shim<sup>†</sup>
+    special_note: '<a href="https://huggingface.co/papers/2608.11616" target="_blank" rel="noopener noreferrer" style="color: #f97316 !important; font-weight: 700; text-decoration: none;">🤗 Hugging Face Daily Paper</a>'
     conference_short: Preprint
     tag_type: default
     conference: Preprint, 2026.
