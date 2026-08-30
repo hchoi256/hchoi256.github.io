@@ -52,9 +52,9 @@
   <input type="radio" id="pub-filter-all" name="pub-filter">
 
   <div class="publication-filter-tabs">
-    <label for="pub-filter-selected">★Selected</label>
+    <label for="pub-filter-selected">★SELECTED</label>
     <span class="publication-filter-separator">/</span>
-    <label for="pub-filter-all">All</label>
+    <label for="pub-filter-all">ALL</label>
   </div>
 
   <div class="publication-panel publication-panel-selected">
