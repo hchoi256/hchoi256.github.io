@@ -973,3 +973,46 @@ footer {
   color: #ea580c !important;
   text-decoration: underline;
 }
+
+/* Selected / All tabs for Publications */
+.publication-filter input[type="radio"] {
+  display: none;
+}
+
+.publication-filter-tabs {
+  margin-top: 4px;
+  margin-bottom: 18px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.publication-filter-tabs label {
+  cursor: pointer;
+  color: #777;
+  padding: 0 2px;
+}
+
+.publication-filter-separator {
+  color: #bbb;
+  margin: 0 6px;
+}
+
+.publication-panel {
+  display: none;
+}
+
+#pub-filter-selected:checked ~ .publication-filter-tabs label[for="pub-filter-selected"],
+#pub-filter-all:checked ~ .publication-filter-tabs label[for="pub-filter-all"] {
+  color: #111;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+#pub-filter-selected:checked ~ .publication-panel-selected {
+  display: block;
+}
+
+#pub-filter-all:checked ~ .publication-panel-all {
+  display: block;
+}

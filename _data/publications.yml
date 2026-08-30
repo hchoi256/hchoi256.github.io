@@ -24,6 +24,7 @@ main:
     page: https://hchoi256.github.io/projects/ovbevseg/
     bibtex: https://hchoi256.github.io/projects/ovbevseg/#bibtex
     image: ./assets/img/teasers/ovbevseg.png
+    selected: true
 
   - title: >-
       MSPL: Multi-Step Pseudo-Labeling for Open-Vocabulary Object Detection
@@ -41,6 +42,7 @@ main:
     page: https://hchoi256.github.io/projects/mspl/
     bibtex: https://github.com/hchoi256/mspl#citation
     image: ./assets/img/teasers/mspl.png
+    selected: true
 
   - title: >-
       SUPER-AD: Semantic Uncertainty-aware Planning for End-to-End Robust Autonomous Driving
@@ -64,6 +66,7 @@ main:
     bibtex: https://github.com/kaist-cvml/I-HallA-v1.0#citation
     image: ./assets/img/teasers/ihalla.png
     notes: Oral Presentation
+    selected: true
 
   - title: Sampling Bag of Views for Open-Vocabulary Object Detection
     authors: '<strong><u>Hojun Choi</u></strong>, Junsuk Choe, and Hyunjung Shim<span style="font-size: 0.68em; vertical-align: super; line-height: 0;">†</span>'
@@ -85,6 +88,7 @@ main:
     code: https://github.com/mobilegptsys/MobileGPT
     bibtex: https://dblp.org/rec/conf/mobicom/LeeCLWCKOS24.bib
     image: ./assets/img/teasers/memodroid.png
+    selected: true
 
   - title: Accurate Retraining-free Pruning for Pre-trained Encoder-based Language Models
     authors: 'Seungcheol Park, <strong><u>Hojun Choi</u></strong>, and U Kang<span style="font-size: 0.68em; vertical-align: super; line-height: 0;">†</span>'
@@ -96,3 +100,4 @@ main:
     code: https://github.com/snudm-starlab/K-prune
     bibtex: https://github.com/snudm-starlab/K-prune#reference
     image: ./assets/img/teasers/kprune.png
+    selected: true
