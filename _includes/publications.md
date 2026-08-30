@@ -80,7 +80,74 @@
       <span class="publication-badge publication-badge--{{ badge.type | default: 'default' }}">
         {{ badge.text }}
       </span>
+      {% endfor %}
+    </div>
+
+    {% elsif link.conference_short %}
+    <div class="publication-badges">
+      <span class="publication-badge publication-badge--{{ link.tag_type | default: 'default' }}">
+        {{ link.conference_short }}
+      </span>
+    </div>
+    {% endif %}
+
+  </div>
+  {% endif %}
+
+  <div class="publication-content">
+
+    <div class="publication-title">
+      <papertitle>{{ link.title }}</papertitle>
+    </div>
+
+    <div class="publication-authors">
+      {{ link.authors }}
+    </div>
+
+    {% if link.special_note %}
+    <div class="publication-special-note">
+      {{ link.special_note }}
+    </div>
+    {% endif %}
+
+    <div class="publication-venue">
+      {{ link.conference }}
+    </div>
+
+    <div class="publication-links">
+      {% if link.demo %}
+      <a href="{{ link.demo }}" target="_blank" rel="noopener noreferrer">Demo</a>
       {% endif %}
+
+      {% if link.pdf %}
+      <a href="{{ link.pdf }}" target="_blank" rel="noopener noreferrer">Paper</a>
+      {% endif %}
+
+      {% if link.code %}
+      <a href="{{ link.code }}" target="_blank" rel="noopener noreferrer">Code</a>
+      {% endif %}
+
+      {% if link.page %}
+      <a href="{{ link.page }}" target="_blank" rel="noopener noreferrer">Project Page</a>
+      {% endif %}
+
+      {% if link.bibtex %}
+      <a href="{{ link.bibtex }}" target="_blank" rel="noopener noreferrer">BibTeX</a>
+      {% endif %}
+
+      {% if link.notes %}
+      <span class="publication-note">{{ link.notes }}</span>
+      {% endif %}
+
+      {% if link.others %}
+      {{ link.others }}
+      {% endif %}
+    </div>
+
+  </div>
+
+</div>
+{% endif %}
 {% endfor %}
 
     </div>
@@ -109,6 +176,73 @@
         {{ badge.text }}
       </span>
       {% endfor %}
+    </div>
+
+    {% elsif link.conference_short %}
+    <div class="publication-badges">
+      <span class="publication-badge publication-badge--{{ link.tag_type | default: 'default' }}">
+        {{ link.conference_short }}
+      </span>
+    </div>
+    {% endif %}
+
+  </div>
+  {% endif %}
+
+  <div class="publication-content">
+
+    <div class="publication-title">
+      <papertitle>{{ link.title }}</papertitle>
+    </div>
+
+    <div class="publication-authors">
+      {{ link.authors }}
+    </div>
+
+    {% if link.special_note %}
+    <div class="publication-special-note">
+      {{ link.special_note }}
+    </div>
+    {% endif %}
+
+    <div class="publication-venue">
+      {{ link.conference }}
+    </div>
+
+    <div class="publication-links">
+      {% if link.demo %}
+      <a href="{{ link.demo }}" target="_blank" rel="noopener noreferrer">Demo</a>
+      {% endif %}
+
+      {% if link.pdf %}
+      <a href="{{ link.pdf }}" target="_blank" rel="noopener noreferrer">Paper</a>
+      {% endif %}
+
+      {% if link.code %}
+      <a href="{{ link.code }}" target="_blank" rel="noopener noreferrer">Code</a>
+      {% endif %}
+
+      {% if link.page %}
+      <a href="{{ link.page }}" target="_blank" rel="noopener noreferrer">Project Page</a>
+      {% endif %}
+
+      {% if link.bibtex %}
+      <a href="{{ link.bibtex }}" target="_blank" rel="noopener noreferrer">BibTeX</a>
+      {% endif %}
+
+      {% if link.notes %}
+      <span class="publication-note">{{ link.notes }}</span>
+      {% endif %}
+
+      {% if link.others %}
+      {{ link.others }}
+      {% endif %}
+    </div>
+
+  </div>
+
+</div>
+{% endfor %}
 
     </div>
   </div>
