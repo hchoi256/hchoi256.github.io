@@ -58,7 +58,7 @@ My research interests include **Multimodal Learning**, **World Models**, and **A
   <div class="timeline-year"><span class="year-label">2025</span></div>
   <div class="timeline-item"><span class="timeline-month">May</span> Joined <img src="{{ '/assets/img/research/naver-labs.png' | relative_url }}" alt="" style="height: 1em; width: 1em; object-fit: contain; vertical-align: -0.12em; margin-right: 4px;"><a href="https://www.naverlabs.com/en/" style="font-weight: 700 !important;">NAVER LABS</a> as a <span class="text-accent">Research Intern</span>.</div>
   <div class="timeline-item"><span class="timeline-month">Feb</span> <b>I-HallA</b> is selected for an <span class="text-accent">Oral Presentation at AAAI 2025</span>.</div>
-  <div class="timeline-item"><span class="timeline-month">Jan</span> <b>I-HallA</b> is accepted to <span class="text-accent" style="font-family: 'Raleway', sans-serif !important; font-weight: 700 !important;">AAAI 2025</span> 🇺🇸</div>
+  <div class="timeline-item"><span class="timeline-month">Jan</span> <b>I-HallA</b> is accepted to <span class="text-accent">AAAI 2025</span> 🇺🇸</div>
   <div class="timeline-item"><span class="timeline-month">Jan</span> New award: <span class="text-accent">Oral Presentation</span> at IPIU 2025.</div>
 </div>
 
