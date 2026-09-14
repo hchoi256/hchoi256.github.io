@@ -1,250 +1,60 @@
-<hr class="section-divider">
+<h2 id="publications" style="margin: 2px 0 6px;">Publications</h2>
+<p style="margin: 0 0 20px; color: gray; font-size: 0.9em;"><em><strong>*:</strong> denotes equal contribution. <strong>†:</strong> denotes corresponding author.</em></p>
 
-## Publications
-
-<style>
-.publication-filter input[type="radio"] {
-  display: none;
-}
-
-.publication-filter-tabs {
-  margin-top: 4px;
-  margin-bottom: 18px;
-  font-size: 15px;
-  font-weight: 600;
-}
-
-.publication-filter-tabs label {
-  cursor: pointer;
-  color: #777;
-  padding: 0 2px;
-}
-
-.publication-filter-separator {
-  color: #bbb;
-  margin: 0 6px;
-}
-
-.publication-panel {
-  display: none;
-}
-
-#pub-filter-selected:checked ~ .publication-filter-tabs label[for="pub-filter-selected"],
-#pub-filter-all:checked ~ .publication-filter-tabs label[for="pub-filter-all"] {
-  color: #111;
-  font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-
-#pub-filter-selected:checked ~ .publication-panel-selected {
-  display: block;
-}
-
-#pub-filter-all:checked ~ .publication-panel-all {
-  display: block;
-}
-</style>
-
-<div class="publication-filter">
-
-  <input type="radio" id="pub-filter-selected" name="pub-filter" checked>
-  <input type="radio" id="pub-filter-all" name="pub-filter">
-
-  <div class="publication-filter-tabs">
-    <label for="pub-filter-selected">★Selected</label>
-    <span class="publication-filter-separator">/</span>
-    <label for="pub-filter-all">All</label>
-  </div>
-
-  <div class="publication-panel publication-panel-selected">
-    <div class="publications-list">
+<div class="publications">
+<ol class="bibliography">
 
 {% for link in site.data.publications.main %}
-{% if link.selected %}
-<div class="publication-item">
 
-  {% if link.image %}
-  <div class="publication-thumb">
-
-    <img
-      class="publication-teaser"
-      src="{{ link.image | relative_url }}"
-      alt="{{ link.title | escape }}"
-      loading="lazy"
-    >
-
-    {% if link.badges %}
-    <div class="publication-badges">
-      {% for badge in link.badges %}
-      <span class="publication-badge publication-badge--{{ badge.type | default: 'default' }}">
-        {{ badge.text }}
-      </span>
-      {% endfor %}
-    </div>
-
-    {% elsif link.conference_short %}
-    <div class="publication-badges">
-      <span class="publication-badge publication-badge--{{ link.tag_type | default: 'default' }}">
-        {{ link.conference_short }}
-      </span>
-    </div>
+<li>
+<div class="pub-row">
+  <div class="col-sm-3 abbr" style="position: relative;padding-right: 15px;padding-left: 15px;">
+    {% if link.image %}
+    <img src="{{ link.image }}" class="teaser img-fluid z-depth-1" style="width=100;height=40%">
+    {% if link.conference_short %}
+    <abbr class="badge">{{ link.conference_short }}</abbr>
     {% endif %}
-
+    {% endif %}
   </div>
-  {% endif %}
-
-  <div class="publication-content">
-
-    <div class="publication-title">
-      <papertitle>{{ link.title }}</papertitle>
-    </div>
-
-    <div class="publication-authors">
-      {{ link.authors }}
-    </div>
-
-    {% if link.special_note %}
-    <div class="publication-special-note">
-      {{ link.special_note }}
-    </div>
-    {% endif %}
-
-    <div class="publication-venue">
-      {{ link.conference }}
-    </div>
-
-    <div class="publication-links">
-      {% if link.demo %}
-      <a href="{{ link.demo }}" target="_blank" rel="noopener noreferrer">Demo</a>
+  <div class="col-sm-9" style="position: relative;padding-right: 15px;padding-left: 20px;">
+      <div class="title"><a href="{{ link.pdf }}">{{ link.title }}</a></div>
+      <div class="author">{{ link.authors }}</div>
+      {% if link.special_note %}
+      <div class="periodical">{{ link.special_note }}</div>
       {% endif %}
-
-      {% if link.pdf %}
-      <a href="{{ link.pdf }}" target="_blank" rel="noopener noreferrer">Paper</a>
-      {% endif %}
-
-      {% if link.code %}
-      <a href="{{ link.code }}" target="_blank" rel="noopener noreferrer">Code</a>
-      {% endif %}
-
-      {% if link.page %}
-      <a href="{{ link.page }}" target="_blank" rel="noopener noreferrer">Project Page</a>
-      {% endif %}
-
-      {% if link.bibtex %}
-      <a href="{{ link.bibtex }}" target="_blank" rel="noopener noreferrer">BibTeX</a>
-      {% endif %}
-
       {% if link.notes %}
-      <span class="publication-note">{{ link.notes }}</span>
+      <div class="periodical"><strong style="color:#e74d3c; font-weight:700 !important;">🎉 {{ link.notes }}</strong></div>
       {% endif %}
-
+      <div class="periodical"><em>{{ link.conference }}</em></div>
+    <div class="links">
+      {% if link.demo %}
+      <a href="{{ link.demo }}" class="btn btn-sm z-depth-0" role="button" target="_blank" style="font-size:12px;">Demo</a>
+      {% endif %}
+      {% if link.pdf %}
+      <a href="{{ link.pdf }}" class="btn btn-sm z-depth-0" role="button" target="_blank" style="font-size:12px;">PDF</a>
+      {% endif %}
+      {% if link.code %}
+      <a href="{{ link.code }}" class="btn btn-sm z-depth-0" role="button" target="_blank" style="font-size:12px;">Code</a>
+      {% endif %}
+      {% if link.page %}
+      <a href="{{ link.page }}" class="btn btn-sm z-depth-0" role="button" target="_blank" style="font-size:12px;">Project Page</a>
+      {% endif %}
+      {% if link.dataset %}
+      <a href="{{ link.dataset }}" class="btn btn-sm z-depth-0" role="button" target="_blank" style="font-size:12px;">Dataset</a>
+      {% endif %}
+      {% if link.bibtex %}
+      <a href="{{ link.bibtex }}" class="btn btn-sm z-depth-0" role="button" target="_blank" style="font-size:12px;">BibTex</a>
+      {% endif %}
       {% if link.others %}
       {{ link.others }}
       {% endif %}
     </div>
-
   </div>
-
 </div>
-{% endif %}
+</li>
+<br>
+
 {% endfor %}
 
-    </div>
-  </div>
-
-  <div class="publication-panel publication-panel-all">
-    <div class="publications-list">
-
-{% for link in site.data.publications.main %}
-<div class="publication-item">
-
-  {% if link.image %}
-  <div class="publication-thumb">
-
-    <img
-      class="publication-teaser"
-      src="{{ link.image | relative_url }}"
-      alt="{{ link.title | escape }}"
-      loading="lazy"
-    >
-
-    {% if link.badges %}
-    <div class="publication-badges">
-      {% for badge in link.badges %}
-      <span class="publication-badge publication-badge--{{ badge.type | default: 'default' }}">
-        {{ badge.text }}
-      </span>
-      {% endfor %}
-    </div>
-
-    {% elsif link.conference_short %}
-    <div class="publication-badges">
-      <span class="publication-badge publication-badge--{{ link.tag_type | default: 'default' }}">
-        {{ link.conference_short }}
-      </span>
-    </div>
-    {% endif %}
-
-  </div>
-  {% endif %}
-
-  <div class="publication-content">
-
-    <div class="publication-title">
-      <papertitle>{{ link.title }}</papertitle>
-    </div>
-
-    <div class="publication-authors">
-      {{ link.authors }}
-    </div>
-
-    {% if link.special_note %}
-    <div class="publication-special-note">
-      {{ link.special_note }}
-    </div>
-    {% endif %}
-
-    <div class="publication-venue">
-      {{ link.conference }}
-    </div>
-
-    <div class="publication-links">
-      {% if link.demo %}
-      <a href="{{ link.demo }}" target="_blank" rel="noopener noreferrer">Demo</a>
-      {% endif %}
-
-      {% if link.pdf %}
-      <a href="{{ link.pdf }}" target="_blank" rel="noopener noreferrer">Paper</a>
-      {% endif %}
-
-      {% if link.code %}
-      <a href="{{ link.code }}" target="_blank" rel="noopener noreferrer">Code</a>
-      {% endif %}
-
-      {% if link.page %}
-      <a href="{{ link.page }}" target="_blank" rel="noopener noreferrer">Project Page</a>
-      {% endif %}
-
-      {% if link.bibtex %}
-      <a href="{{ link.bibtex }}" target="_blank" rel="noopener noreferrer">BibTeX</a>
-      {% endif %}
-
-      {% if link.notes %}
-      <span class="publication-note">{{ link.notes }}</span>
-      {% endif %}
-
-      {% if link.others %}
-      {{ link.others }}
-      {% endif %}
-    </div>
-
-  </div>
-
-</div>
-{% endfor %}
-
-    </div>
-  </div>
-
+</ol>
 </div>

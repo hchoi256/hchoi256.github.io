@@ -169,7 +169,7 @@ papertitle {
 
       .image.avatar img {
         border-radius: 100%;
-        width: 45%;
+        width: 52%;
         padding: 20px;
         // border: 1px solid #ddd;
         // padding: 3px;
@@ -213,12 +213,12 @@ h1 {
 }
 
 a {
-  color:#39c;
+  color:rgb(255, 119, 189);
   text-decoration:none;
 }
 
 a:hover {
-  color:#069;
+  color:rgb(230, 90, 160);
 }
 
 a small {
@@ -515,4 +515,19 @@ footer {
   margin-left: 0px;
   display:none;
   font-family: monospace;
+}
+
+.text-accent {
+  color: #e36b8f;
+  font-weight: bold;
+
+  a {
+    color: inherit;
+    font-weight: inherit;
+  }
+}
+
+.text-accent-org {
+  color: #1e3a5f;
+  font-weight: bold;
 }

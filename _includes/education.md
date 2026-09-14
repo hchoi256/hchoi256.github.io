@@ -1,4 +1,4 @@
-<hr class="section-divider">
+---
 
 ## Education
 
@@ -8,7 +8,6 @@
     <span>Jan. 2026 – Present</span>
   </div>
   <div>Ph.D. in Artificial Intelligence</div>
-  <div>Advisor: Prof. <a href="https://scholar.google.com/citations?hl=en&user=KB5XZGIAAAAJ">Hyunjung (Kate) Shim</a></div>
 </div>
 
 <div style="margin-bottom: 1.1em;">
@@ -17,7 +16,6 @@
     <span>Jan. 2024 – Dec. 2025</span>
   </div>
   <div>M.S. in Artificial Intelligence</div>
-  <div>Advisor: Prof. <a href="https://scholar.google.com/citations?hl=en&user=KB5XZGIAAAAJ">Hyunjung (Kate) Shim</a></div>
 </div>
 
 <div style="margin-bottom: 1.1em;">
@@ -29,8 +27,8 @@
     </div>
     <div style="text-align: right; flex: 0 0 auto;">
       <div>Jan. 2017 – Dec. 2022</div>
-      <!-- <div>GPA: 3.9/4.0</div> -->
-      <div style="color: #b31b1b; font-weight: 700;">Dean's List Recipient</div>
+      <div>GPA: 3.9/4.0</div>
+      <div><span class="text-accent">Dean's List Recipient</span></div>
     </div>
   </div>
 </div>

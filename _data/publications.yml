@@ -1,103 +1,69 @@
 main:
-
-  - title: >-
-      MBA: Multimodal Benchmark and Agents for Real-World Business Ideation
-    authors: '<strong><u>Hojun Choi</u></strong>, Jaeyo Shin, Suin Lee, and Hyunjung Shim<span style="font-size: 0.68em; vertical-align: super; line-height: 0;">†</span>'
-    special_note: '<a href="https://huggingface.co/papers/2608.11616" target="_blank" rel="noopener noreferrer" style="color: #f97316 !important; font-weight: 700; text-decoration: none;">🤗 HuggingFace Daily Paper</a>'
-    conference_short: Preprint
-    tag_type: default
-    conference: '<strong>Preprint</strong>, 2026.'
-    demo: https://huggingface.co/spaces/hchoi256/mba-business-ideation-agent
-    pdf: https://arxiv.org/abs/2608.11616
-    page: https://hchoi256.github.io/projects/mba/
-    code: https://github.com/hchoi256/MBA
-    bibtex: https://hchoi256.github.io/projects/mba/#bibtex
-    image: ./assets/img/teasers/mba.png
-
-  - title: Open-Vocabulary BEV Segmentation with 3D-Aware Geometric Constraints
-    authors: '<strong><u>Hojun Choi</u></strong>, Seulbin Hwang, Dae Jung Kim, Kisung Kim, Hyunjung Shim<span style="font-size: 0.68em; vertical-align: super; line-height: 0;">†</span>, and Jinhan Lee<span style="font-size: 0.68em; vertical-align: super; line-height: 0;">†</span>'
-    conference_short: ECCV
-    tag_type: conference
-    conference: >-
-      <span style="color: #0066cc !important; font-weight: 700 !important;">European Conference on Computer Vision (ECCV)</span>, 2026.
-    pdf: https://arxiv.org/abs/2606.24353
-    page: https://hchoi256.github.io/projects/ovbevseg/
-    bibtex: https://hchoi256.github.io/projects/ovbevseg/#bibtex
-    image: ./assets/img/teasers/ovbevseg.png
-    selected: true
-
-  - title: >-
-      MSPL: Multi-Step Pseudo-Labeling for Open-Vocabulary Object Detection
-    authors: '<strong><u>Hojun Choi</u></strong>, Youngsun Lim, Jaeyo Shin, and Hyunjung Shim<span style="font-size: 0.68em; vertical-align: super; line-height: 0;">†</span>'
-    conference_short: ECCV
-    badges:
-      - text: ECCV
-        type: conference
-      - text: CVPRW
-        type: workshop
-    conference: >-
-      <span style="color: forestgreen !important; font-weight: 700 !important;">2nd Workshop on Multimodal Spatial Intelligence @ CVPR (CVPRW)</span>, 2026.<br><span style="color: #0066cc !important; font-weight: 700 !important;">European Conference on Computer Vision (ECCV)</span>, 2026.
-    pdf: https://arxiv.org/pdf/2510.14792
-    code: https://github.com/hchoi256/mspl
-    page: https://hchoi256.github.io/projects/mspl/
-    bibtex: https://github.com/hchoi256/mspl#citation
-    image: ./assets/img/teasers/mspl.png
-    selected: true
-
-  - title: >-
-      SUPER-AD: Semantic Uncertainty-aware Planning for End-to-End Robust Autonomous Driving
-    authors: 'Wonjeong Ryu, Seungjun Yu, Seokha Moon, <strong><u>Hojun Choi</u></strong>, Junsung Park, Jinkyu Kim, and Hyunjung Shim<span style="font-size: 0.68em; vertical-align: super; line-height: 0;">†</span>'
-    conference_short: Preprint
-    tag_type: default
-    conference: '<strong>Preprint</strong>, 2025.'
-    pdf: https://arxiv.org/pdf/2511.22865
-    bibtex: https://arxiv.org/bibtex/2511.22865
-    image: ./assets/img/teasers/superad.png
-
-  - title: Evaluating Image Hallucination in Text-to-Image Generation with Question-Answering
-    authors: 'Youngsun Lim*, <strong><u>Hojun Choi</u></strong>*, and Hyunjung Shim<span style="font-size: 0.68em; vertical-align: super; line-height: 0;">†</span> (*Equal contribution)'
-    conference_short: AAAI
-    tag_type: conference
-    conference: >-
-      <span style="color: #0066cc !important; font-weight: 700 !important;">AAAI Conference on Artificial Intelligence (AAAI)</span>, 2025.
-    pdf: https://arxiv.org/pdf/2409.12784
-    code: https://github.com/kaist-cvml/I-HallA-v1.0
-    page: https://sgt-lim.github.io/I-HallA/
-    bibtex: https://github.com/kaist-cvml/I-HallA-v1.0#citation
-    image: ./assets/img/teasers/ihalla.png
-    notes: Oral Presentation
-    selected: true
-
-  - title: Sampling Bag of Views for Open-Vocabulary Object Detection
-    authors: '<strong><u>Hojun Choi</u></strong>, Junsuk Choe, and Hyunjung Shim<span style="font-size: 0.68em; vertical-align: super; line-height: 0;">†</span>'
-    conference_short: Preprint
-    tag_type: default
-    conference: '<strong>Preprint</strong>, 2024.'
-    pdf: https://arxiv.org/pdf/2412.18273
-    bibtex: https://arxiv.org/bibtex/2412.18273
-    image: ./assets/img/teasers/bov.png
-
-  - title: >-
-      MobileGPT: Augmenting LLM with Human-like App Memory for Mobile Task Automation
-    authors: 'Sunjae Lee, Junyoung Choi, Jungjae Lee, Munim Hasan Wasi, <strong><u>Hojun Choi</u></strong>, Steven Y. Ko, Sangeun Oh<span style="font-size: 0.68em; vertical-align: super; line-height: 0;">†</span>, and Insik Shin<span style="font-size: 0.68em; vertical-align: super; line-height: 0;">†</span>'
-    conference_short: MobiCom
-    tag_type: conference
-    conference: >-
-      <span style="color: #0066cc !important; font-weight: 700 !important;">ACM International Conference on Mobile Computing and Networking (MobiCom)</span>, 2024.
-    pdf: https://arxiv.org/pdf/2312.03003
-    code: https://github.com/mobilegptsys/MobileGPT
-    bibtex: https://dblp.org/rec/conf/mobicom/LeeCLWCKOS24.bib
-    image: ./assets/img/teasers/memodroid.png
-    selected: true
-
-  - title: Accurate Retraining-free Pruning for Pre-trained Encoder-based Language Models
-    authors: 'Seungcheol Park, <strong><u>Hojun Choi</u></strong>, and U Kang<span style="font-size: 0.68em; vertical-align: super; line-height: 0;">†</span>'
-    conference_short: ICLR
-    tag_type: conference
-    conference: >-
-      <span style="color: #0066cc !important; font-weight: 700 !important;">International Conference on Learning Representations (ICLR)</span>, 2024.
-    pdf: https://proceedings.iclr.cc/paper_files/paper/2024/file/45fc8e1c55df116b23488f3cdb2fc642-Paper-Conference.pdf
-    code: https://github.com/snudm-starlab/K-prune
-    bibtex: https://github.com/snudm-starlab/K-prune#reference
-    image: ./assets/img/teasers/kprune.png
-    selected: true
+- title: 'MBA: Multimodal Benchmark and Agents for Real-World Business Ideation'
+  authors: '<span class="highlight"><b><u>Hojun Choi</u></b></span>, Jaeyo Shin, Suin Lee, and Hyunjung Shim<span style="font-size: 0.68em; vertical-align: super; line-height: 0;">†</span>'
+  special_note: '<a href="https://huggingface.co/papers/2608.11616" target="_blank" rel="noopener noreferrer" style="color: #f97316 !important; font-weight: 700; text-decoration: none;">🤗 Hugging Face Daily Paper</a>'
+  conference_short: Preprint
+  conference: Preprint, 2026.
+  demo: https://huggingface.co/spaces/hchoi256/mba-business-ideation-agent
+  pdf: https://arxiv.org/abs/2608.11616
+  page: https://hchoi256.github.io/projects/mba/
+  code: https://github.com/hchoi256/MBA
+  bibtex: https://hchoi256.github.io/projects/mba/#bibtex
+  image: ./assets/img/teasers/mba.png
+- title: Open-Vocabulary BEV Segmentation with 3D-Aware Geometric Constraints
+  authors: '<span class="highlight"><b><u>Hojun Choi</u></b></span>, Seulbin Hwang, Dae Jung Kim, Kisung Kim, Hyunjung Shim<span style="font-size: 0.68em; vertical-align: super; line-height: 0;">†</span>, and Jinhan Lee<span style="font-size: 0.68em; vertical-align: super; line-height: 0;">†</span>'
+  conference_short: ECCV
+  conference: European Conference on Computer Vision <b>(ECCV)</b>, 2026.
+  pdf: https://arxiv.org/abs/2606.24353
+  page: https://hchoi256.github.io/projects/ovbevseg/
+  bibtex: https://hchoi256.github.io/projects/ovbevseg/#bibtex
+  image: ./assets/img/teasers/ovbevseg.png
+- title: 'MSPL: Multi-Step Pseudo-Labeling for Open-Vocabulary Object Detection'
+  authors: '<span class="highlight"><b><u>Hojun Choi</u></b></span>, Youngsun Lim, Jaeyo Shin, and Hyunjung Shim<span style="font-size: 0.68em; vertical-align: super; line-height: 0;">†</span>'
+  conference_short: ECCV
+  conference: 2nd Workshop on Multimodal Spatial Intelligence @ CVPR <b>(CVPRW)</b>, 2026.<br>European Conference on Computer Vision <b>(ECCV)</b>, 2026.
+  pdf: https://arxiv.org/pdf/2510.14792
+  code: https://github.com/hchoi256/mspl
+  page: https://hchoi256.github.io/projects/mspl/
+  bibtex: https://github.com/hchoi256/mspl#citation
+  image: ./assets/img/teasers/mspl.png
+- title: 'SUPER-AD: Semantic Uncertainty-aware Planning for End-to-End Robust Autonomous Driving'
+  authors: 'Wonjeong Ryu, Seungjun Yu, Seokha Moon, <span class="highlight"><b><u>Hojun Choi</u></b></span>, Junsung Park, Jinkyu Kim, and Hyunjung Shim<span style="font-size: 0.68em; vertical-align: super; line-height: 0;">†</span>'
+  conference_short: Preprint
+  conference: Preprint, 2025.
+  pdf: https://arxiv.org/pdf/2511.22865
+  bibtex: https://arxiv.org/bibtex/2511.22865
+  image: ./assets/img/teasers/superad.png
+- title: Evaluating Image Hallucination in Text-to-Image Generation with Question-Answering
+  authors: 'Youngsun Lim*, <span class="highlight"><b><u>Hojun Choi*</u></b></span>, and Hyunjung Shim<span style="font-size: 0.68em; vertical-align: super; line-height: 0;">†</span>'
+  conference_short: AAAI
+  conference: AAAI Conference on Artificial Intelligence <b>(AAAI)</b>, 2025.
+  pdf: https://arxiv.org/pdf/2409.12784
+  code: https://github.com/kaist-cvml/I-HallA-v1.0
+  page: https://sgt-lim.github.io/I-HallA/
+  bibtex: https://github.com/kaist-cvml/I-HallA-v1.0#citation
+  image: ./assets/img/teasers/ihalla.png
+  notes: Oral Presentation
+- title: Sampling Bag of Views for Open-Vocabulary Object Detection
+  authors: '<span class="highlight"><b><u>Hojun Choi</u></b></span>, Junsuk Choe, and Hyunjung Shim<span style="font-size: 0.68em; vertical-align: super; line-height: 0;">†</span>'
+  conference_short: Preprint
+  conference: Preprint, 2024.
+  pdf: https://arxiv.org/pdf/2412.18273
+  bibtex: https://arxiv.org/bibtex/2412.18273
+  image: ./assets/img/teasers/bov.png
+- title: 'MobileGPT: Augmenting LLM with Human-like App Memory for Mobile Task Automation'
+  authors: 'Sunjae Lee, Junyoung Choi, Jungjae Lee, Munim Hasan Wasi, <span class="highlight"><b><u>Hojun Choi</u></b></span>, Steven Y. Ko, Sangeun Oh<span style="font-size: 0.68em; vertical-align: super; line-height: 0;">†</span>, and Insik Shin<span style="font-size: 0.68em; vertical-align: super; line-height: 0;">†</span>'
+  conference_short: MobiCom
+  conference: ACM International Conference on Mobile Computing and Networking <b>(MobiCom)</b>, 2024.
+  pdf: https://arxiv.org/pdf/2312.03003
+  code: https://github.com/mobilegptsys/MobileGPT
+  bibtex: https://dblp.org/rec/conf/mobicom/LeeCLWCKOS24.bib
+  image: ./assets/img/teasers/memodroid.png
+- title: Accurate Retraining-free Pruning for Pre-trained Encoder-based Language Models
+  authors: 'Seungcheol Park, <span class="highlight"><b><u>Hojun Choi</u></b></span>, and U Kang<span style="font-size: 0.68em; vertical-align: super; line-height: 0;">†</span>'
+  conference_short: ICLR
+  conference: International Conference on Learning Representations <b>(ICLR)</b>, 2024.
+  pdf: https://proceedings.iclr.cc/paper_files/paper/2024/file/45fc8e1c55df116b23488f3cdb2fc642-Paper-Conference.pdf
+  code: https://github.com/snudm-starlab/K-prune
+  bibtex: https://github.com/snudm-starlab/K-prune#reference
+  image: ./assets/img/teasers/kprune.png

@@ -1,0 +1,153 @@
+:root[data-theme="light"] {
+  --global-theme-color: #002D72;
+}
+
+:root[data-theme="dark"] {
+  --global-theme-color: rgb(36, 150, 203);
+}
+
+:root[data-theme="light"] body {
+  background-color: #fff;
+  color: #595959;
+}
+
+:root[data-theme="dark"] body {
+  background-color: #20212b;
+  color: #dadbdf;
+}
+
+:root[data-theme="light"] autocolor {
+  color: #595959;
+}
+
+:root[data-theme="dark"] autocolor {
+  color: #dadbdf;
+}
+
+:root[data-theme="light"] lightonly {
+  visibility: visible;
+}
+
+:root[data-theme="light"] darkonly {
+  visibility: hidden;
+}
+
+:root[data-theme="dark"] lightonly {
+  visibility: hidden;
+}
+
+:root[data-theme="dark"] darkonly {
+  visibility: visible;
+}
+
+:root[data-theme="light"] h1 {
+  color: #c15b79;
+}
+
+:root[data-theme="light"] h2,
+:root[data-theme="light"] h3,
+:root[data-theme="light"] h4,
+:root[data-theme="light"] h5,
+:root[data-theme="light"] h6 {
+  color: #e36b8f;
+}
+
+:root[data-theme="dark"] h1,
+:root[data-theme="dark"] h2,
+:root[data-theme="dark"] h3,
+:root[data-theme="dark"] h4,
+:root[data-theme="dark"] h5,
+:root[data-theme="dark"] h6 {
+  color: rgb(62, 183, 240);
+}
+
+:root[data-theme="light"] a {
+  color: #4a7dc0;
+}
+
+:root[data-theme="dark"] a {
+  color: rgb(62, 183, 240);
+}
+
+:root[data-theme="light"] strong,
+:root[data-theme="light"] papertitle,
+:root[data-theme="light"] header ul a strong {
+  color: #222;
+}
+
+:root[data-theme="dark"] strong,
+:root[data-theme="dark"] papertitle {
+  color: #eeeff0;
+}
+
+:root[data-theme="light"] th,
+:root[data-theme="light"] dt {
+  color: #444;
+}
+
+:root[data-theme="dark"] th,
+:root[data-theme="dark"] dt {
+  color: rgb(62, 183, 240);
+}
+
+:root[data-theme="light"] .publications ol.bibliography li .links a.btn {
+  color: #000;
+  border-color: #000;
+}
+
+:root[data-theme="dark"] .publications ol.bibliography li .links a.btn {
+  color: #fff;
+  border-color: #fff;
+}
+
+.theme-switcher {
+  display: inline-flex;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.theme-choice {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 54px;
+  height: 28px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  line-height: 1;
+  padding: 0 12px;
+}
+
+.theme-choice + .theme-choice {
+  border-left: 1px solid currentColor;
+}
+
+.theme-choice:hover {
+  opacity: 0.75;
+}
+
+.theme-choice[aria-pressed="true"] {
+  background: currentColor;
+}
+
+.theme-choice[aria-pressed="true"] span {
+  color: #fff;
+}
+
+:root[data-theme="dark"] .theme-choice[aria-pressed="true"] span {
+  color: #20212b;
+}
+
+.news-icon {
+  display: inline-block;
+  width: 1.25em;
+  height: 1.25em;
+  margin-left: 0.25em;
+  object-fit: contain;
+  vertical-align: -0.2em;
+}
