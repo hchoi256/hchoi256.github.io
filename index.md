@@ -48,12 +48,13 @@ I am a first-year Ph.D. student at KAIST AI, advised by Prof. **[Hyunjung (Kate)
   <div class="timeline-item"><span class="timeline-month">Jun</span> <b>OVBEVSeg</b> is accepted to <span class="text-accent">ECCV 2026</span> 🇸🇪</div>
   <div class="timeline-item"><span class="timeline-month">Jun</span> <b>MSPL</b> is accepted to <span class="text-accent">ECCV 2026</span> 🇸🇪</div>
   <div class="timeline-item"><span class="timeline-month">Jun</span> <b>CoT-PL</b> is accepted to the <span class="text-accent">2nd Workshop on Multimodal Spatial Intelligence @ CVPR 2026</span>.</div>
-  <div class="timeline-item"><span class="timeline-month">Feb</span> <span class="text-accent">Best Poster Award</span> at IPIU 2026.</div>
+  <div class="timeline-item"><span class="timeline-month">Feb</span> New award: <span class="text-accent">Best Poster Award</span> at IPIU 2026.</div>
 
   <div class="timeline-year"><span class="year-label">2025</span></div>
+  <div class="timeline-item"><span class="timeline-month">May</span> Joined <b><img src="{{ '/assets/img/research/naver-labs.png' | relative_url }}" alt="" style="height: 1em; width: 1em; object-fit: contain; vertical-align: -0.12em; margin-right: 4px;">NAVER LABS</b> as a <span class="text-accent">Research Intern</span>.</div>
   <div class="timeline-item"><span class="timeline-month">Feb</span> <b>I-HallA</b> is selected for an <span class="text-accent">Oral Presentation at AAAI 2025</span>.</div>
   <div class="timeline-item"><span class="timeline-month">Jan</span> <b>I-HallA</b> is accepted to <span class="text-accent">AAAI 2025</span>.</div>
-  <div class="timeline-item"><span class="timeline-month">Jan</span> <span class="text-accent">Oral Presentation</span> at IPIU 2025.</div>
+  <div class="timeline-item"><span class="timeline-month">Jan</span> New award: <span class="text-accent">Oral Presentation</span> at IPIU 2025.</div>
 </div>
 
 ---
