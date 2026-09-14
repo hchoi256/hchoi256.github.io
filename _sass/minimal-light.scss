@@ -637,3 +637,31 @@ hr {
     border-color: rgba(227,107,143,0.12);
   }
 }
+
+/* Manual dark-mode fix */
+:root .about-card {
+background: linear-gradient(
+135deg,
+rgba(227, 107, 143, 0.06),
+rgba(140, 203, 160, 0.06)
+);
+border-color: rgba(227, 107, 143, 0.12);
+color: #dadbdf;
+}
+
+:root .pub-row:hover {
+background: linear-gradient(
+135deg,
+rgba(227, 107, 143, 0.08),
+rgba(140, 203, 160, 0.08)
+);
+box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+:root .publications ol.bibliography li .author {
+color: #b8bac2;
+}
+
+:root .publications ol.bibliography li .periodical {
+color: #b8bac2;
+}
