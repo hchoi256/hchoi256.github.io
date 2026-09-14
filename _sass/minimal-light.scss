@@ -638,31 +638,48 @@ hr {
   }
 }
 
-/* Manual dark-mode fix — dark mode only */
+/* ===== Manual theme override: explicit light / dark ===== */
 
-:root .about-card {
-background: linear-gradient(
-135deg,
-rgba(227, 107, 143, 0.06),
-rgba(140, 203, 160, 0.06)
-);
-border-color: rgba(227, 107, 143, 0.12);
-color: #dadbdf;
+/* Light mode */
+:root[data-theme="light"] .about-card {
+  background: linear-gradient(135deg, #fef5fa 0%, #f0f9f2 100%);
+  border-color: rgba(227, 107, 143, 0.10);
+  color: #595959;
 }
 
-:root .pub-row:hover {
-background: linear-gradient(
-135deg,
-rgba(227, 107, 143, 0.08),
-rgba(140, 203, 160, 0.08)
-);
-box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+:root[data-theme="light"] .pub-row:hover {
+  background: linear-gradient(135deg, #fef5fa, #f0f9f2);
+  box-shadow: 0 4px 16px rgba(227, 107, 143, 0.13);
 }
 
-:root .publications ol.bibliography li .author {
-color: #b8bac2;
+:root[data-theme="light"] .publications ol.bibliography li .author {
+  color: #888;
 }
 
-:root .publications ol.bibliography li .periodical {
-color: #b8bac2;
+/* Dark mode */
+:root[data-theme="dark"] .about-card {
+  background: linear-gradient(
+    135deg,
+    rgba(227, 107, 143, 0.06),
+    rgba(140, 203, 160, 0.06)
+  );
+  border-color: rgba(227, 107, 143, 0.12);
+  color: #dadbdf;
+}
+
+:root[data-theme="dark"] .pub-row:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(227, 107, 143, 0.08),
+    rgba(140, 203, 160, 0.08)
+  );
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+:root[data-theme="dark"] .publications ol.bibliography li .author {
+  color: #b8bac2;
+}
+
+:root[data-theme="dark"] .publications ol.bibliography li .periodical {
+  color: #b8bac2;
 }
