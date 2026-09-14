@@ -39,44 +39,59 @@ My research interests include **Multimodal Learning**, **Vision-Language Models*
 
 <hr class="section-divider">
 
-<h2 class="news-timeline-title">News</h2>
+## News
 
 <style>
-.news-timeline-title {
-  color: #ef5b7c !important;
-  font-size: 20px !important;
-  font-weight: 400 !important;
-  margin: 0 0 15px 0 !important;
-}
-
 .news-timeline {
   position: relative;
-  margin: 0 0 22px 14px;
-  padding: 0 0 0 25px;
-  border-left: 2px solid #73c79c;
+  margin: 0 0 20px 18px;
+  padding-left: 25px;
+}
+
+.news-timeline::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 9px;
+  bottom: 5px;
+  width: 2px;
+  background: #72c89b;
 }
 
 .news-year {
   position: relative;
-  margin: 0 0 8px 0;
-  min-height: 24px;
-  color: #d94e72;
+  min-height: 25px;
+  margin: 0 0 3px 0;
+  color: #d94f72;
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.5px;
+  line-height: 18px;
 }
 
 .news-year::before {
   content: "";
   position: absolute;
-  left: -35px;
-  top: 1px;
-  width: 15px;
-  height: 15px;
-  border: 2px solid #ef5b7c;
+  left: -34px;
+  top: 0;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #f15b7d;
   border-radius: 50%;
-  background: white;
-  box-shadow: 0 0 0 2px white;
+  background: #ffffff;
+  z-index: 2;
+}
+
+.news-year::after {
+  content: "";
+  position: absolute;
+  left: -29px;
+  top: 5px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #f15b7d;
+  z-index: 3;
 }
 
 .news-item {
@@ -84,55 +99,80 @@ My research interests include **Multimodal Learning**, **Vision-Language Models*
   display: grid;
   grid-template-columns: 38px minmax(0, 1fr);
   align-items: baseline;
-  margin: 0 0 7px 0;
-  line-height: 1.35;
+  margin: 0 0 6px 0;
+  line-height: 1.45;
 }
 
 .news-item::before {
   content: "";
   position: absolute;
-  left: -31px;
+  left: -29px;
   top: 7px;
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #86cfa7;
-  border: 1px solid #63b88d;
-  box-shadow: 0 0 0 1px white;
+  background: #9bd7b5;
+  border: 1px solid #ffffff;
+  box-shadow: 0 0 0 1px #69bd91;
+  z-index: 2;
 }
 
 .news-month {
-  color: #a5a5a5;
+  color: #a6a6a6;
   font-size: 13px;
 }
 
 .news-text {
-  color: inherit;
   font-size: 14px;
 }
 
-.news-text strong {
-  color: #444;
-  font-weight: 600;
+.news-paper {
+  color: #444444;
+  font-weight: 700;
+}
+
+.news-preprint {
+  color: #337ab7 !important;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .news-accent {
-  color: #ef5b7c;
-  font-weight: 600;
+  color: #f05b7d;
+  font-weight: 700;
 }
 
-@media (max-width: 480px) {
+@media (prefers-color-scheme: dark) {
+  .news-year::before {
+    background: #202124;
+  }
+
+  .news-item::before {
+    border-color: #202124;
+  }
+
+  .news-paper {
+    color: #f0f0f0;
+  }
+}
+
+@media print, screen and (max-width: 480px) {
   .news-timeline {
-    margin-left: 11px;
-    padding-left: 22px;
+    margin-left: 15px;
+    padding-left: 23px;
   }
 
   .news-year::before {
     left: -32px;
   }
 
+  .news-year::after {
+    left: -27px;
+  }
+
   .news-item::before {
-    left: -28px;
+    left: -27px;
   }
 
   .news-item {
@@ -148,31 +188,30 @@ My research interests include **Multimodal Learning**, **Vision-Language Models*
   <div class="news-item">
     <span class="news-month">Aug</span>
     <span class="news-text">
-      New preprint is out: <strong>MBA: Multimodal Benchmark and Agents for Real-World Business Ideation</strong>.
+      New preprint is out:
+      <a class="news-preprint" href="https://arxiv.org/abs/2608.11616" target="_blank" rel="noopener noreferrer">MBA</a>.
     </span>
   </div>
 
   <div class="news-item">
     <span class="news-month">Jun</span>
     <span class="news-text">
-      <strong>Open-Vocabulary BEV Segmentation with 3D-Aware Geometric Constraints</strong>
-      is accepted to <span class="news-accent">ECCV 2026</span>.
+      <span class="news-paper">OVBEVSeg</span> is accepted to <span class="news-accent">ECCV 2026</span> 🇸🇪
     </span>
   </div>
 
   <div class="news-item">
     <span class="news-month">Jun</span>
     <span class="news-text">
-      <strong>MSPL: Multi-Step Pseudo-Labeling for Open-Vocabulary Object Detection</strong>
-      is accepted to <span class="news-accent">ECCV 2026</span>.
+      <span class="news-paper">MSPL</span> is accepted to <span class="news-accent">ECCV 2026</span> 🇸🇪
     </span>
   </div>
 
   <div class="news-item">
     <span class="news-month">Jun</span>
     <span class="news-text">
-      <strong>CoT-PL: Chain-of-Thought Pseudo-Labeling for Open-Vocabulary Object Detection</strong>
-      is accepted to the <span class="news-accent">2nd Workshop on Multimodal Spatial Intelligence @ CVPR 2026</span>.
+      <span class="news-paper">CoT-PL</span> is accepted to the
+      <span class="news-accent">2nd Workshop on Multimodal Spatial Intelligence @ CVPR 2026</span>.
     </span>
   </div>
 

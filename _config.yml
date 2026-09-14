@@ -1,50 +1,41 @@
-# Basic Information 
-title: Hojun (Eric) Choi
+# Basic Information
+title: Hojun Choi
 position: Ph.D. Candidate
 affiliation: KAIST AI
 email: hchoi256@kaist.ac.kr
 
 # Search Engine Optimization (SEO)
-# The following information is used to improve the website traffic from search engines, e.g., Google.
 keywords: minimal light
 description: The Minimal Light is a simple and elegant jekyll theme for academic personal homepage.
 canonical: https://minimal-light-theme.yliu.me/
 
-# Links 
-# If you don't need one of them, you may delete the corresponding line.
+# Links
 google_scholar: https://scholar.google.com/citations?user=6uE5yBgAAAAJ&hl=en
 cv_link: assets/files/CV.pdf
 github_link: https://github.com/hchoi256
 linkedin: https://www.linkedin.com/in/hojun-choi-2b10b11a0/
 # twitter: https://twitter.com/
 
-# Images (e.g., your profile picture and your website's favicon) 
-# "favicon" and "favicon_dark" are used for the light and dark modes, respectively. 
+# Images
 avatar: ./assets/img/avatar.png
 favicon: ./assets/img/favicon.png
 favicon_dark: ./assets/img/favicon.png
 
 # Footnote
-# You may use the option to disable the footnote, "Powered by Jekyll and Minimal Light theme."
 enable_footnote: false
 
 # Auto Dark Mode
-# You may use the option to disable the automatic dark theme
 auto_dark_mode: true
 
 # Font
-# You can use this option to choose between Serif or Sans Serif fonts.
-font: "Serif" # or "Sans Serif"
+font: "Sans Serif"
 
 # Google Analytics ID
-# Please remove this if you don't use Google Analytics
 # google_analytics: UA-111540567-4
 
-# Use this project as a remote theme for GitHub Pages
-# See the guide here: https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/adding-a-theme-to-your-github-pages-site-using-jekyll
+# Remote theme
 remote_theme: yaoyao-liu/minimal-light
 
-# The following files will be removed from the generated website.
 exclude:
   - Gemfile
   - Gemfile.lock
