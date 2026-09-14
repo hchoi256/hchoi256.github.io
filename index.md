@@ -39,13 +39,151 @@ My research interests include **Multimodal Learning**, **Vision-Language Models*
 
 <hr class="section-divider">
 
-## News
+<h2 class="news-timeline-title">News</h2>
 
-- <strong style="color: #2e3135 !important; font-weight: 700 !important;">[Preprint]</strong> Our new paper, **"MBA: Multimodal Benchmark and Agents for Real-World Business Ideation,"** is now available.
-- <strong style="color: #0066cc !important; font-weight: 700 !important;">[Conference]</strong> Our paper, **"Open-Vocabulary BEV Segmentation with 3D-Aware Geometric Constraints,"** has been accepted to ECCV 2026.
-- <strong style="color: #0066cc !important; font-weight: 700 !important;">[Conference]</strong> Our paper, **"MSPL: Multi-Step Pseudo-Labeling for Open-Vocabulary Object Detection,"** has been accepted to ECCV 2026.
-- <strong style="color: forestgreen !important; font-weight: 700 !important;">[Workshop]</strong> Our paper, **"CoT-PL: Chain-of-Thought Pseudo-Labeling for Open-Vocabulary Object Detection,"** has been accepted to the 2nd Workshop on Multimodal Spatial Intelligence at CVPR 2026.
-- <strong style="color: darkorange !important; font-weight: 700 !important;">[Award]</strong> Honored to have received the **Best Poster Award** at IPIU 2026.
+<style>
+.news-timeline-title {
+  color: #ef5b7c !important;
+  font-size: 20px !important;
+  font-weight: 400 !important;
+  margin: 0 0 15px 0 !important;
+}
+
+.news-timeline {
+  position: relative;
+  margin: 0 0 22px 14px;
+  padding: 0 0 0 25px;
+  border-left: 2px solid #73c79c;
+}
+
+.news-year {
+  position: relative;
+  margin: 0 0 8px 0;
+  min-height: 24px;
+  color: #d94e72;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.news-year::before {
+  content: "";
+  position: absolute;
+  left: -35px;
+  top: 1px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid #ef5b7c;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 0 0 2px white;
+}
+
+.news-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr);
+  align-items: baseline;
+  margin: 0 0 7px 0;
+  line-height: 1.35;
+}
+
+.news-item::before {
+  content: "";
+  position: absolute;
+  left: -31px;
+  top: 7px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #86cfa7;
+  border: 1px solid #63b88d;
+  box-shadow: 0 0 0 1px white;
+}
+
+.news-month {
+  color: #a5a5a5;
+  font-size: 13px;
+}
+
+.news-text {
+  color: inherit;
+  font-size: 14px;
+}
+
+.news-text strong {
+  color: #444;
+  font-weight: 600;
+}
+
+.news-accent {
+  color: #ef5b7c;
+  font-weight: 600;
+}
+
+@media (max-width: 480px) {
+  .news-timeline {
+    margin-left: 11px;
+    padding-left: 22px;
+  }
+
+  .news-year::before {
+    left: -32px;
+  }
+
+  .news-item::before {
+    left: -28px;
+  }
+
+  .news-item {
+    grid-template-columns: 34px minmax(0, 1fr);
+  }
+}
+</style>
+
+<div class="news-timeline">
+
+  <div class="news-year">2026</div>
+
+  <div class="news-item">
+    <span class="news-month">Aug</span>
+    <span class="news-text">
+      New preprint is out: <strong>MBA: Multimodal Benchmark and Agents for Real-World Business Ideation</strong>.
+    </span>
+  </div>
+
+  <div class="news-item">
+    <span class="news-month">Jun</span>
+    <span class="news-text">
+      <strong>Open-Vocabulary BEV Segmentation with 3D-Aware Geometric Constraints</strong>
+      is accepted to <span class="news-accent">ECCV 2026</span>.
+    </span>
+  </div>
+
+  <div class="news-item">
+    <span class="news-month">Jun</span>
+    <span class="news-text">
+      <strong>MSPL: Multi-Step Pseudo-Labeling for Open-Vocabulary Object Detection</strong>
+      is accepted to <span class="news-accent">ECCV 2026</span>.
+    </span>
+  </div>
+
+  <div class="news-item">
+    <span class="news-month">Jun</span>
+    <span class="news-text">
+      <strong>CoT-PL: Chain-of-Thought Pseudo-Labeling for Open-Vocabulary Object Detection</strong>
+      is accepted to the <span class="news-accent">2nd Workshop on Multimodal Spatial Intelligence @ CVPR 2026</span>.
+    </span>
+  </div>
+
+  <div class="news-item">
+    <span class="news-month">Feb</span>
+    <span class="news-text">
+      Received the <span class="news-accent">Best Poster Award</span> at IPIU 2026.
+    </span>
+  </div>
+
+</div>
 
 {% include_relative _includes/publications.md %}
 {% include_relative _includes/education.md %}
