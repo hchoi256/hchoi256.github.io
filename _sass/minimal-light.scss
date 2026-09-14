@@ -683,3 +683,20 @@ hr {
 :root[data-theme="dark"] .publications ol.bibliography li .periodical {
   color: #b8bac2;
 }
+
+/* ASCII dog */
+.about-ascii {
+  color: #595959 !important;
+}
+
+/* Manual dark mode */
+:root[data-theme="dark"] .about-ascii {
+  color: #f3f4f6 !important;
+}
+
+/* System dark mode, unless Light is explicitly selected */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .about-ascii {
+    color: #f3f4f6 !important;
+  }
+}

@@ -8,7 +8,8 @@ layout: homepage
 Hello. 👋
 
 <div style="text-align: center; overflow-x: auto; margin: 0.75em 0 1em 0;">
-<pre style="display: inline-block; text-align: left; margin: 0; line-height: 1.05; font-size: 0.58em; background: transparent; border: 0; padding: 0; white-space: pre;">⠻⣷⣤⣄⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣠⣤⣾⠟
+<pre class="about-ascii" style="display: inline-block; text-align: left; margin: 0; line-height: 1.05; font-size: 0.58em; background: transparent; border: 0; padding: 0; white-space: pre;">
+⠻⣷⣤⣄⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣠⣤⣾⠟
 ⠀⠀⠙⠻⢿⣿⣿⣿⣿⣿⣶⣶⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣶⣶⣿⣿⣿⣿⣿⡿⠟⠋⠀⠀
 ⢠⠀⠀⠀⠀⠀⠉⠛⠻⢿⣿⣿⣿⣿⣷⣤⣀⣀⣀⣀⣠⣤⣴⣶⣶⣾⡷⠀⠀⠀⠀⠀⠀⢾⣷⣶⣶⣦⣤⣄⣀⣀⣀⣀⣤⣾⣿⣿⣿⣿⡿⠟⠛⠉⠀⠀⠀⠀⠀⡄
 ⢸⡆⠀⠀⠀⠀⠀⠀⠀⠀⠉⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠈⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠋⠀⠀⠀⠀⠀⠀⠀⠀⢰⡇
