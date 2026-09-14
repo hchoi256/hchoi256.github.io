@@ -50,7 +50,7 @@ I am a first-year Ph.D. student at KAIST AI, advised by Prof. <a href="https://s
   <div class="timeline-item"><span class="timeline-month">Jun</span> <b>MSPL</b> is accepted to <span class="text-accent">ECCV 2026</span> 🇸🇪</div>
   <div class="timeline-item"><span class="timeline-month">Jun</span> <b>CoT-PL</b> is accepted to the <span class="text-accent">2nd Workshop on Multimodal Spatial Intelligence @ CVPR 2026</span>.</div>
   <div class="timeline-item"><span class="timeline-month">Feb</span> New award: <span class="text-accent">Best Poster Award</span> at IPIU 2026.</div>
-  <div class="timeline-item"><span class="timeline-month">Jan</span> Graduated from <img src="{{ '/assets/img/education/kaist-ai.jpg' | relative_url }}" alt="" style="height: 1em; width: 1em; object-fit: contain; vertical-align: -0.12em; margin-right: 3px;"><a href="https://ai.kaist.ac.kr/" style="font-weight: 700 !important;">KAIST AI</a> with an <span class="text-accent">M.S. in Artificial Intelligence</span>.</div>
+  <div class="timeline-item"><span class="timeline-month">Jan</span> Graduated from <img src="{{ '/assets/img/education/kaist-ai.png' | relative_url }}" alt="" style="height: 1em; width: 1em; object-fit: contain; vertical-align: -0.12em; margin-right: 3px;"><a href="https://ai.kaist.ac.kr/" style="font-weight: 700 !important;">KAIST AI</a> with an <span class="text-accent">M.S. in Artificial Intelligence</span>.</div>
 
 
 

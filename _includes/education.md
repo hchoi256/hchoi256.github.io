@@ -19,7 +19,7 @@
   </div>
 
   <div style="display: grid; grid-template-columns: 42px minmax(0, 1fr) auto; column-gap: 12px; align-items: center;">
-    <img src="{{ '/assets/img/education/kaist-ai.jpg' | relative_url }}"
+    <img src="{{ '/assets/img/education/kaist-ai.png' | relative_url }}"
          alt="KAIST AI"
          style="width: 42px; height: 42px; object-fit: contain; border-radius: 4px;">
     <div>
