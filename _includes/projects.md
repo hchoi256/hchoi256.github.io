@@ -4,8 +4,8 @@
 
 <div style="display: flex; justify-content: space-between; align-items: center; gap: 18px; margin-bottom: 4px;">
 
-  <div>
-    A collection of my research and software development projects, including detailed specifications and demos.
+  <div style="white-space: nowrap;">
+    Explore my research and software projects with demos and details.
   </div>
 
 <a href="https://mousy-mouth-9ff.notion.site/HOJUN-CHOI-2bad927396af48e484236545c1fcad4f?pvs=73"
