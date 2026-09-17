@@ -41,7 +41,7 @@
   </div>
 
   <div style="display: flex; align-items: center; gap: 10px;">
-    <img src="{{ '/assets/img/education/uw-madison.png' | relative_url }}" alt="University of Wisconsin–Madison" style="width: 34px; height: 34px; object-fit: contain; flex: 0 0 34px; border-radius: 5px;">
+    <img src="{{ '/assets/img/education/uw-madison.jpg' | relative_url }}" alt="University of Wisconsin–Madison" style="width: 34px; height: 34px; object-fit: contain; flex: 0 0 34px; border-radius: 5px;">
 
     <div>
       <strong style="font-weight: 700 !important;">Academic Mentor</strong>,
