@@ -701,7 +701,14 @@ hr {
   }
 }
 
+
 /* ===== Animated Projects Button ===== */
+
+@property --project-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
 
 .projects-button {
   position: relative;
@@ -709,7 +716,7 @@ hr {
   align-items: center;
   justify-content: center;
 
-  padding: 7px 14px;
+  padding: 8px 15px;
   border-radius: 999px;
 
   font-weight: 700 !important;
@@ -717,88 +724,82 @@ hr {
   text-decoration: none !important;
 
   color: #2f5fa7 !important;
-  background:
-    linear-gradient(#fff, #fff) padding-box,
-    linear-gradient(
-      90deg,
-      #ff6b9d,
-      #ffb86c,
-      #f5e663,
-      #79d99b,
-      #63c7ff,
-      #9c83ff,
-      #ff6b9d
-    ) border-box;
+  background: #ffffff;
 
-  border: 2px solid transparent;
-
-  background-size:
-    100% 100%,
-    300% 300%;
-
-  animation: projectRainbow 4s linear infinite;
+  border: 0;
 
   box-shadow:
-    0 0 10px rgba(255, 107, 157, 0.15),
-    0 0 16px rgba(99, 199, 255, 0.10);
-
-  overflow: hidden;
+    0 0 10px rgba(255, 107, 157, 0.12),
+    0 0 14px rgba(99, 199, 255, 0.10);
 
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
 }
 
+/* 실제로 흐르는 무지개 테두리 */
+.projects-button::before {
+  content: "";
+  position: absolute;
 
+  inset: -2px;
+  border-radius: inherit;
+  padding: 2px;
+
+  background: conic-gradient(
+    from var(--project-angle),
+    #ff5f8f,
+    #ffb85c,
+    #f5e85b,
+    #72d99b,
+    #59c9ff,
+    #9b7cff,
+    #ff5f8f
+  );
+
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+
+  -webkit-mask-composite: xor;
+
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+
+  mask-composite: exclude;
+
+  pointer-events: none;
+
+  animation: projectBorderFlow 2.4s linear infinite;
+}
+
+@keyframes projectBorderFlow {
+  from {
+    --project-angle: 0deg;
+  }
+
+  to {
+    --project-angle: 360deg;
+  }
+}
 
 .projects-button:hover {
   transform: translateY(-2px) scale(1.03);
 
   box-shadow:
-    0 0 12px rgba(255, 107, 157, 0.30),
-    0 0 22px rgba(99, 199, 255, 0.25),
-    0 4px 12px rgba(0, 0, 0, 0.10);
-}
-
-@keyframes projectRainbow {
-  0% {
-    background-position: 0 0, 0% 50%;
-  }
-
-  100% {
-    background-position: 0 0, 300% 50%;
-  }
+    0 0 13px rgba(255, 107, 157, 0.25),
+    0 0 20px rgba(99, 199, 255, 0.20);
 }
 
 /* Dark mode */
 :root[data-theme="dark"] .projects-button {
   color: #ffffff !important;
-
-  background:
-    linear-gradient(#252630, #252630) padding-box,
-    linear-gradient(
-      90deg,
-      #ff6b9d,
-      #ffb86c,
-      #f5e663,
-      #79d99b,
-      #63c7ff,
-      #9c83ff,
-      #ff6b9d
-    ) border-box;
-
-  background-size:
-    100% 100%,
-    300% 300%;
-
-  box-shadow:
-    0 0 12px rgba(255, 107, 157, 0.22),
-    0 0 18px rgba(99, 199, 255, 0.18);
+  background: #252630;
 }
 
-
 @media (prefers-reduced-motion: reduce) {
-  .projects-button {
+  .projects-button::before {
     animation: none;
   }
 }
