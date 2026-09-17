@@ -700,3 +700,139 @@ hr {
     color: #f3f4f6 !important;
   }
 }
+
+/* ===== Animated Projects Button ===== */
+
+.projects-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 7px 14px;
+  border-radius: 999px;
+
+  font-weight: 700 !important;
+  white-space: nowrap;
+  text-decoration: none !important;
+
+  color: #2f5fa7 !important;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(
+      90deg,
+      #ff6b9d,
+      #ffb86c,
+      #f5e663,
+      #79d99b,
+      #63c7ff,
+      #9c83ff,
+      #ff6b9d
+    ) border-box;
+
+  border: 2px solid transparent;
+
+  background-size:
+    100% 100%,
+    300% 300%;
+
+  animation: projectRainbow 4s linear infinite;
+
+  box-shadow:
+    0 0 10px rgba(255, 107, 157, 0.15),
+    0 0 16px rgba(99, 199, 255, 0.10);
+
+  overflow: hidden;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* 빛이 슥 지나가는 효과 */
+.projects-button::after {
+  content: "";
+  position: absolute;
+
+  top: -50%;
+  left: -70%;
+
+  width: 45%;
+  height: 200%;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.75),
+    transparent
+  );
+
+  transform: rotate(20deg);
+
+  animation: projectShine 2.8s ease-in-out infinite;
+}
+
+.projects-button:hover {
+  transform: translateY(-2px) scale(1.03);
+
+  box-shadow:
+    0 0 12px rgba(255, 107, 157, 0.30),
+    0 0 22px rgba(99, 199, 255, 0.25),
+    0 4px 12px rgba(0, 0, 0, 0.10);
+}
+
+@keyframes projectRainbow {
+  0% {
+    background-position: 0 0, 0% 50%;
+  }
+
+  100% {
+    background-position: 0 0, 300% 50%;
+  }
+}
+
+@keyframes projectShine {
+  0% {
+    left: -70%;
+  }
+
+  55%,
+  100% {
+    left: 140%;
+  }
+}
+
+/* Dark mode */
+:root[data-theme="dark"] .projects-button {
+  color: #ffffff !important;
+
+  background:
+    linear-gradient(#252630, #252630) padding-box,
+    linear-gradient(
+      90deg,
+      #ff6b9d,
+      #ffb86c,
+      #f5e663,
+      #79d99b,
+      #63c7ff,
+      #9c83ff,
+      #ff6b9d
+    ) border-box;
+
+  background-size:
+    100% 100%,
+    300% 300%;
+
+  box-shadow:
+    0 0 12px rgba(255, 107, 157, 0.22),
+    0 0 18px rgba(99, 199, 255, 0.18);
+}
+
+
+/* 모션 감소 설정 사용자 배려 */
+@media (prefers-reduced-motion: reduce) {
+  .projects-button,
+  .projects-button::after {
+    animation: none;
+  }
+}
