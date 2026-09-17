@@ -749,28 +749,7 @@ hr {
     box-shadow 0.2s ease;
 }
 
-/* 빛이 슥 지나가는 효과 */
-.projects-button::after {
-  content: "";
-  position: absolute;
 
-  top: -50%;
-  left: -70%;
-
-  width: 45%;
-  height: 200%;
-
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.75),
-    transparent
-  );
-
-  transform: rotate(20deg);
-
-  animation: projectShine 2.8s ease-in-out infinite;
-}
 
 .projects-button:hover {
   transform: translateY(-2px) scale(1.03);
@@ -788,17 +767,6 @@ hr {
 
   100% {
     background-position: 0 0, 300% 50%;
-  }
-}
-
-@keyframes projectShine {
-  0% {
-    left: -70%;
-  }
-
-  55%,
-  100% {
-    left: 140%;
   }
 }
 
@@ -829,10 +797,8 @@ hr {
 }
 
 
-/* 모션 감소 설정 사용자 배려 */
 @media (prefers-reduced-motion: reduce) {
-  .projects-button,
-  .projects-button::after {
+  .projects-button {
     animation: none;
   }
 }
