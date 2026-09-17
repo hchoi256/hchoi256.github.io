@@ -797,3 +797,44 @@ hr {
 :root[data-theme="dark"] .projects-button::after {
   background: #252630;
 }
+
+/* ===== Projects responsive layout ===== */
+
+.projects-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+}
+
+.projects-description {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.projects-button {
+  flex: 0 0 auto;
+}
+
+/* Mobile */
+@media screen and (max-width: 600px) {
+  .projects-row {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .projects-description {
+    flex: 1 1 100%;
+  }
+
+  .projects-button {
+    margin-left: auto;
+  }
+}
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
