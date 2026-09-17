@@ -68,4 +68,5 @@ My research interests include <span style="font-weight: 700 !important;">Multimo
 {% include_relative _includes/publications.md %}
 {% include_relative _includes/education.md %}
 {% include_relative _includes/research-experience.md %}
+{% include_relative _includes/projects.md %}
 {% include_relative _includes/awards.md %}
