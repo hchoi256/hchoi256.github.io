@@ -198,15 +198,35 @@ body {
   top: 0;
   width: 100%;
 }
-.image.avatar { border-radius: 100%; }
-.image.avatar:before { display: none; }
+// .image.avatar { border-radius: 100%; }
+// .image.avatar:before { display: none; }
+// .image.avatar img {
+//   border-radius: 100%;
+//   width: 62%;
+//   padding: 20px;
+//   // border: 1px solid #ddd;
+//   // padding: 3px;
+//   // box-shadow: 0 -1px 5px 1px rgba(200, 200, 200, 0.3);
+// }
+.image.avatar {
+  border-radius: 16px;
+  display: block;
+  width: 100%;
+  margin: 0 auto 1em auto;
+}
+
+.image.avatar:before {
+  display: none;
+}
+
 .image.avatar img {
-  border-radius: 100%;
-  width: 62%;
-  padding: 20px;
-  // border: 1px solid #ddd;
-  // padding: 3px;
-  // box-shadow: 0 -1px 5px 1px rgba(200, 200, 200, 0.3);
+  display: block;
+  width: 220px;
+  height: auto;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  border-radius: 16px;
 }
 #header .image.avatar {
   margin: 0 0 1em 0;
