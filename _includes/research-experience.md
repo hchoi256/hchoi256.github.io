@@ -46,7 +46,7 @@
     <div>
       <strong style="font-weight: 700 !important;">Academic Mentor</strong>,
       <a href="https://cae.ls.wisc.edu/" style="font-weight: 700 !important;">University of Wisconsin–Madison</a>,
-      USA, Fall 2021 – Fall 2022
+      USA, Sep. 2021 – Dec. 2022
     </div>
   </div>
 
