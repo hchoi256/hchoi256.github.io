@@ -1,7 +1,6 @@
 main:
 - title: Latent World Action Model for GUI Agents
-  authors: <a href="https://scholar.google.com/citations?user=7S4szRIAAAAJ&hl=en&oi=ao" target="_blank" rel="noopener noreferrer">Seungjun Yu*</a>, <span class="highlight"><b><u>Hojun Choi*</u></b></span>,
-    <a href="https://sjpark5800.github.io/" target="_blank" rel="noopener noreferrer">Seojeong Park</a>, Jaeyo Shin, and Hyunjung Shim
+  authors: 'Seungjun Yu*, <span class="highlight"><b><u>Hojun Choi*</u></b></span>, Seojeong Park, Jaeyo Shin, and Hyunjung Shim<span style="font-size: 0.68em; vertical-align: super; line-height: 0;">†</span>'
   conference_short: Preprint
   conference: Preprint, 2026.
   pdf: https://hchoi256.github.io/projects/latent2world/
