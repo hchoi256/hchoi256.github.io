@@ -90,9 +90,18 @@
 .section-title,.abstract-section .section-title{text-align:left!important}
 .abstract{max-width:930px;margin:0;text-align:left}
 .lead-copy{max-width:930px;margin:0 0 1.1rem;text-align:left}
-.figure-caption{text-align:left;margin:.75rem 0 0;max-width:980px}
+.figure-caption{text-align:center;margin:.75rem auto 0;max-width:980px}
 .insight-copy{max-width:930px;margin:1rem 0 0;text-align:left}
 .highlight-box{max-width:930px;margin:1rem 0 0}
+.result-tabs{justify-content:flex-start}
+.result-panel-head{max-width:930px;margin:0 0 1rem;text-align:left}
+.result-panel-head .section-copy{max-width:930px;margin:0;text-align:left}
+/* Final alignment */
+.section-title,.abstract-section .section-title{text-align:left!important}
+.abstract{max-width:930px;margin:0;text-align:left}
+.lead-copy{max-width:930px;margin:0 0 1.1rem;text-align:left}
+.figure-text,.insight-copy{max-width:930px;margin:1rem 0 0;text-align:left}
+.figure-caption{text-align:center!important;margin:.75rem auto 0;max-width:980px}
 .result-tabs{justify-content:flex-start}
 .result-panel-head{max-width:930px;margin:0 0 1rem;text-align:left}
 .result-panel-head .section-copy{max-width:930px;margin:0;text-align:left}
@@ -149,7 +158,7 @@
           Hyunjung Shim
          </a>
          <sup>
-          1&dagger;
+          1†
          </sup>
         </span>
        </div>
@@ -161,9 +170,6 @@
          KAIST AI
         </a>
        </div>
-       <div class="author-notes">
-        * Equal contribution.
-       </div>
        <div class="publication-venue">
         <span class="venue-badge">
          Preprint
@@ -171,8 +177,11 @@
        </div>
        <div class="author-notes">
         <div>
+         * Equal contribution.
+        </div>
+        <div>
          <sup>
-          &dagger;
+          †
          </sup>
          Corresponding author.
         </div>
@@ -224,19 +233,35 @@
      Why Latent World Modeling?
     </h2>
     <p class="lead-copy">
-     Pixel-space GUI world models render a future screen for each candidate action and then perceive it again. This is expensive, while GUI transitions can change appearance abruptly even when action selection only needs the task-relevant consequence.
+     Figure 2 highlights two mismatches in pixel-space GUI world modeling.
+     <strong>
+      (a)
+     </strong>
+     Rendering future screens adds substantial runtime, while Latent2World retains a stronger success–efficiency trade-off.
+     <strong>
+      (b)
+     </strong>
+     GUI transitions show lower similarity and much wider variation than natural-video transitions, making exact future-screen reconstruction an unnecessarily difficult target.
     </p>
     <div class="figure-shell">
      <img alt="Performance-efficiency gains and GUI transition variability" class="paper-image" src="./static/images/figure2.png"/>
     </div>
     <p class="figure-caption">
-     Pixel-space prediction adds substantial inference cost and must model highly variable GUI transitions.
+     <strong>
+      (a)
+     </strong>
+     Performance–efficiency trade-off of GUI world models.
+     <strong>
+      (b)
+     </strong>
+     Transition-similarity distributions measured with DINOv2 and SigLIP2.
     </p>
     <p class="figure-text insight-copy">
+     These observations motivate predicting
      <strong>
-      Latent2World instead predicts decision-relevant future information directly in latent space
+      decision-relevant future information
      </strong>
-     , avoiding full-screen reconstruction while preserving the information needed to compare candidate actions.
+     in latent space instead of reconstructing the full next screen.
     </p>
    </div>
   </section>
@@ -246,28 +271,39 @@
      Mitigating the Identity Shortcut
     </h2>
     <p class="lead-copy">
-     Future-state predictors can take an
+     Figure 3 exposes the
      <strong>
       identity shortcut
      </strong>
-     : staying close to the current screen even when an action causes a large GUI transition. The failure becomes more severe as transition size grows.
+     .
+     <strong>
+      (a)
+     </strong>
+     Even when the ground-truth next screen changes drastically, pixel-space predictors can remain close to the current GUI.
+     <strong>
+      (b)
+     </strong>
+     As transition size increases, shortcut severity rises and downstream SR drops for pixel-space world models, while Latent2World keeps both trends substantially more stable.
     </p>
     <div class="figure-shell">
      <img alt="Identity shortcut example and shortcut severity across transition sizes" class="paper-image" src="./static/images/identity_shortcut.png"/>
     </div>
     <p class="figure-caption">
-     Pixel-space world models increasingly preserve the current state on larger transitions, while Latent2World maintains lower shortcut severity and stronger downstream SR.
+     <strong>
+      (a)
+     </strong>
+     Identity-shortcut example.
+     <strong>
+      (b)
+     </strong>
+     Shortcut severity and downstream success rate across weak, medium, and strong GUI transitions.
     </p>
     <p class="figure-text insight-copy">
-     We counter this with
+     On
      <strong>
-      action-aware contrastive learning
+      strong transitions
      </strong>
-     : the true next state is the positive, the current state is an explicit negative, and memory-bank transitions provide additional negatives. This forces the predicted latent to encode
-     <strong>
-      what the action changes
-     </strong>
-     , rather than what the GUI already looks like.
+     , shortcut severity reaches 98% for Diffusion and 66% for Code2World, versus 41% for Latent2World; the corresponding SRs are 50.0, 48.5, and 61.5. Larger GUI changes therefore amplify identity preservation in pixel space, whereas latent prediction better preserves action-relevant performance.
     </p>
    </div>
   </section>
@@ -277,7 +313,7 @@
      Latent World-Action Model
     </h2>
     <p class="lead-copy">
-     Latent2World learns one shared multimodal representation for
+     Latent2World learns
      <strong>
       action selection
      </strong>
@@ -285,13 +321,20 @@
      <strong>
       action-conditioned future prediction
      </strong>
-     , so predictive supervision directly improves the representation used for decision making.
+     in one shared multimodal latent space, so predictive supervision directly shapes the representation used for decision making.
     </p>
     <div class="figure-shell">
      <img alt="Latent world-action model training and inference" class="paper-image" src="./static/images/method.png"/>
     </div>
     <p class="figure-caption">
-     The Action Head scores candidate actions, while the Transition Head predicts the next-state latent during training.
+     <strong>
+      (a) Training:
+     </strong>
+     the Action Head scores candidates while the Transition Head learns the action-induced next-state latent with an InfoNCE objective.
+     <strong>
+      (b) Inference:
+     </strong>
+     the world model re-scores low-confidence decisions directly in latent space, without rendering a future screen.
     </p>
     <div class="explain-grid">
      <div class="explain-card">
@@ -299,10 +342,14 @@
        Training
       </div>
       <div class="explain-title">
-       Learn which action to take&mdash;and what it will cause
+       Action scoring + action-aware future prediction
       </div>
       <p>
-       The shared LMM representation is optimized jointly by candidate-action scoring and contrastive future prediction.
+       The true next state is the positive target; the current state and memory-bank transitions are negatives. This explicitly teaches the latent to represent
+       <strong>
+        what the action changes
+       </strong>
+       .
       </p>
      </div>
      <div class="explain-card">
@@ -310,10 +357,10 @@
        Inference
       </div>
       <div class="explain-title">
-       Rescore directly in latent space
+       Single-pass latent rescoring
       </div>
       <p>
-       High-confidence actions execute directly; low-confidence candidates are re-scored without rendering and re-perceiving future screens.
+       A confidence gate invokes the world model only when needed. The transition head is discarded at inference, avoiding the render-and-re-perceive loop.
       </p>
      </div>
     </div>
@@ -325,15 +372,15 @@
      Experimental Results
     </h2>
     <p class="lead-copy">
-     We evaluate
+     We report
      <strong>
-      online task completion
+      Online
      </strong>
-     on AndroidWorld and
+     task-level evaluation on AndroidWorld and
      <strong>
-      offline action selection
+      Offline
      </strong>
-     on AndroidControl and AITZ. Select a view below; Online is shown by default.
+     step-level evaluation on AndroidControl and AITZ. Online is shown by default; use the buttons or swipe on mobile to switch views.
     </p>
     <div class="results-switcher" id="results-switcher">
      <div aria-label="Experimental result views" class="result-tabs" role="tablist">
@@ -356,11 +403,11 @@
         AndroidWorld
        </h3>
        <p class="section-copy">
-        On AndroidWorld, Latent2World improves Overall SR over the corresponding base agent by
+        Across five backbones on AndroidWorld, Latent2World improves Overall SR over the corresponding base agent by
         <strong>
          +4.5 to +12.5 points
         </strong>
-        across five backbones, while remaining far more efficient than pixel-space world models.
+        , while avoiding the large runtime cost of pixel-space future generation.
        </p>
       </div>
       <div class="result-table-wrap">
@@ -473,7 +520,7 @@
            53.57
           </td>
           <td>
-           &ndash;
+           –
           </td>
           <td>
            13.21
@@ -586,7 +633,7 @@
            55.75
           </td>
           <td>
-           &ndash;
+           –
           </td>
           <td>
            11.68
@@ -699,7 +746,7 @@
            16.07
           </td>
           <td>
-           &ndash;
+           –
           </td>
           <td>
            16.81
@@ -812,7 +859,7 @@
            33.93
           </td>
           <td>
-           &ndash;
+           –
           </td>
           <td>
            13.59
@@ -925,7 +972,7 @@
            38.39
           </td>
           <td>
-           &ndash;
+           –
           </td>
           <td>
            17.81
@@ -966,562 +1013,562 @@
        </table>
       </div>
      </div>
-    </div>
-    <div class="result-panel" data-result-panel="1">
-     <div class="result-panel-head">
-      <div class="result-eyebrow">
-       Offline Evaluation
+     <div class="result-panel" data-result-panel="1">
+      <div class="result-panel-head">
+       <div class="result-eyebrow">
+        Offline Evaluation
+       </div>
+       <h3 class="result-panel-title">
+        AndroidControl &amp; AITZ
+       </h3>
+       <p class="section-copy">
+        On AndroidControl and AITZ, Latent2World improves action-type prediction across all evaluated backbones and increases step-level SR in most backbone–dataset settings with modest overhead.
+       </p>
       </div>
-      <h3 class="result-panel-title">
-       AndroidControl &amp; AITZ
-      </h3>
-      <p class="section-copy">
-       On AndroidControl and AITZ, Latent2World improves action-type prediction across all evaluated backbones and raises step-level SR in most settings with only modest inference overhead.
+      <div class="result-table-wrap">
+       <table class="result-table">
+        <thead>
+         <tr>
+          <th>
+           Backbone
+          </th>
+          <th>
+           Setting
+          </th>
+          <th>
+           AC Type
+          </th>
+          <th>
+           AC Ground.
+          </th>
+          <th>
+           AC SR
+          </th>
+          <th>
+           AITZ Type
+          </th>
+          <th>
+           AITZ Ground.
+          </th>
+          <th>
+           AITZ SR
+          </th>
+          <th>
+           Tokens/Task
+          </th>
+          <th>
+           Run Time
+          </th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr class="group-start">
+          <td>
+           GPT-5.6
+          </td>
+          <td>
+           Base
+          </td>
+          <td>
+           71.92
+          </td>
+          <td>
+           60.46
+          </td>
+          <td>
+           59.84
+          </td>
+          <td>
+           59.84
+          </td>
+          <td>
+           47.99
+          </td>
+          <td>
+           41.30
+          </td>
+          <td>
+           3585.57
+          </td>
+          <td>
+           1.14
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+           Code2World
+          </td>
+          <td>
+           70.34
+          </td>
+          <td>
+           59.61
+          </td>
+          <td>
+           58.22
+          </td>
+          <td>
+           58.60
+          </td>
+          <td>
+           47.03
+          </td>
+          <td>
+           39.24
+          </td>
+          <td>
+           12634.21
+          </td>
+          <td>
+           9.31
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+           Diffusion2Image
+          </td>
+          <td>
+           68.31
+          </td>
+          <td>
+           55.01
+          </td>
+          <td>
+           57.94
+          </td>
+          <td>
+           56.40
+          </td>
+          <td>
+           46.80
+          </td>
+          <td>
+           38.59
+          </td>
+          <td>
+           –
+          </td>
+          <td>
+           135.20
+          </td>
+         </tr>
+         <tr class="ours">
+          <td>
+          </td>
+          <td>
+           Latent (Ours)
+          </td>
+          <td>
+           75.57
+          </td>
+          <td>
+           58.75
+          </td>
+          <td>
+           58.52
+          </td>
+          <td>
+           64.78
+          </td>
+          <td>
+           48.21
+          </td>
+          <td>
+           46.10
+          </td>
+          <td>
+           4260.90
+          </td>
+          <td>
+           1.46
+          </td>
+         </tr>
+         <tr class="group-start">
+          <td>
+           Gemini-3.6-Flash
+          </td>
+          <td>
+           Base
+          </td>
+          <td>
+           76.02
+          </td>
+          <td>
+           60.78
+          </td>
+          <td>
+           57.25
+          </td>
+          <td>
+           65.14
+          </td>
+          <td>
+           49.67
+          </td>
+          <td>
+           45.19
+          </td>
+          <td>
+           2001.71
+          </td>
+          <td>
+           8.03
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+           Code2World
+          </td>
+          <td>
+           75.80
+          </td>
+          <td>
+           57.61
+          </td>
+          <td>
+           55.50
+          </td>
+          <td>
+           64.37
+          </td>
+          <td>
+           48.08
+          </td>
+          <td>
+           44.15
+          </td>
+          <td>
+           9557.18
+          </td>
+          <td>
+           21.20
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+           Diffusion2Image
+          </td>
+          <td>
+           74.75
+          </td>
+          <td>
+           59.89
+          </td>
+          <td>
+           55.69
+          </td>
+          <td>
+           64.08
+          </td>
+          <td>
+           47.61
+          </td>
+          <td>
+           43.51
+          </td>
+          <td>
+           –
+          </td>
+          <td>
+           194.51
+          </td>
+         </tr>
+         <tr class="ours">
+          <td>
+          </td>
+          <td>
+           Latent (Ours)
+          </td>
+          <td>
+           80.36
+          </td>
+          <td>
+           60.50
+          </td>
+          <td>
+           61.13
+          </td>
+          <td>
+           66.19
+          </td>
+          <td>
+           45.80
+          </td>
+          <td>
+           47.25
+          </td>
+          <td>
+           2658.46
+          </td>
+          <td>
+           8.49
+          </td>
+         </tr>
+         <tr class="group-start">
+          <td>
+           GUI-Owl-7B
+          </td>
+          <td>
+           Base
+          </td>
+          <td>
+           73.23
+          </td>
+          <td>
+           41.65
+          </td>
+          <td>
+           40.40
+          </td>
+          <td>
+           60.73
+          </td>
+          <td>
+           35.56
+          </td>
+          <td>
+           34.78
+          </td>
+          <td>
+           1120.64
+          </td>
+          <td>
+           2.14
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+           Code2World
+          </td>
+          <td>
+           68.52
+          </td>
+          <td>
+           36.08
+          </td>
+          <td>
+           31.80
+          </td>
+          <td>
+           60.03
+          </td>
+          <td>
+           33.59
+          </td>
+          <td>
+           33.45
+          </td>
+          <td>
+           3890.48
+          </td>
+          <td>
+           9.00
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+           Diffusion2Image
+          </td>
+          <td>
+           66.39
+          </td>
+          <td>
+           37.72
+          </td>
+          <td>
+           33.11
+          </td>
+          <td>
+           59.01
+          </td>
+          <td>
+           34.76
+          </td>
+          <td>
+           33.20
+          </td>
+          <td>
+           –
+          </td>
+          <td>
+           100.88
+          </td>
+         </tr>
+         <tr class="ours">
+          <td>
+          </td>
+          <td>
+           Latent (Ours)
+          </td>
+          <td>
+           74.16
+          </td>
+          <td>
+           43.55
+          </td>
+          <td>
+           41.96
+          </td>
+          <td>
+           60.99
+          </td>
+          <td>
+           35.23
+          </td>
+          <td>
+           35.06
+          </td>
+          <td>
+           1181.68
+          </td>
+          <td>
+           2.22
+          </td>
+         </tr>
+         <tr class="group-start">
+          <td>
+           Qwen3-VL-8B
+          </td>
+          <td>
+           Base
+          </td>
+          <td>
+           75.94
+          </td>
+          <td>
+           58.07
+          </td>
+          <td>
+           55.56
+          </td>
+          <td>
+           67.57
+          </td>
+          <td>
+           49.23
+          </td>
+          <td>
+           44.52
+          </td>
+          <td>
+           1391.27
+          </td>
+          <td>
+           4.70
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+           Code2World
+          </td>
+          <td>
+           75.21
+          </td>
+          <td>
+           56.80
+          </td>
+          <td>
+           54.04
+          </td>
+          <td>
+           67.21
+          </td>
+          <td>
+           48.72
+          </td>
+          <td>
+           43.90
+          </td>
+          <td>
+           8170.46
+          </td>
+          <td>
+           14.88
+          </td>
+         </tr>
+         <tr>
+          <td>
+          </td>
+          <td>
+           Diffusion2Image
+          </td>
+          <td>
+           74.29
+          </td>
+          <td>
+           56.73
+          </td>
+          <td>
+           54.96
+          </td>
+          <td>
+           67.26
+          </td>
+          <td>
+           49.30
+          </td>
+          <td>
+           43.31
+          </td>
+          <td>
+           –
+          </td>
+          <td>
+           171.68
+          </td>
+         </tr>
+         <tr class="ours">
+          <td>
+          </td>
+          <td>
+           Latent (Ours)
+          </td>
+          <td>
+           77.15
+          </td>
+          <td>
+           58.95
+          </td>
+          <td>
+           57.09
+          </td>
+          <td>
+           68.35
+          </td>
+          <td>
+           50.40
+          </td>
+          <td>
+           45.62
+          </td>
+          <td>
+           1702.17
+          </td>
+          <td>
+           4.83
+          </td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+      <p class="table-note">
+       AC = AndroidControl. SR requires both the predicted action type and argument to be correct.
       </p>
      </div>
-     <div class="result-table-wrap">
-      <table class="result-table">
-       <thead>
-        <tr>
-         <th>
-          Backbone
-         </th>
-         <th>
-          Setting
-         </th>
-         <th>
-          AC Type
-         </th>
-         <th>
-          AC Ground.
-         </th>
-         <th>
-          AC SR
-         </th>
-         <th>
-          AITZ Type
-         </th>
-         <th>
-          AITZ Ground.
-         </th>
-         <th>
-          AITZ SR
-         </th>
-         <th>
-          Tokens/Task
-         </th>
-         <th>
-          Run Time
-         </th>
-        </tr>
-       </thead>
-       <tbody>
-        <tr class="group-start">
-         <td>
-          GPT-5.6
-         </td>
-         <td>
-          Base
-         </td>
-         <td>
-          71.92
-         </td>
-         <td>
-          60.46
-         </td>
-         <td>
-          59.84
-         </td>
-         <td>
-          59.84
-         </td>
-         <td>
-          47.99
-         </td>
-         <td>
-          41.30
-         </td>
-         <td>
-          3585.57
-         </td>
-         <td>
-          1.14
-         </td>
-        </tr>
-        <tr>
-         <td>
-         </td>
-         <td>
-          Code2World
-         </td>
-         <td>
-          70.34
-         </td>
-         <td>
-          59.61
-         </td>
-         <td>
-          58.22
-         </td>
-         <td>
-          58.60
-         </td>
-         <td>
-          47.03
-         </td>
-         <td>
-          39.24
-         </td>
-         <td>
-          12634.21
-         </td>
-         <td>
-          9.31
-         </td>
-        </tr>
-        <tr>
-         <td>
-         </td>
-         <td>
-          Diffusion2Image
-         </td>
-         <td>
-          68.31
-         </td>
-         <td>
-          55.01
-         </td>
-         <td>
-          57.94
-         </td>
-         <td>
-          56.40
-         </td>
-         <td>
-          46.80
-         </td>
-         <td>
-          38.59
-         </td>
-         <td>
-          &ndash;
-         </td>
-         <td>
-          135.20
-         </td>
-        </tr>
-        <tr class="ours">
-         <td>
-         </td>
-         <td>
-          Latent (Ours)
-         </td>
-         <td>
-          75.57
-         </td>
-         <td>
-          58.75
-         </td>
-         <td>
-          58.52
-         </td>
-         <td>
-          64.78
-         </td>
-         <td>
-          48.21
-         </td>
-         <td>
-          46.10
-         </td>
-         <td>
-          4260.90
-         </td>
-         <td>
-          1.46
-         </td>
-        </tr>
-        <tr class="group-start">
-         <td>
-          Gemini-3.6-Flash
-         </td>
-         <td>
-          Base
-         </td>
-         <td>
-          76.02
-         </td>
-         <td>
-          60.78
-         </td>
-         <td>
-          57.25
-         </td>
-         <td>
-          65.14
-         </td>
-         <td>
-          49.67
-         </td>
-         <td>
-          45.19
-         </td>
-         <td>
-          2001.71
-         </td>
-         <td>
-          8.03
-         </td>
-        </tr>
-        <tr>
-         <td>
-         </td>
-         <td>
-          Code2World
-         </td>
-         <td>
-          75.80
-         </td>
-         <td>
-          57.61
-         </td>
-         <td>
-          55.50
-         </td>
-         <td>
-          64.37
-         </td>
-         <td>
-          48.08
-         </td>
-         <td>
-          44.15
-         </td>
-         <td>
-          9557.18
-         </td>
-         <td>
-          21.20
-         </td>
-        </tr>
-        <tr>
-         <td>
-         </td>
-         <td>
-          Diffusion2Image
-         </td>
-         <td>
-          74.75
-         </td>
-         <td>
-          59.89
-         </td>
-         <td>
-          55.69
-         </td>
-         <td>
-          64.08
-         </td>
-         <td>
-          47.61
-         </td>
-         <td>
-          43.51
-         </td>
-         <td>
-          &ndash;
-         </td>
-         <td>
-          194.51
-         </td>
-        </tr>
-        <tr class="ours">
-         <td>
-         </td>
-         <td>
-          Latent (Ours)
-         </td>
-         <td>
-          80.36
-         </td>
-         <td>
-          60.50
-         </td>
-         <td>
-          61.13
-         </td>
-         <td>
-          66.19
-         </td>
-         <td>
-          45.80
-         </td>
-         <td>
-          47.25
-         </td>
-         <td>
-          2658.46
-         </td>
-         <td>
-          8.49
-         </td>
-        </tr>
-        <tr class="group-start">
-         <td>
-          GUI-Owl-7B
-         </td>
-         <td>
-          Base
-         </td>
-         <td>
-          73.23
-         </td>
-         <td>
-          41.65
-         </td>
-         <td>
-          40.40
-         </td>
-         <td>
-          60.73
-         </td>
-         <td>
-          35.56
-         </td>
-         <td>
-          34.78
-         </td>
-         <td>
-          1120.64
-         </td>
-         <td>
-          2.14
-         </td>
-        </tr>
-        <tr>
-         <td>
-         </td>
-         <td>
-          Code2World
-         </td>
-         <td>
-          68.52
-         </td>
-         <td>
-          36.08
-         </td>
-         <td>
-          31.80
-         </td>
-         <td>
-          60.03
-         </td>
-         <td>
-          33.59
-         </td>
-         <td>
-          33.45
-         </td>
-         <td>
-          3890.48
-         </td>
-         <td>
-          9.00
-         </td>
-        </tr>
-        <tr>
-         <td>
-         </td>
-         <td>
-          Diffusion2Image
-         </td>
-         <td>
-          66.39
-         </td>
-         <td>
-          37.72
-         </td>
-         <td>
-          33.11
-         </td>
-         <td>
-          59.01
-         </td>
-         <td>
-          34.76
-         </td>
-         <td>
-          33.20
-         </td>
-         <td>
-          &ndash;
-         </td>
-         <td>
-          100.88
-         </td>
-        </tr>
-        <tr class="ours">
-         <td>
-         </td>
-         <td>
-          Latent (Ours)
-         </td>
-         <td>
-          74.16
-         </td>
-         <td>
-          43.55
-         </td>
-         <td>
-          41.96
-         </td>
-         <td>
-          60.99
-         </td>
-         <td>
-          35.23
-         </td>
-         <td>
-          35.06
-         </td>
-         <td>
-          1181.68
-         </td>
-         <td>
-          2.22
-         </td>
-        </tr>
-        <tr class="group-start">
-         <td>
-          Qwen3-VL-8B
-         </td>
-         <td>
-          Base
-         </td>
-         <td>
-          75.94
-         </td>
-         <td>
-          58.07
-         </td>
-         <td>
-          55.56
-         </td>
-         <td>
-          67.57
-         </td>
-         <td>
-          49.23
-         </td>
-         <td>
-          44.52
-         </td>
-         <td>
-          1391.27
-         </td>
-         <td>
-          4.70
-         </td>
-        </tr>
-        <tr>
-         <td>
-         </td>
-         <td>
-          Code2World
-         </td>
-         <td>
-          75.21
-         </td>
-         <td>
-          56.80
-         </td>
-         <td>
-          54.04
-         </td>
-         <td>
-          67.21
-         </td>
-         <td>
-          48.72
-         </td>
-         <td>
-          43.90
-         </td>
-         <td>
-          8170.46
-         </td>
-         <td>
-          14.88
-         </td>
-        </tr>
-        <tr>
-         <td>
-         </td>
-         <td>
-          Diffusion2Image
-         </td>
-         <td>
-          74.29
-         </td>
-         <td>
-          56.73
-         </td>
-         <td>
-          54.96
-         </td>
-         <td>
-          67.26
-         </td>
-         <td>
-          49.30
-         </td>
-         <td>
-          43.31
-         </td>
-         <td>
-          &ndash;
-         </td>
-         <td>
-          171.68
-         </td>
-        </tr>
-        <tr class="ours">
-         <td>
-         </td>
-         <td>
-          Latent (Ours)
-         </td>
-         <td>
-          77.15
-         </td>
-         <td>
-          58.95
-         </td>
-         <td>
-          57.09
-         </td>
-         <td>
-          68.35
-         </td>
-         <td>
-          50.40
-         </td>
-         <td>
-          45.62
-         </td>
-         <td>
-          1702.17
-         </td>
-         <td>
-          4.83
-         </td>
-        </tr>
-       </tbody>
-      </table>
-     </div>
-     <p class="table-note">
-      AC = AndroidControl. SR requires both the predicted action type and argument to be correct.
-     </p>
     </div>
    </div>
   </section>
@@ -1531,25 +1578,17 @@
      Action-Specific Latent Structure
     </h2>
     <p class="lead-copy">
-     After suppressing shared current-state information, Latent2World forms the clearest action-specific
+     After removing shared current-state information, the t-SNE view shows how each method organizes
      <strong>
-      Click
+      action-induced future representations
      </strong>
-     ,
-     <strong>
-      Scroll
-     </strong>
-     , and
-     <strong>
-      Type
-     </strong>
-     structure, showing that its future latents capture action-induced transitions rather than screen appearance alone.
+     . Latent2World forms the clearest Click, Scroll, and Type clusters around their action centroids.
     </p>
     <div class="figure-shell">
      <img alt="t-SNE visualization of action-induced future representations" class="paper-image" src="./static/images/qual.png"/>
     </div>
     <p class="figure-caption">
-     Latent (Ours) shows clearer action-specific clustering around the corresponding centroids than the base agent and pixel-space world models.
+     Action-specific t-SNE structure for Base, Diffusion, Code2World, and Latent2World. Latent (Ours) shows the strongest separation around the corresponding action centroids.
     </p>
    </div>
   </section>
@@ -1587,7 +1626,8 @@
   let startX = null;
   let startY = null;
   function showResult(index) {
-    active = Math.max(0, Math.min(index, panels.length - 1));
+    if (index < 0 || index >= panels.length) return;
+    active = index;
     tabs.forEach((tab, i) => {
       const selected = i === active;
       tab.classList.toggle('is-active', selected);
@@ -1595,18 +1635,9 @@
     });
     panels.forEach((panel, i) => panel.classList.toggle('is-active', i === active));
   }
-  tabs.forEach((tab, i) => {
-    tab.addEventListener('click', () => showResult(i));
-    tab.addEventListener('keydown', (event) => {
-      if (event.key === 'ArrowRight') {
-        event.preventDefault();
-        showResult((active + 1) % panels.length);
-        tabs[active].focus();
-      } else if (event.key === 'ArrowLeft') {
-        event.preventDefault();
-        showResult((active - 1 + panels.length) % panels.length);
-        tabs[active].focus();
-      }
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', function () {
+      showResult(Number(this.dataset.resultIndex));
     });
   });
   switcher.addEventListener('touchstart', (event) => {
