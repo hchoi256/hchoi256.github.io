@@ -1,4 +1,11 @@
 main:
+- title: Latent World Action Model for GUI Agents
+  authors: 'Seungjun Yu, <span class="highlight"><b><u>Hojun Choi</u></b></span>, Seojeong Park, Jaeyo Shin, and Hyunjung Shim'
+  conference_short: Under Review
+  conference: Under Review at International Conference on Learning Representations <b>(ICLR)</b>, 2027.
+  page: https://hchoi256.github.io/projects/latent2world/
+  bibtex: https://hchoi256.github.io/projects/latent2world/#bibtex
+  image: ./assets/img/teasers/latent2world.png
 - title: 'MBA: Multimodal Benchmark and Agents for Real-World Business Ideation'
   authors: '<span class="highlight"><b><u>Hojun Choi</u></b></span>, Jaeyo Shin, Suin Lee, and Hyunjung Shim<span style="font-size: 0.68em; vertical-align: super; line-height: 0;">†</span>'
   special_note: '<a href="https://huggingface.co/papers/2608.11616" target="_blank" rel="noopener noreferrer" style="color: #f97316 !important; font-weight: 700; text-decoration: none;">🤗 Hugging Face Daily Paper</a>'
