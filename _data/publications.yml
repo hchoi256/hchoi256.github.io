@@ -1,14 +1,18 @@
 main:
 - title: Latent World Action Model for GUI Agents
-  authors: 'Seungjun Yu, <span class="highlight"><b><u>Hojun Choi</u></b></span>, Seojeong Park, Jaeyo Shin, and Hyunjung Shim'
-  conference_short: Under Review
-  conference: Under Review at International Conference on Learning Representations <b>(ICLR)</b>, 2027.
+  authors: <a href="https://scholar.google.com/citations?user=7S4szRIAAAAJ&hl=en&oi=ao" target="_blank" rel="noopener noreferrer">Seungjun Yu*</a>, <span class="highlight"><b><u>Hojun Choi*</u></b></span>,
+    <a href="https://sjpark5800.github.io/" target="_blank" rel="noopener noreferrer">Seojeong Park</a>, Jaeyo Shin, and Hyunjung Shim
+  conference_short: Preprint
+  conference: Preprint, 2026.
+  pdf: https://hchoi256.github.io/projects/latent2world/
+  code: https://github.com/hchoi256
   page: https://hchoi256.github.io/projects/latent2world/
   bibtex: https://hchoi256.github.io/projects/latent2world/#bibtex
   image: ./assets/img/teasers/latent2world.png
 - title: 'MBA: Multimodal Benchmark and Agents for Real-World Business Ideation'
   authors: '<span class="highlight"><b><u>Hojun Choi</u></b></span>, Jaeyo Shin, Suin Lee, and Hyunjung Shim<span style="font-size: 0.68em; vertical-align: super; line-height: 0;">†</span>'
-  special_note: '<a href="https://huggingface.co/papers/2608.11616" target="_blank" rel="noopener noreferrer" style="color: #f97316 !important; font-weight: 700; text-decoration: none;">🤗 Hugging Face Daily Paper</a>'
+  special_note: '<a href="https://huggingface.co/papers/2608.11616" target="_blank" rel="noopener noreferrer" style="color: #f97316 !important; font-weight: 700; text-decoration: none;">🤗 Hugging Face Daily
+    Paper</a>'
   conference_short: Preprint
   conference: Preprint, 2026.
   demo: https://huggingface.co/spaces/hchoi256/mba-business-ideation-agent
@@ -18,7 +22,8 @@ main:
   bibtex: https://hchoi256.github.io/projects/mba/#bibtex
   image: ./assets/img/teasers/mba.png
 - title: Open-Vocabulary BEV Segmentation with 3D-Aware Geometric Constraints
-  authors: '<span class="highlight"><b><u>Hojun Choi</u></b></span>, Seulbin Hwang, Dae Jung Kim, Kisung Kim, Hyunjung Shim<span style="font-size: 0.68em; vertical-align: super; line-height: 0;">†</span>, and Jinhan Lee<span style="font-size: 0.68em; vertical-align: super; line-height: 0;">†</span>'
+  authors: '<span class="highlight"><b><u>Hojun Choi</u></b></span>, Seulbin Hwang, Dae Jung Kim, Kisung Kim, Hyunjung Shim<span style="font-size: 0.68em; vertical-align: super; line-height: 0;">†</span>,
+    and Jinhan Lee<span style="font-size: 0.68em; vertical-align: super; line-height: 0;">†</span>'
   conference_short: ECCV
   conference: European Conference on Computer Vision <b>(ECCV)</b>, 2026.
   pdf: https://arxiv.org/abs/2606.24353
@@ -35,7 +40,8 @@ main:
   bibtex: https://github.com/hchoi256/mspl#citation
   image: ./assets/img/teasers/mspl.png
 - title: 'SUPER-AD: Semantic Uncertainty-aware Planning for End-to-End Robust Autonomous Driving'
-  authors: 'Wonjeong Ryu, Seungjun Yu, Seokha Moon, <span class="highlight"><b><u>Hojun Choi</u></b></span>, Junsung Park, Jinkyu Kim, and Hyunjung Shim<span style="font-size: 0.68em; vertical-align: super; line-height: 0;">†</span>'
+  authors: 'Wonjeong Ryu, Seungjun Yu, Seokha Moon, <span class="highlight"><b><u>Hojun Choi</u></b></span>, Junsung Park, Jinkyu Kim, and Hyunjung Shim<span style="font-size: 0.68em; vertical-align: super;
+    line-height: 0;">†</span>'
   conference_short: Preprint
   conference: Preprint, 2025.
   pdf: https://arxiv.org/pdf/2511.22865
@@ -59,7 +65,8 @@ main:
   bibtex: https://arxiv.org/bibtex/2412.18273
   image: ./assets/img/teasers/bov.png
 - title: 'MobileGPT: Augmenting LLM with Human-like App Memory for Mobile Task Automation'
-  authors: 'Sunjae Lee, Junyoung Choi, Jungjae Lee, Munim Hasan Wasi, <span class="highlight"><b><u>Hojun Choi</u></b></span>, Steven Y. Ko, Sangeun Oh<span style="font-size: 0.68em; vertical-align: super; line-height: 0;">†</span>, and Insik Shin<span style="font-size: 0.68em; vertical-align: super; line-height: 0;">†</span>'
+  authors: 'Sunjae Lee, Junyoung Choi, Jungjae Lee, Munim Hasan Wasi, <span class="highlight"><b><u>Hojun Choi</u></b></span>, Steven Y. Ko, Sangeun Oh<span style="font-size: 0.68em; vertical-align: super;
+    line-height: 0;">†</span>, and Insik Shin<span style="font-size: 0.68em; vertical-align: super; line-height: 0;">†</span>'
   conference_short: MobiCom
   conference: ACM International Conference on Mobile Computing and Networking <b>(MobiCom)</b>, 2024.
   pdf: https://arxiv.org/pdf/2312.03003
